@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useState } from "react";
 import userIcon from "../../assets/ICONS/user.svg";
+import { useRegisterMutation } from "../../features/auth/authApi";
 
 function Registration() {
   const [inputData, setInputData] = useState({
@@ -13,12 +14,24 @@ function Registration() {
     veterinary_address: "",
   });
   const [isLoading, setIsLoading] = useState(false);
-
+  const [register, { data: UserLoggedInData, isError }] = useRegisterMutation();
   const registerUser = (e) => {
     e.preventDefault();
     setIsLoading(true);
     // http://localhost:5000/api/v1/user
+    // user data sob diben
+    register(inputData);
   };
+
+  // korte paren or auth api teke direct navigate o korte paren
+  // useEffect(() => {
+  //   if (isError) {
+  //     alert("Something went wrong");
+  //   }
+  //   if (UserLoggedInData?.data?.accessToken) {
+  //     navigate("/dashboard");
+  //   }
+  // }, [UserLoggedInData, isError, navigate]);
 
   const handleInputChange = (event) => {
     setInputData((inputs) => ({
