@@ -1,7 +1,31 @@
-import React from "react";
+import { useState } from "react";
 import userIcon from "../../assets/ICONS/user.svg";
 
 function Registration() {
+  const [inputData, setInputData] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    password: "",
+    doctor_type1: "",
+    doctor_type2: "",
+    veterinary_address: "",
+  });
+  const [isLoading, setIsLoading] = useState(false);
+
+  const registerUser = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    // http://localhost:5000/api/v1/user
+  };
+
+  const handleInputChange = (event) => {
+    setInputData((inputs) => ({
+      ...inputs,
+      [event.target.name]: event.target.value,
+    }));
+  };
+
   return (
     <section className="flex justify-center items-center bg-[#FFF7EC] py-16 border-[1px] border-[#EAEAEB]">
       <div className="max-w-[638px] w-full  rounded-lg p-16 bg-white">
@@ -25,24 +49,39 @@ function Registration() {
             </span>
           </div>
         </div>
-        <form action="" className="flex flex-col gap-y-4">
+        <form
+          onSubmit={registerUser}
+          action=""
+          className="flex flex-col gap-y-4"
+        >
           <div>
             <input
               type="text"
+              name="first_name"
+              value={inputData.first_name}
+              onChange={handleInputChange}
               placeholder="Name *"
               className="w-full rounded-lg py-3 px-4 outline-none border-[1px] border-[#E5E7EC]"
+              required
             />
           </div>
           <div>
             <input
               type="text"
+              name="last_name"
+              value={inputData.last_name}
+              onChange={handleInputChange}
               placeholder="Cognome *"
               className="w-full rounded-lg py-3 px-4 outline-none border-[1px] border-[#E5E7EC]"
+              required
             />
           </div>
           <div>
             <input
               type="text"
+              name="doctor_type1"
+              value={inputData.doctor_type1}
+              onChange={handleInputChange}
               placeholder="Scegli che tipo di dottore sei *"
               className="w-full rounded-lg py-3 px-4 outline-none border-[1px] border-[#E5E7EC]"
             />
@@ -50,6 +89,9 @@ function Registration() {
           <div>
             <input
               type="text"
+              name="doctor_type2"
+              value={inputData.doctor_type2}
+              onChange={handleInputChange}
               placeholder="Scegli che tipo di dottore sei *"
               className="w-full rounded-lg py-3 px-4 outline-none border-[1px] border-[#E5E7EC]"
             />
@@ -58,6 +100,9 @@ function Registration() {
           <div>
             <input
               type="text"
+              name="veterinary_address"
+              value={inputData.veterinary_address}
+              onChange={handleInputChange}
               placeholder="Indirizzo del tuo ufficio veterinario *"
               className="w-full rounded-lg py-3 px-4 outline-none border-[1px] border-[#E5E7EC]"
             />
@@ -65,21 +110,32 @@ function Registration() {
 
           <div>
             <input
-              type="text"
+              type="email"
+              name="email"
+              value={inputData.email}
+              onChange={handleInputChange}
               placeholder="Email *"
               className="w-full rounded-lg py-3 px-4 outline-none border-[1px] border-[#E5E7EC]"
+              required
             />
           </div>
 
           <div>
             <input
-              type="text"
+              type="password"
               placeholder="Password *"
+              name="password"
+              value={inputData.password}
+              onChange={handleInputChange}
               className="w-full rounded-lg py-3 px-4 outline-none border-[1px] border-[#E5E7EC]"
+              required
             />
           </div>
           <div>
-            <button className="w-full rounded-lg py-3 px-4 outline-none bg-[#E8971F] text-white">
+            <button
+              type="submit"
+              className="w-full rounded-lg py-3 px-4 outline-none bg-[#E8971F] text-white"
+            >
               Avanti
             </button>
           </div>

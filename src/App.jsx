@@ -9,8 +9,8 @@ import RegistrationGoogleCalenderConnect from "./pagers/vetRegistration/Registra
 import RegistrationGoogleCalenderConnected from "./pagers/vetRegistration/RegistrationGoogleCalenderConnected";
 import RegistrationWithGoogle from "./pagers/vetRegistration/RegistrationWithGoogle";
 import firebaseAuthInit from "../firebase.init";
-import DefaultLayout from "./pagers/adminPages/DefaultLayout";
-import AllAppointment from "./pagers/adminPages/AllAppointment";
+// import DefaultLayout from "./pagers/adminPages/DefaultLayout";
+// import AllAppointment from "./pagers/adminPages/AllAppointment";
 
 const App = () => {
   firebaseAuthInit();
