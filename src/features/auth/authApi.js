@@ -11,7 +11,6 @@ export const authApi = apiSlice.injectEndpoints({
       }),
       // if i want to get the callback response here then
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
-        console.log("onQueryStarted", arg);
         try {
           const result = await queryFulfilled;
           sessionStorage.setItem(

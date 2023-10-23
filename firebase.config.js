@@ -1,10 +1,10 @@
 const firebaseConfig = {
-    apiKey: 'AIzaSyANzUNQ8MCmwzu4R82oGf5bQdIDZKaipAc',
-    authDomain: 'racyline-c5ced.firebaseapp.com',
-    projectId: 'racyline-c5ced',
-    storageBucket: 'racyline-c5ced.appspot.com',
-    messagingSenderId: '456818356122',
-    appId: '1:456818356122:web:6199de4f7c9d2f56ac1423',
+    apiKey: import.meta.env.VITE_API_KEY,
+    authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+    projectId: import.meta.env.VITE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_APP_Id,
 };
 
 export default firebaseConfig;

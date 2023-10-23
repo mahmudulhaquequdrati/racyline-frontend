@@ -1,9 +1,12 @@
 /* eslint-disable no-unused-vars */
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import userIcon from "../../assets/ICONS/user.svg";
 import { useRegisterMutation } from "../../features/auth/authApi";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Registration() {
+  const navigate = useNavigate();
   const [inputData, setInputData] = useState({
     first_name: "",
     last_name: "",
@@ -12,32 +15,54 @@ function Registration() {
     doctor_type1: "",
     doctor_type2: "",
     veterinary_address: "",
+    profile_image_url: "",
   });
   const [isLoading, setIsLoading] = useState(false);
   const [register, { data: UserLoggedInData, isError }] = useRegisterMutation();
+  const [selectedFile, setSelectedFile] = useState(null);
   const registerUser = (e) => {
     e.preventDefault();
     setIsLoading(true);
-    // http://localhost:5000/api/v1/user
-    // user data sob diben
     register(inputData);
   };
 
-  // korte paren or auth api teke direct navigate o korte paren
-  // useEffect(() => {
-  //   if (isError) {
-  //     alert("Something went wrong");
-  //   }
-  //   if (UserLoggedInData?.data?.accessToken) {
-  //     navigate("/dashboard");
-  //   }
-  // }, [UserLoggedInData, isError, navigate]);
+  useEffect(() => {
+    if (isError) {
+      alert("Something went wrong");
+    }
+    if (UserLoggedInData?.data?.accessToken) {
+      navigate("/registration-google-calender-connect");
+    }
+  }, [UserLoggedInData, isError, navigate]);
 
   const handleInputChange = (event) => {
     setInputData((inputs) => ({
       ...inputs,
       [event.target.name]: event.target.value,
     }));
+  };
+  const fileInputRef = useRef(null);
+
+  const handleButtonClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleFileChange = (e) => {
+    let formData = new FormData();
+    const maxFileSize = 5 * 1024 * 1024;
+    const file = e.target.files[0];
+    if (file && file.size > maxFileSize) {
+      alert(
+        "File size exceeds the maximum allowed size (5MB). Please choose a smaller file."
+      );
+    } else {
+      formData.append("image", file);
+      formData.append("key", `${import.meta.env.VITE_IMGBB_API_KEY}`);
+      setSelectedFile(file);
+      axios.post("https://api.imgbb.com/1/upload", formData).then((res) => {
+        setInputData({ ...inputData, profile_image_url: res.data.data.url });
+      });
+    }
   };
 
   return (
@@ -52,12 +77,30 @@ function Registration() {
 
         <div className="flex gap-6 items-center py-[30px]">
           <div className="w-[105px] h-[105px] flex items-center gap-6 justify-center rounded-full bg-[#E5E7EC]">
-            <img src={userIcon} alt="" className="w-[32px] h-[33px]" />
+            {selectedFile ? (
+              <img
+                src={URL.createObjectURL(selectedFile)}
+                alt=""
+                className="w-[105px] h-[105px] rounded-full"
+              />
+            ) : (
+              <img src={userIcon} alt="" className="w-[32px] h-[33px]" />
+            )}
           </div>
           <div className="flex flex-col gap-y-[10px]">
-            <button className="border-[1px] border-black rounded-md py-3 px-8 text-[15px] font-medium">
+            <button
+              onClick={handleButtonClick}
+              className="border-[1px] border-black rounded-md py-3 px-8 text-[15px] font-medium"
+            >
               Carica la foto di profilo
             </button>
+            <input
+              type="file"
+              className="hidden"
+              accept="image/*"
+              onChange={handleFileChange}
+              ref={fileInputRef}
+            />
             <span className="text-black/[.40]">
               JPG or PNG. Max size of 5MB.
             </span>
