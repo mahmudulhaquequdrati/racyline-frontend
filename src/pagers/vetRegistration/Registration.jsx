@@ -31,7 +31,7 @@ function Registration() {
       alert("Something went wrong");
     }
     if (UserLoggedInData?.data?.accessToken) {
-      navigate("/registration-google-calender-connect");
+      navigate("/registration-availabilities");
     }
   }, [UserLoggedInData, isError, navigate]);
 

@@ -37,6 +37,10 @@ const App = () => {
           path="/registration-availabilities"
           element={<RegistrationAvailabilities />}
         />
+        <Route
+          path="/registration-availabilities"
+          element={<RegistrationAvailabilities />}
+        />
         {/* <Route path="/admin" element={<DefaultLayout />}>
           <Route element={<AllAppointment />} />
         </Route> */}
