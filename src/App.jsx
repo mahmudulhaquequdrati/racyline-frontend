@@ -22,45 +22,52 @@ const App = () => {
       <Header />
       <Routes>
         <Route path="/" element={<Dashboard />} />
-        <Route path="/login" element={<Login />} />
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
         <Route
           path="/registration"
           element={
-            <PublicRoute>
-              <Registration />
-            </PublicRoute>
+            // <PublicRoute>
+            <Registration />
+            // </PublicRoute>
           }
         />
         <Route
           path="/registration-with-google"
           element={
-            <PublicRoute>
-              <RegistrationWithGoogle />
-            </PublicRoute>
+            // <PublicRoute>
+            <RegistrationWithGoogle />
+            // </PublicRoute>
           }
         />
         <Route
           path="/registration-google-calender-connect"
           element={
-            <PublicRoute>
-              <RegistrationGoogleCalenderConnect />
-            </PublicRoute>
+            // <PublicRoute>
+            <RegistrationGoogleCalenderConnect />
+            // </PublicRoute>
           }
         />
         <Route
           path="/registration-google-calender-connected"
           element={
-            <PublicRoute>
-              <RegistrationGoogleCalenderConnected />
-            </PublicRoute>
+            // <PublicRoute>
+            <RegistrationGoogleCalenderConnected />
+            // </PublicRoute>
           }
         />
         <Route
           path="/registration-availabilities"
           element={
-            <PublicRoute>
-              <RegistrationAvailabilities />
-            </PublicRoute>
+            // <PublicRoute>
+            <RegistrationAvailabilities />
+            // </PublicRoute>
           }
         />
 
