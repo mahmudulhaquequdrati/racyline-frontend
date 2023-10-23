@@ -10,6 +10,8 @@ import RegistrationGoogleCalenderConnected from "./pagers/vetRegistration/Regist
 import RegistrationWithGoogle from "./pagers/vetRegistration/RegistrationWithGoogle";
 import firebaseAuthInit from "../firebase.init";
 import Appointment from "./pagers/VetDashboard/Appointment";
+import AuthProtected from "./routes/AuthProtected";
+import PublicRoute from "./routes/PublicRoutes";
 // import DefaultLayout from "./pagers/adminPages/DefaultLayout";
 // import AllAppointment from "./pagers/adminPages/AllAppointment";
 
@@ -21,24 +23,56 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/registration" element={<Registration />} />
+        <Route
+          path="/registration"
+          element={
+            <PublicRoute>
+              <Registration />
+            </PublicRoute>
+          }
+        />
         <Route
           path="/registration-with-google"
-          element={<RegistrationWithGoogle />}
+          element={
+            <PublicRoute>
+              <RegistrationWithGoogle />
+            </PublicRoute>
+          }
         />
         <Route
           path="/registration-google-calender-connect"
-          element={<RegistrationGoogleCalenderConnect />}
+          element={
+            <PublicRoute>
+              <RegistrationGoogleCalenderConnect />
+            </PublicRoute>
+          }
         />
         <Route
           path="/registration-google-calender-connected"
-          element={<RegistrationGoogleCalenderConnected />}
+          element={
+            <PublicRoute>
+              <RegistrationGoogleCalenderConnected />
+            </PublicRoute>
+          }
         />
         <Route
           path="/registration-availabilities"
-          element={<RegistrationAvailabilities />}
+          element={
+            <PublicRoute>
+              <RegistrationAvailabilities />
+            </PublicRoute>
+          }
         />
-        <Route path="/vets/appointment" element={<Appointment />} />
+
+        <Route
+          path="/vets/appointment"
+          element={
+            <AuthProtected>
+              <Appointment />{" "}
+            </AuthProtected>
+          }
+        />
+
         {/* <Route path="/admin" element={<DefaultLayout />}>
           <Route element={<AllAppointment />} />
         </Route> */}
