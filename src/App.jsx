@@ -9,6 +9,7 @@ import RegistrationGoogleCalenderConnect from "./pagers/vetRegistration/Registra
 import RegistrationGoogleCalenderConnected from "./pagers/vetRegistration/RegistrationGoogleCalenderConnected";
 import RegistrationWithGoogle from "./pagers/vetRegistration/RegistrationWithGoogle";
 import firebaseAuthInit from "../firebase.init";
+import Appointment from "./pagers/VetDashboard/Appointment";
 // import DefaultLayout from "./pagers/adminPages/DefaultLayout";
 // import AllAppointment from "./pagers/adminPages/AllAppointment";
 
@@ -37,10 +38,7 @@ const App = () => {
           path="/registration-availabilities"
           element={<RegistrationAvailabilities />}
         />
-        <Route
-          path="/registration-availabilities"
-          element={<RegistrationAvailabilities />}
-        />
+        <Route path="/vets/appointment" element={<Appointment />} />
         {/* <Route path="/admin" element={<DefaultLayout />}>
           <Route element={<AllAppointment />} />
         </Route> */}
