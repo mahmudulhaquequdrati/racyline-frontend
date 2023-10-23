@@ -43,15 +43,15 @@ function Login() {
     e.preventDefault();
     login({ email, password });
   };
-  // useEffect(() => {
-  //   if (isError) {
-  //     alert("Something went wrong");
-  //   }
-  //   if (LoginInData?.data?.accessToken && !googleSignIn) {
-  //     console.log("came");
-  //     navigate("/");
-  //   }
-  // }, [LoginInData, isError, navigate, googleSignIn]);
+  useEffect(() => {
+    if (isError) {
+      alert("Something went wrong");
+    }
+    if (LoginInData?.data?.accessToken) {
+      console.log("came");
+      navigate("/");
+    }
+  }, [LoginInData, isError, navigate]);
   return (
     <section className="flex justify-center items-center bg-[#FFF7EC] pb-16 pt-8 border-[1px] border-[#EAEAEB]">
       <div className="max-w-[638px] w-full  rounded-lg p-16 bg-white">
