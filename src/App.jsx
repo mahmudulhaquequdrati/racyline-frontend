@@ -12,6 +12,9 @@ import firebaseAuthInit from "../firebase.init";
 import Appointment from "./pagers/VetDashboard/Appointment";
 import AuthProtected from "./routes/AuthProtected";
 import PublicRoute from "./routes/PublicRoutes";
+import AccountSetting from "./pagers/VetDashboard/AccountSetting";
+import Availabilities from "./pagers/VetDashboard/availabilities";
+import Calender from "./pagers/VetDashboard/Calender";
 // import DefaultLayout from "./pagers/adminPages/DefaultLayout";
 // import AllAppointment from "./pagers/adminPages/AllAppointment";
 
@@ -75,7 +78,31 @@ const App = () => {
           path="/vets/appointment"
           element={
             <AuthProtected>
-              <Appointment />{" "}
+              <Appointment />
+            </AuthProtected>
+          }
+        />
+        <Route
+          path="/vets/accountsettings"
+          element={
+            <AuthProtected>
+              <AccountSetting />
+            </AuthProtected>
+          }
+        />
+        <Route
+          path="/vets/availabilities"
+          element={
+            <AuthProtected>
+              <Availabilities />
+            </AuthProtected>
+          }
+        />
+        <Route
+          path="/vets/calender"
+          element={
+            <AuthProtected>
+              <Calender />
             </AuthProtected>
           }
         />
