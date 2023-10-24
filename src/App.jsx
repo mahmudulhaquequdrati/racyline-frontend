@@ -13,7 +13,7 @@ import Appointment from "./pagers/VetDashboard/Appointment";
 import AuthProtected from "./routes/AuthProtected";
 import PublicRoute from "./routes/PublicRoutes";
 import AccountSetting from "./pagers/VetDashboard/AccountSetting";
-import Availabilities from "./pagers/VetDashboard/availabilities";
+import Availabilities from "./pagers/VetDashboard/Availabilities";
 import Calender from "./pagers/VetDashboard/Calender";
 // import DefaultLayout from "./pagers/adminPages/DefaultLayout";
 // import AllAppointment from "./pagers/adminPages/AllAppointment";
