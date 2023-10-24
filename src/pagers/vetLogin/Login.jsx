@@ -11,11 +11,13 @@ function Login() {
   const [login, { data: LoginInData, isError }] = useLoginMutation();
   const googleProvider = new GoogleAuthProvider();
   const navigate = useNavigate();
+  const [googleLogin, setGoogleLogin] = useState(false);
   const signInWithGoogle = () => {
     signInWithPopup(auth, googleProvider)
       .then((result) => {
         // const user = result.user;
         // console.log(result);
+        setGoogleLogin(true);
         sessionStorage.setItem(
           "authUser",
           JSON.stringify({
@@ -29,7 +31,7 @@ function Login() {
             user: result.user,
           })
         );
-        navigate("/registration-with-google");
+        // navigate("/registration-with-google");
       })
       .catch((error) => {
         console.log(error);
@@ -41,17 +43,19 @@ function Login() {
 
   const handleLogin = (e) => {
     e.preventDefault();
+    setGoogleLogin(false);
     login({ email, password });
   };
   useEffect(() => {
     if (isError) {
       alert("Something went wrong");
     }
-    if (LoginInData?.data?.accessToken) {
-      console.log("came");
-      navigate("/");
+    if (LoginInData?.data?.accessToken && googleLogin) {
+      navigate("/registration-with-google");
+    } else if (LoginInData?.data?.accessToken && !googleLogin) {
+      navigate("/vets/appointment");
     }
-  }, [LoginInData, isError, navigate]);
+  }, [LoginInData, isError, navigate, googleLogin]);
   return (
     <section className="flex justify-center items-center bg-[#FFF7EC] pb-16 pt-8 border-[1px] border-[#EAEAEB]">
       <div className="max-w-[638px] w-full  rounded-lg p-16 bg-white">

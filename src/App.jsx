@@ -11,7 +11,7 @@ import RegistrationWithGoogle from "./pagers/vetRegistration/RegistrationWithGoo
 import firebaseAuthInit from "../firebase.init";
 import Appointment from "./pagers/VetDashboard/Appointment";
 import AuthProtected from "./routes/AuthProtected";
-import PublicRoute from "./routes/PublicRoutes";
+// import PublicRoute from "./routes/PublicRoutes";
 import AccountSetting from "./pagers/VetDashboard/AccountSetting";
 import Availabilities from "./pagers/VetDashboard/Availabilities";
 import Calender from "./pagers/VetDashboard/Calender";
@@ -28,9 +28,9 @@ const App = () => {
         <Route
           path="/login"
           element={
-            <PublicRoute>
-              <Login />
-            </PublicRoute>
+            // <PublicRoute>
+            <Login />
+            // </PublicRoute>
           }
         />
         <Route
@@ -44,33 +44,33 @@ const App = () => {
         <Route
           path="/registration-with-google"
           element={
-            // <PublicRoute>
-            <RegistrationWithGoogle />
-            // </PublicRoute>
+            <AuthProtected>
+              <RegistrationWithGoogle />
+            </AuthProtected>
           }
         />
         <Route
           path="/registration-google-calender-connect"
           element={
-            // <PublicRoute>
-            <RegistrationGoogleCalenderConnect />
-            // </PublicRoute>
+            <AuthProtected>
+              <RegistrationGoogleCalenderConnect />
+            </AuthProtected>
           }
         />
         <Route
           path="/registration-google-calender-connected"
           element={
-            // <PublicRoute>
-            <RegistrationGoogleCalenderConnected />
-            // </PublicRoute>
+            <AuthProtected>
+              <RegistrationGoogleCalenderConnected />
+            </AuthProtected>
           }
         />
         <Route
           path="/registration-availabilities"
           element={
-            // <PublicRoute>
-            <RegistrationAvailabilities />
-            // </PublicRoute>
+            <AuthProtected>
+              <RegistrationAvailabilities />
+            </AuthProtected>
           }
         />
 

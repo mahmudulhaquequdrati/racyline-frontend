@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 
 function RegistrationGoogleCalenderConnect() {
@@ -27,7 +26,7 @@ function RegistrationGoogleCalenderConnect() {
           </div>
           <div>
             <button
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/vets/appointment")}
               className="w-full rounded-lg py-3 px-4 outline-none border-[1px] border-[#E5E7EC]"
             >
               Concludi la registrazione
