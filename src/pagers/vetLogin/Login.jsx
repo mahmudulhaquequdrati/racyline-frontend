@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import GoogleIcon from "../../assets/ICONS/google.svg";
 import { useEffect, useState } from "react";
 import { useLoginMutation } from "../../features/auth/authApi";
+
 function Login() {
   const [login, { data: LoginInData, isError }] = useLoginMutation();
   const navigate = useNavigate();
@@ -25,6 +26,59 @@ function Login() {
       navigate("/vets/appointment");
     }
   }, [LoginInData, isError, navigate, googleLogin]);
+
+  /*
+   * Create form to request access token from Google's OAuth 2.0 server.
+   */
+  function oauthSignIn() {
+    // Google's OAuth 2.0 endpoint for requesting an access token
+    var oauth2Endpoint = "https://accounts.google.com/o/oauth2/v2/auth";
+
+    // Create <form> element to submit parameters to OAuth 2.0 endpoint.
+    var form = document.createElement("form");
+    form.setAttribute("method", "GET"); // Send as a GET request.
+    form.setAttribute("action", oauth2Endpoint);
+
+    // Parameters to pass to OAuth 2.0 endpoint.
+    var params = {
+      client_id:
+        "512829763535-rnppdojmbme1ecaaitu68ck56fk61ent.apps.googleusercontent.com",
+      redirect_uri: "http://localhost:5173/login",
+      response_type: "token",
+      scope:
+        "https://www.googleapis.com/auth/drive.metadata.readonly https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.readonly https://www.googleapis.com/auth/calendar.events https://www.googleapis.com/auth/calendar.events.readonly https://www.googleapis.com/auth/calendar.settings.readonly https://www.googleapis.com/auth/calendar.addons.execute",
+      include_granted_scopes: "true",
+      state: "pass-through value",
+    };
+
+    // Add form parameters as hidden input values.
+    for (var p in params) {
+      var input = document.createElement("input");
+      input.setAttribute("type", "hidden");
+      input.setAttribute("name", p);
+      input.setAttribute("value", params[p]);
+      form.appendChild(input);
+    }
+
+    // Add form to page and submit it to open the OAuth 2.0 endpoint.
+    document.body.appendChild(form);
+    form.submit();
+  }
+  useEffect(() => {
+    // Extract the access token from the URL query parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const accessToken = urlParams.get("access_token");
+
+    if (accessToken) {
+      // Access token is available, you can use it or store it as needed
+      console.log("Access Token:", accessToken);
+
+      // You might want to store the access token in state, context, or send it to a server for further processing.
+    } else {
+      // Handle error or unauthorized access
+      console.error("Access denied. No access token found.");
+    }
+  }, []);
   return (
     <section className="flex justify-center items-center bg-[#FFF7EC] pb-16 pt-8 border-[1px] border-[#EAEAEB]">
       <div className="max-w-[638px] w-full  rounded-lg p-16 bg-white">
@@ -62,7 +116,7 @@ function Login() {
           </div>
           <div>
             <button
-              // onClick={handleAuthorize}
+              onClick={oauthSignIn}
               type="button"
               className="w-full rounded-lg py-3 px-4 outline-none border-[1px] border-[#E5E7EC]"
             >
