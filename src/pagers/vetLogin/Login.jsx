@@ -5,23 +5,26 @@ import { useLoginMutation } from "../../features/auth/authApi";
 function Login() {
   const [login, { data: LoginInData, isError }] = useLoginMutation();
   const navigate = useNavigate();
+  const [googleLogin, setGoogleLogin] = useState(false);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = (e) => {
     e.preventDefault();
+    setGoogleLogin(false);
     login({ email, password });
   };
   useEffect(() => {
     if (isError) {
       alert("Something went wrong");
     }
-    if (LoginInData?.data?.accessToken) {
-      console.log("came");
-      navigate("/");
+    if (LoginInData?.data?.accessToken && googleLogin) {
+      navigate("/registration-with-google");
+    } else if (LoginInData?.data?.accessToken && !googleLogin) {
+      navigate("/vets/appointment");
     }
-  }, [LoginInData, isError, navigate]);
-
+  }, [LoginInData, isError, navigate, googleLogin]);
   return (
     <section className="flex justify-center items-center bg-[#FFF7EC] pb-16 pt-8 border-[1px] border-[#EAEAEB]">
       <div className="max-w-[638px] w-full  rounded-lg p-16 bg-white">

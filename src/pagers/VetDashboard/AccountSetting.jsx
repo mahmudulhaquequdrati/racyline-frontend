@@ -16,31 +16,32 @@ const people = [
 ];
 const AccountSetting = () => {
   const [selected, setSelected] = useState(people[0]);
+  const [selected2, setSelected2] = useState(people[3]);
   return (
-    <div className="p-20 min-h-[100vh] bg-[#FFF7EC]">
+    <div className="p-12 lg:p-20 min-h-[100vh] bg-[#FFF7EC]">
       <div>
         <h1 className="text-[32px] font-bold">Impostazioni dell’account</h1>
-        <p className="font-bold mt-5">Anagrafica</p>
+        <p className="font-bold mt-5 mb-3">Anagrafica</p>
         <div>
           <input
             type="text"
-            className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-1/3"
+            className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full md:w-[60%] lg:w-[40%]"
           />
         </div>
         <div className="mt-3">
           <input
             type="text"
-            className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-1/3"
+            className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full md:w-[60%] lg:w-[40%]"
           />
         </div>
       </div>
       <div className="mt-5">
-        <p className="font-bold">Lavorative</p>
+        <p className="font-bold mb-3">Lavorative</p>
         <div>
-          <div className="w-1/3">
+          <div className="w-full md:w-[60%] lg:w-[40%]">
             <Listbox value={selected} onChange={setSelected}>
               <div className="relative mt-1">
-                <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white  focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+                <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-3 pl-4 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white  focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
                   <span className="block truncate">{selected.name}</span>
                   <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                     <ChevronDownIcon
@@ -95,12 +96,12 @@ const AccountSetting = () => {
             </Listbox>
           </div>
         </div>
-        <div className="mt-3">
-          <div className="w-1/3">
-            <Listbox value={selected} onChange={setSelected}>
+        <div className="mt-3 mb-3">
+          <div className="w-full md:w-[60%] lg:w-[40%]">
+            <Listbox value={selected2} onChange={setSelected2}>
               <div className="relative mt-1">
-                <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
-                  <span className="block truncate">{selected.name}</span>
+                <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-3 pl-4 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+                  <span className="block truncate">{selected2.name}</span>
                   <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                     <ChevronDownIcon
                       className="h-5 w-5 text-gray-400"
@@ -154,22 +155,22 @@ const AccountSetting = () => {
             </Listbox>
           </div>
         </div>
-        <div className="mt-3">
+        <div className="mt-3 mb-3">
           <input
             type="text"
-            className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow-xl w-1/3"
+            className="rounded-lg py-3 px-4 outline-none border-[1px] border-none shadow-xl w-full md:w-[60%] lg:w-[40%]"
           />
         </div>
         <div className="mt-5">
-          <p className="font-bold">Contatto</p>
+          <p className="font-bold mb-3">Contatto</p>
           <div>
             <input
               type="email"
               placeholder="mariorossi@gmail.com"
-              className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-1/3"
+              className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full md:w-[60%] lg:w-[40%]"
             />
           </div>
-          <p className="flex items-center mt-2">
+          <p className="flex items-center mt-4 mb-4 text-sm w-full md:w-[60%] lg:w-[40%]">
             <img src={GoogleIcon} alt="" />
             <span className="ml-2">
               Hai effettuato l’accesso con il tuo account Google
@@ -177,13 +178,13 @@ const AccountSetting = () => {
           </p>
         </div>
       </div>
-      <div className="mt-5">
-        <button className="w-1/3 rounded-lg py-2 px-4 outline-none bg-[#E8971F] text-white">
+      <div className="mt-12">
+        <button className="w-full md:w-[60%] lg:w-[40%] rounded-lg py-2 px-4 outline-none bg-[#E8971F] text-white">
           Salva
         </button>
       </div>
       <div className="mt-3">
-        <button className="w-1/3 rounded-lg py-2 px-4 text-[#E8971F] outline-none border-[1px] border-[#E8971F] ">
+        <button className="w-full md:w-[60%] lg:w-[40%] rounded-lg py-2 px-4 text-[#E8971F] outline-none border-[1px] border-[#E8971F] ">
           Elimina il mio account
         </button>
       </div>

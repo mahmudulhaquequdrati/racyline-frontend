@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 
 function RegistrationGoogleCalenderConnected() {
@@ -21,7 +20,7 @@ function RegistrationGoogleCalenderConnected() {
         <form action="" className="flex flex-col gap-y-4">
           <div>
             <button
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/vets/appointment")}
               className="w-full rounded-lg py-3 px-4 outline-none bg-[#E8971F] text-white"
             >
               Concludi la registrazione

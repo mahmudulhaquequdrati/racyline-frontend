@@ -1,6 +1,11 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function RegistrationWithGoogle() {
+  const navigate = useNavigate();
+  const handleForm = (e) => {
+    e.preventDefault();
+    navigate("/vets/appointment");
+  };
   return (
     <section className="flex justify-center items-center bg-[#FFF7EC] py-16 border-[1px] border-[#EAEAEB]">
       <div className="max-w-[638px] w-full  rounded-lg p-16 bg-white">
@@ -11,7 +16,7 @@ function RegistrationWithGoogle() {
           Concludi la registrazione per diventare membro di Racyline
         </p>
 
-        <form action="" className="flex flex-col gap-y-4">
+        <form onSubmit={handleForm} className="flex flex-col gap-y-4">
           <div>
             <input
               type="text"
@@ -35,7 +40,10 @@ function RegistrationWithGoogle() {
           </div>
 
           <div>
-            <button className="w-full rounded-lg py-3 px-4 outline-none bg-[#E8971F] text-white">
+            <button
+              type="submit"
+              className="w-full rounded-lg py-3 px-4 outline-none bg-[#E8971F] text-white"
+            >
               Avanti
             </button>
           </div>
