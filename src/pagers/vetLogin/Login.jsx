@@ -1,41 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
 import GoogleIcon from "../../assets/ICONS/google.svg";
-import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { useLoginMutation } from "../../features/auth/authApi";
-import { useDispatch } from "react-redux";
-import { userLoggedIn } from "../../features/auth/authSlice";
 function Login() {
-  const auth = getAuth();
-  const dispatch = useDispatch();
   const [login, { data: LoginInData, isError }] = useLoginMutation();
-  const googleProvider = new GoogleAuthProvider();
   const navigate = useNavigate();
-  const signInWithGoogle = () => {
-    signInWithPopup(auth, googleProvider)
-      .then((result) => {
-        // const user = result.user;
-        // console.log(result);
-        sessionStorage.setItem(
-          "authUser",
-          JSON.stringify({
-            accessToken: "1234",
-            user: result.user,
-          })
-        );
-        dispatch(
-          userLoggedIn({
-            accessToken: "1234",
-            user: result.user,
-          })
-        );
-        navigate("/registration-with-google");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    // .finally(() => setIsLoading(false));
-  };
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -52,6 +21,7 @@ function Login() {
       navigate("/");
     }
   }, [LoginInData, isError, navigate]);
+
   return (
     <section className="flex justify-center items-center bg-[#FFF7EC] pb-16 pt-8 border-[1px] border-[#EAEAEB]">
       <div className="max-w-[638px] w-full  rounded-lg p-16 bg-white">
@@ -89,7 +59,7 @@ function Login() {
           </div>
           <div>
             <button
-              onClick={signInWithGoogle}
+              // onClick={handleAuthorize}
               type="button"
               className="w-full rounded-lg py-3 px-4 outline-none border-[1px] border-[#E5E7EC]"
             >

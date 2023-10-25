@@ -8,7 +8,6 @@ import RegistrationAvailabilities from "./pagers/vetRegistration/RegistrationAva
 import RegistrationGoogleCalenderConnect from "./pagers/vetRegistration/RegistrationGoogleCalenderConnect";
 import RegistrationGoogleCalenderConnected from "./pagers/vetRegistration/RegistrationGoogleCalenderConnected";
 import RegistrationWithGoogle from "./pagers/vetRegistration/RegistrationWithGoogle";
-import firebaseAuthInit from "../firebase.init";
 import Appointment from "./pagers/VetDashboard/Appointment";
 import AuthProtected from "./routes/AuthProtected";
 import PublicRoute from "./routes/PublicRoutes";
@@ -19,7 +18,6 @@ import Calender from "./pagers/VetDashboard/Calender";
 // import AllAppointment from "./pagers/adminPages/AllAppointment";
 
 const App = () => {
-  firebaseAuthInit();
   return (
     <main className="">
       <Header />
