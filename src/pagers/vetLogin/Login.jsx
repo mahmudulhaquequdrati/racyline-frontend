@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import GoogleIcon from "../../assets/ICONS/google.svg";
 import { useEffect, useState } from "react";
 import { useLoginMutation } from "../../features/auth/authApi";
+import { primary_bg_color, primary_color } from "../../../constant";
 
 function Login() {
   const [login, { data: LoginInData, isError }] = useLoginMutation();
@@ -76,7 +77,7 @@ function Login() {
   // };
   return (
     <section className="flex justify-center items-center bg-[#FFF7EC] pb-16 pt-8 border-[1px] border-[#EAEAEB]">
-      <div className="max-w-[638px] w-full  rounded-lg p-16 bg-white">
+      <div className="max-w-[638px] w-full  rounded-lg px-4 py-12 md:p-8 lg:p-16 bg-white">
         <h1 className="text-[32px] font-bold leading-10 text-center mb-6">
           Sei un medico veterinario?Accedi o registrati
         </h1>
@@ -104,7 +105,7 @@ function Login() {
           <div>
             <button
               type="submit"
-              className="w-full rounded-lg py-3 px-4 outline-none bg-[#E8971F] text-white"
+              className={`w-full rounded-lg py-3 px-4 outline-none text-white ${primary_bg_color} `}
             >
               Accedi
             </button>
@@ -125,7 +126,7 @@ function Login() {
             <Link to={"/registration"} className="no-underline">
               <p className="text-center text-[15px]">
                 Non hai ancora un account?{" "}
-                <span className="text-[#E8971F]">Registrati ora!</span>
+                <span className={`${primary_color}`}>Registrati ora!</span>
               </p>
             </Link>
           </div>

@@ -4,6 +4,7 @@ import PlusIcon from "../../assets/ICONS/plusIcon.svg";
 import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { primary_bg_color } from "../../../constant";
 
 const RegistrationAvailabilities = () => {
   const navigate = useNavigate();
@@ -348,7 +349,7 @@ const RegistrationAvailabilities = () => {
         <div className="mt-8">
           <button
             onClick={() => navigate("/registration-google-calender-connect")}
-            className="w-full rounded-lg py-3 px-4 outline-none bg-[#E8971F] text-white"
+            className={`w-full rounded-lg py-3 px-4 outline-none  text-white ${primary_bg_color}`}
           >
             Avanti
           </button>

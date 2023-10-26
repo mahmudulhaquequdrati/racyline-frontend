@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { primary_bg_color } from "../../../constant";
 
 function RegistrationWithGoogle() {
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ function RegistrationWithGoogle() {
           <div>
             <button
               type="submit"
-              className="w-full rounded-lg py-3 px-4 outline-none bg-[#E8971F] text-white"
+              className={`w-full rounded-lg py-3 px-4 outline-none  text-white ${primary_bg_color}`}
             >
               Avanti
             </button>

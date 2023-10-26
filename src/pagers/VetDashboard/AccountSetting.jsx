@@ -2,6 +2,11 @@ import { Fragment, useState } from "react";
 import { ChevronDownIcon, CheckIcon } from "@heroicons/react/24/solid";
 import { Listbox, Transition } from "@headlessui/react";
 import GoogleIcon from "../../assets/ICONS/google.svg";
+import {
+  primary_bg_color,
+  primary_border_color,
+  primary_color,
+} from "../../../constant";
 
 const people = [
   {
@@ -179,12 +184,16 @@ const AccountSetting = () => {
         </div>
       </div>
       <div className="mt-12">
-        <button className="w-full md:w-[60%] lg:w-[40%] rounded-lg py-2 px-4 outline-none bg-[#E8971F] text-white">
+        <button
+          className={`w-full md:w-[60%] lg:w-[40%] rounded-lg py-2 px-4 outline-none  text-white ${primary_bg_color}`}
+        >
           Salva
         </button>
       </div>
       <div className="mt-3">
-        <button className="w-full md:w-[60%] lg:w-[40%] rounded-lg py-2 px-4 text-[#E8971F] outline-none border-[1px] border-[#E8971F] ">
+        <button
+          className={`w-full md:w-[60%] lg:w-[40%] rounded-lg py-2 px-4  outline-none border-[1px] ${primary_color} ${primary_border_color} `}
+        >
           Elimina il mio account
         </button>
       </div>

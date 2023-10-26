@@ -1,9 +1,12 @@
 /* eslint-disable no-unused-vars */
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import userIcon from "../../assets/ICONS/user.svg";
 import { useRegisterMutation } from "../../features/auth/authApi";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { primary_bg_color } from "../../../constant";
+import { Listbox, Transition } from "@headlessui/react";
+import { CheckIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
 
 function Registration() {
   const navigate = useNavigate();
@@ -64,10 +67,28 @@ function Registration() {
       });
     }
   };
+  const people = [
+    {
+      name: "Veterinary Doctor",
+    },
+  ];
+  const type = [
+    {
+      name: "Dog",
+    },
+    {
+      name: "Cat",
+    },
+    {
+      name: "Parrot",
+    },
+  ];
+  const [selected, setSelected] = useState({});
+  const [selected2, setSelected2] = useState({});
 
   return (
     <section className="flex justify-center items-center bg-[#FFF7EC] py-16 border-[1px] border-[#EAEAEB]">
-      <div className="max-w-[638px] w-full  rounded-lg p-16 bg-white">
+      <div className="max-w-[638px] w-full  rounded-lg px-4 py-12 md:p-8 lg:p-16 bg-white">
         <h1 className="text-[32px] font-bold leading-10 text-center mb-6">
           Completa la registrazione
         </h1>
@@ -134,24 +155,132 @@ function Registration() {
             />
           </div>
           <div>
-            <input
-              type="text"
-              name="doctor_type1"
-              value={inputData.doctor_type1}
-              onChange={handleInputChange}
-              placeholder="Scegli che tipo di dottore sei *"
-              className="w-full rounded-lg py-3 px-4 outline-none border-[1px] border-[#E5E7EC]"
-            />
+            <Listbox value={selected} onChange={setSelected}>
+              <div className="relative mt-1">
+                <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-3 pl-4 pr-10 text-left border-[1px] border-[#E5E7EC] focus:outline-none  ">
+                  {selected.name ? (
+                    <span className="block truncate">{selected.name}</span>
+                  ) : (
+                    <span className="block truncate text-gray-400">
+                      {"Scegli che tipo di dottore sei *"}
+                    </span>
+                  )}
+
+                  <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                    <ChevronDownIcon
+                      className="h-5 w-5 text-gray-400"
+                      aria-hidden="true"
+                    />
+                  </span>
+                </Listbox.Button>
+                <Transition
+                  as={Fragment}
+                  leave="transition ease-in duration-100"
+                  leaveFrom="opacity-100"
+                  leaveTo="opacity-0"
+                >
+                  <Listbox.Options className="z-50 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                    {people.map((person, personIdx) => (
+                      <Listbox.Option
+                        key={personIdx}
+                        className={({ active }) =>
+                          `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                            active
+                              ? "bg-amber-100 text-amber-900"
+                              : "text-gray-900"
+                          }`
+                        }
+                        value={person}
+                      >
+                        {({ selected }) => (
+                          <>
+                            <span
+                              className={`block truncate ${
+                                selected ? "font-medium" : "font-normal"
+                              }`}
+                            >
+                              {person.name}
+                            </span>
+                            {selected ? (
+                              <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
+                                <CheckIcon
+                                  className="h-5 w-5"
+                                  aria-hidden="true"
+                                />
+                              </span>
+                            ) : null}
+                          </>
+                        )}
+                      </Listbox.Option>
+                    ))}
+                  </Listbox.Options>
+                </Transition>
+              </div>
+            </Listbox>
           </div>
           <div>
-            <input
-              type="text"
-              name="doctor_type2"
-              value={inputData.doctor_type2}
-              onChange={handleInputChange}
-              placeholder="Scegli che tipo di dottore sei *"
-              className="w-full rounded-lg py-3 px-4 outline-none border-[1px] border-[#E5E7EC]"
-            />
+            <Listbox value={selected2} onChange={setSelected2}>
+              <div className="relative mt-1">
+                <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-3 pl-4 pr-10 text-left border-[1px] border-[#E5E7EC] focus:outline-none  ">
+                  {selected2.name ? (
+                    <span className="block truncate">{selected2.name}</span>
+                  ) : (
+                    <span className="block truncate text-gray-400">
+                      {"Scegli gli animali che curi *"}
+                    </span>
+                  )}
+
+                  <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                    <ChevronDownIcon
+                      className="h-5 w-5 text-gray-400"
+                      aria-hidden="true"
+                    />
+                  </span>
+                </Listbox.Button>
+                <Transition
+                  as={Fragment}
+                  leave="transition ease-in duration-100"
+                  leaveFrom="opacity-100"
+                  leaveTo="opacity-0"
+                >
+                  <Listbox.Options className="z-50 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                    {type.map((tp, tpIdx) => (
+                      <Listbox.Option
+                        key={tpIdx}
+                        className={({ active }) =>
+                          `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                            active
+                              ? "bg-amber-100 text-amber-900"
+                              : "text-gray-900"
+                          }`
+                        }
+                        value={tp}
+                      >
+                        {({ selected2 }) => (
+                          <>
+                            <span
+                              className={`block truncate ${
+                                selected2 ? "font-medium" : "font-normal"
+                              }`}
+                            >
+                              {tp.name}
+                            </span>
+                            {selected2 ? (
+                              <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
+                                <CheckIcon
+                                  className="h-5 w-5"
+                                  aria-hidden="true"
+                                />
+                              </span>
+                            ) : null}
+                          </>
+                        )}
+                      </Listbox.Option>
+                    ))}
+                  </Listbox.Options>
+                </Transition>
+              </div>
+            </Listbox>
           </div>
           <hr className="outline-1 border[#ddd]" />
           <div>
@@ -191,7 +320,7 @@ function Registration() {
           <div>
             <button
               type="submit"
-              className="w-full rounded-lg py-3 px-4 outline-none bg-[#E8971F] text-white"
+              className={`w-full rounded-lg py-3 px-4 outline-none  text-white ${primary_bg_color}`}
             >
               Avanti
             </button>

@@ -1,3 +1,5 @@
+import { primary_bg_color } from "../../../constant";
+
 const Calender = () => {
   return (
     <div className="p-12 lg:p-20 min-h-[100vh] bg-[#FFF7EC]">
@@ -9,7 +11,9 @@ const Calender = () => {
         <p className="font-bold text-lg">marcorizzaa@gmail.com</p>
       </div>
       <div className="mt-8">
-        <button className="w-full md:w-1/2 rounded-lg py-3 px-4 outline-none bg-[#E8971F] text-white">
+        <button
+          className={`w-full md:w-1/2 rounded-lg py-3 px-4 outline-none  text-white ${primary_bg_color} `}
+        >
           Disconnetti Google Calendar
         </button>
       </div>

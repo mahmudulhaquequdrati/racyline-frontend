@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { primary_bg_color } from "../../../constant";
 
 function RegistrationGoogleCalenderConnect() {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ function RegistrationGoogleCalenderConnect() {
               onClick={() =>
                 navigate("/registration-google-calender-connected")
               }
-              className="w-full rounded-lg py-3 px-4 outline-none bg-[#E8971F] text-white"
+              className={`w-full rounded-lg py-3 px-4 outline-none ${primary_bg_color} text-white`}
             >
               Connetti a Google Calendar
             </button>

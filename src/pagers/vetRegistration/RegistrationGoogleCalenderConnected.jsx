@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { primary_bg_color } from "../../../constant";
 
 function RegistrationGoogleCalenderConnected() {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ function RegistrationGoogleCalenderConnected() {
           <div>
             <button
               onClick={() => navigate("/vets/appointment")}
-              className="w-full rounded-lg py-3 px-4 outline-none bg-[#E8971F] text-white"
+              className={`w-full rounded-lg py-3 px-4 outline-none  text-white ${primary_bg_color}`}
             >
               Concludi la registrazione
             </button>

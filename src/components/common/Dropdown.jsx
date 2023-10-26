@@ -3,6 +3,7 @@ import { Fragment } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { userLoggedOut } from "../../features/auth/authSlice";
+import { primary_color } from "../../../constant";
 // import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
 export default function DropDown() {
@@ -15,7 +16,9 @@ export default function DropDown() {
     <div className=" w-56 text-right">
       <Menu as="div" className="relative inline-block text-left">
         <div>
-          <Menu.Button className="text-[#E8971F] inline-flex gap-2 items-center">
+          <Menu.Button
+            className={`inline-flex gap-2 items-center ${primary_color}`}
+          >
             Il mio profilo{" "}
             <svg
               width="16"
@@ -26,7 +29,7 @@ export default function DropDown() {
             >
               <path
                 d="M7.9995 8.78145L11.2995 5.48145L12.2422 6.42411L7.9995 10.6668L3.75684 6.42411L4.6995 5.48145L7.9995 8.78145Z"
-                fill="#E8971F"
+                fill={"#E8971F"}
               />
             </svg>
           </Menu.Button>
