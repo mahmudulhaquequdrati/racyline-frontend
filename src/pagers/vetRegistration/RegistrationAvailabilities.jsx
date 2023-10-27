@@ -349,7 +349,7 @@ const RegistrationAvailabilities = () => {
         <div className="mt-8">
           <button
             onClick={() => navigate("/registration-google-calender-connect")}
-            className={`w-full rounded-lg py-3 px-4 outline-none  text-white ${primary_bg_color}`}
+            className={`w-full rounded-lg py-3 px-4 outline-none  text-white bg-primary`}
           >
             Avanti
           </button>

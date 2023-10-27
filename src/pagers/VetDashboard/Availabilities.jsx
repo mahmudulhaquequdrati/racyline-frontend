@@ -346,7 +346,7 @@ const Availabilities = () => {
             <button
               // onClick={collectInformation}
               onClick={() => navigate("/vets/appointment")}
-              className={`w-full rounded-lg py-3 px-4 outline-none  text-white ${primary_bg_color}`}
+              className={`w-full rounded-lg py-3 px-4 outline-none  text-white bg-primary`}
             >
               Salva
             </button>

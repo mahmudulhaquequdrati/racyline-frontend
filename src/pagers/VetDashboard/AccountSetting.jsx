@@ -185,14 +185,14 @@ const AccountSetting = () => {
       </div>
       <div className="mt-12">
         <button
-          className={`w-full md:w-[60%] lg:w-[40%] rounded-lg py-2 px-4 outline-none  text-white ${primary_bg_color}`}
+          className={`w-full md:w-[60%] lg:w-[40%] rounded-lg py-2 px-4 outline-none  text-white bg-primary`}
         >
           Salva
         </button>
       </div>
       <div className="mt-3">
         <button
-          className={`w-full md:w-[60%] lg:w-[40%] rounded-lg py-2 px-4  outline-none border-[1px] ${primary_color} ${primary_border_color} `}
+          className={`w-full md:w-[60%] lg:w-[40%] rounded-lg py-2 px-4  outline-none border-[1px] text-primary border-primary `}
         >
           Elimina il mio account
         </button>

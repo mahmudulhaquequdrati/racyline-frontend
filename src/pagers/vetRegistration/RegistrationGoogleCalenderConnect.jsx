@@ -20,7 +20,7 @@ function RegistrationGoogleCalenderConnect() {
               onClick={() =>
                 navigate("/registration-google-calender-connected")
               }
-              className={`w-full rounded-lg py-3 px-4 outline-none ${primary_bg_color} text-white`}
+              className={`w-full rounded-lg py-3 px-4 outline-none bg-primary text-white`}
             >
               Connetti a Google Calendar
             </button>

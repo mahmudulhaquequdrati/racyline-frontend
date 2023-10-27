@@ -20,7 +20,7 @@ export default function Header() {
           <h2 className="text-sm md:text-base">Sei un medico veterinario? </h2>
           <h2
             onClick={() => navigate("/login")}
-            className={`${primary_color} cursor-pointer`}
+            className={` cursor-pointer text-primary`}
           >
             accedi
           </h2>

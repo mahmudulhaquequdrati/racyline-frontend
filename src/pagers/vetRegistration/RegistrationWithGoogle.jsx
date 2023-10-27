@@ -43,7 +43,7 @@ function RegistrationWithGoogle() {
           <div>
             <button
               type="submit"
-              className={`w-full rounded-lg py-3 px-4 outline-none  text-white ${primary_bg_color}`}
+              className={`w-full rounded-lg py-3 px-4 outline-none  text-white bg-primary`}
             >
               Avanti
             </button>

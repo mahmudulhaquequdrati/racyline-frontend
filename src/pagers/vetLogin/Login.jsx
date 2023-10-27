@@ -105,7 +105,7 @@ function Login() {
           <div>
             <button
               type="submit"
-              className={`w-full rounded-lg py-3 px-4 outline-none text-white ${primary_bg_color} `}
+              className={`w-full rounded-lg py-3 px-4 outline-none text-white bg-primary `}
             >
               Accedi
             </button>
@@ -126,7 +126,7 @@ function Login() {
             <Link to={"/registration"} className="no-underline">
               <p className="text-center text-[15px]">
                 Non hai ancora un account?{" "}
-                <span className={`${primary_color}`}>Registrati ora!</span>
+                <span className={`text-primary`}>Registrati ora!</span>
               </p>
             </Link>
           </div>

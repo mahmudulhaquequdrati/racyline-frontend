@@ -12,7 +12,7 @@ const Calender = () => {
       </div>
       <div className="mt-8">
         <button
-          className={`w-full md:w-1/2 rounded-lg py-3 px-4 outline-none  text-white ${primary_bg_color} `}
+          className={`w-full md:w-1/2 rounded-lg py-3 px-4 outline-none  text-white bg-primary `}
         >
           Disconnetti Google Calendar
         </button>

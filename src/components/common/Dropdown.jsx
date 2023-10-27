@@ -17,7 +17,7 @@ export default function DropDown() {
       <Menu as="div" className="relative inline-block text-left">
         <div>
           <Menu.Button
-            className={`inline-flex gap-2 items-center ${primary_color}`}
+            className={`inline-flex gap-2 items-center text-primary`}
           >
             Il mio profilo{" "}
             <svg
