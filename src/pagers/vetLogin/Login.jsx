@@ -2,7 +2,6 @@ import { Link, useNavigate } from "react-router-dom";
 import GoogleIcon from "../../assets/ICONS/google.svg";
 import { useEffect, useState } from "react";
 import { useLoginMutation } from "../../features/auth/authApi";
-import { primary_bg_color, primary_color } from "../../../constant";
 
 function Login() {
   const [login, { data: LoginInData, isError }] = useLoginMutation();
