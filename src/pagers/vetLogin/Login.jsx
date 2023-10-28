@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useLoginMutation } from "../../features/auth/authApi";
 
 function Login() {
-  const [login, { data: LoginInData, isError }] = useLoginMutation();
+  const [login, { data: LoginInData, isError, isLoading }] = useLoginMutation();
   const navigate = useNavigate();
   const [googleLogin, setGoogleLogin] = useState(false);
 
@@ -18,7 +18,7 @@ function Login() {
   };
   useEffect(() => {
     if (isError) {
-      alert("Something went wrong");
+      alert("No User Found");
     }
     if (LoginInData?.data?.accessToken && googleLogin) {
       navigate("/registration-with-google");
@@ -101,14 +101,26 @@ function Login() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <div>
-            <button
-              type="submit"
-              className={`w-full rounded-lg py-3 px-4 outline-none text-white bg-primary `}
-            >
-              Accedi
-            </button>
-          </div>
+          {isLoading ? (
+            <div>
+              <button
+                type="button"
+                className={`w-full rounded-lg py-3 px-4 outline-none text-white bg-primary `}
+              >
+                Loading...
+              </button>
+            </div>
+          ) : (
+            <div>
+              <button
+                type="submit"
+                className={`w-full rounded-lg py-3 px-4 outline-none text-white bg-primary `}
+              >
+                Accedi
+              </button>
+            </div>
+          )}
+
           <div>
             <button
               onClick={createGoogleAuthLink}

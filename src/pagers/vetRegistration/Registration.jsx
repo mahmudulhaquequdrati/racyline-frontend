@@ -23,6 +23,7 @@ function Registration() {
   const [isLoading, setIsLoading] = useState(false);
   const [register, { data: UserLoggedInData, isError }] = useRegisterMutation();
   const [selectedFile, setSelectedFile] = useState(null);
+  const [error, setError] = useState("");
   const registerUser = (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -44,6 +45,7 @@ function Registration() {
       [event.target.name]: event.target.value,
     }));
   };
+
   const fileInputRef = useRef(null);
 
   const handleButtonClick = () => {
@@ -55,10 +57,11 @@ function Registration() {
     const maxFileSize = 5 * 1024 * 1024;
     const file = e.target.files[0];
     if (file && file.size > maxFileSize) {
-      alert(
+      setError(
         "File size exceeds the maximum allowed size (5MB). Please choose a smaller file."
       );
     } else {
+      setError("");
       formData.append("image", file);
       formData.append("key", `${import.meta.env.VITE_IMGBB_API_KEY}`);
       setSelectedFile(file);
@@ -83,8 +86,6 @@ function Registration() {
       name: "Parrot",
     },
   ];
-  const [selected, setSelected] = useState({});
-  const [selected2, setSelected2] = useState({});
 
   return (
     <section className="flex justify-center items-center bg-[#FFF7EC] py-16 border-[1px] border-[#EAEAEB]">
@@ -95,6 +96,7 @@ function Registration() {
         <p className="text-center text-[15px] text-[#00000099]">
           Concludi la registrazione per diventare membro di Racyline
         </p>
+        {error && <p className="text-center text-red-500">{error}</p>}
 
         <div className="flex gap-6 items-center py-[30px]">
           <div className="w-[105px] h-[105px] flex items-center gap-6 justify-center rounded-full bg-[#E5E7EC]">
@@ -155,11 +157,18 @@ function Registration() {
             />
           </div>
           <div>
-            <Listbox value={selected} onChange={setSelected}>
+            <Listbox
+              value={inputData.doctor_type1}
+              onChange={(value) =>
+                setInputData({ ...inputData, doctor_type1: value.name })
+              }
+            >
               <div className="relative mt-1">
                 <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-3 pl-4 pr-10 text-left border-[1px] border-[#E5E7EC] focus:outline-none  ">
-                  {selected.name ? (
-                    <span className="block truncate">{selected.name}</span>
+                  {inputData.doctor_type1 ? (
+                    <span className="block truncate">
+                      {inputData.doctor_type1}
+                    </span>
                   ) : (
                     <span className="block truncate text-gray-400">
                       {"Scegli che tipo di dottore sei *"}
@@ -219,11 +228,18 @@ function Registration() {
             </Listbox>
           </div>
           <div>
-            <Listbox value={selected2} onChange={setSelected2}>
+            <Listbox
+              value={inputData.doctor_type2}
+              onChange={(value) =>
+                setInputData({ ...inputData, doctor_type2: value.name })
+              }
+            >
               <div className="relative mt-1">
                 <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-3 pl-4 pr-10 text-left border-[1px] border-[#E5E7EC] focus:outline-none  ">
-                  {selected2.name ? (
-                    <span className="block truncate">{selected2.name}</span>
+                  {inputData.doctor_type2 ? (
+                    <span className="block truncate">
+                      {inputData.doctor_type2}
+                    </span>
                   ) : (
                     <span className="block truncate text-gray-400">
                       {"Scegli gli animali che curi *"}

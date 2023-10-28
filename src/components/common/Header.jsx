@@ -2,7 +2,6 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import { useSelector } from "react-redux";
 import DropDown from "./Dropdown";
-import { primary_color } from "../../../constant";
 export default function Header() {
   const navigate = useNavigate();
   const state = useSelector((state) => state.auth);

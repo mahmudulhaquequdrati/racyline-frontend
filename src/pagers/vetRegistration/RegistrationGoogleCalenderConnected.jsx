@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { primary_bg_color } from "../../../constant";
 
 function RegistrationGoogleCalenderConnected() {
   const navigate = useNavigate();
