@@ -144,7 +144,7 @@ const Availabilities = () => {
   };
 
   return (
-    <section className="p-12 lg:p-16 flex justify-start items-center bg-[#FFF7EC] py-16 border-[1px] border-[#EAEAEB]">
+    <section className="px-4 md:px-28 container flex justify-start items-center bg-[#FFF7EC] py-16 border-[1px] border-[#EAEAEB]">
       <div className="max-w-[638px] w-full  ">
         <h1 className="text-[32px] font-bold leading-10 mb-6">
           Le mie disponibilità
@@ -158,14 +158,17 @@ const Availabilities = () => {
               >
                 <div className="flex items-start gap-6">
                   <div className="mr-2 flex items-center mt-3">
-                    <input
-                      type="checkbox"
-                      className="mr-2"
-                      name="checkbox1"
-                      checked={res.available}
-                      onChange={(e) => onAvailableChange(e.target.checked, i)}
-                    />
-                    <label>{res.name}</label>
+                    <label className="option ">
+                      <span> {res.name}</span>
+                      <input
+                        type="checkbox"
+                        className="mr-2"
+                        name="checkbox1"
+                        checked={res.available}
+                        onChange={(e) => onAvailableChange(e.target.checked, i)}
+                      />
+                      <span className="customcheckbox"></span>
+                    </label>
                   </div>
                   {res.availabilities?.length === 0 ? (
                     <div className="text-gray-700 text-sm mt-3">

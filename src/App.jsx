@@ -14,6 +14,7 @@ import AuthProtected from "./routes/AuthProtected";
 import AccountSetting from "./pagers/VetDashboard/AccountSetting";
 import Availabilities from "./pagers/VetDashboard/Availabilities";
 import Calender from "./pagers/VetDashboard/Calender";
+import UserLogin from "./pagers/userLogin/Login";
 // import DefaultLayout from "./pagers/adminPages/DefaultLayout";
 // import AllAppointment from "./pagers/adminPages/AllAppointment";
 
@@ -28,6 +29,14 @@ const App = () => {
           element={
             // <PublicRoute>
             <Login />
+            // </PublicRoute>
+          }
+        />
+        <Route
+          path="/user/login"
+          element={
+            // <PublicRoute>
+            <UserLogin />
             // </PublicRoute>
           }
         />
@@ -83,9 +92,9 @@ const App = () => {
         <Route
           path="/vets/accountsettings"
           element={
-            <AuthProtected>
-              <AccountSetting />
-            </AuthProtected>
+            // <AuthProtected>
+            <AccountSetting />
+            // </AuthProtected>
           }
         />
         <Route

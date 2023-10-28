@@ -24,10 +24,24 @@ function Registration() {
   const [register, { data: UserLoggedInData, isError }] = useRegisterMutation();
   const [selectedFile, setSelectedFile] = useState(null);
   const [error, setError] = useState("");
+  const [feildError, setFeildError] = useState(false);
   const registerUser = (e) => {
     e.preventDefault();
-    setIsLoading(true);
-    register(inputData);
+    if (
+      inputData?.first_name !== "" &&
+      inputData?.last_name !== "" &&
+      inputData?.email !== "" &&
+      inputData?.password !== "" &&
+      inputData?.doctor_type1 !== "" &&
+      inputData?.doctor_type2 !== "" &&
+      inputData?.veterinary_address !== ""
+    ) {
+      setFeildError(false);
+      setIsLoading(true);
+      register(inputData);
+    } else {
+      setFeildError(true);
+    }
   };
 
   useEffect(() => {
@@ -96,7 +110,6 @@ function Registration() {
         <p className="text-center text-[15px] text-[#00000099]">
           Concludi la registrazione per diventare membro di Racyline
         </p>
-        {error && <p className="text-center text-red-500">{error}</p>}
 
         <div className="flex gap-6 items-center py-[30px]">
           <div className="w-[105px] h-[105px] flex items-center gap-6 justify-center rounded-full bg-[#E5E7EC]">
@@ -141,8 +154,11 @@ function Registration() {
               value={inputData.first_name}
               onChange={handleInputChange}
               placeholder="Name *"
-              className="w-full rounded-lg py-3 px-4 outline-none border-[1px] border-[#E5E7EC]"
-              required
+              className={`w-full rounded-lg py-3 px-4 outline-none border-[1px] ${
+                feildError && inputData?.first_name === ""
+                  ? "border-red-500"
+                  : "border-[#E5E7EC] "
+              } `}
             />
           </div>
           <div>
@@ -152,8 +168,11 @@ function Registration() {
               value={inputData.last_name}
               onChange={handleInputChange}
               placeholder="Cognome *"
-              className="w-full rounded-lg py-3 px-4 outline-none border-[1px] border-[#E5E7EC]"
-              required
+              className={`w-full rounded-lg py-3 px-4 outline-none border-[1px] ${
+                feildError && inputData?.last_name === ""
+                  ? "border-red-500"
+                  : "border-[#E5E7EC] "
+              } `}
             />
           </div>
           <div>
@@ -164,7 +183,13 @@ function Registration() {
               }
             >
               <div className="relative mt-1">
-                <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-3 pl-4 pr-10 text-left border-[1px] border-[#E5E7EC] focus:outline-none  ">
+                <Listbox.Button
+                  className={`relative w-full cursor-default rounded-lg bg-white py-3 pl-4 pr-10 text-left border-[1px] ${
+                    feildError && inputData?.doctor_type1 === ""
+                      ? "border-red-500"
+                      : "border-[#E5E7EC] "
+                  } focus:outline-none `}
+                >
                   {inputData.doctor_type1 ? (
                     <span className="block truncate">
                       {inputData.doctor_type1}
@@ -235,7 +260,13 @@ function Registration() {
               }
             >
               <div className="relative mt-1">
-                <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-3 pl-4 pr-10 text-left border-[1px] border-[#E5E7EC] focus:outline-none  ">
+                <Listbox.Button
+                  className={`relative w-full cursor-default rounded-lg bg-white py-3 pl-4 pr-10 text-left border-[1px] ${
+                    feildError && inputData?.doctor_type2 === ""
+                      ? "border-red-500"
+                      : "border-[#E5E7EC] "
+                  } focus:outline-none  `}
+                >
                   {inputData.doctor_type2 ? (
                     <span className="block truncate">
                       {inputData.doctor_type2}
@@ -306,7 +337,11 @@ function Registration() {
               value={inputData.veterinary_address}
               onChange={handleInputChange}
               placeholder="Indirizzo del tuo ufficio veterinario *"
-              className="w-full rounded-lg py-3 px-4 outline-none border-[1px] border-[#E5E7EC]"
+              className={`w-full rounded-lg py-3 px-4 outline-none border-[1px] ${
+                feildError && inputData?.veterinary_address === ""
+                  ? "border-red-500"
+                  : "border-[#E5E7EC] "
+              } `}
             />
           </div>
 
@@ -317,8 +352,11 @@ function Registration() {
               value={inputData.email}
               onChange={handleInputChange}
               placeholder="Email *"
-              className="w-full rounded-lg py-3 px-4 outline-none border-[1px] border-[#E5E7EC]"
-              required
+              className={`w-full rounded-lg py-3 px-4 outline-none border-[1px] ${
+                feildError && inputData?.email === ""
+                  ? "border-red-500"
+                  : "border-[#E5E7EC] "
+              } `}
             />
           </div>
 
@@ -329,10 +367,16 @@ function Registration() {
               name="password"
               value={inputData.password}
               onChange={handleInputChange}
-              className="w-full rounded-lg py-3 px-4 outline-none border-[1px] border-[#E5E7EC]"
-              required
+              className={`w-full rounded-lg py-3 px-4 outline-none border-[1px] ${
+                feildError && inputData?.password === ""
+                  ? "border-red-500"
+                  : "border-[#E5E7EC] "
+              } `}
             />
           </div>
+          {error && (
+            <p className="text-center text-[15px] text-red-500">{error}</p>
+          )}
           <div>
             <button
               type="submit"
@@ -342,7 +386,11 @@ function Registration() {
             </button>
           </div>
           <div>
-            <p className="text-center text-[15px] text-black/[.40]">
+            <p
+              className={`text-center text-[15px] ${
+                feildError ? "text-red-500" : "text-black/[.40]"
+              }`}
+            >
               * I campi sono obbligatori
             </p>
           </div>

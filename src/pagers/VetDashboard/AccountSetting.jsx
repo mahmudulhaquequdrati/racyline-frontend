@@ -2,26 +2,26 @@ import { Fragment, useState } from "react";
 import { ChevronDownIcon, CheckIcon } from "@heroicons/react/24/solid";
 import { Listbox, Transition } from "@headlessui/react";
 import GoogleIcon from "../../assets/ICONS/google.svg";
-import {
-  primary_bg_color,
-  primary_border_color,
-  primary_color,
-} from "../../../constant";
 
 const people = [
   {
-    id: 1,
-    name: "Veterinario di medicina generale, Chirurgo veterinario",
-    unavailable: false,
+    name: "Veterinary Doctor",
   },
-  { id: 2, name: "Kenton Towne", unavailable: false },
-  { id: 3, name: "Therese Wunsch", unavailable: false },
-  { id: 4, name: "Benedict Kessler", unavailable: true },
-  { id: 5, name: "Katelyn Rohan", unavailable: false },
+];
+const type = [
+  {
+    name: "Dog",
+  },
+  {
+    name: "Cat",
+  },
+  {
+    name: "Parrot",
+  },
 ];
 const AccountSetting = () => {
   const [selected, setSelected] = useState(people[0]);
-  const [selected2, setSelected2] = useState(people[3]);
+  const [selected2, setSelected2] = useState(type[0]);
   return (
     <div className="p-12 lg:p-20 min-h-[100vh] bg-[#FFF7EC]">
       <div>
@@ -46,8 +46,15 @@ const AccountSetting = () => {
           <div className="w-full md:w-[60%] lg:w-[40%]">
             <Listbox value={selected} onChange={setSelected}>
               <div className="relative mt-1">
-                <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-3 pl-4 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white  focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
-                  <span className="block truncate">{selected.name}</span>
+                <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-3 pl-4 pr-10 text-left border-[1px] border-[#E5E7EC] focus:outline-none  ">
+                  {selected.name ? (
+                    <span className="block truncate">{selected.name}</span>
+                  ) : (
+                    <span className="block truncate text-gray-400">
+                      {"Scegli gli animali che curi *"}
+                    </span>
+                  )}
+
                   <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                     <ChevronDownIcon
                       className="h-5 w-5 text-gray-400"
@@ -62,9 +69,9 @@ const AccountSetting = () => {
                   leaveTo="opacity-0"
                 >
                   <Listbox.Options className="z-50 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                    {people.map((person, personIdx) => (
+                    {people?.map((tp, tpIdx) => (
                       <Listbox.Option
-                        key={personIdx}
+                        key={tpIdx}
                         className={({ active }) =>
                           `relative cursor-default select-none py-2 pl-10 pr-4 ${
                             active
@@ -72,18 +79,18 @@ const AccountSetting = () => {
                               : "text-gray-900"
                           }`
                         }
-                        value={person}
+                        value={tp}
                       >
-                        {({ selected }) => (
+                        {({ selected2 }) => (
                           <>
                             <span
                               className={`block truncate ${
-                                selected ? "font-medium" : "font-normal"
+                                selected2 ? "font-medium" : "font-normal"
                               }`}
                             >
-                              {person.name}
+                              {tp.name}
                             </span>
-                            {selected ? (
+                            {selected2 ? (
                               <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
                                 <CheckIcon
                                   className="h-5 w-5"
@@ -105,8 +112,15 @@ const AccountSetting = () => {
           <div className="w-full md:w-[60%] lg:w-[40%]">
             <Listbox value={selected2} onChange={setSelected2}>
               <div className="relative mt-1">
-                <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-3 pl-4 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
-                  <span className="block truncate">{selected2.name}</span>
+                <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-3 pl-4 pr-10 text-left border-[1px] border-[#E5E7EC] focus:outline-none  ">
+                  {selected2?.name ? (
+                    <span className="block truncate">{selected2.name}</span>
+                  ) : (
+                    <span className="block truncate text-gray-400">
+                      {"Scegli gli animali che curi *"}
+                    </span>
+                  )}
+
                   <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                     <ChevronDownIcon
                       className="h-5 w-5 text-gray-400"
@@ -120,10 +134,10 @@ const AccountSetting = () => {
                   leaveFrom="opacity-100"
                   leaveTo="opacity-0"
                 >
-                  <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                    {people.map((person, personIdx) => (
+                  <Listbox.Options className="z-50 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                    {type.map((tp, tpIdx) => (
                       <Listbox.Option
-                        key={personIdx}
+                        key={tpIdx}
                         className={({ active }) =>
                           `relative cursor-default select-none py-2 pl-10 pr-4 ${
                             active
@@ -131,18 +145,18 @@ const AccountSetting = () => {
                               : "text-gray-900"
                           }`
                         }
-                        value={person}
+                        value={tp}
                       >
-                        {({ selected }) => (
+                        {({ selected2 }) => (
                           <>
                             <span
                               className={`block truncate ${
-                                selected ? "font-medium" : "font-normal"
+                                selected2 ? "font-medium" : "font-normal"
                               }`}
                             >
-                              {person.name}
+                              {tp.name}
                             </span>
-                            {selected ? (
+                            {selected2 ? (
                               <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
                                 <CheckIcon
                                   className="h-5 w-5"

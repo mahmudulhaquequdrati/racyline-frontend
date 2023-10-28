@@ -163,14 +163,17 @@ const RegistrationAvailabilities = () => {
             >
               <div className="flex items-start gap-6">
                 <div className="mr-2 flex items-center mt-3">
-                  <input
-                    type="checkbox"
-                    className="mr-2"
-                    name="checkbox1"
-                    checked={res.available}
-                    onChange={(e) => onAvailableChange(e.target.checked, i)}
-                  />
-                  <label>{res.name}</label>
+                  <label className="option ">
+                    <span> {res.name}</span>
+                    <input
+                      type="checkbox"
+                      className="mr-2"
+                      name="checkbox1"
+                      checked={res.available}
+                      onChange={(e) => onAvailableChange(e.target.checked, i)}
+                    />
+                    <span className="customcheckbox"></span>
+                  </label>
                 </div>
                 {res.availabilities?.length === 0 ? (
                   <div className="text-gray-700 text-sm mt-3">
