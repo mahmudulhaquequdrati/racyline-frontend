@@ -2,6 +2,8 @@ import { Route, Routes } from "react-router-dom";
 import Footer from "./components/common/Footer";
 import Header from "./components/common/Header";
 import Appointment from "./pagers/NewAppointment/Appointment";
+import AppointmentError from "./pagers/NewAppointment/AppointmentError";
+import AppointmentSuccess from "./pagers/NewAppointment/AppointmentSuccess";
 import Dashboard from "./pagers/VetDashboard/Dashboard";
 import VetLists from "./pagers/vetLists/vetLists";
 import Login from "./pagers/vetLogin/Login";
@@ -37,6 +39,8 @@ const App = () => {
         />
         <Route path="/vet-lists" element={<VetLists />} />
         <Route path="/new-appointment" element={<Appointment />} />
+        <Route path="/appointment-success" element={<AppointmentSuccess />} />
+        <Route path="/appointment-error" element={<AppointmentError />} />
       </Routes>
       <Footer />
     </main>
