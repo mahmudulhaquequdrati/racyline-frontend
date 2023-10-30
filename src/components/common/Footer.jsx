@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <footer className="py-8">
       <div className="container mx-auto">
-        <div>
+        <div className="p-5">
           <div className="w-[125px] mb-3">
             <img src={logo} className="w-[80%] md:w-[100%]" alt="logo" />
           </div>
@@ -18,7 +18,7 @@ const Footer = () => {
           </ul>
         </div>
 
-        <div className="flex justify-between mt-8">
+        <div className="flex flex-col sm:flex-row justify-between mt-3 sm:mt-8 p-5">
           <p className="text-[13px] leading-5">
             Al rights reserved | Copyright &copy; 2023
           </p>
