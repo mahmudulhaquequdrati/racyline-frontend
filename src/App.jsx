@@ -1,7 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 import Footer from "./components/common/Footer";
 import Header from "./components/common/Header";
+import Appointment from "./pagers/NewAppointment/Appointment";
 import Dashboard from "./pagers/VetDashboard/Dashboard";
+import VetLists from "./pagers/vetLists/vetLists";
 import Login from "./pagers/vetLogin/Login";
 import Registration from "./pagers/vetRegistration/Registration";
 import RegistrationAvailabilities from "./pagers/vetRegistration/RegistrationAvailabilities";
@@ -33,6 +35,8 @@ const App = () => {
           path="/registration-availabilities"
           element={<RegistrationAvailabilities />}
         />
+        <Route path="/vet-lists" element={<VetLists />} />
+        <Route path="/new-appointment" element={<Appointment />} />
       </Routes>
       <Footer />
     </main>
