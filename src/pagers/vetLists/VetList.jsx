@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import vetUser from "../../../public/vetListImage/vetUser.jpeg";
 
 const VetList = ({ vetInfo }) => {
@@ -114,7 +115,7 @@ const VetList = ({ vetInfo }) => {
           </div>
         </div>
         <button className="w-full text-white text-[15px] font-medium text-center p-[12px] bg-[#E8971F] rounded">
-          Prenota ora
+          <Link to={"/new-appointment"}>Prenota ora</Link>
         </button>
       </div>
     </div>

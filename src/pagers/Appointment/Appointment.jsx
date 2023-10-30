@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import vetUser from "../../../public/vetListImage/vetUser.jpeg";
 
 const Appointment = () => {
@@ -93,7 +94,7 @@ const Appointment = () => {
               </div>
               <div className="w-full">
                 <button className="w-full text-white text-[15px] font-medium text-center p-[12px] bg-[#E8971F] rounded">
-                  Prenota ora
+                  <Link to={"/appointment-success"}>Prenota ora</Link>
                 </button>
               </div>
             </form>
@@ -126,7 +127,7 @@ const Appointment = () => {
                 <p className="text-[14px] leading-5 font-medium mb-[10px]">
                   Veterinario di medicina generale, Chirurgo veterinario
                 </p>
-                <p className="flex gap-[6px] text-[#666666] text-[13px] font-normal leading-[22px]">
+                <p className="flex items-center gap-[6px] text-[#666666] text-[13px] font-normal leading-[22px]">
                   <span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"

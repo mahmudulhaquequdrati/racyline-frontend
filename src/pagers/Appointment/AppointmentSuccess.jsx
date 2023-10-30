@@ -51,7 +51,7 @@ const AppointmentSuccess = () => {
               <p className="text-[14px] leading-5 font-medium mb-[10px]">
                 Veterinario di medicina generale, Chirurgo veterinario
               </p>
-              <p className="flex gap-[6px] text-[#666666] text-[13px] font-normal leading-[22px]">
+              <p className="flex items-center gap-[6px] text-[#666666] text-[13px] font-normal leading-[22px]">
                 <span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
