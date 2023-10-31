@@ -1,9 +1,10 @@
 import { useState } from "react";
-import Delete from "../../assets/ICONS/delete.svg";
-import PlusIcon from "../../assets/ICONS/plusIcon.svg";
-import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useNavigate } from "react-router-dom";
+import Delete from "../../assets/ICONS/delete.svg";
+import PlusIcon from "../../assets/ICONS/plusIcon.svg";
+
 const Availabilities = () => {
   const [weakData, setWeakData] = useState([
     {
@@ -117,10 +118,27 @@ const Availabilities = () => {
     }
   };
 
+  // adding or removing appointment
   const onAvailableChange = (value, index) => {
-    let data = [...weakData];
-    data[index]["available"] = value;
-    setWeakData(data);
+    if (weakData[index]?.available) {
+      setWeakData((prevWeakData) => {
+        const updatedWeakData = [...prevWeakData];
+        updatedWeakData[index].availabilities = [];
+        updatedWeakData[index]["available"] = false;
+        return updatedWeakData;
+      });
+    } else {
+      setWeakData((prevWeakData) => {
+        let updatedWeakData = [...prevWeakData];
+        const newfield = {
+          start_time: new Date(),
+          end_time: new Date(),
+        };
+        updatedWeakData[index].availabilities = [newfield];
+        updatedWeakData[index]["available"] = true;
+        return updatedWeakData;
+      });
+    }
   };
 
   const handleAvailabilityChange = (
@@ -158,8 +176,8 @@ const Availabilities = () => {
               >
                 <div className="flex items-start gap-6">
                   <div className="mr-2 flex items-center mt-3">
-                    <label className="option ">
-                      <span> {res.name}</span>
+                    <label className="option">
+                      <span>{res.name}</span>
                       <input
                         type="checkbox"
                         className="mr-2"
