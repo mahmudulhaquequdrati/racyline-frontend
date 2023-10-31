@@ -1,14 +1,16 @@
 import { Route, Routes } from "react-router-dom";
 import Footer from "./components/common/Footer";
 import Header from "./components/common/Header";
+import Appointment from "./pagers/Appointment/Appointment";
+import AppointmentError from "./pagers/Appointment/AppointmentError";
+import AppointmentSuccess from "./pagers/Appointment/AppointmentSuccess";
 import Dashboard from "./pagers/VetDashboard/Dashboard";
+import VetLists from "./pagers/vetLists/vetLists";
 import Login from "./pagers/vetLogin/Login";
 import Registration from "./pagers/vetRegistration/Registration";
-import RegistrationAvailabilities from "./pagers/vetRegistration/RegistrationAvailabilities";
 import RegistrationGoogleCalenderConnect from "./pagers/vetRegistration/RegistrationGoogleCalenderConnect";
 import RegistrationGoogleCalenderConnected from "./pagers/vetRegistration/RegistrationGoogleCalenderConnected";
 import RegistrationWithGoogle from "./pagers/vetRegistration/RegistrationWithGoogle";
-import Appointment from "./pagers/VetDashboard/Appointment";
 import AuthProtected from "./routes/AuthProtected";
 // import PublicRoute from "./routes/PublicRoutes";
 import AccountSetting from "./pagers/VetDashboard/AccountSetting";
@@ -73,19 +75,26 @@ const App = () => {
           }
         />
         <Route
-          path="/registration-availabilities"
-          element={
-            <AuthProtected>
-              <RegistrationAvailabilities />
-            </AuthProtected>
-          }
-        />
-
-        <Route
           path="/vets/appointment"
           element={
             <AuthProtected>
               <Appointment />
+            </AuthProtected>
+          }
+        />
+        <Route
+          path="/appointment-success"
+          element={
+            <AuthProtected>
+              <AppointmentSuccess />
+            </AuthProtected>
+          }
+        />
+        <Route
+          path="/appointment-error"
+          element={
+            <AuthProtected>
+              <AppointmentError />
             </AuthProtected>
           }
         />
@@ -113,10 +122,7 @@ const App = () => {
             </AuthProtected>
           }
         />
-
-        {/* <Route path="/admin" element={<DefaultLayout />}>
-          <Route element={<AllAppointment />} />
-        </Route> */}
+        <Route path="/vet-lists" element={<VetLists />} />
       </Routes>
       <Footer />
     </main>
