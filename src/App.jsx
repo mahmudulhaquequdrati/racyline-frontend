@@ -13,6 +13,9 @@ import RegistrationGoogleCalenderConnected from "./pagers/vetRegistration/Regist
 import RegistrationWithGoogle from "./pagers/vetRegistration/RegistrationWithGoogle";
 import AuthProtected from "./routes/AuthProtected";
 // import PublicRoute from "./routes/PublicRoutes";
+import MyAppointment from "./pagers/UserPages/MyAppointment";
+import MyAppointmentEditing from "./pagers/UserPages/MyAppointmentEditing";
+import UserSettings from "./pagers/UserPages/UserSettings";
 import AccountSetting from "./pagers/VetDashboard/AccountSetting";
 import Availabilities from "./pagers/VetDashboard/Availabilities";
 import Calender from "./pagers/VetDashboard/Calender";
@@ -95,6 +98,30 @@ const App = () => {
           element={
             <AuthProtected>
               <AppointmentError />
+            </AuthProtected>
+          }
+        />
+        <Route
+          path="/user/settings"
+          element={
+            <AuthProtected>
+              <UserSettings />
+            </AuthProtected>
+          }
+        />
+        <Route
+          path="/user/my-appointment"
+          element={
+            <AuthProtected>
+              <MyAppointment />
+            </AuthProtected>
+          }
+        />
+        <Route
+          path="/user/my-appointment-editing"
+          element={
+            <AuthProtected>
+              <MyAppointmentEditing />
             </AuthProtected>
           }
         />

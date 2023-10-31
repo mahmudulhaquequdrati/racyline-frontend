@@ -69,6 +69,61 @@ const Availabilities = () => {
       available: false,
     },
   ]);
+
+  function generateTimeSequence(
+    startTime = "00:00",
+    deference = "15",
+    endTime = "23:45"
+  ) {
+    const timeSequence = [];
+    let currentTime = startTime;
+    while (currentTime !== endTime) {
+      timeSequence.push(currentTime);
+      let [hours, minutes] = currentTime.split(":").map(Number);
+      minutes += Number(deference);
+      if (minutes >= 60) {
+        minutes -= 60;
+        hours++;
+      }
+      if (hours === 24) {
+        hours = 0;
+      }
+      currentTime = `${String(hours).padStart(2, "0")}:${String(
+        minutes
+      ).padStart(2, "0")}`;
+    }
+    return timeSequence;
+  }
+  const timeSequences = generateTimeSequence();
+  console.log(timeSequences);
+
+  function generateTimeSequence(
+    startTime = "12:00",
+    deference = "15",
+    endTime = "23:45"
+  ) {
+    const timeSequence = [];
+    let currentTime = startTime;
+    while (currentTime !== endTime) {
+      timeSequence.push(currentTime);
+      let [hours, minutes] = currentTime.split(":").map(Number);
+      minutes += Number(deference);
+      if (minutes >= 60) {
+        minutes -= 60;
+        hours++;
+      }
+      if (hours === 24) {
+        hours = 0;
+      }
+      currentTime = `${String(hours).padStart(2, "0")}:${String(
+        minutes
+      ).padStart(2, "0")}`;
+    }
+    return timeSequence;
+  }
+  const timeSequence = generateTimeSequence();
+  console.log(timeSequence);
+
   const navigate = useNavigate();
 
   const addFields = (index) => {
