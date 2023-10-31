@@ -8,7 +8,6 @@ import Dashboard from "./pagers/VetDashboard/Dashboard";
 import VetLists from "./pagers/vetLists/vetLists";
 import Login from "./pagers/vetLogin/Login";
 import Registration from "./pagers/vetRegistration/Registration";
-import RegistrationAvailabilities from "./pagers/vetRegistration/RegistrationAvailabilities";
 import RegistrationGoogleCalenderConnect from "./pagers/vetRegistration/RegistrationGoogleCalenderConnect";
 import RegistrationGoogleCalenderConnected from "./pagers/vetRegistration/RegistrationGoogleCalenderConnected";
 import RegistrationWithGoogle from "./pagers/vetRegistration/RegistrationWithGoogle";
@@ -72,14 +71,6 @@ const App = () => {
           element={
             <AuthProtected>
               <RegistrationGoogleCalenderConnected />
-            </AuthProtected>
-          }
-        />
-        <Route
-          path="/registration-availabilities"
-          element={
-            <AuthProtected>
-              <RegistrationAvailabilities />
             </AuthProtected>
           }
         />
