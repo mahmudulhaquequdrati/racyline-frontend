@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
 import { useState } from "react";
-import Delete from "../../assets/ICONS/delete.svg";
-import PlusIcon from "../../assets/ICONS/plusIcon.svg";
-import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useNavigate } from "react-router-dom";
+import Delete from "../../assets/ICONS/delete.svg";
+import PlusIcon from "../../assets/ICONS/plusIcon.svg";
 
 const RegistrationAvailabilities = () => {
   const [weakData, setWeakData] = useState([
@@ -119,10 +119,27 @@ const RegistrationAvailabilities = () => {
     }
   };
 
+  // adding or removing appointment
   const onAvailableChange = (value, index) => {
-    let data = [...weakData];
-    data[index]["available"] = value;
-    setWeakData(data);
+    if (weakData[index]?.available) {
+      setWeakData((prevWeakData) => {
+        const updatedWeakData = [...prevWeakData];
+        updatedWeakData[index].availabilities = [];
+        updatedWeakData[index]["available"] = false;
+        return updatedWeakData;
+      });
+    } else {
+      setWeakData((prevWeakData) => {
+        let updatedWeakData = [...prevWeakData];
+        const newfield = {
+          start_time: new Date(),
+          end_time: new Date(),
+        };
+        updatedWeakData[index].availabilities = [newfield];
+        updatedWeakData[index]["available"] = true;
+        return updatedWeakData;
+      });
+    }
   };
 
   const handleAvailabilityChange = (

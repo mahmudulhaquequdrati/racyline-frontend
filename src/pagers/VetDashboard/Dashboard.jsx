@@ -1,3 +1,10 @@
+import React from "react";
+import { Link } from "react-router-dom";
+
 export default function Dashboard() {
-  return <div className="min-h-screen p-12">This will be a Landing page</div>;
+  return (
+    <div className="container mx-auto">
+      <Link to={"/vet-lists"}>Dashboard</Link>
+    </div>
+  );
 }
