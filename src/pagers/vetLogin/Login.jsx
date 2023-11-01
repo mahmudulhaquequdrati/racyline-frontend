@@ -1,6 +1,6 @@
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import GoogleIcon from "../../assets/ICONS/google.svg";
-import { useEffect, useState } from "react";
 import { useLoginMutation } from "../../features/auth/authApi";
 
 function Login() {
@@ -35,9 +35,12 @@ function Login() {
 
   const createGoogleAuthLink = async () => {
     try {
-      const request = await fetch("http://localhost:5000/createAuthLink", {
-        method: "POST",
-      });
+      const request = await fetch(
+        "http://localhost:5000/api/v1/createAuthLink",
+        {
+          method: "POST",
+        }
+      );
       const response = await request.json();
       window.location.href = response.url;
     } catch (error) {
