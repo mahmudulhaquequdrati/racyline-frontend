@@ -108,7 +108,7 @@ const VetList = ({ vetInfo }) => {
             {time?.map((t, index) => (
               <p
                 key={index}
-                className="w-[70px] text-center text-[13px] hover:rounded-full hover:bg-[#7D7D7D] hover:cursor-pointer hover:text-[#fff]"
+                className="flex items-center justify-center w-[70px] text-center text-[13px] hover:rounded-full hover:bg-[#7D7D7D] hover:cursor-pointer hover:text-[#fff]"
               >
                 {t}
               </p>
