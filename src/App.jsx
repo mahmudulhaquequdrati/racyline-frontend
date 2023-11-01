@@ -20,6 +20,7 @@ import AccountSetting from "./pagers/VetDashboard/AccountSetting";
 import Availabilities from "./pagers/VetDashboard/Availabilities";
 import Calender from "./pagers/VetDashboard/Calender";
 import UserLogin from "./pagers/userLogin/Login";
+import RegistrationAvailabilities from "./pagers/vetRegistration/RegistrationAvailabilities";
 // import DefaultLayout from "./pagers/adminPages/DefaultLayout";
 // import AllAppointment from "./pagers/adminPages/AllAppointment";
 
@@ -75,6 +76,14 @@ const App = () => {
             <AuthProtected>
               <RegistrationGoogleCalenderConnected />
             </AuthProtected>
+          }
+        />
+        <Route
+          path="/registration-availabilities"
+          element={
+            // <AuthProtected>
+            <RegistrationAvailabilities />
+            //</AuthProtected>
           }
         />
         <Route

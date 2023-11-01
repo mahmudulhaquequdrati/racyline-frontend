@@ -33,7 +33,7 @@ const tokenExpired = () => {
 const getValidTokenFromServer = async (refreshToken) => {
     // get new token from server with refresh token
     try {
-        const request = await fetch("http://localhost:5000/getValidToken", {
+        const request = await fetch("http://localhost:5000/api/v1/getValidToken", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
