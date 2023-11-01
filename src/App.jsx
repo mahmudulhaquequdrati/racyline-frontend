@@ -1,7 +1,24 @@
 import { Route, Routes } from "react-router-dom";
-import Dashboard from "./pagers/VetDashboard/Dashboard";
+import Footer from "./components/common/Footer";
 import Header from "./components/common/Header";
-import RegistrationAvailabilities from "./pagers/Vets/RegistrationAvailabilities/RegistrationAvailabilities";
+import Appointment from "./pagers/Appointment/Appointment";
+import AppointmentError from "./pagers/Appointment/AppointmentError";
+import AppointmentSuccess from "./pagers/Appointment/AppointmentSuccess";
+import Dashboard from "./pagers/VetDashboard/Dashboard";
+import VetLists from "./pagers/vetLists/vetLists";
+import Login from "./pagers/vetLogin/Login";
+import Registration from "./pagers/vetRegistration/Registration";
+import RegistrationGoogleCalenderConnect from "./pagers/vetRegistration/RegistrationGoogleCalenderConnect";
+import RegistrationGoogleCalenderConnected from "./pagers/vetRegistration/RegistrationGoogleCalenderConnected";
+import RegistrationWithGoogle from "./pagers/vetRegistration/RegistrationWithGoogle";
+import AuthProtected from "./routes/AuthProtected";
+// import PublicRoute from "./routes/PublicRoutes";
+import AccountSetting from "./pagers/VetDashboard/AccountSetting";
+import Availabilities from "./pagers/VetDashboard/Availabilities";
+import Calender from "./pagers/VetDashboard/Calender";
+import UserLogin from "./pagers/userLogin/Login";
+// import DefaultLayout from "./pagers/adminPages/DefaultLayout";
+// import AllAppointment from "./pagers/adminPages/AllAppointment";
 
 const App = () => {
   return (
@@ -11,12 +28,104 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route
-          path="/registration-availabilities"
-          element={<RegistrationAvailabilities />}
+          path="/login"
+          element={
+            // <PublicRoute>
+            <Login />
+            // </PublicRoute>
+          }
         />
+        <Route
+          path="/user/login"
+          element={
+            // <PublicRoute>
+            <UserLogin />
+            // </PublicRoute>
+          }
+        />
+        <Route
+          path="/registration"
+          element={
+            // <PublicRoute>
+            <Registration />
+            // </PublicRoute>
+          }
+        />
+        <Route
+          path="/registration-with-google"
+          element={
+            <AuthProtected>
+              <RegistrationWithGoogle />
+            </AuthProtected>
+          }
+        />
+        <Route
+          path="/registration-google-calender-connect"
+          element={
+            <AuthProtected>
+              <RegistrationGoogleCalenderConnect />
+            </AuthProtected>
+          }
+        />
+        <Route
+          path="/registration-google-calender-connected"
+          element={
+            <AuthProtected>
+              <RegistrationGoogleCalenderConnected />
+            </AuthProtected>
+          }
+        />
+        <Route
+          path="/vets/appointment"
+          element={
+            <AuthProtected>
+              <Appointment />
+            </AuthProtected>
+          }
+        />
+        <Route
+          path="/appointment-success"
+          element={
+            <AuthProtected>
+              <AppointmentSuccess />
+            </AuthProtected>
+          }
+        />
+        <Route
+          path="/appointment-error"
+          element={
+            <AuthProtected>
+              <AppointmentError />
+            </AuthProtected>
+          }
+        />
+        <Route
+          path="/vets/accountsettings"
+          element={
+            // <AuthProtected>
+            <AccountSetting />
+            // </AuthProtected>
+          }
+        />
+        <Route
+          path="/vets/availabilities"
+          element={
+            <AuthProtected>
+              <Availabilities />
+            </AuthProtected>
+          }
+        />
+        <Route
+          path="/vets/calender"
+          element={
+            <AuthProtected>
+              <Calender />
+            </AuthProtected>
+          }
+        />
+        <Route path="/vet-lists" element={<VetLists />} />
       </Routes>
-
-      {/* <Footer /> */}
+      <Footer />
     </main>
   );
 };
