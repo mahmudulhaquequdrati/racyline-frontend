@@ -77,37 +77,6 @@ const RegistrationAvailabilities = () => {
   ]);
   const navigate = useNavigate();
 
-  // const onOpening_time = (event, value) => {
-  //         const time = event.target.value;
-  //         if (moment(time, 'HH:mm').isBefore(moment(closing_time, 'HH:mm'))) {
-  //             setOpening_time(${time})
-  //             setTimeError(false)
-  //         }
-  //         else {
-  //             setTimeError(true)
-  //             SweetAlert.fire(
-  //                 'Error!',
-  //                 End Time cannot be less than start time!.,
-  //                 'error'
-  //             )
-  //         }
-  //     }
-  //     const onClosing_time = (event, value) => {
-  //         const time = event.target.value;
-  //         if (moment(opening_time, 'HH:mm').isBefore(moment(time, 'HH:mm'))) {
-  //             setClosing_time(${time})
-  //             setTimeError(false)
-  //         }
-  //         else {
-  //             setTimeError(true)
-  //             SweetAlert.fire(
-  //                 'Error!',
-  //                 End Time cannot be less than start time!.,
-  //                 'error'
-  //             )
-  //         }
-  //     }
-
   const addFields = (index) => {
     if (weakData[index]?.availabilities?.length !== 0) {
       setWeakData((prevWeakData) => {
