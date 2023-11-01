@@ -1,12 +1,17 @@
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import * as React from "react";
+import { useState } from "react";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 
-export default function BasicDateCalendar() {
+export default function Calender() {
+  const [value, onChange] = useState(new Date());
+
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DateCalendar />
-    </LocalizationProvider>
+    <div>
+      <Calendar
+        onChange={onChange}
+        value={value}
+        className={"customizeCalender"}
+      />
+    </div>
   );
 }

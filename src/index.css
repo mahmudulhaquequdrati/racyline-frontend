@@ -30,7 +30,7 @@ body {
   /* Hide the default checkbox */
 }
 
-.checkbox+label {
+.checkbox + label {
   position: relative;
   padding-left: 26px;
   cursor: pointer;
@@ -40,7 +40,7 @@ body {
   line-height: 20px;
 }
 
-.checkbox+label:before {
+.checkbox + label:before {
   content: "";
   position: absolute;
   left: 0;
@@ -52,13 +52,13 @@ body {
   background: var(--base-white, #fff);
 }
 
-.checkbox:checked+label:before {
+.checkbox:checked + label:before {
   border-radius: 6px;
   border: 2px solid var(--primary-600, #3852db);
   background: var(--primary-600, #3852db);
 }
 
-.checkbox+label:after {
+.checkbox + label:after {
   content: "";
   position: absolute;
   left: 6.5px;
@@ -73,15 +73,15 @@ body {
   opacity: 0;
 }
 
-.checkbox:checked+label:after {
+.checkbox:checked + label:after {
   opacity: 1;
 }
 
-.checkbox:checked+label:after {
+.checkbox:checked + label:after {
   opacity: 1;
 }
 
-input[type=checkbox] {
+input[type="checkbox"] {
   visibility: hidden;
 }
 
@@ -100,13 +100,13 @@ input[type=checkbox] {
   left: 0;
   height: 15px;
   width: 15px;
-  border: 1px solid #E8971F;
+  border: 1px solid #e8971f;
   border-radius: 5px;
-  margin-top: 5px
+  margin-top: 5px;
 }
 
-.option input:checked~.customcheckbox {
-  background-color: #E8971F;
+.option input:checked ~ .customcheckbox {
+  background-color: #e8971f;
 }
 
 .customcheckbox:after {
@@ -115,7 +115,7 @@ input[type=checkbox] {
   display: none;
 }
 
-.option input:checked~.customcheckbox:after {
+.option input:checked ~ .customcheckbox:after {
   display: block;
 }
 
@@ -130,3 +130,22 @@ input[type=checkbox] {
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+
+.customizeCalender {
+  border: none;
+}
+
+.react-calendar__tile {
+  border-radius: 50px;
+}
+
+.react-calendar__tile--active,
+.react-calendar__tile--now {
+  background: #7d7d7d;
+}
+
+/* react-calendar__tile--now react-calendar__tile--active */
+
+/* .customizeCalender .react-calendar__navigation {
+  display: none;
+} */

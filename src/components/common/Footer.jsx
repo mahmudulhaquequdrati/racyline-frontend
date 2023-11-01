@@ -2,8 +2,8 @@ import logo from "../../assets/logo.png";
 
 const Footer = () => {
   return (
-    <footer className="py-[16px] md:py-8 px-5 md:px-28">
-      <div className="container mx-auto">
+    <footer className="py-[16px] md:py-8 px-5 md:px-28 flex justify-center">
+      <div className="max-w-[1140px] w-full mx-auto">
         <div className="p-5">
           <div className="w-[125px] mb-3">
             <img src={logo} className="w-[80%] md:w-[100%]" alt="logo" />
