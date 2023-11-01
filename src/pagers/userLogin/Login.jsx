@@ -1,6 +1,6 @@
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import GoogleIcon from "../../assets/ICONS/google.svg";
-import { useEffect, useState } from "react";
 import { useLoginMutation } from "../../features/auth/authApi";
 
 function UserLogin() {
