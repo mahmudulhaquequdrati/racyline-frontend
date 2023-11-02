@@ -1,19 +1,25 @@
 /* eslint-disable no-unused-vars */
 import { useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { useNavigate } from "react-router-dom";
 import Delete from "../../assets/ICONS/delete.svg";
 import PlusIcon from "../../assets/ICONS/plusIcon.svg";
+import { useNavigate } from "react-router-dom";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import moment from "moment/moment";
+import setHours from "date-fns/setHours";
+import setMinutes from "date-fns/setMinutes";
 
-const Availabilities = () => {
+const RegistrationAvailabilities = () => {
   const [weakData, setWeakData] = useState([
     {
       name: "Lun",
       availabilities: [
         {
-          start_time: new Date(),
-          end_time: new Date(),
+          start_time: setHours(
+            setMinutes(setHours(setMinutes(new Date(), 0), 0), 0),
+            0
+          ),
+          end_time: setHours(setMinutes(new Date(), 0), 0),
         },
       ],
       available: true,
@@ -22,8 +28,8 @@ const Availabilities = () => {
       name: "Mar",
       availabilities: [
         {
-          start_time: new Date(),
-          end_time: new Date(),
+          start_time: setHours(setMinutes(new Date(), 0), 0),
+          end_time: setHours(setMinutes(new Date(), 0), 0),
         },
       ],
       available: true,
@@ -32,8 +38,8 @@ const Availabilities = () => {
       name: "Mer",
       availabilities: [
         {
-          start_time: new Date(),
-          end_time: new Date(),
+          start_time: setHours(setMinutes(new Date(), 0), 0),
+          end_time: setHours(setMinutes(new Date(), 0), 0),
         },
       ],
       available: true,
@@ -42,8 +48,8 @@ const Availabilities = () => {
       name: "Gio",
       availabilities: [
         {
-          start_time: new Date(),
-          end_time: new Date(),
+          start_time: setHours(setMinutes(new Date(), 0), 0),
+          end_time: setHours(setMinutes(new Date(), 0), 0),
         },
       ],
       available: true,
@@ -52,8 +58,8 @@ const Availabilities = () => {
       name: "Ven",
       availabilities: [
         {
-          start_time: new Date(),
-          end_time: new Date(),
+          start_time: setHours(setMinutes(new Date(), 0), 0),
+          end_time: setHours(setMinutes(new Date(), 0), 0),
         },
       ],
       available: true,
@@ -69,26 +75,36 @@ const Availabilities = () => {
       available: false,
     },
   ]);
-
   const navigate = useNavigate();
 
   const addFields = (index) => {
     if (weakData[index]?.availabilities?.length !== 0) {
       setWeakData((prevWeakData) => {
         const updatedWeakData = [...prevWeakData];
-        const newfield = {
-          start_time: new Date(),
-          end_time: new Date(),
+        const lastAvailability =
+          updatedWeakData[index].availabilities[
+            updatedWeakData[index].availabilities.length - 1
+          ];
+        const newStartTime = new Date(lastAvailability.end_time);
+        newStartTime.setMinutes(newStartTime.getMinutes() + 15);
+
+        const newEndTime = new Date(newStartTime);
+        newEndTime.setMinutes(newEndTime.getMinutes() + 30);
+
+        const newField = {
+          start_time: newStartTime,
+          end_time: newEndTime,
         };
-        updatedWeakData[index].availabilities.push(newfield);
+
+        updatedWeakData[index].availabilities.push(newField);
         return updatedWeakData;
       });
     } else {
       setWeakData((prevWeakData) => {
         let updatedWeakData = [...prevWeakData];
         const newfield = {
-          start_time: new Date(),
-          end_time: new Date(),
+          start_time: setHours(setMinutes(new Date(), 0), 0),
+          end_time: setHours(setMinutes(new Date(), 0), 0),
         };
         updatedWeakData[index].availabilities = [newfield];
         updatedWeakData[index]["available"] = true;
@@ -120,7 +136,6 @@ const Availabilities = () => {
     }
   };
 
-  // adding or removing appointment
   const onAvailableChange = (value, index) => {
     if (weakData[index]?.available) {
       setWeakData((prevWeakData) => {
@@ -133,8 +148,8 @@ const Availabilities = () => {
       setWeakData((prevWeakData) => {
         let updatedWeakData = [...prevWeakData];
         const newfield = {
-          start_time: new Date(),
-          end_time: new Date(),
+          start_time: setHours(setMinutes(new Date(), 0), 0),
+          end_time: setHours(setMinutes(new Date(), 0), 0),
         };
         updatedWeakData[index].availabilities = [newfield];
         updatedWeakData[index]["available"] = true;
@@ -149,13 +164,112 @@ const Availabilities = () => {
     key,
     value
   ) => {
-    setWeakData((prevWeakData) => {
-      const updatedWeakData = [...prevWeakData];
-      updatedWeakData[elementIndex].availabilities[availabilityIndex][key] =
-        value;
-
-      return updatedWeakData;
-    });
+    if (weakData[elementIndex].availabilities?.length === 1) {
+      if (key === "end_time") {
+        if (
+          moment(value).isAfter(
+            moment(
+              weakData[elementIndex].availabilities[availabilityIndex][
+                "start_time"
+              ]
+            )
+          )
+        ) {
+          setWeakData((prevWeakData) => {
+            const updatedWeakData = [...prevWeakData];
+            updatedWeakData[elementIndex].availabilities[availabilityIndex][
+              key
+            ] = value;
+            return updatedWeakData;
+          });
+        } else {
+          alert("End time cannot be less than start time");
+        }
+      } else {
+        if (
+          moment(value).isBefore(
+            moment(
+              weakData[elementIndex].availabilities[availabilityIndex][
+                "end_time"
+              ]
+            )
+          )
+        ) {
+          setWeakData((prevWeakData) => {
+            const updatedWeakData = [...prevWeakData];
+            updatedWeakData[elementIndex].availabilities[availabilityIndex][
+              key
+            ] = value;
+            return updatedWeakData;
+          });
+        } else {
+          alert("Start time cannot be grater than end time");
+        }
+      }
+    } else {
+      if (
+        weakData[elementIndex].availabilities?.length ===
+        availabilityIndex + 1
+      ) {
+        if (key === "end_time") {
+          if (
+            moment(value).isAfter(
+              moment(
+                weakData[elementIndex].availabilities[availabilityIndex - 1][
+                  "end_time"
+                ]
+              )
+            ) &&
+            moment(value).isAfter(
+              moment(
+                weakData[elementIndex].availabilities[availabilityIndex][
+                  "start_time"
+                ]
+              )
+            )
+          ) {
+            setWeakData((prevWeakData) => {
+              const updatedWeakData = [...prevWeakData];
+              updatedWeakData[elementIndex].availabilities[availabilityIndex][
+                key
+              ] = value;
+              return updatedWeakData;
+            });
+          } else {
+            alert("End time cannot be less than start time");
+          }
+        } else {
+          if (
+            moment(value).isAfter(
+              moment(
+                weakData[elementIndex].availabilities[availabilityIndex - 1][
+                  "end_time"
+                ]
+              )
+            ) &&
+            moment(value).isBefore(
+              moment(
+                weakData[elementIndex].availabilities[availabilityIndex][
+                  "end_time"
+                ]
+              )
+            )
+          ) {
+            setWeakData((prevWeakData) => {
+              const updatedWeakData = [...prevWeakData];
+              updatedWeakData[elementIndex].availabilities[availabilityIndex][
+                key
+              ] = value;
+              return updatedWeakData;
+            });
+          } else {
+            alert("Start time cannot be grater than end time");
+          }
+        }
+      } else {
+        alert("Previous time cannot be change");
+      }
+    }
   };
 
   const onSubmit = () => {
@@ -285,4 +399,4 @@ const Availabilities = () => {
   );
 };
 
-export default Availabilities;
+export default RegistrationAvailabilities;

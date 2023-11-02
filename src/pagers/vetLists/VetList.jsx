@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import vetUser from "../../../public/vetListImage/vetUser.jpeg";
+import Calender from "./Calender";
 
 const VetList = ({ vetInfo }) => {
   const { name, image, company, location, treatmentAnimals, availability } =
@@ -101,13 +102,13 @@ const VetList = ({ vetInfo }) => {
       <div className="w-full md:w-1/2 p-6 border-l-[0.5px] border-[#E5E7EC]">
         <div className="flex flex-col sm:flex-row gap-4 mb-4">
           <div className="w-full sm:w-1/2">
-            <h2>A Calendar will show here!</h2>
+            <Calender />
           </div>
           <div className="w-full sm:w-1/2 flex flex-wrap gap-3">
             {time?.map((t, index) => (
               <p
                 key={index}
-                className="w-[70px] text-center text-[13px] hover:rounded-full hover:bg-[#7D7D7D] hover:cursor-pointer hover:text-[#fff]"
+                className="flex items-center justify-center w-[70px] text-center text-[13px] hover:rounded-full hover:bg-[#7D7D7D] hover:cursor-pointer hover:text-[#fff]"
               >
                 {t}
               </p>
