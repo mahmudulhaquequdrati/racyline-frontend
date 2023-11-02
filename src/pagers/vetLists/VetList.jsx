@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import vetUser from "../../../public/vetListImage/vetUser.jpeg";
-import Calender from "./Calender";
+import VetCalender from "./Calender";
 
 const VetList = ({ vetInfo }) => {
   const { name, image, company, location, treatmentAnimals, availability } =
@@ -102,7 +102,7 @@ const VetList = ({ vetInfo }) => {
       <div className="w-full md:w-1/2 p-6 border-l-[0.5px] border-[#E5E7EC]">
         <div className="flex flex-col sm:flex-row gap-4 mb-4">
           <div className="w-full sm:w-1/2">
-            <Calender />
+            <VetCalender />
           </div>
           <div className="w-full sm:w-1/2 flex flex-wrap gap-3">
             {time?.map((t, index) => (
