@@ -1,6 +1,6 @@
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import GoogleIcon from "../../assets/ICONS/google.svg";
-import { useEffect, useState } from "react";
 import { useLoginMutation } from "../../features/auth/authApi";
 
 function Login() {
@@ -23,7 +23,7 @@ function Login() {
     if (LoginInData?.data?.accessToken && googleLogin) {
       navigate("/registration-with-google");
     } else if (LoginInData?.data?.accessToken && !googleLogin) {
-      navigate("/vets/appointment");
+      navigate("/");
     }
   }, [LoginInData, isError, navigate, googleLogin]);
 
@@ -137,7 +137,7 @@ function Login() {
             </button>
           </div>
           <div>
-            <Link to={"/registration"} className="no-underline">
+            <Link to={"/vets/registration"} className="no-underline">
               <p className="text-center text-[15px]">
                 Non hai ancora un account?{" "}
                 <span className={`text-primary`}>Registrati ora!</span>

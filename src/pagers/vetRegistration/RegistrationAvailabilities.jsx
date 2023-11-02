@@ -1,13 +1,13 @@
 /* eslint-disable no-unused-vars */
-import { useState } from "react";
-import Delete from "../../assets/ICONS/delete.svg";
-import PlusIcon from "../../assets/ICONS/plusIcon.svg";
-import { useNavigate } from "react-router-dom";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import moment from "moment/moment";
 import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
+import moment from "moment/moment";
+import { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { useNavigate } from "react-router-dom";
+import Delete from "../../assets/ICONS/delete.svg";
+import PlusIcon from "../../assets/ICONS/plusIcon.svg";
 
 const RegistrationAvailabilities = () => {
   const [weakData, setWeakData] = useState([
@@ -15,10 +15,7 @@ const RegistrationAvailabilities = () => {
       name: "Lun",
       availabilities: [
         {
-          start_time: setHours(
-            setMinutes(setHours(setMinutes(new Date(), 0), 0), 0),
-            0
-          ),
+          start_time: setHours(setMinutes(new Date(), 0), 0),
           end_time: setHours(setMinutes(new Date(), 0), 0),
         },
       ],
