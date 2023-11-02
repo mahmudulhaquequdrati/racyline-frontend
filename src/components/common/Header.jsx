@@ -7,6 +7,7 @@ export default function Header() {
   const state = useSelector((state) => state.auth);
 
   const { user, accessToken } = state || {};
+  console.log(user);
   return (
     <div className="px-4 md:px-8 py-6 bg-[#fff] flex justify-center items-center">
       <div className="max-w-[1140px] w-full mx-auto flex justify-between">

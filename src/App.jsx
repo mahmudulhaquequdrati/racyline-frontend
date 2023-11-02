@@ -15,12 +15,15 @@ import AuthProtected from "./routes/AuthProtected";
 // import PublicRoute from "./routes/PublicRoutes";
 import MyAppointment from "./pagers/UserPages/MyAppointment";
 import MyAppointmentEditing from "./pagers/UserPages/MyAppointmentEditing";
+import UserRegistration from "./pagers/UserPages/UserRegistration";
 import UserSettings from "./pagers/UserPages/UserSettings";
 import AccountSetting from "./pagers/VetDashboard/AccountSetting";
 import Availabilities from "./pagers/VetDashboard/Availabilities";
 import Calender from "./pagers/VetDashboard/Calender";
 import UserLogin from "./pagers/userLogin/Login";
 import RegistrationAvailabilities from "./pagers/vetRegistration/RegistrationAvailabilities";
+import UserProtected from "./routes/UserProtected";
+import VetProtected from "./routes/VetProtected";
 // import DefaultLayout from "./pagers/adminPages/DefaultLayout";
 // import AllAppointment from "./pagers/adminPages/AllAppointment";
 
@@ -29,31 +32,13 @@ const App = () => {
     <main className="">
       <Header />
       <Routes>
+        {/* Public Routes  */}
+        {/* Public Routes  */}
+        {/* Public Routes  */}
+        {/* Public Routes  */}
+        {/* Public Routes  */}
+        {/* Public Routes  */}
         <Route path="/" element={<Dashboard />} />
-        <Route
-          path="/login"
-          element={
-            // <PublicRoute>
-            <Login />
-            // </PublicRoute>
-          }
-        />
-        <Route
-          path="/user/login"
-          element={
-            // <PublicRoute>
-            <UserLogin />
-            // </PublicRoute>
-          }
-        />
-        <Route
-          path="/registration"
-          element={
-            // <PublicRoute>
-            <Registration />
-            // </PublicRoute>
-          }
-        />
         <Route
           path="/registration-with-google"
           element={
@@ -62,6 +47,7 @@ const App = () => {
             </AuthProtected>
           }
         />
+
         <Route
           path="/registration-google-calender-connect"
           element={
@@ -86,79 +72,131 @@ const App = () => {
             //</AuthProtected>
           }
         />
+        {/* Vets Routes  */}
+        {/* Vets Routes  */}
+        {/* Vets Routes  */}
+        {/* Vets Routes  */}
+        {/* Vets Routes  */}
+        {/* Vets Routes  */}
         <Route
-          path="/vets/appointment"
+          path="/vets/registration"
           element={
-            <AuthProtected>
-              <Appointment />
-            </AuthProtected>
+            // <PublicRoute>
+            <Registration />
+            // </PublicRoute>
           }
         />
         <Route
-          path="/appointment-success"
+          path="/vets/login"
           element={
-            <AuthProtected>
-              <AppointmentSuccess />
-            </AuthProtected>
+            // <PublicRoute>
+            <Login />
+            // </PublicRoute>
           }
         />
-        <Route
-          path="/appointment-error"
-          element={
-            <AuthProtected>
-              <AppointmentError />
-            </AuthProtected>
-          }
-        />
-        <Route
-          path="/user/settings"
-          element={
-            <AuthProtected>
-              <UserSettings />
-            </AuthProtected>
-          }
-        />
-        <Route
-          path="/user/my-appointment"
-          element={
-            <AuthProtected>
-              <MyAppointment />
-            </AuthProtected>
-          }
-        />
-        <Route
-          path="/user/my-appointment-editing"
-          element={
-            <AuthProtected>
-              <MyAppointmentEditing />
-            </AuthProtected>
-          }
-        />
+
         <Route
           path="/vets/accountsettings"
           element={
-            // <AuthProtected>
-            <AccountSetting />
-            // </AuthProtected>
+            <VetProtected>
+              <AccountSetting />
+            </VetProtected>
           }
         />
         <Route
-          path="/vets/availabilities"
+          path="/vets/MyAvailabilities"
           element={
-            <AuthProtected>
+            <VetProtected>
               <Availabilities />
-            </AuthProtected>
+            </VetProtected>
           }
         />
         <Route
           path="/vets/calender"
           element={
-            <AuthProtected>
+            <VetProtected>
               <Calender />
-            </AuthProtected>
+            </VetProtected>
           }
         />
-        <Route path="/vet-lists" element={<VetLists />} />
+        {/* User Routes  */}
+        {/* User Routes  */}
+        {/* User Routes  */}
+        {/* User Routes  */}
+        {/* User Routes  */}
+        {/* User Routes  */}
+        <Route
+          path="/user/registration"
+          element={
+            // <PublicRoute>
+            <UserRegistration />
+            // </PublicRoute>
+          }
+        />
+        <Route
+          path="/user/login"
+          element={
+            // <PublicRoute>
+            <UserLogin />
+            // </PublicRoute>
+          }
+        />
+        <Route
+          path="/user/vet-lists"
+          element={
+            <UserProtected>
+              <VetLists />
+            </UserProtected>
+          }
+        />
+        <Route
+          path="/user/new-appointment"
+          element={
+            <UserProtected>
+              <Appointment />
+            </UserProtected>
+          }
+        />
+        <Route
+          path="/user/appointment-success"
+          element={
+            <UserProtected>
+              <AppointmentSuccess />
+            </UserProtected>
+          }
+        />
+        <Route
+          path="/user/appointment-error"
+          element={
+            <UserProtected>
+              <AppointmentError />
+            </UserProtected>
+          }
+        />
+        <Route
+          path="/user/my-appointment"
+          element={
+            <UserProtected>
+              <MyAppointment />
+            </UserProtected>
+          }
+        />
+        <Route
+          path="/user/my-appointment-editing"
+          element={
+            <UserProtected>
+              <MyAppointmentEditing />
+            </UserProtected>
+          }
+        />
+        <Route
+          path="/user/accountsettings"
+          element={
+            <UserProtected>
+              <UserSettings />
+            </UserProtected>
+          }
+        />
       </Routes>
       <Footer />
     </main>

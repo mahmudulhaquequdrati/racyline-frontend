@@ -116,7 +116,7 @@ const VetList = ({ vetInfo }) => {
           </div>
         </div>
         <button className="w-full text-white text-[15px] font-medium text-center p-[12px] bg-[#E8971F] rounded">
-          <Link to={"/new-appointment"}>Prenota ora</Link>
+          <Link to={"/user/new-appointment"}>Prenota ora</Link>
         </button>
       </div>
     </div>

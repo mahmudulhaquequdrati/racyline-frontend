@@ -5,11 +5,17 @@ import moment from "moment/moment";
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Delete from "../../assets/ICONS/delete.svg";
 import PlusIcon from "../../assets/ICONS/plusIcon.svg";
+import {
+  useCreateAvailabilitiesMutation,
+  useGetAllAvailabilitiesQuery,
+} from "../../features/availabilities/availabilitiesApi";
 
 const Availabilities = () => {
+  // const [weakData, setWeakData] = useState([]);
   const [weakData, setWeakData] = useState([
     {
       name: "Lun",
@@ -72,6 +78,26 @@ const Availabilities = () => {
       available: false,
     },
   ]);
+
+  const { user } = useSelector((state) => state.auth);
+  console.log(user);
+  const { data, isLoading, isError, isSuccess } = useGetAllAvailabilitiesQuery(
+    {
+      userId: user?._id,
+    },
+    { skip: !user?._id }
+  );
+
+  // Redux mutation for sending data to server
+  const [
+    createAvailabilities,
+    {
+      data: createAvailabilitiesResponse,
+      isLoading: creatingAvailabilities,
+      isError: errorSavingAvailabilities,
+      isSuccess: savedAvailabilities,
+    },
+  ] = useCreateAvailabilitiesMutation();
 
   const navigate = useNavigate();
 
@@ -272,126 +298,158 @@ const Availabilities = () => {
   };
 
   const onSubmit = () => {
-    console.log(weakData);
-    navigate("/registration-google-calender-connect");
+    const newData = {
+      userId: user?._id,
+      availabilities: weakData,
+    };
+    if (weakData?.length > 0) {
+      // sending data through redux mutation
+      createAvailabilities(newData);
+    }
+    // navigate("/registration-google-calender-connect");
   };
 
-  return (
-    <section className="flex justify-center items-center bg-[#FFF7EC] py-16 border-[1px] border-[#EAEAEB]">
-      <div className="max-w-[638px] w-full  rounded-lg p-16 bg-white">
-        <h1 className="text-[32px] font-bold leading-10 text-center mb-6">
-          Inserisci le tue disponibilità
-        </h1>
-        <p className="text-center text-[15px] text-[#00000099] pb-8">
-          Aggiungi tutti i tuoi orari lavorativi per ogni giorno della settimana
-          per concludere la registrazione
-        </p>
-        <div className="flex flex-col gap-y-8">
-          {weakData?.map((res, i) => (
-            <div
-              key={i}
-              className="flex gap-6 justify-between  border-b border-b-[#E5E7EC] pb-6"
-            >
-              <div className="flex items-start gap-6">
-                <div className="mr-2 flex items-center mt-3">
-                  <label className="option ">
-                    <span> {res.name}</span>
-                    <input
-                      type="checkbox"
-                      className="mr-2"
-                      name="checkbox1"
-                      checked={res.available}
-                      onChange={(e) => onAvailableChange(e.target.checked, i)}
-                    />
-                    <span className="customcheckbox"></span>
-                  </label>
-                </div>
-                {res.availabilities?.length === 0 ? (
-                  <div className="text-gray-700 text-sm mt-3">
-                    Non disponibile
-                  </div>
-                ) : (
-                  <div>
-                    {res.availabilities?.map((avl, avlI) => (
-                      <div
-                        key={avlI}
-                        className={`flex items-center gap-[10px] ${
-                          avlI !== 0 && "mt-3"
-                        }`}
-                      >
-                        <div className="w-[85px]">
-                          <DatePicker
-                            selected={avl?.start_time}
-                            onChange={(date) =>
-                              handleAvailabilityChange(
-                                i,
-                                avlI,
-                                "start_time",
-                                date
-                              )
-                            }
-                            showTimeSelect
-                            showTimeSelectOnly
-                            timeIntervals={15}
-                            timeCaption=""
-                            dateFormat="HH:mm"
-                            timeFormat="HH:mm"
-                            className="w-full rounded-lg py-3 px-4 outline-none border-[1px] border-[#E5E7EC] "
-                          />
-                        </div>
-                        <hr className="w-[10px] border-black" />
-                        <div className="w-[85px]">
-                          <DatePicker
-                            selected={avl?.end_time}
-                            onChange={(date) =>
-                              handleAvailabilityChange(
-                                i,
-                                avlI,
-                                "end_time",
-                                date
-                              )
-                            }
-                            showTimeSelect
-                            showTimeSelectOnly
-                            timeIntervals={15}
-                            timeCaption=""
-                            dateFormat="HH:mm"
-                            timeFormat="HH:mm"
-                            className="w-full rounded-lg py-3 px-4 outline-none border-[1px] border-[#E5E7EC] "
-                          />
-                        </div>
-                        <div>
-                          <img
-                            className="cursor-pointer"
-                            onClick={() => deleteFields(i, avlI)}
-                            src={Delete}
-                            alt=""
-                          />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-              <div className="mt-3">
-                <img
-                  className="cursor-pointer"
-                  onClick={() => addFields(i)}
-                  src={PlusIcon}
-                  alt=""
-                />
-              </div>
-            </div>
-          ))}
-        </div>
+  // useEffect(() => {
+  //   if (data?.data?._id) {
+  //     const loadedData = data?.data?.availabilities?.map((avil) => {
+  //       return avil?.availabilities?.map((times) => {
+  //         const startTimeHours = new Date(`${times?.start_time}`).getHours();
+  //         const startTimeMinutes = new Date(
+  //           `${times?.start_time}`
+  //         ).getMinutes();
+  //         const endTimeHours = new Date(`${times?.end_time}`).getHours();
+  //         const endTimeMinutes = new Date(`${times?.end_time}`).getMinutes();
 
-        <div className="mt-8">
-          <button
-            onClick={onSubmit}
-            className={`w-full rounded-lg py-3 px-4 outline-none  text-white bg-primary`}
-          >
-            Avanti
-          </button>
+  //         return {
+  //           ...times,
+  //           start_time: setHours(setMinutes(new Date(), 2), 2),
+  //           end_time: setHours(setMinutes(new Date(), 3), 3),
+  //         };
+  //       });
+  //     });
+  //     console.log(loadedData);
+  //     // setWeakData([]);
+  //   }
+  // }, []);
+
+  return (
+    <section className="flex bg-[#FFF7EC] py-16 border-[1px] border-[#EAEAEB]">
+      <div className="max-w-[1140px] w-full mx-auto">
+        <div className="max-w-[638px] w-full  rounded-lg p-16 bg-white">
+          <h1 className="text-[32px] font-bold leading-10 text-center mb-6">
+            Inserisci le tue disponibilità
+          </h1>
+          <p className="text-center text-[15px] text-[#00000099] pb-8">
+            Aggiungi tutti i tuoi orari lavorativi per ogni giorno della
+            settimana per concludere la registrazione
+          </p>
+          <div className="flex flex-col gap-y-8">
+            {weakData?.map((res, i) => (
+              <div
+                key={i}
+                className="flex gap-6 justify-between  border-b border-b-[#E5E7EC] pb-6"
+              >
+                <div className="flex items-start gap-6">
+                  <div className="mr-2 flex items-center mt-3">
+                    <label className="option ">
+                      <span> {res.name}</span>
+                      <input
+                        type="checkbox"
+                        className="mr-2"
+                        name="checkbox1"
+                        checked={res.available}
+                        onChange={(e) => onAvailableChange(e.target.checked, i)}
+                      />
+                      <span className="customcheckbox"></span>
+                    </label>
+                  </div>
+                  {res.availabilities?.length === 0 ? (
+                    <div className="text-gray-700 text-sm mt-3">
+                      Non disponibile
+                    </div>
+                  ) : (
+                    <div>
+                      {res.availabilities?.map((avl, avlI) => (
+                        <div
+                          key={avlI}
+                          className={`flex items-center gap-[10px] ${
+                            avlI !== 0 && "mt-3"
+                          }`}
+                        >
+                          <div className="w-[85px]">
+                            <DatePicker
+                              selected={avl?.start_time}
+                              onChange={(date) =>
+                                handleAvailabilityChange(
+                                  i,
+                                  avlI,
+                                  "start_time",
+                                  date
+                                )
+                              }
+                              showTimeSelect
+                              showTimeSelectOnly
+                              timeIntervals={15}
+                              timeCaption=""
+                              dateFormat="HH:mm"
+                              timeFormat="HH:mm"
+                              className="w-full rounded-lg py-3 px-4 outline-none border-[1px] border-[#E5E7EC] "
+                            />
+                          </div>
+                          <hr className="w-[10px] border-black" />
+                          <div className="w-[85px]">
+                            <DatePicker
+                              selected={avl?.end_time}
+                              onChange={(date) =>
+                                handleAvailabilityChange(
+                                  i,
+                                  avlI,
+                                  "end_time",
+                                  date
+                                )
+                              }
+                              showTimeSelect
+                              showTimeSelectOnly
+                              timeIntervals={15}
+                              timeCaption=""
+                              dateFormat="HH:mm"
+                              timeFormat="HH:mm"
+                              className="w-full rounded-lg py-3 px-4 outline-none border-[1px] border-[#E5E7EC] "
+                            />
+                          </div>
+                          <div>
+                            <img
+                              className="cursor-pointer"
+                              onClick={() => deleteFields(i, avlI)}
+                              src={Delete}
+                              alt=""
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                <div className="mt-3">
+                  <img
+                    className="cursor-pointer"
+                    onClick={() => addFields(i)}
+                    src={PlusIcon}
+                    alt=""
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8">
+            <button
+              onClick={onSubmit}
+              className={`w-full rounded-lg py-3 px-4 outline-none  text-white bg-primary`}
+            >
+              Avanti
+            </button>
+          </div>
         </div>
       </div>
     </section>
