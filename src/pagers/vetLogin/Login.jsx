@@ -14,7 +14,7 @@ function Login() {
   const handleLogin = (e) => {
     e.preventDefault();
     setGoogleLogin(false);
-    login({ email, password, userType: "user" });
+    login({ email, password, userType: "vet_admin" });
   };
   useEffect(() => {
     if (isError) {

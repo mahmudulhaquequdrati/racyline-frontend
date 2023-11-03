@@ -11,7 +11,6 @@ import Registration from "./pagers/vetRegistration/Registration";
 import RegistrationGoogleCalenderConnect from "./pagers/vetRegistration/RegistrationGoogleCalenderConnect";
 import RegistrationGoogleCalenderConnected from "./pagers/vetRegistration/RegistrationGoogleCalenderConnected";
 import RegistrationWithGoogle from "./pagers/vetRegistration/RegistrationWithGoogle";
-import AuthProtected from "./routes/AuthProtected";
 // import PublicRoute from "./routes/PublicRoutes";
 import MyAppointment from "./pagers/UserPages/MyAppointment";
 import MyAppointmentEditing from "./pagers/UserPages/MyAppointmentEditing";
@@ -43,26 +42,26 @@ const App = () => {
         <Route
           path="/registration-with-google"
           element={
-            <AuthProtected>
-              <RegistrationWithGoogle />
-            </AuthProtected>
+            // <AuthProtected>
+            <RegistrationWithGoogle />
+            // </AuthProtected>
           }
         />
 
         <Route
           path="/registration-google-calender-connect"
           element={
-            <AuthProtected>
-              <RegistrationGoogleCalenderConnect />
-            </AuthProtected>
+            // <AuthProtected>
+            <RegistrationGoogleCalenderConnect />
+            // </AuthProtected>
           }
         />
         <Route
           path="/registration-google-calender-connected"
           element={
-            <AuthProtected>
-              <RegistrationGoogleCalenderConnected />
-            </AuthProtected>
+            // <AuthProtected>
+            <RegistrationGoogleCalenderConnected />
+            // </AuthProtected>
           }
         />
         <Route
