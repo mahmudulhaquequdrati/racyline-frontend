@@ -1,16 +1,18 @@
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { userLoggedOut } from "../../features/auth/authSlice";
 // import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
 export default function DropDown() {
   const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleLogut = () => {
     sessionStorage.clear();
     dispatch(userLoggedOut());
+    navigate("/user/login");
   };
   return (
     <div className=" w-56 text-right">
@@ -50,7 +52,7 @@ export default function DropDown() {
                   <Menu.Item>
                     {({ active }) => (
                       <Link
-                        to="/vets/accountsettings"
+                        to="/vets/my-appointment"
                         className={`${
                           active
                             ? "bg-[#e8981f26] text-gray-800"

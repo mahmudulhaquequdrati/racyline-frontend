@@ -39,7 +39,7 @@ export default function VetCalender() {
   const [value, onChange] = useState(new Date());
 
   return (
-    <div>
+    <div className="max-w-[1140px] w-full mx-auto">
       <Calendar
         onChange={onChange}
         value={value}

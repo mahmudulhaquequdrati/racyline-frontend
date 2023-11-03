@@ -2,76 +2,41 @@
 import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
 import moment from "moment/moment";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Delete from "../../assets/ICONS/delete.svg";
 import PlusIcon from "../../assets/ICONS/plusIcon.svg";
+import {
+  useCreateAvailabilitiesMutation,
+  useGetAllAvailabilitiesQuery,
+} from "../../features/availabilities/availabilitiesApi";
 
 const RegistrationAvailabilities = () => {
-  const [weakData, setWeakData] = useState([
+  const [weakData, setWeakData] = useState([]);
+
+  const { user } = useSelector((state) => state.auth);
+
+  const { data, isLoading, isError, isSuccess } = useGetAllAvailabilitiesQuery(
     {
-      name: "Lun",
-      availabilities: [
-        {
-          start_time: setHours(setMinutes(new Date(), 0), 0),
-          end_time: setHours(setMinutes(new Date(), 0), 0),
-        },
-      ],
-      available: true,
+      userId: user?._id,
     },
+    { skip: !user?._id }
+  );
+
+  // Redux mutation for sending data to server
+  const [
+    createAvailabilities,
     {
-      name: "Mar",
-      availabilities: [
-        {
-          start_time: setHours(setMinutes(new Date(), 0), 0),
-          end_time: setHours(setMinutes(new Date(), 0), 0),
-        },
-      ],
-      available: true,
+      data: createAvailabilitiesResponse,
+      isLoading: creatingAvailabilities,
+      isError: errorSavingAvailabilities,
+      isSuccess: savedAvailabilities,
     },
-    {
-      name: "Mer",
-      availabilities: [
-        {
-          start_time: setHours(setMinutes(new Date(), 0), 0),
-          end_time: setHours(setMinutes(new Date(), 0), 0),
-        },
-      ],
-      available: true,
-    },
-    {
-      name: "Gio",
-      availabilities: [
-        {
-          start_time: setHours(setMinutes(new Date(), 0), 0),
-          end_time: setHours(setMinutes(new Date(), 0), 0),
-        },
-      ],
-      available: true,
-    },
-    {
-      name: "Ven",
-      availabilities: [
-        {
-          start_time: setHours(setMinutes(new Date(), 0), 0),
-          end_time: setHours(setMinutes(new Date(), 0), 0),
-        },
-      ],
-      available: true,
-    },
-    {
-      name: "Sab",
-      availabilities: [],
-      available: false,
-    },
-    {
-      name: "Dom",
-      availabilities: [],
-      available: false,
-    },
-  ]);
+  ] = useCreateAvailabilitiesMutation();
+
   const navigate = useNavigate();
 
   const addFields = (index) => {
@@ -273,6 +238,75 @@ const RegistrationAvailabilities = () => {
     console.log(weakData);
     navigate("/registration-google-calender-connect");
   };
+
+  useEffect(() => {
+    if (data?.data?._id) {
+      const loadedData = data?.data?.availabilities?.map((avil) => {
+        return {
+          ...avil,
+          availabilities: avil?.availabilities?.map((times) => {
+            const startTimeHours = new Date(`${times?.start_time}`).getHours();
+            const startTimeMinutes = new Date(
+              `${times?.start_time}`
+            ).getMinutes();
+            const endTimeHours = new Date(`${times?.end_time}`).getHours();
+            const endTimeMinutes = new Date(`${times?.end_time}`).getMinutes();
+            return {
+              ...times,
+              start_time: setHours(
+                setMinutes(new Date(), startTimeMinutes),
+                startTimeHours
+              ),
+              end_time: setHours(
+                setMinutes(new Date(), endTimeMinutes),
+                endTimeHours
+              ),
+            };
+          }),
+        };
+      });
+      setWeakData(loadedData);
+    } else {
+      const emptyWeekData = [
+        {
+          name: "Lun",
+          availabilities: [],
+          available: false,
+        },
+        {
+          name: "Mar",
+          availabilities: [],
+          available: false,
+        },
+        {
+          name: "Mer",
+          availabilities: [],
+          available: false,
+        },
+        {
+          name: "Gio",
+          availabilities: [],
+          available: false,
+        },
+        {
+          name: "Ven",
+          availabilities: [],
+          available: false,
+        },
+        {
+          name: "Sab",
+          availabilities: [],
+          available: false,
+        },
+        {
+          name: "Dom",
+          availabilities: [],
+          available: false,
+        },
+      ];
+      setWeakData(emptyWeekData);
+    }
+  }, [data?.data?._id]);
 
   return (
     <section className="flex justify-center items-center bg-[#FFF7EC] py-16 border-[1px] border-[#EAEAEB]">
