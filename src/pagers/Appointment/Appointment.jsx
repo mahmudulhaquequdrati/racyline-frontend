@@ -93,9 +93,11 @@ const Appointment = () => {
                 />
               </div>
               <div className="w-full">
-                <button className="w-full text-white text-[15px] font-medium text-center p-[12px] bg-[#E8971F] rounded">
-                  <Link to={"/appointment-success"}>Prenota ora</Link>
-                </button>
+                <Link to={"/user/appointment-success"}>
+                  <button className="w-full text-white text-[15px] font-medium text-center p-[12px] bg-[#E8971F] rounded">
+                    Prenota ora
+                  </button>
+                </Link>
               </div>
             </form>
           </div>
