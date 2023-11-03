@@ -3,18 +3,49 @@ import { useNavigate } from "react-router-dom";
 function RegistrationWithGoogle() {
   const navigate = useNavigate();
 
+  const handleTokenFromQueryParams = () => {
+    const query = new URLSearchParams(window.location.search);
+    const accessToken = query.get("accessToken");
+    const refreshToken = query.get("refreshToken");
+    const createdId = query.get("createdId");
+    const email = query.get("email");
+
+    const identity = { accessToken, refreshToken, userId: createdId, email };
+    if (accessToken && refreshToken && createdId && email) {
+      return identity;
+    }
+  };
+
   const handleForm = async (e) => {
     e.preventDefault();
+    const doctor_type = e.target.doctor_type.value;
+    const animals_types = e.target.animals_types.value;
+    const veterinary_address = e.target.veterinary_address.value;
+    const identity = handleTokenFromQueryParams();
+
+    const uploadData = {
+      identity,
+      doctor_type,
+      animals_types,
+      veterinary_address,
+    };
+
+    console.log("uploadData ", uploadData);
 
     try {
       const request = await fetch(
-        "http://localhost:5000/api/v1/handleGoogleDataUpdate",
+        "http://localhost:5000/api/v1/handleGoogleDataCreate",
         {
-          method: "patch",
-          // body:
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(uploadData),
         }
       );
       const response = await request.json();
+      console.log("response - ", response);
       window.location.href = response.url;
     } catch (error) {
       console.log("App.js 12 | error", error);
@@ -37,6 +68,7 @@ function RegistrationWithGoogle() {
           <div>
             <input
               type="text"
+              name="doctor_type"
               placeholder="Scegli che tipo di dottore sei *"
               className="w-full rounded-lg py-3 px-4 outline-none border-[1px] border-[#E5E7EC]"
             />
@@ -44,6 +76,7 @@ function RegistrationWithGoogle() {
           <div>
             <input
               type="text"
+              name="animals_types"
               placeholder="Scegli gli animali che curi *"
               className="w-full rounded-lg py-3 px-4 outline-none border-[1px] border-[#E5E7EC]"
             />
@@ -51,6 +84,7 @@ function RegistrationWithGoogle() {
           <div>
             <input
               type="text"
+              name="veterinary_address"
               placeholder="Indirizzo del tuo ufficio veterinario *"
               className="w-full rounded-lg py-3 px-4 outline-none border-[1px] border-[#E5E7EC]"
             />
