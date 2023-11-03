@@ -2,7 +2,7 @@
 import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
 import moment from "moment/moment";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useSelector } from "react-redux";
@@ -15,72 +15,10 @@ import {
 } from "../../features/availabilities/availabilitiesApi";
 
 const Availabilities = () => {
-  // const [weakData, setWeakData] = useState([]);
-  const [weakData, setWeakData] = useState([
-    {
-      name: "Lun",
-      availabilities: [
-        {
-          start_time: setHours(setMinutes(new Date(), 0), 0),
-          end_time: setHours(setMinutes(new Date(), 0), 0),
-        },
-      ],
-      available: true,
-    },
-    {
-      name: "Mar",
-      availabilities: [
-        {
-          start_time: setHours(setMinutes(new Date(), 0), 0),
-          end_time: setHours(setMinutes(new Date(), 0), 0),
-        },
-      ],
-      available: true,
-    },
-    {
-      name: "Mer",
-      availabilities: [
-        {
-          start_time: setHours(setMinutes(new Date(), 0), 0),
-          end_time: setHours(setMinutes(new Date(), 0), 0),
-        },
-      ],
-      available: true,
-    },
-    {
-      name: "Gio",
-      availabilities: [
-        {
-          start_time: setHours(setMinutes(new Date(), 0), 0),
-          end_time: setHours(setMinutes(new Date(), 0), 0),
-        },
-      ],
-      available: true,
-    },
-    {
-      name: "Ven",
-      availabilities: [
-        {
-          start_time: setHours(setMinutes(new Date(), 0), 0),
-          end_time: setHours(setMinutes(new Date(), 0), 0),
-        },
-      ],
-      available: true,
-    },
-    {
-      name: "Sab",
-      availabilities: [],
-      available: false,
-    },
-    {
-      name: "Dom",
-      availabilities: [],
-      available: false,
-    },
-  ]);
+  const [weakData, setWeakData] = useState([]);
 
   const { user } = useSelector((state) => state.auth);
-  console.log(user);
+
   const { data, isLoading, isError, isSuccess } = useGetAllAvailabilitiesQuery(
     {
       userId: user?._id,
@@ -309,28 +247,74 @@ const Availabilities = () => {
     // navigate("/registration-google-calender-connect");
   };
 
-  // useEffect(() => {
-  //   if (data?.data?._id) {
-  //     const loadedData = data?.data?.availabilities?.map((avil) => {
-  //       return avil?.availabilities?.map((times) => {
-  //         const startTimeHours = new Date(`${times?.start_time}`).getHours();
-  //         const startTimeMinutes = new Date(
-  //           `${times?.start_time}`
-  //         ).getMinutes();
-  //         const endTimeHours = new Date(`${times?.end_time}`).getHours();
-  //         const endTimeMinutes = new Date(`${times?.end_time}`).getMinutes();
-
-  //         return {
-  //           ...times,
-  //           start_time: setHours(setMinutes(new Date(), 2), 2),
-  //           end_time: setHours(setMinutes(new Date(), 3), 3),
-  //         };
-  //       });
-  //     });
-  //     console.log(loadedData);
-  //     // setWeakData([]);
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (data?.data?._id) {
+      const loadedData = data?.data?.availabilities?.map((avil) => {
+        return {
+          ...avil,
+          availabilities: avil?.availabilities?.map((times) => {
+            const startTimeHours = new Date(`${times?.start_time}`).getHours();
+            const startTimeMinutes = new Date(
+              `${times?.start_time}`
+            ).getMinutes();
+            const endTimeHours = new Date(`${times?.end_time}`).getHours();
+            const endTimeMinutes = new Date(`${times?.end_time}`).getMinutes();
+            return {
+              ...times,
+              start_time: setHours(
+                setMinutes(new Date(), startTimeMinutes),
+                startTimeHours
+              ),
+              end_time: setHours(
+                setMinutes(new Date(), endTimeMinutes),
+                endTimeHours
+              ),
+            };
+          }),
+        };
+      });
+      setWeakData(loadedData);
+    } else {
+      const emptyWeekData = [
+        {
+          name: "Lun",
+          availabilities: [],
+          available: false,
+        },
+        {
+          name: "Mar",
+          availabilities: [],
+          available: false,
+        },
+        {
+          name: "Mer",
+          availabilities: [],
+          available: false,
+        },
+        {
+          name: "Gio",
+          availabilities: [],
+          available: false,
+        },
+        {
+          name: "Ven",
+          availabilities: [],
+          available: false,
+        },
+        {
+          name: "Sab",
+          availabilities: [],
+          available: false,
+        },
+        {
+          name: "Dom",
+          availabilities: [],
+          available: false,
+        },
+      ];
+      setWeakData(emptyWeekData);
+    }
+  }, [data?.data?._id]);
 
   return (
     <section className="flex bg-[#FFF7EC] py-16 border-[1px] border-[#EAEAEB]">
@@ -344,102 +328,110 @@ const Availabilities = () => {
             settimana per concludere la registrazione
           </p>
           <div className="flex flex-col gap-y-8">
-            {weakData?.map((res, i) => (
-              <div
-                key={i}
-                className="flex gap-6 justify-between  border-b border-b-[#E5E7EC] pb-6"
-              >
-                <div className="flex items-start gap-6">
-                  <div className="mr-2 flex items-center mt-3">
-                    <label className="option ">
-                      <span> {res.name}</span>
-                      <input
-                        type="checkbox"
-                        className="mr-2"
-                        name="checkbox1"
-                        checked={res.available}
-                        onChange={(e) => onAvailableChange(e.target.checked, i)}
-                      />
-                      <span className="customcheckbox"></span>
-                    </label>
-                  </div>
-                  {res.availabilities?.length === 0 ? (
-                    <div className="text-gray-700 text-sm mt-3">
-                      Non disponibile
-                    </div>
-                  ) : (
-                    <div>
-                      {res.availabilities?.map((avl, avlI) => (
-                        <div
-                          key={avlI}
-                          className={`flex items-center gap-[10px] ${
-                            avlI !== 0 && "mt-3"
-                          }`}
-                        >
-                          <div className="w-[85px]">
-                            <DatePicker
-                              selected={avl?.start_time}
-                              onChange={(date) =>
-                                handleAvailabilityChange(
-                                  i,
-                                  avlI,
-                                  "start_time",
-                                  date
-                                )
-                              }
-                              showTimeSelect
-                              showTimeSelectOnly
-                              timeIntervals={15}
-                              timeCaption=""
-                              dateFormat="HH:mm"
-                              timeFormat="HH:mm"
-                              className="w-full rounded-lg py-3 px-4 outline-none border-[1px] border-[#E5E7EC] "
-                            />
-                          </div>
-                          <hr className="w-[10px] border-black" />
-                          <div className="w-[85px]">
-                            <DatePicker
-                              selected={avl?.end_time}
-                              onChange={(date) =>
-                                handleAvailabilityChange(
-                                  i,
-                                  avlI,
-                                  "end_time",
-                                  date
-                                )
-                              }
-                              showTimeSelect
-                              showTimeSelectOnly
-                              timeIntervals={15}
-                              timeCaption=""
-                              dateFormat="HH:mm"
-                              timeFormat="HH:mm"
-                              className="w-full rounded-lg py-3 px-4 outline-none border-[1px] border-[#E5E7EC] "
-                            />
-                          </div>
-                          <div>
-                            <img
-                              className="cursor-pointer"
-                              onClick={() => deleteFields(i, avlI)}
-                              src={Delete}
-                              alt=""
-                            />
-                          </div>
+            {isLoading ? (
+              <p>Loading...</p>
+            ) : (
+              <>
+                {weakData?.map((res, i) => (
+                  <div
+                    key={i}
+                    className="flex gap-6 justify-between  border-b border-b-[#E5E7EC] pb-6"
+                  >
+                    <div className="flex items-start gap-6">
+                      <div className="mr-2 flex items-center mt-3">
+                        <label className="option ">
+                          <span> {res.name}</span>
+                          <input
+                            type="checkbox"
+                            className="mr-2"
+                            name="checkbox1"
+                            checked={res.available}
+                            onChange={(e) =>
+                              onAvailableChange(e.target.checked, i)
+                            }
+                          />
+                          <span className="customcheckbox"></span>
+                        </label>
+                      </div>
+                      {res.availabilities?.length === 0 ? (
+                        <div className="text-gray-700 text-sm mt-3">
+                          Non disponibile
                         </div>
-                      ))}
+                      ) : (
+                        <div>
+                          {res.availabilities?.map((avl, avlI) => (
+                            <div
+                              key={avlI}
+                              className={`flex items-center gap-[10px] ${
+                                avlI !== 0 && "mt-3"
+                              }`}
+                            >
+                              <div className="w-[85px]">
+                                <DatePicker
+                                  selected={avl?.start_time}
+                                  onChange={(date) =>
+                                    handleAvailabilityChange(
+                                      i,
+                                      avlI,
+                                      "start_time",
+                                      date
+                                    )
+                                  }
+                                  showTimeSelect
+                                  showTimeSelectOnly
+                                  timeIntervals={15}
+                                  timeCaption=""
+                                  dateFormat="HH:mm"
+                                  timeFormat="HH:mm"
+                                  className="w-full rounded-lg py-3 px-4 outline-none border-[1px] border-[#E5E7EC] "
+                                />
+                              </div>
+                              <hr className="w-[10px] border-black" />
+                              <div className="w-[85px]">
+                                <DatePicker
+                                  selected={avl?.end_time}
+                                  onChange={(date) =>
+                                    handleAvailabilityChange(
+                                      i,
+                                      avlI,
+                                      "end_time",
+                                      date
+                                    )
+                                  }
+                                  showTimeSelect
+                                  showTimeSelectOnly
+                                  timeIntervals={15}
+                                  timeCaption=""
+                                  dateFormat="HH:mm"
+                                  timeFormat="HH:mm"
+                                  className="w-full rounded-lg py-3 px-4 outline-none border-[1px] border-[#E5E7EC] "
+                                />
+                              </div>
+                              <div>
+                                <img
+                                  className="cursor-pointer"
+                                  onClick={() => deleteFields(i, avlI)}
+                                  src={Delete}
+                                  alt=""
+                                />
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
-                <div className="mt-3">
-                  <img
-                    className="cursor-pointer"
-                    onClick={() => addFields(i)}
-                    src={PlusIcon}
-                    alt=""
-                  />
-                </div>
-              </div>
-            ))}
+                    <div className="mt-3">
+                      <img
+                        className="cursor-pointer"
+                        onClick={() => addFields(i)}
+                        src={PlusIcon}
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                ))}
+              </>
+            )}
           </div>
 
           <div className="mt-8">
