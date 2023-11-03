@@ -1,11 +1,27 @@
 import { useNavigate } from "react-router-dom";
-import { primary_bg_color } from "../../../constant";
 
 function RegistrationWithGoogle() {
   const navigate = useNavigate();
-  const handleForm = (e) => {
+
+  const handleForm = async (e) => {
     e.preventDefault();
-    navigate("/vets/appointment");
+
+    try {
+      const request = await fetch(
+        "http://localhost:5000/api/v1/handleGoogleDataUpdate",
+        {
+          method: "patch",
+          // body:
+        }
+      );
+      const response = await request.json();
+      window.location.href = response.url;
+    } catch (error) {
+      console.log("App.js 12 | error", error);
+      throw new Error("Issue with Login", error.message);
+    }
+
+    // navigate("/vets/appointment");
   };
   return (
     <section className="flex justify-center items-center bg-[#FFF7EC] py-16 border-[1px] border-[#EAEAEB]">
