@@ -1,9 +1,9 @@
 const Appointment = () => {
   return (
     <div className="bg-[#FFF7EC] h-[100vh]">
-      <p className="font-bold p-16 text-3xl">
-        Scegli il veterinario, l’orario e prenota la visita
-      </p>
+      <div className="max-w-[1140px] w-full mx-auto">
+        <p className="font-bold py-6 text-3xl">Lorem Ipsum</p>
+      </div>
     </div>
   );
 };

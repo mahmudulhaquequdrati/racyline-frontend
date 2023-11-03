@@ -14,7 +14,7 @@ function Login() {
   const handleLogin = (e) => {
     e.preventDefault();
     setGoogleLogin(false);
-    login({ email, password });
+    login({ email, password, userType: "vet_admin" });
   };
   useEffect(() => {
     if (isError) {
@@ -23,7 +23,7 @@ function Login() {
     if (LoginInData?.data?.accessToken && googleLogin) {
       navigate("/registration-with-google");
     } else if (LoginInData?.data?.accessToken && !googleLogin) {
-      navigate("/");
+      navigate("/vets/my-appointment");
     }
   }, [LoginInData, isError, navigate, googleLogin]);
 
