@@ -1,6 +1,7 @@
-import { Fragment, useState } from "react";
-import { ChevronDownIcon, CheckIcon } from "@heroicons/react/24/solid";
 import { Listbox, Transition } from "@headlessui/react";
+import { CheckIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
+import { Fragment, useState } from "react";
+import { useSelector } from "react-redux";
 import GoogleIcon from "../../assets/ICONS/google.svg";
 
 const people = [
@@ -22,6 +23,8 @@ const type = [
 const AccountSetting = () => {
   const [selected, setSelected] = useState(people[0]);
   const [selected2, setSelected2] = useState(type[0]);
+
+  const { user } = useSelector((state) => state.auth);
   return (
     <div className="p-12 lg:p-20 min-h-[100vh] bg-[#FFF7EC]">
       <div>
@@ -185,6 +188,7 @@ const AccountSetting = () => {
           <div>
             <input
               type="email"
+              value={user?.email}
               placeholder="mariorossi@gmail.com"
               className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full md:w-[60%] lg:w-[40%]"
             />

@@ -1,6 +1,7 @@
-import { primary_bg_color } from "../../../constant";
+import { useSelector } from "react-redux";
 
 const Calender = () => {
+  const { user } = useSelector((state) => state.auth);
   return (
     <div className="p-12 lg:p-20 min-h-[100vh] bg-[#FFF7EC]">
       <h1 className="font-bold text-2xl mb-6">Calendario</h1>
@@ -8,7 +9,7 @@ const Calender = () => {
         <p className="text-gray-400">
           Account attualmente connesso al Calendario Google
         </p>
-        <p className="font-bold text-lg">marcorizzaa@gmail.com</p>
+        <p className="font-bold text-lg">{user?.email}</p>
       </div>
       <div className="mt-8">
         <button
