@@ -65,11 +65,11 @@ const App = () => {
           }
         />
         <Route
-          path="/registration-availabilities"
+          path="/vets/availabilities"
           element={
-            // <AuthProtected>
-            <RegistrationAvailabilities />
-            //</AuthProtected>
+            <VetProtected>
+              <RegistrationAvailabilities />
+            </VetProtected>
           }
         />
         {/* Vets Routes  */}

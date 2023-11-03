@@ -57,6 +57,20 @@ export default function DropDown() {
                             : "text-gray-900"
                         } group flex w-full items-center rounded-md px-4 py-2 text-sm`}
                       >
+                        Appointment List
+                      </Link>
+                    )}
+                  </Menu.Item>
+                  <Menu.Item>
+                    {({ active }) => (
+                      <Link
+                        to="/vets/accountsettings"
+                        className={`${
+                          active
+                            ? "bg-[#e8981f26] text-gray-800"
+                            : "text-gray-900"
+                        } group flex w-full items-center rounded-md px-4 py-2 text-sm`}
+                      >
                         Account Settings
                       </Link>
                     )}
@@ -94,6 +108,20 @@ export default function DropDown() {
 
               {user?.role === "user" && (
                 <>
+                  <Menu.Item>
+                    {({ active }) => (
+                      <Link
+                        to="/user/vet-lists"
+                        className={`${
+                          active
+                            ? "bg-[#e8981f26] text-gray-800"
+                            : "text-gray-900"
+                        } group flex w-full items-center rounded-md px-4 py-2 text-sm`}
+                      >
+                        Vet lists
+                      </Link>
+                    )}
+                  </Menu.Item>
                   <Menu.Item>
                     {({ active }) => (
                       <Link

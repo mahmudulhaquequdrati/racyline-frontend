@@ -1,12 +1,11 @@
 /* eslint-disable no-unused-vars */
-import { Fragment, useEffect, useRef, useState } from "react";
-import userIcon from "../../assets/ICONS/user.svg";
-import { useRegisterMutation } from "../../features/auth/authApi";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { primary_bg_color } from "../../../constant";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
+import axios from "axios";
+import { Fragment, useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import userIcon from "../../assets/ICONS/user.svg";
+import { useRegisterMutation } from "../../features/auth/authApi";
 
 function Registration() {
   const navigate = useNavigate();
@@ -49,7 +48,7 @@ function Registration() {
       alert("Something went wrong");
     }
     if (UserLoggedInData?.data?.accessToken) {
-      navigate("/registration-availabilities");
+      navigate("/vets/availabilities");
     }
   }, [UserLoggedInData, isError, navigate]);
 

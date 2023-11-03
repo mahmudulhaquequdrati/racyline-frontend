@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import vetUser from "../../../public/vetListImage/vetUser.jpeg";
+import VetCalender from "../vetLists/Calender";
 
 const MyAppointmentEditing = () => {
   const time = [
@@ -84,7 +85,7 @@ const MyAppointmentEditing = () => {
             <div className="w-full">
               <div className="flex flex-col sm:flex-row gap-4 mb-4">
                 <div className="w-full sm:w-1/2">
-                  <h2>A Calendar will show here!</h2>
+                  <VetCalender />
                 </div>
                 <div className="w-full sm:w-1/2 flex flex-wrap gap-3">
                   {time?.map((t, index) => (
