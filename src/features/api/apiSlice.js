@@ -28,6 +28,7 @@ export const apiSlice = createApi({
     }
     return result;
   },
+  tagTypes: ["Availabilities"],
   endpoints: (builder) => ({}),
 });
 

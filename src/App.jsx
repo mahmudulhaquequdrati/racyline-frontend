@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import Footer from "./components/common/Footer";
 import Header from "./components/common/Header";
-import Appointment from "./pagers/Appointment/Appointment";
+import UserAppointment from "./pagers/Appointment/Appointment";
 import AppointmentError from "./pagers/Appointment/AppointmentError";
 import AppointmentSuccess from "./pagers/Appointment/AppointmentSuccess";
 import Dashboard from "./pagers/VetDashboard/Dashboard";
@@ -11,13 +11,13 @@ import Registration from "./pagers/vetRegistration/Registration";
 import RegistrationGoogleCalenderConnect from "./pagers/vetRegistration/RegistrationGoogleCalenderConnect";
 import RegistrationGoogleCalenderConnected from "./pagers/vetRegistration/RegistrationGoogleCalenderConnected";
 import RegistrationWithGoogle from "./pagers/vetRegistration/RegistrationWithGoogle";
-import AuthProtected from "./routes/AuthProtected";
 // import PublicRoute from "./routes/PublicRoutes";
 import MyAppointment from "./pagers/UserPages/MyAppointment";
 import MyAppointmentEditing from "./pagers/UserPages/MyAppointmentEditing";
 import UserRegistration from "./pagers/UserPages/UserRegistration";
 import UserSettings from "./pagers/UserPages/UserSettings";
 import AccountSetting from "./pagers/VetDashboard/AccountSetting";
+import VetAppointment from "./pagers/VetDashboard/Appointment";
 import Availabilities from "./pagers/VetDashboard/Availabilities";
 import Calender from "./pagers/VetDashboard/Calender";
 import UserLogin from "./pagers/userLogin/Login";
@@ -43,34 +43,34 @@ const App = () => {
         <Route
           path="/registration-with-google"
           element={
-            <AuthProtected>
-              <RegistrationWithGoogle />
-            </AuthProtected>
+            // <AuthProtected>
+            <RegistrationWithGoogle />
+            // </AuthProtected>
           }
         />
 
         <Route
           path="/registration-google-calender-connect"
           element={
-            <AuthProtected>
-              <RegistrationGoogleCalenderConnect />
-            </AuthProtected>
+            // <AuthProtected>
+            <RegistrationGoogleCalenderConnect />
+            // </AuthProtected>
           }
         />
         <Route
           path="/registration-google-calender-connected"
           element={
-            <AuthProtected>
-              <RegistrationGoogleCalenderConnected />
-            </AuthProtected>
+            // <AuthProtected>
+            <RegistrationGoogleCalenderConnected />
+            // </AuthProtected>
           }
         />
         <Route
-          path="/registration-availabilities"
+          path="/vets/availabilities"
           element={
-            // <AuthProtected>
-            <RegistrationAvailabilities />
-            //</AuthProtected>
+            <VetProtected>
+              <RegistrationAvailabilities />
+            </VetProtected>
           }
         />
         {/* Vets Routes  */}
@@ -95,7 +95,14 @@ const App = () => {
             // </PublicRoute>
           }
         />
-
+        <Route
+          path="/vets/my-appointment"
+          element={
+            <VetProtected>
+              <VetAppointment />
+            </VetProtected>
+          }
+        />
         <Route
           path="/vets/accountsettings"
           element={
@@ -154,7 +161,7 @@ const App = () => {
           path="/user/new-appointment"
           element={
             <UserProtected>
-              <Appointment />
+              <UserAppointment />
             </UserProtected>
           }
         />

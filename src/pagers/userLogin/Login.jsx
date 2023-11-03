@@ -15,7 +15,7 @@ function UserLogin() {
   const handleLogin = (e) => {
     e.preventDefault();
     setGoogleLogin(false);
-    login({ email, password });
+    login({ email, password, userType: "user" });
   };
   useEffect(() => {
     if (isError) {

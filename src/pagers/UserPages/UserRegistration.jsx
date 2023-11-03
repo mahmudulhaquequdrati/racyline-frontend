@@ -41,7 +41,7 @@ function UserRegistration() {
       alert("Something went wrong");
     }
     if (UserLoggedInData?.data?.accessToken) {
-      navigate("/registration-availabilities");
+      navigate("/user/vet-lists");
     }
   }, [UserLoggedInData, isError, navigate]);
 

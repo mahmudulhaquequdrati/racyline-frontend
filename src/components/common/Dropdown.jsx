@@ -1,16 +1,18 @@
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { userLoggedOut } from "../../features/auth/authSlice";
 // import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
 export default function DropDown() {
   const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleLogut = () => {
     sessionStorage.clear();
     dispatch(userLoggedOut());
+    navigate("/user/login");
   };
   return (
     <div className=" w-56 text-right">
@@ -47,6 +49,20 @@ export default function DropDown() {
             <div className="px-2 py-1 ">
               {user?.role === "vet_admin" && (
                 <>
+                  <Menu.Item>
+                    {({ active }) => (
+                      <Link
+                        to="/vets/my-appointment"
+                        className={`${
+                          active
+                            ? "bg-[#e8981f26] text-gray-800"
+                            : "text-gray-900"
+                        } group flex w-full items-center rounded-md px-4 py-2 text-sm`}
+                      >
+                        Appointment List
+                      </Link>
+                    )}
+                  </Menu.Item>
                   <Menu.Item>
                     {({ active }) => (
                       <Link
@@ -94,6 +110,20 @@ export default function DropDown() {
 
               {user?.role === "user" && (
                 <>
+                  <Menu.Item>
+                    {({ active }) => (
+                      <Link
+                        to="/user/vet-lists"
+                        className={`${
+                          active
+                            ? "bg-[#e8981f26] text-gray-800"
+                            : "text-gray-900"
+                        } group flex w-full items-center rounded-md px-4 py-2 text-sm`}
+                      >
+                        Vet lists
+                      </Link>
+                    )}
+                  </Menu.Item>
                   <Menu.Item>
                     {({ active }) => (
                       <Link
