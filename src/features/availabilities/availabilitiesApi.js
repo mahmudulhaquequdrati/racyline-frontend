@@ -8,11 +8,13 @@ export const authApi = apiSlice.injectEndpoints({
         method: "POST",
         body: { availabilities },
       }),
+      providesTags: ["Availabilities"],
     }),
     getAllAvailabilities: builder.query({
       query: ({ userId }) => ({
         url: `getAvailabilities/${userId}`,
       }),
+      invalidatesTags: ["Availabilities"],
     }),
   }),
 });
