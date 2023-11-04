@@ -45,8 +45,7 @@ function RegistrationWithGoogle() {
         }
       );
       const response = await request.json();
-      console.log("response - ", response);
-      window.location.href = response.url;
+      window.location.href = response.data.url;
     } catch (error) {
       console.log("App.js 12 | error", error);
       throw new Error("Issue with Login", error.message);
