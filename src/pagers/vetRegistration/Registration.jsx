@@ -119,7 +119,7 @@ function Registration() {
                 className="w-[105px] h-[105px] rounded-full"
               />
             ) : (
-              <img src={userIcon} alt="" className="w-[32px] h-[33px]" />
+              <img src={userIcon} alt="" className="w-[32px] h-[32px]" />
             )}
           </div>
           <div className="flex flex-col gap-y-[10px]">
