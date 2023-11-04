@@ -12,7 +12,6 @@ function Login() {
     { data: googleLoginData, isError: googleError, isLoading: isGoogleLogin },
   ] = useGoogleLoginMutation();
   const navigate = useNavigate();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
