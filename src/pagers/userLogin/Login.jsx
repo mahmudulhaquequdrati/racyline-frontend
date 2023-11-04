@@ -7,6 +7,7 @@ function UserLogin() {
   const [login, { data: LoginInData, isError, isLoading }] = useLoginMutation();
   const navigate = useNavigate();
   const [googleLogin, setGoogleLogin] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,13 +26,11 @@ function UserLogin() {
     } else if (LoginInData?.data?.accessToken && !googleLogin) {
       navigate("/user/vet-lists");
     }
-  }, [LoginInData, isError, navigate, googleLogin]);
+  }, [isLoggedIn, LoginInData, isError, navigate, googleLogin]);
 
   useEffect(() => {
     handleTokenFromQueryParams();
   }, []);
-
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const createGoogleAuthLink = async () => {
     try {
