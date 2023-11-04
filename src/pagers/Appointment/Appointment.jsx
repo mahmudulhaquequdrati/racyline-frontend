@@ -1,8 +1,103 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import vetUser from "../../../public/vetListImage/vetUser.jpeg";
 
 const Appointment = () => {
+  const state = useSelector((state) => state.auth);
+  const { user, accessToken } = state || {};
+
+  console.log(" user ", { user, accessToken });
+
+  const submitHandle = async (e) => {
+    e.preventDefault();
+    const query = new URLSearchParams(window.location.search);
+    const makeData = {
+      userId: user?._id,
+      userEmail: user?.email,
+      vetId: "?",
+      vetEmail: "?",
+      firstName: e.target.firstName.value,
+      secondName: e.target.secondName.value,
+      email: e.target.email.value,
+      phoneNumber: e.target.phoneNumber.value,
+      animals: e.target.animals.value,
+      reasonVisit: e.target.reasonVisit.value,
+      data: query.get("selectDate"),
+      selectTime: query.get("selectTime"),
+    };
+
+    const {
+      userId,
+      userEmail,
+      vetId,
+      vetEmail,
+      firstName,
+      secondName,
+      email,
+      phoneNumber,
+      animals,
+      reasonVisit,
+      data,
+      selectTime,
+    } = makeData;
+
+    if (
+      !userId ||
+      !userEmail ||
+      !vetId ||
+      !vetEmail ||
+      !firstName ||
+      !secondName ||
+      !email ||
+      !phoneNumber ||
+      !animals ||
+      !reasonVisit ||
+      !data ||
+      !selectTime
+    ) {
+      return alert("All Fields is Required !");
+    }
+
+    const appointmentData = {
+      vet: {
+        vetId,
+        vetEmail,
+      },
+      userInfo: { userEmail, userId },
+      appointmentInfo: {
+        email,
+        phoneNumber,
+        firstName,
+        secondName,
+        animals,
+        reasonVisit,
+        data,
+        selectTime,
+      },
+    };
+
+    // store database
+    try {
+      const request = await fetch(
+        "http://localhost:5000/api/v1/AppointmentUserCreate",
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(appointmentData),
+        }
+      );
+      const response = await request.json();
+      window.location.href = response.data.url;
+    } catch (error) {
+      console.log("book now | error", error);
+      throw new Error("Issue with appointment", error.message);
+    }
+
+    console.log("makeData  ", makeData);
+  };
+
   return (
     <div className="bg-[#FFF7EC] pt-[60px] pb-[80px]">
       <div className="max-w-[1140px] w-full mx-auto flex flex-col md:flex-row gap-20">
@@ -11,7 +106,7 @@ const Appointment = () => {
             Concludi la prenotazione
           </h2>
           <div className="flex flex-col gap-4">
-            <form action="" className="flex flex-col gap-9">
+            <form onSubmit={submitHandle} className="flex flex-col gap-9">
               <div className="flex flex-col gap-[14px]">
                 <label
                   htmlFor="Anagrafica"
@@ -20,6 +115,7 @@ const Appointment = () => {
                   Anagrafica
                 </label>
                 <input
+                  name="firstName"
                   type="text"
                   style={{
                     boxShadow: "0px 1px 3px 0px rgba(232, 151, 31, 0.15)",
@@ -28,6 +124,7 @@ const Appointment = () => {
                   placeholder="Mario"
                 />
                 <input
+                  name="secondName"
                   type="text"
                   placeholder="Rossi"
                   style={{
@@ -44,6 +141,7 @@ const Appointment = () => {
                   Contatto
                 </label>
                 <input
+                  name="email"
                   type="email"
                   placeholder="mariorossi@gmail.com"
                   style={{
@@ -52,6 +150,7 @@ const Appointment = () => {
                   className="p-[14px] rounded outline-none border-none text-[15px] text-black placeholder:text-[15px] placeholder:text-[#C2BFBA]"
                 />
                 <input
+                  name="phoneNumber"
                   type="number"
                   placeholder="3330123456"
                   style={{
@@ -68,6 +167,7 @@ const Appointment = () => {
                   Animale
                 </label>
                 <input
+                  name="animals"
                   type="text"
                   placeholder="Mario"
                   style={{
@@ -84,6 +184,7 @@ const Appointment = () => {
                   Motivazione della visita
                 </label>
                 <textarea
+                  name="reasonVisit"
                   type="text"
                   placeholder="Vengo a far fare una visita al mio animale perchè..."
                   style={{
@@ -93,11 +194,15 @@ const Appointment = () => {
                 />
               </div>
               <div className="w-full">
-                <Link to={"/user/appointment-success"}>
-                  <button className="w-full text-white text-[15px] font-medium text-center p-[12px] bg-[#E8971F] rounded">
-                    Prenota ora
-                  </button>
-                </Link>
+                {}
+                {/* <Link to={"/user/appointment-success"}> */}
+                <button
+                  type="submit"
+                  className="w-full text-white text-[15px] font-medium text-center p-[12px] bg-[#E8971F] rounded"
+                >
+                  Prenota ora
+                </button>
+                {/* </Link> */}
               </div>
             </form>
           </div>
