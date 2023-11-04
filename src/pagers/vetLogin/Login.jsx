@@ -41,14 +41,16 @@ function Login() {
           if (!response.code) {
             return;
           }
-          googleLogin({ code: response.code }).then((res) => {
-            console.log(res?.data);
-            if (res?.data?.data?.user?.already_connected) {
-              navigate("/vets/appointment");
-            } else {
-              navigate("/vets/registration-with-google");
+          googleLogin({ code: response.code, role: "vet_admin" }).then(
+            (res) => {
+              console.log(res?.data);
+              if (res?.data?.data?.user?.already_connected) {
+                navigate("/vets/appointment");
+              } else {
+                navigate("/vets/registration-with-google");
+              }
             }
-          });
+          );
         } catch (error) {
           console.log(error);
         }

@@ -14,7 +14,7 @@ const UserProtected = ({ children }) => {
   if (loading) {
     return;
   }
-
+  console.log(user);
   return user && user?.role === "user" && accessToken && !loading ? (
     children
   ) : (
