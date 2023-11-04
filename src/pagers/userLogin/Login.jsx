@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import GoogleIcon from "../../assets/ICONS/google.svg";
 import { useLoginMutation } from "../../features/auth/authApi";
+import { userLoggedIn } from "../../features/auth/authSlice";
 
 function UserLogin() {
   const [login, { data: LoginInData, isError, isLoading }] = useLoginMutation();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [googleLogin, setGoogleLogin] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -24,6 +27,7 @@ function UserLogin() {
     if (LoginInData?.data?.accessToken && googleLogin) {
       navigate("/registration-with-google");
     } else if (LoginInData?.data?.accessToken && !googleLogin) {
+      dispatch(userLoggedIn(LoginInData?.data));
       navigate("/user/vet-lists");
     }
   }, [isLoggedIn, LoginInData, isError, navigate, googleLogin]);
@@ -43,7 +47,6 @@ function UserLogin() {
       const response = await request.json();
       window.location.href = response.url;
     } catch (error) {
-      console.log("App.js 12 | error", error);
       throw new Error("Issue with Login", error.message);
     }
   };
@@ -53,7 +56,6 @@ function UserLogin() {
     const accessToken = query.get("accessToken");
     const refreshToken = query.get("refreshToken");
     const expirationDate = newExpirationDate();
-    console.log("App.js 30 | expiration Date", expirationDate);
     if (accessToken && refreshToken) {
       storeTokenData(accessToken, refreshToken, expirationDate);
       setIsLoggedIn(true);
@@ -77,7 +79,7 @@ function UserLogin() {
   //   sessionStorage.clear();
   // };
   return (
-    <section className="flex flex-col justify-center items-center bg-[#FFF7EC] pb-16 pt-8 border-[1px] border-[#EAEAEB]">
+    <section className="flex flex-col justify-center items-center bg-[#FFF7EC] pb-16 px-4 pt-8 border-[1px] border-[#EAEAEB]">
       <div className="max-w-[638px] w-full  rounded-lg px-4 py-12 md:p-8 lg:p-16 bg-white">
         <h1 className="text-[32px] font-bold leading-10 text-center mb-6">
           Accedi o registrati per concludere la prenotazione
