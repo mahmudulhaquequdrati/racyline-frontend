@@ -59,7 +59,11 @@ export const authApi = apiSlice.injectEndpoints({
         }
       },
     }),
+    getUserInfo: builder.query({
+      query: () => `user/userInfo`,
+    }),
   }),
 });
 
-export const { useRegisterMutation, useLoginMutation } = authApi;
+export const { useRegisterMutation, useLoginMutation, useGetUserInfoQuery } =
+  authApi;
