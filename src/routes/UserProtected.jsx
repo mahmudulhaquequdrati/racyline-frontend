@@ -10,7 +10,6 @@ const UserProtected = ({ children }) => {
   const state = useSelector((state) => state.auth);
 
   const { user, accessToken } = state || {};
-  console.log(!(user?.role === "user"));
 
   if (loading) {
     return;
