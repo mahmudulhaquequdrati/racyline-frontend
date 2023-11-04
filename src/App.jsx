@@ -5,7 +5,7 @@ import UserAppointment from "./pagers/Appointment/Appointment";
 import AppointmentError from "./pagers/Appointment/AppointmentError";
 import AppointmentSuccess from "./pagers/Appointment/AppointmentSuccess";
 import Dashboard from "./pagers/VetDashboard/Dashboard";
-import VetLists from "./pagers/vetLists/vetLists";
+import VetLists from "./pagers/vetLists/VetLists";
 import Login from "./pagers/vetLogin/Login";
 import Registration from "./pagers/vetRegistration/Registration";
 import RegistrationGoogleCalenderConnect from "./pagers/vetRegistration/RegistrationGoogleCalenderConnect";
@@ -31,6 +31,7 @@ const App = () => {
   return (
     <main className="">
       <Header />
+
       <Routes>
         {/* Public Routes  */}
         {/* Public Routes  */}

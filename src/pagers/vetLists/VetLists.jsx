@@ -1,5 +1,5 @@
 import React from "react";
-import VetList from "./vetList";
+import VetList from "./VetList";
 
 const VetLists = () => {
   const vetList = [
