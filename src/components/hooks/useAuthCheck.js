@@ -22,7 +22,7 @@ const useAuthCheck = () => {
 
   useEffect(() => {
     if (!accessToken || isError) {
-      navigate("user/login");
+      // navigate("user/login");
       setIsAuth(true);
     }
 
