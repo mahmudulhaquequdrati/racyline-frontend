@@ -49,7 +49,7 @@ function Login() {
               if (res?.data?.data?.user?.already_connected) {
                 navigate("/vets/appointment");
               } else {
-                navigate("/vets/registration-with-google");
+                navigate("/registration-with-google");
               }
             }
           );
