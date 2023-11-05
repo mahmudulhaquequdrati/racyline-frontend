@@ -235,9 +235,23 @@ const RegistrationAvailabilities = () => {
   };
 
   const onSubmit = () => {
-    console.log(weakData);
-    navigate("/registration-google-calender-connect");
+    const newData = {
+      userId: user?._id,
+      availabilities: weakData,
+    };
+    if (weakData?.length > 0) {
+      // sending data through redux mutation
+      createAvailabilities(newData).then((res) => {
+        navigate("/registration-google-calender-connect");
+      });
+    }
+    // navigate("/registration-google-calender-connect");
   };
+  // const onSubmit = () => {
+  //   console.log(weakData);
+
+  //   navigate("/registration-google-calender-connect");
+  // };
 
   useEffect(() => {
     if (data?.data?._id) {
