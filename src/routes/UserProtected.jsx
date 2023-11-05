@@ -4,17 +4,16 @@ import { useProfile } from "../components/hooks/userHooks";
 
 const UserProtected = ({ children }) => {
   const location = useLocation();
-  // const { userProfile, loading } = useProfile();
-  const { loading } = useProfile();
 
   const state = useSelector((state) => state.auth);
 
   const { user, accessToken } = state || {};
+  const { loading } = useProfile();
 
   if (loading) {
     return;
   }
-
+  console.log(user);
   return user && user?.role === "user" && accessToken && !loading ? (
     children
   ) : (

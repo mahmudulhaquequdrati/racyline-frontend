@@ -1,17 +1,10 @@
 import { Route, Routes } from "react-router-dom";
+import useAuthCheck from "../src/components/hooks/useAuthCheck.js";
 import Footer from "./components/common/Footer";
 import Header from "./components/common/Header";
 import UserAppointment from "./pagers/Appointment/Appointment";
 import AppointmentError from "./pagers/Appointment/AppointmentError";
 import AppointmentSuccess from "./pagers/Appointment/AppointmentSuccess";
-import Dashboard from "./pagers/VetDashboard/Dashboard";
-import VetLists from "./pagers/vetLists/VetLists";
-import Login from "./pagers/vetLogin/Login";
-import Registration from "./pagers/vetRegistration/Registration";
-import RegistrationGoogleCalenderConnect from "./pagers/vetRegistration/RegistrationGoogleCalenderConnect";
-import RegistrationGoogleCalenderConnected from "./pagers/vetRegistration/RegistrationGoogleCalenderConnected";
-import RegistrationWithGoogle from "./pagers/vetRegistration/RegistrationWithGoogle";
-// import PublicRoute from "./routes/PublicRoutes";
 import MyAppointment from "./pagers/UserPages/MyAppointment";
 import MyAppointmentEditing from "./pagers/UserPages/MyAppointmentEditing";
 import UserRegistration from "./pagers/UserPages/UserRegistration";
@@ -20,22 +13,28 @@ import AccountSetting from "./pagers/VetDashboard/AccountSetting";
 import VetAppointment from "./pagers/VetDashboard/Appointment";
 import Availabilities from "./pagers/VetDashboard/Availabilities";
 import Calender from "./pagers/VetDashboard/Calender";
+import Dashboard from "./pagers/VetDashboard/Dashboard";
 import UserLogin from "./pagers/userLogin/Login";
+import VetLists from "./pagers/vetLists/VetLists";
+import Login from "./pagers/vetLogin/Login";
+import Registration from "./pagers/vetRegistration/Registration";
 import RegistrationAvailabilities from "./pagers/vetRegistration/RegistrationAvailabilities";
+import RegistrationGoogleCalenderConnect from "./pagers/vetRegistration/RegistrationGoogleCalenderConnect";
+import RegistrationGoogleCalenderConnected from "./pagers/vetRegistration/RegistrationGoogleCalenderConnected";
+import RegistrationWithGoogle from "./pagers/vetRegistration/RegistrationWithGoogle";
 import UserProtected from "./routes/UserProtected";
 import VetProtected from "./routes/VetProtected";
-// import DefaultLayout from "./pagers/adminPages/DefaultLayout";
-// import AllAppointment from "./pagers/adminPages/AllAppointment";
 
 const App = () => {
-  return (
+  const isAuth = useAuthCheck();
+
+  return !isAuth ? (
+    <h1>Loading...</h1>
+  ) : (
     <main className="">
       <Header />
 
       <Routes>
-        {/* Public Routes  */}
-        {/* Public Routes  */}
-        {/* Public Routes  */}
         {/* Public Routes  */}
         {/* Public Routes  */}
         {/* Public Routes  */}
@@ -73,9 +72,6 @@ const App = () => {
             </VetProtected>
           }
         />
-        {/* Vets Routes  */}
-        {/* Vets Routes  */}
-        {/* Vets Routes  */}
         {/* Vets Routes  */}
         {/* Vets Routes  */}
         {/* Vets Routes  */}
@@ -127,9 +123,6 @@ const App = () => {
             </VetProtected>
           }
         />
-        {/* User Routes  */}
-        {/* User Routes  */}
-        {/* User Routes  */}
         {/* User Routes  */}
         {/* User Routes  */}
         {/* User Routes  */}

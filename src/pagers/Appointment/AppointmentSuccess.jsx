@@ -65,7 +65,7 @@ const AppointmentSuccess = () => {
                       fill="black"
                       fill-opacity="0.6"
                       stroke="white"
-                      stroke-width="0.25"
+                      strokeWidth="0.25"
                     />
                   </svg>
                 </span>

@@ -8,7 +8,7 @@ const NextIcon = () => {
     <svg
       stroke="currentColor"
       fill="#7D7D7D"
-      stroke-width="0"
+      strokeWidth="0"
       viewBox="0 0 24 24"
       height="28"
       width="28"
@@ -24,7 +24,7 @@ const PrevIcon = () => {
     <svg
       stroke="currentColor"
       fill="#7D7D7D"
-      stroke-width="0"
+      strokeWidth="0"
       viewBox="0 0 24 24"
       height="28"
       width="28"

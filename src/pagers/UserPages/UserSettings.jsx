@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import GoogleIcon from "../../assets/ICONS/google.svg";
 
 const people = [
@@ -20,8 +21,10 @@ const type = [
 const UserSettings = () => {
   const [selected, setSelected] = useState(people[0]);
   const [selected2, setSelected2] = useState(type[0]);
+  const { user } = useSelector((state) => state.auth);
+
   return (
-    <div className="p-12 lg:p-20 min-h-[100vh] bg-[#FFF7EC]">
+    <div className="p-4 md:p-8 lg:p-20 min-h-[100vh] bg-[#FFF7EC]">
       <div className="max-w-[1150px] w-full mx-auto">
         <div className="max-w-[570px] w-full">
           <div className="w-full">
@@ -31,12 +34,14 @@ const UserSettings = () => {
               <div className="w-full">
                 <input
                   type="text"
+                  value={user?.first_name}
                   className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full"
                 />
               </div>
               <div className="w-full">
                 <input
                   type="text"
+                  value={user?.first_name}
                   className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full"
                 />
               </div>
@@ -49,15 +54,20 @@ const UserSettings = () => {
                 <div className="w-full">
                   <input
                     type="number"
-                    placeholder="3330123456"
-                    className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full"
+                    value={user?.phone}
+                    placeholder="34343434"
+                    disabled
+                    readOnly
+                    className="rounded-lg py-2 px-4  bg-[#F3FEFE] text-[#00000066] outline-none border-[1px] border-none shadow w-full"
                   />
                 </div>
                 <div>
                   <input
                     type="email"
+                    value={user?.email}
+                    disabled
                     placeholder="mariorossi@gmail.com"
-                    className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full"
+                    className="rounded-lg py-2 px-4 bg-[#F3FEFE] text-[#00000066] outline-none border-[1px] border-none shadow w-full"
                   />
                 </div>
               </div>
