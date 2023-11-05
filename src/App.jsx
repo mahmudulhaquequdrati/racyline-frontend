@@ -40,7 +40,7 @@ const App = () => {
         {/* Public Routes  */}
         <Route path="/" element={<Dashboard />} />
         <Route
-          path="/registration-with-google"
+          path="/vets/registration-with-google"
           element={
             // <AuthProtected>
             <RegistrationWithGoogle />

@@ -31,8 +31,8 @@ function Login() {
   }, [LoginInData, isError, navigate]);
 
   async function handleGoogle() {
-    var SCOPES = "https://www.googleapis.com/auth/userinfo.profile ";
-    // var SCOPES = "https://www.googleapis.com/auth/calendar.events ";
+    // var SCOPES = "https://www.googleapis.com/auth/userinfo.profile ";
+    var SCOPES = "https://www.googleapis.com/auth/userinfo.email";
     const client = window.google.accounts.oauth2.initCodeClient({
       client_id:
         "745412608351-323qm5ivn5cgpn6ipikf5k7q5dfhh9sn.apps.googleusercontent.com",
