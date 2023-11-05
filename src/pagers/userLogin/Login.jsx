@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import GoogleIcon from "../../assets/ICONS/google.svg";
 import { useLoginMutation } from "../../features/auth/authApi";
 import { useGoogleLoginMutation } from "../../features/auth/googleAuthApi";
+import { userLoggedOut } from "../../features/auth/authSlice";
 
 function UserLogin() {
   const [login, { data: LoginInData, isError, isLoading }] = useLoginMutation();
@@ -13,6 +14,13 @@ function UserLogin() {
   ] = useGoogleLoginMutation();
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const dispatch = useDispatch();
+  const handleLogut = () => {
+    sessionStorage.clear();
+    dispatch(userLoggedOut());
+    navigate("/user/login");
+  };
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -44,8 +52,10 @@ function UserLogin() {
             return;
           }
           googleLogin({ code: response.code, role: "user" }).then((res) => {
-            if (res?.data) {
-              console.log(res?.data);
+            if (res?.data?.data?.user?.role === "vet_admin") {
+              alert("you are not a user");
+              handleLogut();
+            } else {
               navigate("/user/vet-lists");
             }
           });
