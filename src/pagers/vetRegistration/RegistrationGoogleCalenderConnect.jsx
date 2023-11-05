@@ -9,7 +9,8 @@ function RegistrationGoogleCalenderConnect() {
 
   async function handleGoogle(e) {
     e.preventDefault();
-    var SCOPES = "https://www.googleapis.com/auth/calendar";
+    var SCOPES =
+      "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/calendar";
     const client = window.google.accounts.oauth2.initCodeClient({
       client_id:
         "745412608351-323qm5ivn5cgpn6ipikf5k7q5dfhh9sn.apps.googleusercontent.com",
