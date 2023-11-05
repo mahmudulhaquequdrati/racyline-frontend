@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
+import { useProfile } from "../components/hooks/userHooks";
 
 const UserProtected = ({ children }) => {
   const location = useLocation();
@@ -7,6 +8,7 @@ const UserProtected = ({ children }) => {
   const state = useSelector((state) => state.auth);
 
   const { user, accessToken } = state || {};
+  const { loading } = useProfile();
 
   if (loading) {
     return;
