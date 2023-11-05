@@ -39,7 +39,8 @@ export default function VetCalender({ setSelectDate }) {
   const [value, onChange] = useState(new Date());
 
   useEffect(() => {
-    setSelectDate(value);
+    // this throws error
+    // setSelectDate(value);
   }, [value]);
 
   return (

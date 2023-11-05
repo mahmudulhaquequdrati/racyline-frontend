@@ -1,11 +1,13 @@
 import { useSelector } from "react-redux";
 import vetUser from "../../../public/vetListImage/vetUser.jpeg";
+import { useNavigate } from "react-router-dom";
 
 const Appointment = () => {
   const state = useSelector((state) => state.auth);
   const { user, accessToken } = state || {};
 
   console.log(" user ", { user, accessToken });
+  const navigate = useNavigate();
 
   const submitHandle = async (e) => {
     e.preventDefault();
@@ -89,10 +91,12 @@ const Appointment = () => {
         }
       );
       const response = await request.json();
-      window.location.href = response.data.url;
+      navigate("/user/appointment-success");
+      // window.location.href = response.data.url;
     } catch (error) {
-      console.log("book now | error", error);
-      throw new Error("Issue with appointment", error.message);
+      // console.log("book now | error", error);
+      navigate("/user/appointment-error");
+      // throw new Error("Issue with appointment", error.message);
     }
 
     console.log("makeData  ", makeData);
