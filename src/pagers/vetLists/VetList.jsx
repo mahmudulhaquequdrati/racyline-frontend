@@ -1,9 +1,11 @@
-import React from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import vetUser from "../../../public/vetListImage/vetUser.jpeg";
 import VetCalender from "./Calender";
 
 const VetList = ({ vetInfo }) => {
+  const [selectTime, setSelectTime] = useState(null);
+  const [selectDate, setSelectDate] = useState(null);
   const { name, image, company, location, treatmentAnimals, availability } =
     vetInfo || {};
   const time = [
@@ -29,6 +31,8 @@ const VetList = ({ vetInfo }) => {
     "11:00 PM",
     "11:30 PM",
   ];
+
+  console.log({ selectTime, selectDate });
 
   return (
     <div className="flex flex-col md:flex-row bg-white rounded-lg overflow-hidden">
@@ -102,13 +106,16 @@ const VetList = ({ vetInfo }) => {
       <div className="w-full md:w-1/2 p-6 border-l-[0.5px] border-[#E5E7EC]">
         <div className="flex flex-col sm:flex-row gap-4 mb-4">
           <div className="w-full sm:w-1/2">
-            <VetCalender />
+            <VetCalender setSelectDate={setSelectDate} />
           </div>
           <div className="w-full sm:w-1/2 flex flex-wrap gap-3">
             {time?.map((t, index) => (
               <p
+                onClick={() => setSelectTime(t)}
                 key={index}
-                className="flex items-center justify-center w-[70px] text-center text-[13px] hover:rounded-full hover:bg-[#7D7D7D] hover:cursor-pointer hover:text-[#fff]"
+                className={`flex items-center justify-center w-[70px] text-center text-[13px] hover:rounded-full hover:bg-[#7D7D7D] cursor-pointer hover:text-white ${
+                  selectTime == t && "bg-[#7D7D7D] text-white"
+                }`}
               >
                 {t}
               </p>
@@ -116,11 +123,22 @@ const VetList = ({ vetInfo }) => {
           </div>
         </div>
 
-        <Link to={"/user/new-appointment"}>
-          <button className="w-full text-white text-[15px] font-medium text-center p-[12px] bg-[#E8971F] rounded">
+        {selectTime && selectDate ? (
+          <Link
+            to={`/user/new-appointment?selectTime=${selectTime}&selectDate=${selectDate}`}
+          >
+            <button className="w-full text-white text-[15px] font-medium text-center p-[12px] bg-[#E8971F] rounded">
+              Prenota ora
+            </button>
+          </Link>
+        ) : (
+          <button
+            onClick={() => alert("Please select Date And Time")}
+            className="w-full text-white text-[15px] font-medium text-center p-[12px] bg-[#E8971F] rounded"
+          >
             Prenota ora
           </button>
-        </Link>
+        )}
       </div>
     </div>
   );

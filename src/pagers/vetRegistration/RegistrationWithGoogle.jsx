@@ -8,6 +8,7 @@ import { useGoogleLoginDataMutation } from "../../features/auth/googleSetDataApi
 
 function RegistrationWithGoogle() {
   const navigate = useNavigate();
+  //
   const [googleLoginData, { data: googlenData, isError, isLoading }] =
     useGoogleLoginDataMutation();
   const { user } = useSelector((state) => state.auth);

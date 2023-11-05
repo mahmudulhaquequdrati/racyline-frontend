@@ -1,7 +1,8 @@
-import React from "react";
+import { useState } from "react";
 import VetList from "./VetList";
 
 const VetLists = () => {
+  const [selected, setSelected] = useState("");
   const vetList = [
     {
       id: 1,
