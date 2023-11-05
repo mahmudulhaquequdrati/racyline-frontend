@@ -47,7 +47,7 @@ function Login() {
             (res) => {
               console.log(res?.data);
               if (res?.data?.data?.user?.already_connected) {
-                navigate("/vets/appointment");
+                navigate("/vets/my-appointment");
               } else {
                 navigate("/registration-with-google");
               }
