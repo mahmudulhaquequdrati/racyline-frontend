@@ -39,7 +39,7 @@ function UserLogin() {
   }, [isLoggedIn, LoginInData, isError, navigate]);
 
   async function handleGoogle() {
-    var SCOPES = "https://www.googleapis.com/auth/userinfo.profile ";
+    var SCOPES = "https://www.googleapis.com/auth/userinfo.email";
     // var SCOPES = "https://www.googleapis.com/auth/calendar.events ";
     const client = window.google.accounts.oauth2.initCodeClient({
       client_id:
