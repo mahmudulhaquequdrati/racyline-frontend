@@ -26,7 +26,7 @@ const AccountSetting = () => {
 
   const { user } = useSelector((state) => state.auth);
   return (
-    <div className="p-12 lg:p-20 min-h-[100vh] bg-[#FFF7EC]">
+    <div className="p-4 md:p-8 lg:p-20 min-h-[100vh] bg-[#FFF7EC]">
       <div className="max-w-[1140px] w-full mx-auto">
         <div className="max-w-[570px] w-full">
           <div className="w-full">
@@ -35,12 +35,14 @@ const AccountSetting = () => {
             <div className="w-full">
               <input
                 type="text"
+                value={user?.first_name}
                 className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full"
               />
             </div>
             <div className="w-full mt-3">
               <input
                 type="text"
+                value={user?.last_name}
                 className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full"
               />
             </div>
@@ -179,10 +181,11 @@ const AccountSetting = () => {
                 </Listbox>
               </div>
             </div>
-            <div className="mt-3 mb-3">
+            <div className="w-full mt-3">
               <input
                 type="text"
-                className="rounded-lg py-3 px-4 outline-none border-[1px] border-none shadow-xl w-full"
+                value={"Via Roma, 1, Roma, 00196 Roma (RM), Italia"}
+                className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full"
               />
             </div>
             <div className="mt-5">
@@ -191,8 +194,10 @@ const AccountSetting = () => {
                 <input
                   type="email"
                   value={user?.email}
+                  disabled
+                  readOnly
                   placeholder="mariorossi@gmail.com"
-                  className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full"
+                  className="rounded-lg text-[#00000066] bg-[#F3FEFE] py-2 px-4 outline-none border-[1px] border-none shadow w-full"
                 />
               </div>
               <p className="flex items-center mt-4 mb-4 text-sm w-full">
