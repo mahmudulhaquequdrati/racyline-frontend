@@ -31,7 +31,7 @@ export default function DropDown() {
             >
               <path
                 d="M7.9995 8.78145L11.2995 5.48145L12.2422 6.42411L7.9995 10.6668L3.75684 6.42411L4.6995 5.48145L7.9995 8.78145Z"
-                fill={"#E8971F"}
+                fill={"#339E9F"}
               />
             </svg>
           </Menu.Button>

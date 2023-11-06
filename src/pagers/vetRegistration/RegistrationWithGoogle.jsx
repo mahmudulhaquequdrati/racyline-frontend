@@ -29,7 +29,7 @@ function RegistrationWithGoogle() {
       setFeildError(false);
       googleLoginData(inputData).then((res) => {
         if (res?.data) {
-          navigate("/vets/availabilities");
+          navigate("/vets/registration-availabilities");
         }
       });
     } else {
@@ -225,7 +225,7 @@ function RegistrationWithGoogle() {
           <div>
             <button
               type="submit"
-              className={`w-full rounded-lg py-3 px-4 outline-none  text-white bg-primary`}
+              className={`w-full rounded-lg py-3 px-4 outline-none  text-white bg-secondary`}
             >
               Avanti
             </button>

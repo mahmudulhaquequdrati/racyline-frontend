@@ -428,7 +428,7 @@ const RegistrationAvailabilities = () => {
         <div className="mt-8">
           <button
             onClick={onSubmit}
-            className={`w-full rounded-lg py-3 px-4 outline-none  text-white bg-primary`}
+            className={`w-full rounded-lg py-3 px-4 outline-none  text-white bg-secondary`}
           >
             Avanti
           </button>
