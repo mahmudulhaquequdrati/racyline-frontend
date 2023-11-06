@@ -22,6 +22,7 @@ const UserSettings = () => {
   const [selected, setSelected] = useState(people[0]);
   const [selected2, setSelected2] = useState(type[0]);
   const { user } = useSelector((state) => state.auth);
+  console.log(user);
 
   return (
     <div className="p-4 md:p-8 lg:p-20 min-h-[100vh] bg-[#FFF7EC]">
@@ -55,9 +56,7 @@ const UserSettings = () => {
                   <input
                     type="number"
                     value={user?.phone}
-                    placeholder="34343434"
-                    disabled
-                    readOnly
+                    placeholder="23454356"
                     className="rounded-lg py-2 px-4  bg-[#F3FEFE] text-[#00000066] outline-none border-[1px] border-none shadow w-full"
                   />
                 </div>

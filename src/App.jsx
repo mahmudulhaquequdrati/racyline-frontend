@@ -28,6 +28,8 @@ import VetProtected from "./routes/VetProtected";
 const App = () => {
   const isAuth = useAuthCheck();
 
+  console.log(isAuth);
+
   return !isAuth ? (
     <h1>Loading...</h1>
   ) : (

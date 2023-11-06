@@ -16,7 +16,6 @@ const useAuthCheck = () => {
     isLoading,
     isError,
   } = useGetUserInfoQuery(undefined, { skip: !accessToken });
-  console.log(isLoading);
 
   const dispatch = useDispatch();
 
