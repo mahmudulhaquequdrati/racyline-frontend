@@ -65,7 +65,6 @@ const UserSettings = () => {
                     type="email"
                     value={user?.email}
                     disabled
-                    placeholder="mariorossi@gmail.com"
                     className="rounded-lg py-2 px-4 bg-[#F3FEFE] text-[#00000066] outline-none border-[1px] border-none shadow w-full"
                   />
                 </div>

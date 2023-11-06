@@ -18,10 +18,10 @@ const useAuthCheck = () => {
   } = useGetUserInfoQuery(undefined, { skip: !accessToken });
 
   const dispatch = useDispatch();
+  console.log(!isLoading && !isError && userData?.user?._id);
 
   useEffect(() => {
     if (!accessToken || isError) {
-      // navigate("user/login");
       setIsAuth(true);
     }
 
@@ -29,15 +29,7 @@ const useAuthCheck = () => {
       dispatch(getUserInfo(userData?.user));
       setIsAuth(true);
     }
-  }, [
-    isAuth,
-    setIsAuth,
-    isError,
-    isLoading,
-    accessToken,
-    userData?.user?._id,
-    dispatch,
-  ]);
+  }, [isAuth, setIsAuth, isError, isLoading, userData?.user?._id, getUserInfo]);
 
   return isAuth;
 };

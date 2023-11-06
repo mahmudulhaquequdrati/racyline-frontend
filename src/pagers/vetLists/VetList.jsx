@@ -114,7 +114,7 @@ const VetList = ({ vetInfo }) => {
                 onClick={() => setSelectTime(t)}
                 key={index}
                 className={`flex items-center justify-center w-[70px] text-center text-[13px] hover:rounded-full hover:bg-[#7D7D7D] cursor-pointer hover:text-white ${
-                  selectTime == t && "bg-[#7D7D7D] text-white"
+                  selectTime == t && "bg-[#7D7D7D] rounded-full text-white"
                 }`}
               >
                 {t}

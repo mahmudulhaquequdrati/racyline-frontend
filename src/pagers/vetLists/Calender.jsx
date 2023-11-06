@@ -1,5 +1,5 @@
 import moment from "moment/moment";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
@@ -37,11 +37,18 @@ const PrevIcon = () => {
 
 export default function VetCalender({ setSelectDate }) {
   const [value, onChange] = useState(new Date());
+  var daysOfWeek = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
 
-  useEffect(() => {
-    // this throws error
-    // setSelectDate(value);
-  }, [value]);
+  var dayName = daysOfWeek[value.getDay()];
+  console.log("Today is " + dayName);
 
   return (
     <div className="max-w-[1140px] w-full mx-auto">

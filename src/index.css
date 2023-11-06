@@ -154,6 +154,10 @@ input[type="number"]::-webkit-outer-spin-button {
   color: #fff;
 }
 
+/* react-calendar__month-view__days__day */
+
+/* react-calendar__tile--now react-calendar__tile--active react-calendar__tile--range react-calendar__tile--rangeStart react-calendar__tile--rangeEnd react-calendar__tile--rangeBothEnds react-calendar__month-view__days__day */
+
 .react-calendar {
   width: 600px;
   padding: 5px;
@@ -216,10 +220,10 @@ abbr[title] {
   border-radius: 50px;
 }
 .react-calendar__tile--now {
-  background: #7d7d7d;
+  background: #fff;
   border-radius: 50px;
   font-weight: bold;
-  color: white !important;
+  color: #7d7d7d;
 }
 .react-calendar__tile--now:enabled:hover,
 .react-calendar__tile--now:enabled:focus {
@@ -234,7 +238,7 @@ abbr[title] {
   background: #f8f8fa;
 }
 .react-calendar__tile--active {
-  background: #7d7d7d;
+  background: #b19393;
   border-radius: 50px;
   font-weight: bold;
   color: white !important;
