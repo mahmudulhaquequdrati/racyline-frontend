@@ -3,8 +3,8 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import GoogleIcon from "../../assets/ICONS/google.svg";
 import { useLoginMutation } from "../../features/auth/authApi";
+import { userLoggedIn, userLoggedOut } from "../../features/auth/authSlice";
 import { useGoogleLoginMutation } from "../../features/auth/googleAuthApi";
-import { userLoggedOut } from "../../features/auth/authSlice";
 
 function UserLogin() {
   const [login, { data: LoginInData, isError, isLoading }] = useLoginMutation();
@@ -34,6 +34,7 @@ function UserLogin() {
       alert("No User Found");
     }
     if (LoginInData?.data?.accessToken) {
+      dispatch(userLoggedIn(LoginInData?.data));
       navigate("/user/vet-lists");
     }
   }, [isLoggedIn, LoginInData, isError, navigate]);
