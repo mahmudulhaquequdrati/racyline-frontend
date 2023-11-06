@@ -1,8 +1,7 @@
-import { useState } from "react";
+import { useGetAllVetListsQuery } from "../../features/vetLists/vetLists";
 import VetList from "./VetList";
 
 const VetLists = () => {
-  const [selected, setSelected] = useState("");
   const vetList = [
     {
       id: 1,
@@ -45,14 +44,17 @@ const VetLists = () => {
     },
   ];
 
+  const { data: vetLists, isLoading, isError } = useGetAllVetListsQuery();
+  console.log(vetLists?.vetList);
+
   return (
     <div className="bg-primary pt-[60px] pb-[80px]">
-      <div className="max-w-[1140px] w-full mx-auto">
-        <h2 className="text-[18px] sm:text-[26px] p-4 md:p-0 md:text-[32px] font-bold leading-6 sm:leading-10 mb-3 sm:mb-7 md:mb-9">
+      <div className="max-w-[1140px] w-full mx-auto p-4 md:p-8 lg:p-0">
+        <h2 className="text-[18px] sm:text-[26px] md:text-[32px] font-bold leading-6 sm:leading-10 mb-4 sm:mb-7 md:mb-9">
           Scegli il veterinario, l’orario e prenota la visita
         </h2>
-        <div className="flex flex-col gap-4 p-4 md:p-0">
-          {vetList?.map((vetList) => (
+        <div className="flex flex-col gap-4">
+          {vetLists?.vetList?.map((vetList) => (
             <VetList vetInfo={vetList} key={vetList?.id} />
           ))}
         </div>

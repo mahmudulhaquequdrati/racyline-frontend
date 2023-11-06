@@ -48,7 +48,6 @@ export default function VetCalender({ setSelectDate }) {
   ];
 
   var dayName = daysOfWeek[value.getDay()];
-  console.log("Today is " + dayName);
 
   return (
     <div className="max-w-[1140px] w-full mx-auto">
