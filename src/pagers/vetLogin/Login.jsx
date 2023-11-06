@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import GoogleIcon from "../../assets/ICONS/google.svg";
 import { useLoginMutation } from "../../features/auth/authApi";
-import axios from "axios";
 import { useGoogleLoginMutation } from "../../features/auth/googleAuthApi";
 
 function Login() {
@@ -63,7 +62,7 @@ function Login() {
   }
 
   return (
-    <section className="flex justify-center items-center bg-[#FFF7EC] pb-16 px-4 pt-8 border-[1px] border-[#EAEAEB]">
+    <section className="flex justify-center items-center bg-primary pb-16 px-4 pt-8 border-[1px] border-[#EAEAEB]">
       <div className="max-w-[638px] w-full  rounded-lg px-4 py-12 md:p-8 lg:p-16 bg-white">
         <h1 className="text-[32px] font-bold leading-10 text-center mb-6">
           Sei un medico veterinario?Accedi o registrati

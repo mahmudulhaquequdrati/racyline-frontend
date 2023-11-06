@@ -24,7 +24,7 @@ const UserSettings = () => {
   const { user } = useSelector((state) => state.auth);
 
   return (
-    <div className="p-4 md:p-8 lg:p-20 min-h-[100vh] bg-[#FFF7EC]">
+    <div className="p-4 md:p-8 lg:p-20 min-h-[100vh] bg-primary">
       <div className="max-w-[1150px] w-full mx-auto">
         <div className="max-w-[570px] w-full">
           <div className="w-full">

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 function RegistrationGoogleCalenderConnected() {
   const navigate = useNavigate();
   return (
-    <section className="flex justify-center items-center bg-[#FFF7EC] py-16 border-[1px] border-[#EAEAEB]">
+    <section className="flex justify-center items-center bg-primary py-16 border-[1px] border-[#EAEAEB]">
       <div className="max-w-[638px] w-full  rounded-lg p-16 bg-white">
         <h1 className="text-[32px] font-bold leading-10 text-center mb-6">
           Ora sei connesso con il tuo Calendario Google

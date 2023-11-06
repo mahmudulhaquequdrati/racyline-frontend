@@ -4,7 +4,7 @@ import vetUser from "../../../public/vetListImage/vetUser.jpeg";
 
 const MyAppointment = () => {
   return (
-    <div className="w-full bg-[#FFF7EC] pt-[60px] p-4 md:p-8 pb-[80px]">
+    <div className="w-full bg-primary pt-[60px] p-4 md:p-8 pb-[80px]">
       <div className="max-w-[1150px] w-full mx-auto">
         <h1 className="text-[32px] leading-[40px] font-bold mb-18 md:mb-[36px]">
           I miei appuntamenti
