@@ -52,7 +52,7 @@ function Registration() {
     }
     if (UserLoggedInData?.data?.accessToken) {
       dispatch(userLoggedIn(UserLoggedInData?.data));
-      navigate("/vets/availabilities");
+      navigate("/vets/registration-availabilities");
     }
   }, [UserLoggedInData, isError, navigate]);
 

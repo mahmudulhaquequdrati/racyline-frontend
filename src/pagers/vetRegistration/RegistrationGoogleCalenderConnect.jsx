@@ -56,7 +56,7 @@ function RegistrationGoogleCalenderConnect() {
           <div>
             <button
               onClick={handleGoogle}
-              className={`w-full rounded-lg py-3 px-4 outline-none bg-primary text-white`}
+              className={`w-full rounded-lg py-3 px-4 outline-none bg-secondary text-white`}
             >
               Connetti a Google Calendar
             </button>

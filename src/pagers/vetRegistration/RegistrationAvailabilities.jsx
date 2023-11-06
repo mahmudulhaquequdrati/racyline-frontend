@@ -242,7 +242,7 @@ const RegistrationAvailabilities = () => {
     if (weakData?.length > 0) {
       // sending data through redux mutation
       createAvailabilities(newData).then((res) => {
-        navigate("/vets/my-appointment");
+        navigate("/registration-google-calender-connect");
       });
     }
   };

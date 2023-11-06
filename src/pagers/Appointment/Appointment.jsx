@@ -6,7 +6,6 @@ const Appointment = () => {
   const state = useSelector((state) => state.auth);
   const { user, accessToken } = state || {};
 
-  console.log(" user ", { user, accessToken });
   const navigate = useNavigate();
 
   const submitHandle = async (e) => {
