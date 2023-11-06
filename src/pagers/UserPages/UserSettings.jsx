@@ -35,14 +35,14 @@ const UserSettings = () => {
               <div className="w-full">
                 <input
                   type="text"
-                  value={user?.first_name}
+                  placeholder={user?.first_name}
                   className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full"
                 />
               </div>
               <div className="w-full">
                 <input
                   type="text"
-                  value={user?.last_name}
+                  placeholder={user?.last_name}
                   className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full"
                 />
               </div>

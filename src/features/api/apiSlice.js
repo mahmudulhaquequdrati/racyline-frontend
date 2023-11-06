@@ -24,7 +24,7 @@ export const apiSlice = createApi({
     if (result?.error?.status === 401) {
       // dispatch logout action
       api.dispatch(userLoggedOut());
-      sessionStorage.removeItem("authUser");
+      localStorage.removeItem("authUser");
     }
     return result;
   },

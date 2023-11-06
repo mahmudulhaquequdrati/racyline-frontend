@@ -66,7 +66,7 @@ const Availabilities = () => {
         let updatedWeakData = [...prevWeakData];
         const newfield = {
           start_time: setHours(setMinutes(new Date(), 0), 9),
-          end_time: setHours(setMinutes(new Date(), 0), 12),
+          end_time: setHours(setMinutes(new Date(), 0), 17),
         };
         updatedWeakData[index].availabilities = [newfield];
         updatedWeakData[index]["available"] = true;
@@ -439,7 +439,7 @@ const Availabilities = () => {
               onClick={onSubmit}
               className={`w-full rounded-lg py-3 px-4 outline-none  text-white bg-secondary`}
             >
-              Avanti
+              Salva
             </button>
           </div>
         </div>
