@@ -51,7 +51,7 @@ function Login() {
           }
           googleLogin({ code: response.code, role: "vet_admin" }).then(
             (res) => {
-              console.log(res?.data);
+              dispatch(userLoggedIn(res?.data?.data));
               if (res?.data?.data?.user?.already_connected) {
                 navigate("/vets/my-appointment");
               } else {
