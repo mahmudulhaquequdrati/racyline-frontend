@@ -19,7 +19,6 @@ const authSlice = createSlice({
       state.accessToken = null;
     },
     getUserInfo: (state, action) => {
-      console.log(action);
       state.user = action.payload;
     },
   },
