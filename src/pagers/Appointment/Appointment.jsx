@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
-import vetUser from "../../../public/vetListImage/vetUser.jpeg";
 import { useNavigate } from "react-router-dom";
+import vetUser from "../../../public/vetListImage/vetUser.jpeg";
 
 const Appointment = () => {
   const state = useSelector((state) => state.auth);
@@ -103,7 +103,7 @@ const Appointment = () => {
   };
 
   return (
-    <div className="bg-[#FFF7EC] pt-[60px] pb-[80px]">
+    <div className="bg-primary pt-[60px] pb-[80px]">
       <div className="max-w-[1140px] w-full mx-auto flex flex-col md:flex-row gap-20">
         <div className="max-w-[510px] sm:max-w-full w-full flex flex-col p-4">
           <h2 className="text-[26px] md:text-[32px] font-bold leading-10 mb-7 md:mb-9">
@@ -202,7 +202,7 @@ const Appointment = () => {
                 {/* <Link to={"/user/appointment-success"}> */}
                 <button
                   type="submit"
-                  className="w-full text-white text-[15px] font-medium text-center p-[12px] bg-[#E8971F] rounded"
+                  className="w-full text-white text-[15px] font-medium text-center p-[12px] bg-secondary rounded"
                 >
                   Prenota ora
                 </button>

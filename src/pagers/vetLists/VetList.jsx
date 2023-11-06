@@ -127,14 +127,14 @@ const VetList = ({ vetInfo }) => {
           <Link
             to={`/user/new-appointment?selectTime=${selectTime}&selectDate=${selectDate}`}
           >
-            <button className="w-full text-white text-[15px] font-medium text-center p-[12px] bg-[#E8971F] rounded">
+            <button className="w-full text-white text-[15px] font-medium text-center p-[12px] bg-secondary rounded">
               Prenota ora
             </button>
           </Link>
         ) : (
           <button
             onClick={() => alert("Please select Date And Time")}
-            className="w-full text-white text-[15px] font-medium text-center p-[12px] bg-[#E8971F] rounded"
+            className="w-full text-white text-[15px] font-medium text-center p-[12px] bg-secondary rounded"
           >
             Prenota ora
           </button>

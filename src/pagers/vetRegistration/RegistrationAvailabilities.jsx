@@ -317,7 +317,7 @@ const RegistrationAvailabilities = () => {
   }, [data?.data?._id]);
 
   return (
-    <section className="flex justify-center items-center bg-[#FFF7EC] py-16 px-4 border-[1px] border-[#EAEAEB]">
+    <section className="flex justify-center items-center bg-primary py-16 px-4 border-[1px] border-[#EAEAEB]">
       <div className="max-w-[638px] w-full rounded-lg p-6 md:p-8 lg:p-16 bg-white">
         <h1 className="text-[32px] font-bold leading-10 text-center mb-6">
           Inserisci le tue disponibilità
