@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import GoogleIcon from "../../assets/ICONS/google.svg";
 import { useLoginMutation } from "../../features/auth/authApi";
-import axios from "axios";
+import { userLoggedIn } from "../../features/auth/authSlice";
 import { useGoogleLoginMutation } from "../../features/auth/googleAuthApi";
 
 function Login() {
@@ -26,6 +26,7 @@ function Login() {
       alert("No User Found");
     }
     if (LoginInData?.data?.accessToken) {
+      dispatch(userLoggedIn(LoginInData?.data));
       navigate("/vets/my-appointment");
     }
   }, [LoginInData, isError, navigate]);

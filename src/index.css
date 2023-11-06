@@ -85,6 +85,13 @@ input[type="checkbox"] {
   visibility: hidden;
 }
 
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  display: none;
+}
+
 .option {
   display: block;
   position: relative;

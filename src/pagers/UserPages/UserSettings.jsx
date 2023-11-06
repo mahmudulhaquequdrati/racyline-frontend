@@ -42,7 +42,7 @@ const UserSettings = () => {
               <div className="w-full">
                 <input
                   type="text"
-                  value={user?.first_name}
+                  value={user?.last_name}
                   className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full"
                 />
               </div>
@@ -57,7 +57,7 @@ const UserSettings = () => {
                     type="number"
                     value={user?.phone}
                     placeholder="23454356"
-                    className="rounded-lg py-2 px-4  bg-[#F3FEFE] text-[#00000066] outline-none border-[1px] border-none shadow w-full"
+                    className="rounded-lg py-2 px-4  bg-white text-black outline-none border-[1px] border-none shadow w-full"
                   />
                 </div>
                 <div>
