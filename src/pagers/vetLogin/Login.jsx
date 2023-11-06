@@ -41,8 +41,7 @@ function Login() {
       "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email";
     // var SCOPES = "https://www.googleapis.com/auth/userinfo.email";
     const client = window.google.accounts.oauth2.initCodeClient({
-      client_id:
-        "745412608351-323qm5ivn5cgpn6ipikf5k7q5dfhh9sn.apps.googleusercontent.com",
+      client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
       scope: SCOPES,
       ux_mode: "popup",
       callback: async (response) => {
