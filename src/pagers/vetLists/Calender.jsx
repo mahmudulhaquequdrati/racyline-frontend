@@ -1,5 +1,5 @@
 import moment from "moment/moment";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
@@ -35,8 +35,13 @@ const PrevIcon = () => {
   );
 };
 
-export default function VetCalender() {
+export default function VetCalender({ setSelectDate }) {
   const [value, onChange] = useState(new Date());
+
+  useEffect(() => {
+    // this throws error
+    // setSelectDate(value);
+  }, [value]);
 
   return (
     <div className="max-w-[1140px] w-full mx-auto">

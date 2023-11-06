@@ -3,76 +3,70 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import GoogleIcon from "../../assets/ICONS/google.svg";
 import { useLoginMutation } from "../../features/auth/authApi";
-import { userLoggedIn } from "../../features/auth/authSlice";
+import { useGoogleLoginMutation } from "../../features/auth/googleAuthApi";
+import { userLoggedOut } from "../../features/auth/authSlice";
 
 function UserLogin() {
   const [login, { data: LoginInData, isError, isLoading }] = useLoginMutation();
-  const dispatch = useDispatch();
+  const [
+    googleLogin,
+    { data: googleLoginData, isError: googleError, isLoading: isGoogleLogin },
+  ] = useGoogleLoginMutation();
   const navigate = useNavigate();
-  const [googleLogin, setGoogleLogin] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const dispatch = useDispatch();
+  const handleLogut = () => {
+    sessionStorage.clear();
+    dispatch(userLoggedOut());
+    navigate("/user/login");
+  };
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = (e) => {
     e.preventDefault();
-    setGoogleLogin(false);
     login({ email, password, userType: "user" });
   };
   useEffect(() => {
     if (isError) {
       alert("No User Found");
     }
-    if (LoginInData?.data?.accessToken && googleLogin) {
-      navigate("/registration-with-google");
-    } else if (LoginInData?.data?.accessToken && !googleLogin) {
-      dispatch(userLoggedIn(LoginInData?.data));
+    if (LoginInData?.data?.accessToken) {
       navigate("/user/vet-lists");
     }
-  }, [isLoggedIn, LoginInData, isError, navigate, googleLogin]);
+  }, [isLoggedIn, LoginInData, isError, navigate]);
 
-  useEffect(() => {
-    handleTokenFromQueryParams();
-  }, []);
-
-  const createGoogleAuthLink = async () => {
-    try {
-      const request = await fetch(
-        "http://localhost:5000/api/v1/createAuthLink",
-        {
-          method: "POST",
+  async function handleGoogle() {
+    var SCOPES =
+      "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email";
+    // var SCOPES = "https://www.googleapis.com/auth/calendar.events ";
+    const client = window.google.accounts.oauth2.initCodeClient({
+      client_id:
+        "745412608351-323qm5ivn5cgpn6ipikf5k7q5dfhh9sn.apps.googleusercontent.com",
+      scope: SCOPES,
+      ux_mode: "popup",
+      callback: async (response) => {
+        try {
+          if (!response.code) {
+            return;
+          }
+          googleLogin({ code: response.code, role: "user" }).then((res) => {
+            if (res?.data?.data?.user?.role === "vet_admin") {
+              alert("you are not a user");
+              handleLogut();
+            } else {
+              navigate("/user/vet-lists");
+            }
+          });
+        } catch (error) {
+          console.log(error);
         }
-      );
-      const response = await request.json();
-      window.location.href = response.url;
-    } catch (error) {
-      throw new Error("Issue with Login", error.message);
-    }
-  };
-
-  const handleTokenFromQueryParams = () => {
-    const query = new URLSearchParams(window.location.search);
-    const accessToken = query.get("accessToken");
-    const refreshToken = query.get("refreshToken");
-    const expirationDate = newExpirationDate();
-    if (accessToken && refreshToken) {
-      storeTokenData(accessToken, refreshToken, expirationDate);
-      setIsLoggedIn(true);
-    }
-  };
-
-  const newExpirationDate = () => {
-    var expiration = new Date();
-    expiration.setHours(expiration.getHours() + 1);
-    return expiration;
-  };
-
-  const storeTokenData = async (token, refreshToken, expirationDate) => {
-    sessionStorage.setItem("accessToken", token);
-    sessionStorage.setItem("refreshToken", refreshToken);
-    sessionStorage.setItem("expirationDate", expirationDate);
-  };
+      },
+    });
+    client.requestCode();
+  }
 
   // const signOut = () => {
   //   setIsLoggedIn(false);
@@ -127,7 +121,7 @@ function UserLogin() {
 
           <div>
             <button
-              onClick={createGoogleAuthLink}
+              onClick={handleGoogle}
               type="button"
               className="w-full rounded-lg py-3 px-4 outline-none border-[1px] border-[#E5E7EC]"
             >
