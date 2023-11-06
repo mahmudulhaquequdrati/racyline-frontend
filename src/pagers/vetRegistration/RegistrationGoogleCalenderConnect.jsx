@@ -21,7 +21,9 @@ function RegistrationGoogleCalenderConnect() {
           }
           axios
             .post(
-              "http://localhost:5000/api/v1/guser/connect/google-calender",
+              `${
+                import.meta.env.VITE_SERVER_LINK
+              }/guser/connect/google-calender`,
               {
                 code: response.code,
                 user_id: JSON.parse(sessionStorage.getItem("authUser"))?.user

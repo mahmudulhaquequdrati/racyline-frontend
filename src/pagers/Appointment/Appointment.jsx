@@ -79,7 +79,7 @@ const Appointment = () => {
     // store database
     try {
       const request = await fetch(
-        "http://localhost:5000/api/v1/AppointmentUserCreate",
+        `${import.meta.env.VITE_SERVER_LINK}/AppointmentUserCreate`,
         {
           method: "POST",
           headers: {
