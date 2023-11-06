@@ -27,17 +27,22 @@ function UserLogin() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    login({ email, password, userType: "user" });
+    login({ email, password, userType: "user" }).then((res) => {
+      if (res?.data?.data?.accessToken) {
+        dispatch(userLoggedIn(res?.data?.data));
+        navigate("/user/vet-lists");
+      }
+    });
   };
-  useEffect(() => {
-    if (isError) {
-      alert("No User Found");
-    }
-    if (LoginInData?.data?.accessToken) {
-      dispatch(userLoggedIn(LoginInData?.data));
-      navigate("/user/vet-lists");
-    }
-  }, [isLoggedIn, LoginInData, isError, navigate]);
+  // useEffect(() => {
+  //   if (isError) {
+  //     alert("No User Found");
+  //   }
+  //   if (LoginInData?.data?.accessToken) {
+  //     dispatch(userLoggedIn(LoginInData?.data));
+  //     navigate("/user/vet-lists");
+  //   }
+  // }, [isLoggedIn, LoginInData, isError, navigate]);
 
   async function handleGoogle() {
     var SCOPES =

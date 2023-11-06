@@ -19,17 +19,22 @@ function Login() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    login({ email, password, userType: "vet_admin" });
+    login({ email, password, userType: "vet_admin" }).then((res) => {
+      if (res?.data?.data?.accessToken) {
+        dispatch(userLoggedIn(res?.data?.data));
+        navigate("/vets/my-appointment");
+      }
+    });
   };
-  useEffect(() => {
-    if (isError || googleError) {
-      alert("No User Found");
-    }
-    if (LoginInData?.data?.accessToken) {
-      dispatch(userLoggedIn(LoginInData?.data));
-      navigate("/vets/my-appointment");
-    }
-  }, [LoginInData, isError, navigate]);
+  // useEffect(() => {
+  //   if (isError || googleError) {
+  //     alert("No User Found");
+  //   }
+  //   if (LoginInData?.data?.accessToken) {
+  //     dispatch(userLoggedIn(LoginInData?.data));
+  //     navigate("/vets/my-appointment");
+  //   }
+  // }, [LoginInData, isError, navigate]);
 
   async function handleGoogle() {
     var SCOPES =
