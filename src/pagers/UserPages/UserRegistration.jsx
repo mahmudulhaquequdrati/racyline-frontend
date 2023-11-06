@@ -1,8 +1,10 @@
 /* eslint-disable no-unused-vars */
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useRegisterMutation } from "../../features/auth/authApi";
+import { userLoggedIn } from "../../features/auth/authSlice";
 
 function UserRegistration() {
   const navigate = useNavigate();
@@ -16,6 +18,7 @@ function UserRegistration() {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [register, { data: UserLoggedInData, isError }] = useRegisterMutation();
+  const dispatch = useDispatch();
   const [selectedFile, setSelectedFile] = useState(null);
   const [error, setError] = useState("");
   const [feildError, setFeildError] = useState(false);
@@ -41,6 +44,7 @@ function UserRegistration() {
       alert("Something went wrong");
     }
     if (UserLoggedInData?.data?.accessToken) {
+      dispatch(userLoggedIn(UserLoggedInData?.data));
       navigate("/user/vet-lists");
     }
   }, [UserLoggedInData, isError, navigate]);
@@ -94,7 +98,7 @@ function UserRegistration() {
   ];
 
   return (
-    <section className="flex justify-center items-center bg-[#FFF7EC] py-16 border-[1px] border-[#EAEAEB]">
+    <section className="flex justify-center items-center bg-primary py-16 border-[1px] border-[#EAEAEB]">
       <div className="max-w-[638px] w-full  rounded-lg px-4 py-12 md:p-8 lg:p-16 bg-white">
         <h1 className="text-[32px] font-bold leading-10 text-center mb-6">
           Completa la registrazione
@@ -188,7 +192,7 @@ function UserRegistration() {
           <div>
             <button
               type="submit"
-              className={`w-full rounded-lg py-3 px-4 outline-none  text-white bg-primary`}
+              className={`w-full rounded-lg py-3 px-4 outline-none  text-white bg-secondary`}
             >
               Avanti
             </button>

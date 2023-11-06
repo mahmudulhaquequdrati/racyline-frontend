@@ -152,20 +152,6 @@ export default function DropDown() {
                       </Link>
                     )}
                   </Menu.Item>
-                  <Menu.Item>
-                    {({ active }) => (
-                      <Link
-                        to="/user/my-appointment-editing"
-                        className={`${
-                          active
-                            ? "bg-[#e8981f26] text-gray-800"
-                            : "text-gray-900"
-                        } group flex w-full items-center rounded-md px-4 py-2 text-sm`}
-                      >
-                        My Appointment Editing
-                      </Link>
-                    )}
-                  </Menu.Item>
                 </>
               )}
 

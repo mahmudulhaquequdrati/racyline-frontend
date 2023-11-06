@@ -22,9 +22,10 @@ const UserSettings = () => {
   const [selected, setSelected] = useState(people[0]);
   const [selected2, setSelected2] = useState(type[0]);
   const { user } = useSelector((state) => state.auth);
+  console.log(user);
 
   return (
-    <div className="p-4 md:p-8 lg:p-20 min-h-[100vh] bg-[#FFF7EC]">
+    <div className="p-4 md:p-8 lg:p-20 min-h-[100vh] bg-primary">
       <div className="max-w-[1150px] w-full mx-auto">
         <div className="max-w-[570px] w-full">
           <div className="w-full">
@@ -41,7 +42,7 @@ const UserSettings = () => {
               <div className="w-full">
                 <input
                   type="text"
-                  value={user?.first_name}
+                  value={user?.last_name}
                   className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full"
                 />
               </div>
@@ -55,10 +56,8 @@ const UserSettings = () => {
                   <input
                     type="number"
                     value={user?.phone}
-                    placeholder="34343434"
-                    disabled
-                    readOnly
-                    className="rounded-lg py-2 px-4  bg-[#F3FEFE] text-[#00000066] outline-none border-[1px] border-none shadow w-full"
+                    placeholder="23454356"
+                    className="rounded-lg py-2 px-4  bg-white text-black outline-none border-[1px] border-none shadow w-full"
                   />
                 </div>
                 <div>
@@ -66,7 +65,6 @@ const UserSettings = () => {
                     type="email"
                     value={user?.email}
                     disabled
-                    placeholder="mariorossi@gmail.com"
                     className="rounded-lg py-2 px-4 bg-[#F3FEFE] text-[#00000066] outline-none border-[1px] border-none shadow w-full"
                   />
                 </div>
@@ -82,7 +80,7 @@ const UserSettings = () => {
 
           <div className="w-full mt-12">
             <button
-              className={`w-full rounded-lg py-2 px-4 outline-none  text-white bg-primary`}
+              className={`w-full rounded-lg py-2 px-4 outline-none  text-white bg-secondary`}
             >
               Salva
             </button>

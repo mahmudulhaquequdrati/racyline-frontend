@@ -26,7 +26,7 @@ const AccountSetting = () => {
 
   const { user } = useSelector((state) => state.auth);
   return (
-    <div className="p-4 md:p-8 lg:p-20 min-h-[100vh] bg-[#FFF7EC]">
+    <div className="p-4 md:p-8 lg:p-20 min-h-[100vh] bg-primary">
       <div className="max-w-[1140px] w-full mx-auto">
         <div className="max-w-[570px] w-full">
           <div className="w-full">
@@ -210,14 +210,14 @@ const AccountSetting = () => {
           </div>
           <div className="mt-12">
             <button
-              className={`w-full rounded-lg py-2 px-4 outline-none  text-white bg-primary`}
+              className={`w-full rounded-lg py-2 px-4 outline-none  text-white bg-secondary`}
             >
               Salva
             </button>
           </div>
           <div className="mt-3">
             <button
-              className={`w-full rounded-lg py-2 px-4  outline-none border-[1px] text-primary border-primary `}
+              className={`w-full rounded-lg py-2 px-4  outline-none border-[1px] text-primary border-primary`}
             >
               Elimina il mio account
             </button>

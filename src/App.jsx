@@ -63,7 +63,7 @@ const App = () => {
           }
         />
         <Route
-          path="/vets/availabilities"
+          path="/vets/registration-availabilities"
           element={
             <VetProtected>
               <RegistrationAvailabilities />

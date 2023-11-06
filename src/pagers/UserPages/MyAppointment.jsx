@@ -4,7 +4,7 @@ import vetUser from "../../../public/vetListImage/vetUser.jpeg";
 
 const MyAppointment = () => {
   return (
-    <div className="w-full bg-[#FFF7EC] pt-[60px] p-4 md:p-8 pb-[80px]">
+    <div className="w-full bg-primary pt-[60px] p-4 md:p-8 pb-[80px]">
       <div className="max-w-[1150px] w-full mx-auto">
         <h1 className="text-[32px] leading-[40px] font-bold mb-18 md:mb-[36px]">
           I miei appuntamenti
@@ -59,12 +59,12 @@ const MyAppointment = () => {
           </div>
           <div className="flex flex-col gap-3">
             <div className="w-full">
-              <button className="w-full text-white text-[15px] font-medium text-center p-[12px] bg-[#E8971F] rounded">
+              <button className="w-full text-white text-[15px] font-medium text-center p-[12px] bg-secondary rounded">
                 <Link to={"/appointment-success"}>Modifica l’appuntamento</Link>
               </button>
             </div>
             <div className="w-full">
-              <button className="w-full text-[#E8971F] text-[15px] border-[1px] border-[#E8971F] font-medium text-center p-[12px] bg-white rounded">
+              <button className="w-full text-[15px] border-[1px] font-medium text-center p-[12px] text-primary border-primary">
                 <Link to={"/appointment-success"}>Elimina l’appuntamento</Link>
               </button>
             </div>
