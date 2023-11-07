@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <footer className="py-[16px] md:py-8 px-5 md:px-28 flex justify-center">
       <div className="max-w-[1140px] w-full mx-auto">
-        <div className="p-5">
+        <div className="">
           <div className="w-[125px] mb-3">
             <img src={logo} className="w-[80%] md:w-[100%]" alt="logo" />
           </div>
@@ -17,7 +17,7 @@ const Footer = () => {
           </ul>
         </div>
 
-        <div className="flex flex-col sm:flex-row justify-between mt-3 sm:mt-8 p-5">
+        <div className="flex flex-col sm:flex-row justify-between mt-3 sm:mt-8">
           <p className="text-[13px] leading-5">
             Al rights reserved | Copyright &copy; 2023
           </p>
