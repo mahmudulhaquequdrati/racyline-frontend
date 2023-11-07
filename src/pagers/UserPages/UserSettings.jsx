@@ -53,20 +53,14 @@ const UserSettings = () => {
               <div className="w-full">
                 <input
                   type="text"
-                  value={userData?.first_name}
-                  onChange={(e) => {
-                    setUserData({ ...userData, first_name: e.target.value });
-                  }}
+                  value={user?.first_name}
                   className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full"
                 />
               </div>
               <div className="w-full">
                 <input
                   type="text"
-                  value={userData?.last_name}
-                  onChange={(e) => {
-                    setUserData({ ...userData, last_name: e.target.value });
-                  }}
+                  value={user?.last_name}
                   className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full"
                 />
               </div>

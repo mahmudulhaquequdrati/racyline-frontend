@@ -16,12 +16,13 @@ export default function Header() {
         </Link>
         {!user && !accessToken ? (
           <div className="flex gap-3 md:gap-8 uppercase">
-            <h2
+            <Link
+              to="/vets/login"
               // onClick={() => navigate("/login")}
               className="text-sm md:text-base cursor-pointer"
             >
               Sei un medico veterinario?{" "}
-            </h2>
+            </Link>
             <h2
               onClick={() => navigate("/user/login")}
               className={` cursor-pointer text-primary`}

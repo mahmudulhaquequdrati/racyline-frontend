@@ -52,6 +52,20 @@ const Appointment = () => {
       vetInfo: data?.vetInfo,
     };
 
+    // store database
+    try {
+      const request = await fetch(
+        `${import.meta.env.VITE_SERVER_LINK}/AppointmentUserCreate`,
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(appointmentData),
+        }
+      );
+      const response = await request.json();
     createAppointment(appointmentData);
   };
 

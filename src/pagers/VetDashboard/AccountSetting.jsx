@@ -97,6 +97,7 @@ const AccountSetting = () => {
                 onChange={(e) => {
                   setUserData({ ...userData, first_name: e.target.value });
                 }}
+                placeholder={user?.first_name}
                 className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full"
               />
             </div>
@@ -107,6 +108,7 @@ const AccountSetting = () => {
                 onChange={(e) => {
                   setUserData({ ...userData, last_name: e.target.value });
                 }}
+                placeholder={user?.last_name}
                 className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full"
               />
             </div>

@@ -10,7 +10,8 @@ export default function DropDown() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleLogut = () => {
-    sessionStorage.clear();
+    localStorage.clear();
+    localStorage;
     dispatch(userLoggedOut());
     navigate("/user/login");
   };
