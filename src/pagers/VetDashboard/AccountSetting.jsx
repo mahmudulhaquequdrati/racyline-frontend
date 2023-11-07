@@ -35,14 +35,14 @@ const AccountSetting = () => {
             <div className="w-full">
               <input
                 type="text"
-                value={user?.first_name}
+                placeholder={user?.first_name}
                 className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full"
               />
             </div>
             <div className="w-full mt-3">
               <input
                 type="text"
-                value={user?.last_name}
+                placeholder={user?.last_name}
                 className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full"
               />
             </div>
@@ -210,14 +210,14 @@ const AccountSetting = () => {
           </div>
           <div className="mt-12">
             <button
-              className={`w-full rounded-lg py-2 px-4 outline-none  text-white bg-primary`}
+              className={`w-full rounded-lg py-2 px-4 outline-none  text-white bg-secondary`}
             >
               Salva
             </button>
           </div>
           <div className="mt-3">
             <button
-              className={`w-full rounded-lg py-2 px-4  outline-none border-[1px] text-primary border-primary `}
+              className={`w-full rounded-lg py-2 px-4  outline-none border-[1px] text-primary border-primary`}
             >
               Elimina il mio account
             </button>

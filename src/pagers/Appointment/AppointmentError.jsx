@@ -29,7 +29,7 @@ const AppointmentError = () => {
           </p>
         </div>
         <div className="w-full flex justify-center">
-          <button className=" text-white text-[15px] font-medium text-center p-[12px] bg-[#E8971F] rounded">
+          <button className=" text-white text-[15px] font-medium text-center p-[12px] bg-secondary rounded">
             support@company.com
           </button>
         </div>

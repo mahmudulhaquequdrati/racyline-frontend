@@ -98,7 +98,7 @@ const MyAppointmentEditing = () => {
                   ))}
                 </div>
               </div>
-              <button className="w-full text-white text-[15px] font-medium text-center p-[12px] bg-[#E8971F] rounded">
+              <button className="w-full text-white text-[15px] font-medium text-center p-[12px] bg-secondary rounded">
                 <Link to={"/new-appointment"}>
                   Salva il nuovo orario selezionato
                 </Link>

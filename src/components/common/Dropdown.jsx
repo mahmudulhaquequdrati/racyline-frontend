@@ -10,7 +10,8 @@ export default function DropDown() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleLogut = () => {
-    sessionStorage.clear();
+    localStorage.clear();
+    localStorage;
     dispatch(userLoggedOut());
     navigate("/user/login");
   };
@@ -31,7 +32,7 @@ export default function DropDown() {
             >
               <path
                 d="M7.9995 8.78145L11.2995 5.48145L12.2422 6.42411L7.9995 10.6668L3.75684 6.42411L4.6995 5.48145L7.9995 8.78145Z"
-                fill={"#E8971F"}
+                fill={"#339E9F"}
               />
             </svg>
           </Menu.Button>
@@ -149,20 +150,6 @@ export default function DropDown() {
                         } group flex w-full items-center rounded-md px-4 py-2 text-sm`}
                       >
                         My Appointments
-                      </Link>
-                    )}
-                  </Menu.Item>
-                  <Menu.Item>
-                    {({ active }) => (
-                      <Link
-                        to="/user/my-appointment-editing"
-                        className={`${
-                          active
-                            ? "bg-[#e8981f26] text-gray-800"
-                            : "text-gray-900"
-                        } group flex w-full items-center rounded-md px-4 py-2 text-sm`}
-                      >
-                        My Appointment Editing
                       </Link>
                     )}
                   </Menu.Item>

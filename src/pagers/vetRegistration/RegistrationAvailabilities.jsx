@@ -65,8 +65,8 @@ const RegistrationAvailabilities = () => {
       setWeakData((prevWeakData) => {
         let updatedWeakData = [...prevWeakData];
         const newfield = {
-          start_time: setHours(setMinutes(new Date(), 0), 0),
-          end_time: setHours(setMinutes(new Date(), 0), 0),
+          start_time: setHours(setMinutes(new Date(), 0), 9),
+          end_time: setHours(setMinutes(new Date(), 0), 17),
         };
         updatedWeakData[index].availabilities = [newfield];
         updatedWeakData[index]["available"] = true;
@@ -110,8 +110,8 @@ const RegistrationAvailabilities = () => {
       setWeakData((prevWeakData) => {
         let updatedWeakData = [...prevWeakData];
         const newfield = {
-          start_time: setHours(setMinutes(new Date(), 0), 0),
-          end_time: setHours(setMinutes(new Date(), 0), 0),
+          start_time: setHours(setMinutes(new Date(), 0), 9),
+          end_time: setHours(setMinutes(new Date(), 0), 12),
         };
         updatedWeakData[index].availabilities = [newfield];
         updatedWeakData[index]["available"] = true;
@@ -245,13 +245,7 @@ const RegistrationAvailabilities = () => {
         navigate("/registration-google-calender-connect");
       });
     }
-    // navigate("/registration-google-calender-connect");
   };
-  // const onSubmit = () => {
-  //   console.log(weakData);
-
-  //   navigate("/registration-google-calender-connect");
-  // };
 
   useEffect(() => {
     if (data?.data?._id) {
@@ -323,8 +317,8 @@ const RegistrationAvailabilities = () => {
   }, [data?.data?._id]);
 
   return (
-    <section className="flex justify-center items-center bg-primary py-16 border-[1px] border-[#EAEAEB]">
-      <div className="max-w-[638px] w-full  rounded-lg p-16 bg-white">
+    <section className="flex justify-center items-center bg-primary py-16 px-4 border-[1px] border-[#EAEAEB]">
+      <div className="max-w-[638px] w-full rounded-lg p-6 md:p-8 lg:p-16 bg-white">
         <h1 className="text-[32px] font-bold leading-10 text-center mb-6">
           Inserisci le tue disponibilità
         </h1>
@@ -434,7 +428,7 @@ const RegistrationAvailabilities = () => {
         <div className="mt-8">
           <button
             onClick={onSubmit}
-            className={`w-full rounded-lg py-3 px-4 outline-none  text-white bg-primary`}
+            className={`w-full rounded-lg py-3 px-4 outline-none  text-white bg-secondary`}
           >
             Avanti
           </button>

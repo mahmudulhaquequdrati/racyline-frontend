@@ -6,7 +6,6 @@ const Appointment = () => {
   const state = useSelector((state) => state.auth);
   const { user, accessToken } = state || {};
 
-  console.log(" user ", { user, accessToken });
   const navigate = useNavigate();
 
   const submitHandle = async (e) => {
@@ -80,7 +79,7 @@ const Appointment = () => {
     // store database
     try {
       const request = await fetch(
-        "http://localhost:5000/api/v1/AppointmentUserCreate",
+        `${import.meta.env.VITE_SERVER_LINK}/AppointmentUserCreate`,
         {
           method: "POST",
           headers: {
@@ -202,7 +201,7 @@ const Appointment = () => {
                 {/* <Link to={"/user/appointment-success"}> */}
                 <button
                   type="submit"
-                  className="w-full text-white text-[15px] font-medium text-center p-[12px] bg-[#E8971F] rounded"
+                  className="w-full text-white text-[15px] font-medium text-center p-[12px] bg-secondary rounded"
                 >
                   Prenota ora
                 </button>

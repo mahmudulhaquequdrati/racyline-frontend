@@ -13,6 +13,7 @@ import AccountSetting from "./pagers/VetDashboard/AccountSetting";
 import VetAppointment from "./pagers/VetDashboard/Appointment";
 import Availabilities from "./pagers/VetDashboard/Availabilities";
 import Calender from "./pagers/VetDashboard/Calender";
+import ConnectCalender from "./pagers/VetDashboard/ConnectCalender.jsx";
 import Dashboard from "./pagers/VetDashboard/Dashboard";
 import UserLogin from "./pagers/userLogin/Login";
 import VetLists from "./pagers/vetLists/VetLists";
@@ -63,7 +64,7 @@ const App = () => {
           }
         />
         <Route
-          path="/vets/availabilities"
+          path="/vets/registration-availabilities"
           element={
             <VetProtected>
               <RegistrationAvailabilities />
@@ -118,6 +119,14 @@ const App = () => {
           element={
             <VetProtected>
               <Calender />
+            </VetProtected>
+          }
+        />
+        <Route
+          path="/vets/calender-connected"
+          element={
+            <VetProtected>
+              <ConnectCalender />
             </VetProtected>
           }
         />

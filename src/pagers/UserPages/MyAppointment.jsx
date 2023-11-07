@@ -59,12 +59,12 @@ const MyAppointment = () => {
           </div>
           <div className="flex flex-col gap-3">
             <div className="w-full">
-              <button className="w-full text-white text-[15px] font-medium text-center p-[12px] bg-[#E8971F] rounded">
+              <button className="w-full text-white text-[15px] font-medium text-center p-[12px] bg-secondary rounded">
                 <Link to={"/appointment-success"}>Modifica l’appuntamento</Link>
               </button>
             </div>
             <div className="w-full">
-              <button className="w-full text-[#E8971F] text-[15px] border-[1px] border-[#E8971F] font-medium text-center p-[12px] bg-white rounded">
+              <button className="w-full text-[15px] border-[1px] font-medium text-center p-[12px] text-primary border-primary">
                 <Link to={"/appointment-success"}>Elimina l’appuntamento</Link>
               </button>
             </div>

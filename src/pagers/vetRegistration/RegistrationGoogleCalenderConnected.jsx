@@ -21,7 +21,7 @@ function RegistrationGoogleCalenderConnected() {
           <div>
             <button
               onClick={() => navigate("/vets/my-appointment")}
-              className={`w-full rounded-lg py-3 px-4 outline-none  text-white bg-primary`}
+              className={`w-full rounded-lg py-3 px-4 outline-none  text-white bg-secondary`}
             >
               Concludi la registrazione
             </button>

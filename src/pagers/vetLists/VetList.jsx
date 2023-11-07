@@ -6,8 +6,15 @@ import VetCalender from "./Calender";
 const VetList = ({ vetInfo }) => {
   const [selectTime, setSelectTime] = useState(null);
   const [selectDate, setSelectDate] = useState(null);
-  const { name, image, company, location, treatmentAnimals, availability } =
-    vetInfo || {};
+  const {
+    first_name,
+    last_name,
+    company,
+    veterinary_address,
+    availability,
+    doctor_type1,
+    doctor_type2,
+  } = vetInfo || {};
   const time = [
     "1:30 PM",
     "2:00 PM",
@@ -32,21 +39,21 @@ const VetList = ({ vetInfo }) => {
     "11:30 PM",
   ];
 
-  console.log({ selectTime, selectDate });
+  console.log(vetInfo);
 
   return (
     <div className="flex flex-col md:flex-row bg-white rounded-lg overflow-hidden">
-      <div className="w-full md:w-1/2 flex flex-col gap-6 p-6 border-r-[0.5px] border-[#E5E7EC]">
+      <div className="w-full md:w-1/2 flex flex-col gap-6 p-6 md:border-r-[0.5px] md:border-[#E5E7EC]">
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
           <div className="w-[100px] h-[100px]">
             <img src={vetUser} className="w-full rounded-full" alt="vetUser" />
           </div>
           <div>
             <h1 className="text-[16px] sm:text-[18px] leading-[22px] font-semibold mb-2">
-              {name}
+              {first_name + " " + last_name}
             </h1>
             <p className="text-[12px] sm:text-[14px] leading-5 font-medium mb-[10px]">
-              {company}
+              {doctor_type1}
             </p>
             <p className="flex gap-[6px] text-[#666666] text-[11px] sm:text-[13px] font-normal leading-[22px]">
               <span>
@@ -66,7 +73,7 @@ const VetList = ({ vetInfo }) => {
                   />
                 </svg>
               </span>
-              <span>{location}</span>
+              <span>{veterinary_address}</span>
             </p>
           </div>
         </div>
@@ -74,32 +81,54 @@ const VetList = ({ vetInfo }) => {
           <h3 className="text-[14px] leading-5 font-medium mb-[12px]">
             Animali trattati
           </h3>
-          <div className="flex gap-1">
-            {treatmentAnimals?.map((treatment, index) => (
-              <p
-                key={index}
-                className="text-[13px] font-normal leading-[22px] text-black"
-              >
-                {treatment}
-              </p>
-            ))}
-          </div>
+          <div className="flex gap-1">{doctor_type2}</div>
         </div>
         <div>
           <h3 className="text-[14px] leading-5 font-medium mb-[12px]">
             Disponibilità
           </h3>
           <div className="flex flex-col gap-2">
-            {availability?.map((availabilities, index) => (
-              <div key={index} className="flex gap-3 justify-between">
-                <p className="text-[13px] font-normal leading-[22px] text-black">
-                  {availabilities?.day}
-                </p>
-                <p className="text-[13px] font-normal leading-[22px] text-[#666666]">
-                  {availabilities?.time}
-                </p>
-              </div>
-            ))}
+            {availability?.availabilities?.map((availabilities, index) => {
+              if (availabilities?.available) {
+                return (
+                  <div key={index} className="flex gap-3 justify-between">
+                    <p className="text-[13px] font-normal leading-[22px] text-black">
+                      {availabilities?.name}
+                    </p>
+                    <p className="text-right text-[13px] font-normal leading-[22px] text-[#666666]">
+                      {availabilities?.availabilities?.map((avil) => {
+                        const startTimeHours = new Date(
+                          `${avil?.start_time}`
+                        ).getHours();
+                        const startTimeMinutes = new Date(
+                          `${avil?.start_time}`
+                        ).getMinutes();
+                        const endTimeHours = new Date(
+                          `${avil?.end_time}`
+                        ).getHours();
+                        const endTimeMinutes = new Date(
+                          `${avil?.end_time}`
+                        ).getMinutes();
+                        return (
+                          <p>{`${startTimeHours}.${startTimeMinutes} - ${endTimeHours}.${endTimeMinutes}`}</p>
+                        );
+                      })}
+                    </p>
+                  </div>
+                );
+              } else {
+                return (
+                  <div key={index} className="flex gap-3 justify-between">
+                    <p className="text-[13px] font-normal leading-[22px] text-black">
+                      {availabilities?.name}
+                    </p>
+                    <p className="text-right text-[13px] font-normal leading-[22px] text-[#666666]">
+                      Chiuso
+                    </p>
+                  </div>
+                );
+              }
+            })}
           </div>
         </div>
       </div>
@@ -114,7 +143,7 @@ const VetList = ({ vetInfo }) => {
                 onClick={() => setSelectTime(t)}
                 key={index}
                 className={`flex items-center justify-center w-[70px] text-center text-[13px] hover:rounded-full hover:bg-[#7D7D7D] cursor-pointer hover:text-white ${
-                  selectTime == t && "bg-[#7D7D7D] text-white"
+                  selectTime == t && "bg-[#7D7D7D] rounded-full text-white"
                 }`}
               >
                 {t}
@@ -123,22 +152,11 @@ const VetList = ({ vetInfo }) => {
           </div>
         </div>
 
-        {selectTime && selectDate ? (
-          <Link
-            to={`/user/new-appointment?selectTime=${selectTime}&selectDate=${selectDate}`}
-          >
-            <button className="w-full text-white text-[15px] font-medium text-center p-[12px] bg-[#E8971F] rounded">
-              Prenota ora
-            </button>
-          </Link>
-        ) : (
-          <button
-            onClick={() => alert("Please select Date And Time")}
-            className="w-full text-white text-[15px] font-medium text-center p-[12px] bg-[#E8971F] rounded"
-          >
+        <Link to={`/user/new-appointment`}>
+          <button className="w-full text-white text-[15px] font-medium text-center p-[12px] bg-secondary rounded">
             Prenota ora
           </button>
-        )}
+        </Link>
       </div>
     </div>
   );
