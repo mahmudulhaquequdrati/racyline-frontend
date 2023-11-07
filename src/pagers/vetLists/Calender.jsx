@@ -35,7 +35,7 @@ const PrevIcon = () => {
   );
 };
 
-export default function VetCalender({ setSelectDate }) {
+export default function VetCalender({ setNewDate }) {
   const [value, onChange] = useState(new Date());
   var daysOfWeek = [
     "Sunday",
@@ -48,6 +48,7 @@ export default function VetCalender({ setSelectDate }) {
   ];
 
   var dayName = daysOfWeek[value.getDay()];
+  setNewDate(dayName);
 
   return (
     <div className="max-w-[1140px] w-full mx-auto">

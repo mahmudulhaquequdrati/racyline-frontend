@@ -1,105 +1,68 @@
+import { Listbox, Transition } from "@headlessui/react";
+import { CheckIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
+import { Fragment, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import vetUser from "../../../public/vetListImage/vetUser.jpeg";
+import { useCreateAppointmentMutation } from "../../features/appointment/appointmentApi";
+
+const type = [
+  {
+    name: "Dog",
+  },
+  {
+    name: "Cat",
+  },
+  {
+    name: "Parrot",
+  },
+];
 
 const Appointment = () => {
   const state = useSelector((state) => state.auth);
   const { user, accessToken } = state || {};
+  const [animale, selectAnimale] = useState(type[0]);
+  const [appointment, setAppointment] = useState({
+    firstName: user?.first_name,
+    lastName: user?.last_name,
+    email: user?.email,
+    phone: user?.phone,
+    reasonVisit: "",
+  });
 
   const navigate = useNavigate();
+  const [
+    createAppointment,
+    { data: createdAppointmentResponse, isLoading, isError },
+  ] = useCreateAppointmentMutation();
+
+  const { data } = useSelector((state) => state.appointment);
+  console.log(data);
 
   const submitHandle = async (e) => {
     e.preventDefault();
-    const query = new URLSearchParams(window.location.search);
-    const makeData = {
-      userId: user?._id,
-      userEmail: user?.email,
-      vetId: "?",
-      vetEmail: "?",
-      firstName: e.target.firstName.value,
-      secondName: e.target.secondName.value,
-      email: e.target.email.value,
-      phoneNumber: e.target.phoneNumber.value,
-      animals: e.target.animals.value,
-      reasonVisit: e.target.reasonVisit.value,
-      data: query.get("selectDate"),
-      selectTime: query.get("selectTime"),
-    };
-
-    const {
-      userId,
-      userEmail,
-      vetId,
-      vetEmail,
-      firstName,
-      secondName,
-      email,
-      phoneNumber,
-      animals,
-      reasonVisit,
-      data,
-      selectTime,
-    } = makeData;
-
-    if (
-      !userId ||
-      !userEmail ||
-      !vetId ||
-      !vetEmail ||
-      !firstName ||
-      !secondName ||
-      !email ||
-      !phoneNumber ||
-      !animals ||
-      !reasonVisit ||
-      !data ||
-      !selectTime
-    ) {
-      return alert("All Fields is Required !");
-    }
-
     const appointmentData = {
-      vet: {
-        vetId,
-        vetEmail,
-      },
-      userInfo: { userEmail, userId },
-      appointmentInfo: {
-        email,
-        phoneNumber,
-        firstName,
-        secondName,
-        animals,
-        reasonVisit,
-        data,
-        selectTime,
-      },
+      userId: user?._id,
+      firstName: appointment?.firstName,
+      lastName: appointment?.lastName,
+      phone: appointment?.phone,
+      userEmail: appointment?.email,
+      reasonVisit: appointment?.reasonVisit,
+      appointmentDate: "",
+      appointmentTime: "",
+      vetInfo: data?.vetInfo,
     };
 
-    // store database
-    try {
-      const request = await fetch(
-        "http://localhost:5000/api/v1/AppointmentUserCreate",
-        {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(appointmentData),
-        }
-      );
-      const response = await request.json();
-      navigate("/user/appointment-success");
-      // window.location.href = response.data.url;
-    } catch (error) {
-      // console.log("book now | error", error);
-      navigate("/user/appointment-error");
-      // throw new Error("Issue with appointment", error.message);
-    }
-
-    console.log("makeData  ", makeData);
+    createAppointment(appointmentData);
   };
+
+  useEffect(() => {
+    if (createdAppointmentResponse?.data?.userId && !isError) {
+      navigate("/user/appointment-success");
+    }
+    if (!isLoading && isError) {
+      navigate("/user/appointment-error");
+    }
+  }, [createdAppointmentResponse?.data?.userId]);
 
   return (
     <div className="bg-primary pt-[60px] pb-[80px]">
@@ -119,21 +82,25 @@ const Appointment = () => {
                 </label>
                 <input
                   name="firstName"
+                  value={appointment?.firstName}
+                  disabled
                   type="text"
                   style={{
                     boxShadow: "0px 1px 3px 0px rgba(232, 151, 31, 0.15)",
                   }}
-                  className="p-[14px] rounded outline-none border-none text-[15px] text-black placeholder:text-[15px] placeholder:text-[#C2BFBA]"
+                  className="p-[14px] bg-[#F3FEFE] rounded outline-none border-none text-[15px] text-black placeholder:text-[15px] placeholder:text-[#C2BFBA]"
                   placeholder="Mario"
                 />
                 <input
                   name="secondName"
                   type="text"
+                  value={appointment?.lastName}
+                  disabled
                   placeholder="Rossi"
                   style={{
                     boxShadow: "0px 1px 3px 0px rgba(232, 151, 31, 0.15)",
                   }}
-                  className="p-[14px] rounded outline-none border-none text-[15px] text-black placeholder:text-[15px] placeholder:text-[#C2BFBA]"
+                  className="p-[14px] bg-[#F3FEFE] rounded outline-none border-none text-[15px] text-black placeholder:text-[15px] placeholder:text-[#C2BFBA]"
                 />
               </div>
               <div className="flex flex-col gap-[14px]">
@@ -146,38 +113,97 @@ const Appointment = () => {
                 <input
                   name="email"
                   type="email"
+                  value={appointment?.email}
+                  disabled
                   placeholder="mariorossi@gmail.com"
                   style={{
                     boxShadow: "0px 1px 3px 0px rgba(232, 151, 31, 0.15)",
                   }}
-                  className="p-[14px] rounded outline-none border-none text-[15px] text-black placeholder:text-[15px] placeholder:text-[#C2BFBA]"
+                  className="p-[14px] bg-[#F3FEFE] rounded outline-none border-none text-[15px] text-black placeholder:text-[15px] placeholder:text-[#C2BFBA]"
                 />
                 <input
                   name="phoneNumber"
                   type="number"
+                  value={appointment?.phone}
+                  disabled
                   placeholder="3330123456"
                   style={{
                     boxShadow: "0px 1px 3px 0px rgba(232, 151, 31, 0.15)",
                   }}
-                  className="p-[14px] rounded outline-none border-none text-[15px] text-black placeholder:text-[15px] placeholder:text-[#C2BFBA]"
+                  className="p-[14px] bg-[#F3FEFE] rounded outline-none border-none text-[15px] text-black placeholder:text-[15px] placeholder:text-[#C2BFBA]"
                 />
               </div>
-              <div className="flex flex-col gap-[14px]">
+              <div className="mt-3">
                 <label
-                  htmlFor="Animale"
+                  htmlFor="Anagrafica"
                   className="text-[18px] text-black font-semibold leading-[22px]"
                 >
                   Animale
                 </label>
-                <input
-                  name="animals"
-                  type="text"
-                  placeholder="Mario"
-                  style={{
-                    boxShadow: "0px 1px 3px 0px rgba(232, 151, 31, 0.15)",
-                  }}
-                  className="p-[14px] rounded outline-none border-none text-[15px] text-black placeholder:text-[15px] placeholder:text-[#C2BFBA]"
-                />
+                <div className="w-full mt-3">
+                  <Listbox value={animale} onChange={selectAnimale}>
+                    <div className="relative mt-1">
+                      <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-3 pl-4 pr-10 text-left border-[1px] border-[#E5E7EC] focus:outline-none  ">
+                        {animale?.name ? (
+                          <span className="block truncate">{animale.name}</span>
+                        ) : (
+                          <span className="block truncate text-gray-400">
+                            {"Scegli gli animali che curi *"}
+                          </span>
+                        )}
+
+                        <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                          <ChevronDownIcon
+                            className="h-5 w-5 text-gray-400"
+                            aria-hidden="true"
+                          />
+                        </span>
+                      </Listbox.Button>
+                      <Transition
+                        as={Fragment}
+                        leave="transition ease-in duration-100"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
+                      >
+                        <Listbox.Options className="z-50 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                          {type.map((tp, tpIdx) => (
+                            <Listbox.Option
+                              key={tpIdx}
+                              className={({ active }) =>
+                                `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                                  active
+                                    ? "bg-amber-100 text-amber-900"
+                                    : "text-gray-900"
+                                }`
+                              }
+                              value={tp}
+                            >
+                              {({ animale }) => (
+                                <>
+                                  <span
+                                    className={`block truncate ${
+                                      animale ? "font-medium" : "font-normal"
+                                    }`}
+                                  >
+                                    {tp.name}
+                                  </span>
+                                  {animale ? (
+                                    <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
+                                      <CheckIcon
+                                        className="h-5 w-5"
+                                        aria-hidden="true"
+                                      />
+                                    </span>
+                                  ) : null}
+                                </>
+                              )}
+                            </Listbox.Option>
+                          ))}
+                        </Listbox.Options>
+                      </Transition>
+                    </div>
+                  </Listbox>
+                </div>
               </div>
               <div className="flex flex-col gap-[14px]">
                 <label
@@ -189,6 +215,13 @@ const Appointment = () => {
                 <textarea
                   name="reasonVisit"
                   type="text"
+                  value={appointment?.reasonVisit}
+                  onChange={(e) =>
+                    setAppointment({
+                      ...appointment,
+                      reasonVisit: e.target.value,
+                    })
+                  }
                   placeholder="Vengo a far fare una visita al mio animale perchè..."
                   style={{
                     boxShadow: "0px 1px 3px 0px rgba(232, 151, 31, 0.15)",
@@ -225,17 +258,17 @@ const Appointment = () => {
             <div className="flex gap-6">
               <div className="w-[100px] h-[100px]">
                 <img
-                  src={vetUser}
+                  src={data?.vetInfo?.profile_image_url}
                   className="w-full rounded-full"
                   alt="vetUser"
                 />
               </div>
               <div>
                 <h1 className="text-[18px] leading-[22px] font-semibold mb-2">
-                  Mario Rossi
+                  {data?.vetInfo?.first_name + " " + data?.vetInfo?.last_name}
                 </h1>
                 <p className="text-[14px] leading-5 font-medium mb-[10px]">
-                  Veterinario di medicina generale, Chirurgo veterinario
+                  {data?.vetInfo?.doctor_type1}
                 </p>
                 <p className="flex items-center gap-[6px] text-[#666666] text-[13px] font-normal leading-[22px]">
                   <span>
@@ -255,7 +288,7 @@ const Appointment = () => {
                       />
                     </svg>
                   </span>
-                  <span>sdsdsdsdsdsd</span>
+                  <span>{data?.vetInfo?.veterinary_address}</span>
                 </p>
               </div>
             </div>

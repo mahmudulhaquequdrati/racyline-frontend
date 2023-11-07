@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import GoogleIcon from "../../assets/ICONS/google.svg";
+import {
+  notifyError,
+  notifySuccess,
+} from "../../components/common/Toast/Toast";
 import { useLoginMutation } from "../../features/auth/authApi";
 import { userLoggedIn, userLoggedOut } from "../../features/auth/authSlice";
 import { useGoogleLoginMutation } from "../../features/auth/googleAuthApi";
@@ -31,9 +35,10 @@ function UserLogin() {
   };
   useEffect(() => {
     if (isError) {
-      alert("No User Found");
+      notifyError("Email or password isn't correct!");
     }
     if (LoginInData?.data?.accessToken) {
+      notifySuccess("welcome back!");
       dispatch(userLoggedIn(LoginInData?.data));
       navigate("/user/vet-lists");
     }
@@ -75,6 +80,8 @@ function UserLogin() {
   // };
   return (
     <section className="flex flex-col justify-center items-center bg-primary pb-16 px-4 pt-8 border-[1px] border-[#EAEAEB]">
+      {/* Same as */}
+
       <div className="max-w-[638px] w-full  rounded-lg px-4 py-12 md:p-8 lg:p-16 bg-white">
         <h1 className="text-[32px] font-bold leading-10 text-center mb-6">
           Accedi o registrati per concludere la prenotazione
