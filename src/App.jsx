@@ -1,4 +1,6 @@
 import { Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import useAuthCheck from "../src/components/hooks/useAuthCheck.js";
 import Footer from "./components/common/Footer";
 import Header from "./components/common/Header";
@@ -31,8 +33,8 @@ const App = () => {
 
   return !isAuth ? null : (
     <main className="">
+      <ToastContainer />
       <Header />
-
       <Routes>
         {/* Public Routes  */}
         {/* Public Routes  */}

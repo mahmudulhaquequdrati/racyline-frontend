@@ -1,18 +1,26 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import vetUser from "../../../public/vetListImage/vetUser.jpeg";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { sendDataToAppontment } from "../../features/appointment/appointmentSlice";
 import VetCalender from "./Calender";
 
 const VetList = ({ vetInfo }) => {
-  const [selectTime, setSelectTime] = useState(null);
-  const [selectDate, setSelectDate] = useState(null);
+  const [newDate, setNewDate] = useState(null);
+  const [appointmentDate, setAppointmentDate] = useState({
+    time: newDate,
+    date: new Date(),
+  });
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const {
+    _id,
+    email,
     first_name,
     last_name,
-    company,
     veterinary_address,
     availability,
     doctor_type1,
+    profile_image_url,
     doctor_type2,
   } = vetInfo || {};
   const time = [
@@ -38,15 +46,41 @@ const VetList = ({ vetInfo }) => {
     "11:00 PM",
     "11:30 PM",
   ];
+  const handelGetAppointment = () => {
+    const appointmentData = {
+      vetInfo: {
+        vetId: _id,
+        vetEmail: email,
+        first_name,
+        last_name,
+        profile_image_url,
+        profile_image_url,
+        veterinary_address,
+        doctor_type1,
+      },
+      appointDate: {
+        time: appointmentDate?.time,
+        date: appointmentDate?.date,
+      },
+    };
+    dispatch(sendDataToAppontment(appointmentData));
+    navigate("/user/new-appointment");
+  };
 
-  console.log(vetInfo);
+  useEffect(() => {
+    setAppointmentDate({ ...appointmentDate, time: newDate });
+  }, []);
 
   return (
     <div className="flex flex-col md:flex-row bg-white rounded-lg overflow-hidden">
       <div className="w-full md:w-1/2 flex flex-col gap-6 p-6 md:border-r-[0.5px] md:border-[#E5E7EC]">
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
           <div className="w-[100px] h-[100px]">
-            <img src={vetUser} className="w-full rounded-full" alt="vetUser" />
+            <img
+              src={profile_image_url}
+              className="w-full rounded-full"
+              alt="vetUser"
+            />
           </div>
           <div>
             <h1 className="text-[16px] sm:text-[18px] leading-[22px] font-semibold mb-2">
@@ -135,15 +169,22 @@ const VetList = ({ vetInfo }) => {
       <div className="w-full md:w-1/2 p-6 border-l-[0.5px] border-[#E5E7EC]">
         <div className="flex flex-col sm:flex-row gap-4 mb-4">
           <div className="w-full sm:w-1/2">
-            <VetCalender setSelectDate={setSelectDate} />
+            <VetCalender setNewDate={setNewDate} />
           </div>
           <div className="w-full sm:w-1/2 flex flex-wrap gap-3">
             {time?.map((t, index) => (
               <p
-                onClick={() => setSelectTime(t)}
+                onClick={() =>
+                  setAppointmentDate({
+                    ...appointmentDate,
+                    time: t,
+                    date: new Date(),
+                  })
+                }
                 key={index}
                 className={`flex items-center justify-center w-[70px] text-center text-[13px] hover:rounded-full hover:bg-[#7D7D7D] cursor-pointer hover:text-white ${
-                  selectTime == t && "bg-[#7D7D7D] rounded-full text-white"
+                  appointmentDate?.time == t &&
+                  "bg-[#7D7D7D] rounded-full text-white"
                 }`}
               >
                 {t}
@@ -152,11 +193,12 @@ const VetList = ({ vetInfo }) => {
           </div>
         </div>
 
-        <Link to={`/user/new-appointment`}>
-          <button className="w-full text-white text-[15px] font-medium text-center p-[12px] bg-secondary rounded">
-            Prenota ora
-          </button>
-        </Link>
+        <button
+          onClick={handelGetAppointment}
+          className="w-full text-white text-[15px] font-medium text-center p-[12px] bg-secondary rounded"
+        >
+          Prenota ora
+        </button>
       </div>
     </div>
   );

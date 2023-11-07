@@ -1,28 +1,46 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import GoogleIcon from "../../assets/ICONS/google.svg";
+import {
+  notifyError,
+  notifySuccess,
+} from "../../components/common/Toast/Toast";
+import { useUpdateUserDataMutation } from "../../features/userData/userDataApi";
 
-const people = [
-  {
-    name: "Veterinary Doctor",
-  },
-];
-const type = [
-  {
-    name: "Dog",
-  },
-  {
-    name: "Cat",
-  },
-  {
-    name: "Parrot",
-  },
-];
 const UserSettings = () => {
-  const [selected, setSelected] = useState(people[0]);
-  const [selected2, setSelected2] = useState(type[0]);
   const { user } = useSelector((state) => state.auth);
-  console.log(user);
+  const [userData, setUserData] = useState({
+    first_name: user?.first_name,
+    last_name: user?.last_name,
+    phone: user?.phone,
+    email: user?.email,
+  });
+
+  const [updateUserData, { data, isLoading, isError, isSuccess }] =
+    useUpdateUserDataMutation();
+
+  const handleSubmitData = () => {
+    const updatedData = {
+      _id: user?._id,
+      first_name: userData?.first_name,
+      last_name: userData?.last_name,
+      phone: userData?.phone,
+      email: userData?.email,
+      role: "user",
+    };
+    updateUserData(updatedData);
+  };
+
+  useEffect(() => {
+    if (!isLoading && data?.data?._id) {
+      const { email, first_name, last_name, phone, _id } = data?.data;
+      notifySuccess("user data updated!");
+      setUserData({ first_name, last_name, phone, email });
+    }
+    if (!isLoading && isError) {
+      notifyError("Error occurd while updating data!");
+    }
+  }, [data?.data?._id]);
 
   return (
     <div className="p-4 md:p-8 lg:p-20 min-h-[100vh] bg-primary">
@@ -35,14 +53,14 @@ const UserSettings = () => {
               <div className="w-full">
                 <input
                   type="text"
-                  placeholder={user?.first_name}
+                  value={user?.first_name}
                   className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full"
                 />
               </div>
               <div className="w-full">
                 <input
                   type="text"
-                  placeholder={user?.last_name}
+                  value={user?.last_name}
                   className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full"
                 />
               </div>
@@ -55,7 +73,10 @@ const UserSettings = () => {
                 <div className="w-full">
                   <input
                     type="number"
-                    value={user?.phone}
+                    value={userData?.phone}
+                    onChange={(e) => {
+                      setUserData({ ...userData, phone: e.target.value });
+                    }}
                     placeholder="23454356"
                     className="rounded-lg py-2 px-4  bg-white text-black outline-none border-[1px] border-none shadow w-full"
                   />
@@ -63,7 +84,10 @@ const UserSettings = () => {
                 <div>
                   <input
                     type="email"
-                    value={user?.email}
+                    value={userData?.email}
+                    onChange={(e) => {
+                      setUserData({ ...userData, email: e.target.value });
+                    }}
                     disabled
                     className="rounded-lg py-2 px-4 bg-[#F3FEFE] text-[#00000066] outline-none border-[1px] border-none shadow w-full"
                   />
@@ -80,6 +104,7 @@ const UserSettings = () => {
 
           <div className="w-full mt-12">
             <button
+              onClick={handleSubmitData}
               className={`w-full rounded-lg py-2 px-4 outline-none  text-white bg-secondary`}
             >
               Salva

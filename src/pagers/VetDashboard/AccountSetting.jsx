@@ -1,8 +1,13 @@
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import GoogleIcon from "../../assets/ICONS/google.svg";
+import {
+  notifyError,
+  notifySuccess,
+} from "../../components/common/Toast/Toast";
+import { useUpdateUserDataMutation } from "../../features/userData/userDataApi";
 
 const people = [
   {
@@ -21,10 +26,63 @@ const type = [
   },
 ];
 const AccountSetting = () => {
+  const { user } = useSelector((state) => state.auth);
   const [selected, setSelected] = useState(people[0]);
   const [selected2, setSelected2] = useState(type[0]);
+  const [userData, setUserData] = useState({
+    first_name: user?.first_name,
+    last_name: user?.last_name,
+    email: user?.email,
+    doctor_type1: selected,
+    doctor_type2: selected2,
+    veterinary_address: user?.veterinary_address,
+  });
 
-  const { user } = useSelector((state) => state.auth);
+  const [updateUserData, { data, isLoading, isError, isSuccess }] =
+    useUpdateUserDataMutation();
+
+  const handleSubmitData = () => {
+    const updatedData = {
+      _id: user?._id,
+      first_name: userData?.first_name,
+      last_name: userData?.last_name,
+      role: "vet_admin",
+      email: userData?.email,
+      doctor_type1: selected,
+      doctor_type2: selected2,
+      veterinary_address: userData?.veterinary_address,
+    };
+    updateUserData(updatedData);
+  };
+
+  useEffect(() => {
+    if (!isLoading && data?.data?._id) {
+      const {
+        email,
+        first_name,
+        last_name,
+        phone,
+        doctor_type1,
+        doctor_type2,
+        veterinary_address,
+        _id,
+      } = data?.data;
+      notifySuccess("user data updated!");
+      setUserData({
+        first_name,
+        last_name,
+        phone,
+        email,
+        doctor_type1,
+        doctor_type2,
+        veterinary_address,
+      });
+    }
+    if (!isLoading && isError) {
+      notifyError("Error occurd while updating data!");
+    }
+  }, [data?.data?._id]);
+
   return (
     <div className="p-4 md:p-8 lg:p-20 min-h-[100vh] bg-primary">
       <div className="max-w-[1140px] w-full mx-auto">
@@ -35,6 +93,10 @@ const AccountSetting = () => {
             <div className="w-full">
               <input
                 type="text"
+                value={userData?.first_name}
+                onChange={(e) => {
+                  setUserData({ ...userData, first_name: e.target.value });
+                }}
                 placeholder={user?.first_name}
                 className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full"
               />
@@ -42,6 +104,10 @@ const AccountSetting = () => {
             <div className="w-full mt-3">
               <input
                 type="text"
+                value={userData?.last_name}
+                onChange={(e) => {
+                  setUserData({ ...userData, last_name: e.target.value });
+                }}
                 placeholder={user?.last_name}
                 className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full"
               />
@@ -184,7 +250,13 @@ const AccountSetting = () => {
             <div className="w-full mt-3">
               <input
                 type="text"
-                value={"Via Roma, 1, Roma, 00196 Roma (RM), Italia"}
+                value={userData?.veterinary_address}
+                onChange={(e) => {
+                  setUserData({
+                    ...userData,
+                    veterinary_address: e.target.value,
+                  });
+                }}
                 className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full"
               />
             </div>
@@ -193,7 +265,10 @@ const AccountSetting = () => {
               <div className="w-full">
                 <input
                   type="email"
-                  value={user?.email}
+                  value={userData?.email}
+                  onChange={(e) => {
+                    setUserData({ ...userData, email: e.target.value });
+                  }}
                   disabled
                   readOnly
                   placeholder="mariorossi@gmail.com"
@@ -210,6 +285,7 @@ const AccountSetting = () => {
           </div>
           <div className="mt-12">
             <button
+              onClick={handleSubmitData}
               className={`w-full rounded-lg py-2 px-4 outline-none  text-white bg-secondary`}
             >
               Salva
