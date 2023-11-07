@@ -1,9 +1,24 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import vetUser from "../../../public/vetListImage/vetUser.jpeg";
+import {
+  useEditAppointmentMutation,
+  useGetAppointmentDetailsQuery,
+} from "../../features/appointment/appointmentApi";
 import VetCalender from "../vetLists/Calender";
 
 const MyAppointmentEditing = () => {
+  const [newDate, setNewDate] = useState(null);
+  const { id } = useParams();
+  const {
+    data,
+    isLoading: appointmentLoading,
+    isError,
+  } = useGetAppointmentDetailsQuery(id);
+  const [
+    editAppointment,
+    { data: editAppointmentResponse, isLoading: editAppointmentLoading },
+  ] = useEditAppointmentMutation();
   const time = [
     "1:30 PM",
     "2:00 PM",
@@ -27,6 +42,7 @@ const MyAppointmentEditing = () => {
     "11:00 PM",
     "11:30 PM",
   ];
+
   return (
     <div className="w-full bg-primary pt-[60px] p-4 md:p-8 pb-[80px]">
       <div className="max-w-[1150px] w-full mx-auto">
@@ -85,7 +101,7 @@ const MyAppointmentEditing = () => {
             <div className="w-full">
               <div className="flex flex-col sm:flex-row gap-4 mb-4">
                 <div className="w-full sm:w-1/2">
-                  <VetCalender />
+                  <VetCalender setNewDate={setNewDate} />
                 </div>
                 <div className="w-full sm:w-1/2 flex flex-wrap gap-3">
                   {time?.map((t, index) => (

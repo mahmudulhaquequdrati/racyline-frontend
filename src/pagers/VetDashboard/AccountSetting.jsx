@@ -275,12 +275,14 @@ const AccountSetting = () => {
                   className="rounded-lg text-[#00000066] bg-[#F3FEFE] py-2 px-4 outline-none border-[1px] border-none shadow w-full"
                 />
               </div>
-              <p className="flex items-center mt-4 mb-4 text-sm w-full">
-                <img src={GoogleIcon} alt="" />
-                <span className="ml-2">
-                  Hai effettuato l’accesso con il tuo account Google
-                </span>
-              </p>
+              {user?.userLoginType === "google" && (
+                <p className="flex items-center mt-4 mb-4 text-sm w-full">
+                  <img src={GoogleIcon} alt="" />
+                  <span className="ml-2">
+                    Hai effettuato l’accesso con il tuo account Google
+                  </span>
+                </p>
+              )}
             </div>
           </div>
           <div className="mt-12">

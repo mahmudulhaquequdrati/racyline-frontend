@@ -1,17 +1,42 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import vetUser from "../../../public/vetListImage/vetUser.jpeg";
+import {
+  useDeleteAppointmentMutation,
+  useGetAllAppointmentsQuery,
+} from "../../features/appointment/appointmentApi";
 
 const MyAppointment = () => {
-  return (
-    <div className="w-full bg-primary pt-[60px] p-4 md:p-8 pb-[80px]">
-      <div className="max-w-[1150px] w-full mx-auto">
-        <h1 className="text-[32px] leading-[40px] font-bold mb-18 md:mb-[36px]">
-          I miei appuntamenti
-        </h1>
-        <p className="text-[18px] leading-[24px] font-semibold mb-3">
-          I prossimi appuntamenti
-        </p>
+  const { user } = useSelector((state) => state.auth);
+  const {
+    data: { data } = {},
+    isLoading,
+    isError,
+    refetch,
+    isSuccess,
+  } = useGetAllAppointmentsQuery(
+    {
+      email: user?.email,
+    },
+    { skip: !user?.email }
+  );
+  const [deleteAppointment, { data: deleteAppointmentResponse }] =
+    useDeleteAppointmentMutation();
+
+  // Deleting an appiontment
+  const handleDeleteAppointment = (id) => {
+    deleteAppointment({ id });
+  };
+
+  let content;
+  if (isLoading) {
+    content = <h1>Loading...</h1>;
+  }
+  if (!isLoading && !isError && data?.length > 0) {
+    content = data?.map((appointment) => {
+      const { _id, vetInfo } = appointment;
+      return (
         <div
           className="max-w-[550px] w-full flex flex-col gap-8 rounded bg-white p-6"
           style={{ boxShadow: "0px 1px 3px 0px rgba(232, 151, 31, 0.15)" }}
@@ -30,10 +55,10 @@ const MyAppointment = () => {
             </div>
             <div>
               <h1 className="text-[18px] leading-[22px] font-semibold mb-2">
-                Mario Rossi
+                {`${vetInfo?.first_name} ${vetInfo?.last_name}`}
               </h1>
               <p className="text-[14px] leading-5 font-medium mb-[10px]">
-                Veterinario di medicina generale, Chirurgo veterinario
+                {vetInfo?.doctor_type1}
               </p>
               <p className="flex items-center gap-[6px] text-[#666666] text-[13px] font-normal leading-[22px]">
                 <span>
@@ -53,24 +78,51 @@ const MyAppointment = () => {
                     />
                   </svg>
                 </span>
-                <span>sdsdsdsdsdsd</span>
+                <span>{vetInfo?.veterinary_address}</span>
               </p>
             </div>
           </div>
           <div className="flex flex-col gap-3">
             <div className="w-full">
               <button className="w-full text-white text-[15px] font-medium text-center p-[12px] bg-secondary rounded">
-                <Link to={"/appointment-success"}>Modifica l’appuntamento</Link>
+                <Link to={`/user/my-appointment/${_id}`}>
+                  Modifica l’appuntamento
+                </Link>
               </button>
             </div>
             <div className="w-full">
-              <button className="w-full text-[15px] border-[1px] font-medium text-center p-[12px] text-primary border-primary">
-                <Link to={"/appointment-success"}>Elimina l’appuntamento</Link>
+              <button
+                onClick={() => handleDeleteAppointment(_id)}
+                className="w-full text-[15px] border-[1px] font-medium text-center p-[12px] text-primary border-primary"
+              >
+                Elimina l’appuntamento
               </button>
             </div>
           </div>
         </div>
+      );
+    });
+  }
+  if (isError) {
+    console.log("Something went wrong!");
+  }
 
+  useEffect(() => {
+    if (deleteAppointmentResponse?.data?._id) {
+      refetch();
+    }
+  });
+
+  return (
+    <div className="w-full bg-primary pt-[60px] p-4 md:p-8 pb-[80px]">
+      <div className="max-w-[1150px] w-full mx-auto">
+        <h1 className="text-[32px] leading-[40px] font-bold mb-18 md:mb-[36px]">
+          I miei appuntamenti
+        </h1>
+        <p className="text-[18px] leading-[24px] font-semibold mb-3">
+          I prossimi appuntamenti
+        </p>
+        <div className="grid gap-5 grid-cols-1 sm:grid-cols-2">{content}</div>
         <div className="mt-9">
           <p className="text-[18px] leading-[24px] font-semibold mb-3">
             Passati

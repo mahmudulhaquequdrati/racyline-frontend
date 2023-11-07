@@ -192,7 +192,7 @@ const App = () => {
           }
         />
         <Route
-          path="/user/my-appointment-editing"
+          path="/user/my-appointment/:id"
           element={
             <UserProtected>
               <MyAppointmentEditing />

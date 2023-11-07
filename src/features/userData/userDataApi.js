@@ -5,7 +5,7 @@ export const updateUserDataApi = apiSlice.injectEndpoints({
     updateUserData: builder.mutation({
       query: (data) => {
         return {
-          url: `/userInfoUpdate`,
+          url: `/userInfoUpdate/${data?._id}`,
           method: "PATCH",
           body: data,
         };

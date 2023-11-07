@@ -42,8 +42,10 @@ const UserSettings = () => {
     }
   }, [data?.data?._id]);
 
+  console.log(user);
+
   return (
-    <div className="p-4 md:p-8 lg:p-20 min-h-[100vh] bg-primary">
+    <div className="p-4 md:p-8 lg:p-20 bg-primary">
       <div className="max-w-[1150px] w-full mx-auto">
         <div className="max-w-[570px] w-full">
           <div className="w-full">
@@ -53,14 +55,20 @@ const UserSettings = () => {
               <div className="w-full">
                 <input
                   type="text"
-                  value={user?.first_name}
+                  value={userData?.first_name}
+                  onChange={(e) => {
+                    setUserData({ ...userData, first_name: e.target.value });
+                  }}
                   className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full"
                 />
               </div>
               <div className="w-full">
                 <input
                   type="text"
-                  value={user?.last_name}
+                  value={userData?.last_name}
+                  onChange={(e) => {
+                    setUserData({ ...userData, last_name: e.target.value });
+                  }}
                   className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full"
                 />
               </div>
@@ -93,12 +101,14 @@ const UserSettings = () => {
                   />
                 </div>
               </div>
-              <p className="flex items-center mt-4 mb-4 text-sm w-full">
-                <img src={GoogleIcon} alt="" />
-                <span className="ml-2">
-                  Hai effettuato l’accesso con il tuo account Google
-                </span>
-              </p>
+              {user?.userLoginType === "google" && (
+                <p className="flex items-center mt-4 mb-4 text-sm w-full">
+                  <img src={GoogleIcon} alt="" />
+                  <span className="ml-2">
+                    Hai effettuato l’accesso con il tuo account Google
+                  </span>
+                </p>
+              )}
             </div>
           </div>
 
