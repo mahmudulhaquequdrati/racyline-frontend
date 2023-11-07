@@ -66,7 +66,10 @@ const Appointment = () => {
         }
       );
       const response = await request.json();
-    createAppointment(appointmentData);
+      createAppointment(appointmentData);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
