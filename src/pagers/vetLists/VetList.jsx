@@ -54,7 +54,6 @@ const VetList = ({ vetInfo }) => {
         first_name,
         last_name,
         profile_image_url,
-        profile_image_url,
         veterinary_address,
         doctor_type1,
       },
