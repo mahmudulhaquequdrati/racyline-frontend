@@ -1,9 +1,10 @@
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
 import { Fragment, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useGoogleLoginDataMutation } from "../../features/auth/googleSetDataApi";
+import { userLoggedIn } from "../../features/auth/authSlice";
 const people = [
   {
     name: "Veterinary Doctor",
@@ -35,6 +36,7 @@ function RegistrationWithGoogle() {
     doctor_type2: selected2,
     veterinary_address: "",
   });
+  const dispatch = useDispatch();
 
   const handleForm = (e) => {
     const data = {
@@ -50,9 +52,8 @@ function RegistrationWithGoogle() {
     ) {
       setFeildError(false);
       googleLoginData(data).then((res) => {
-        console.log(res);
         if (res?.data?.data?.user?._id) {
-          console.log("yes");
+          // dispatch(userLoggedIn(res?.data?.data));
           navigate("/vets/registration-availabilities");
         }
       });

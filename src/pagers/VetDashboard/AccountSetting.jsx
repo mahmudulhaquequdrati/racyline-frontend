@@ -28,7 +28,7 @@ const type = [
 const AccountSetting = () => {
   const { user } = useSelector((state) => state.auth);
   const [selected, setSelected] = useState(people[0]);
-  const [selected2, setSelected2] = useState(user?.doctor_type2 || type[0]);
+  const [selected2, setSelected2] = useState(user?.doctor_type2 || [type[0]]);
   const [userData, setUserData] = useState({
     first_name: user?.first_name,
     last_name: user?.last_name,
@@ -207,14 +207,7 @@ const AccountSetting = () => {
             </div>
             <div className="mt-3 mb-3">
               <div className="w-full">
-                <Listbox
-                  value={selected2}
-                  onChange={
-                    // console.log(e);
-                    setSelected2
-                  }
-                  multiple
-                >
+                <Listbox value={selected2} onChange={setSelected2} multiple>
                   <div className="relative mt-1">
                     <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-3 pl-4 pr-10 text-left border-[1px] border-[#E5E7EC] focus:outline-none  flex gap-2 items-center">
                       {selected2?.length ? (
