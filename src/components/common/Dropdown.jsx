@@ -3,6 +3,7 @@ import { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { userLoggedOut } from "../../features/auth/authSlice";
+import { notifySuccess } from "./Toast/Toast";
 // import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
 export default function DropDown() {
@@ -12,6 +13,7 @@ export default function DropDown() {
   const handleLogut = () => {
     localStorage.clear();
     localStorage;
+    notifySuccess("Logged out!");
     dispatch(userLoggedOut());
     navigate("/user/login");
   };

@@ -21,7 +21,7 @@ const VetList = ({ vetInfo }) => {
     availability,
     doctor_type1,
     profile_image_url,
-    doctor_type2,
+    doctor_type2 = [],
   } = vetInfo || {};
   const time = [
     "1:30 PM",
@@ -70,6 +70,8 @@ const VetList = ({ vetInfo }) => {
     setAppointmentDate({ ...appointmentDate, time: newDate });
   }, []);
 
+  console.log(doctor_type2);
+
   return (
     <div className="flex text-black flex-col md:flex-row bg-white rounded-lg overflow-hidden">
       <div className="w-full md:w-1/2 flex flex-col gap-6 p-6 md:border-r-[0.5px] md:border-[#E5E7EC]">
@@ -115,14 +117,18 @@ const VetList = ({ vetInfo }) => {
             Animali trattati
           </h3>
           <div className="flex gap-1">
-            {doctor_type2?.map((d, i) => {
-              return (
-                <span className="text-[14px]">
-                  {d.name}
-                  {doctor_type2.length > i + 1 ? "," : ""}
-                </span>
-              );
-            })}
+            {doctor_type2?.length > 0 && (
+              <>
+                {doctor_type2?.map((d, i) => {
+                  return (
+                    <span className="text-[14px]">
+                      {d.name}
+                      {doctor_type2.length > i + 1 ? "," : ""}
+                    </span>
+                  );
+                })}
+              </>
+            )}
           </div>
         </div>
         <div>

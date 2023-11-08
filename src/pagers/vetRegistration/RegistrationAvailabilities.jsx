@@ -10,21 +10,15 @@ import { useNavigate } from "react-router-dom";
 import Delete from "../../assets/ICONS/delete.svg";
 import PlusIcon from "../../assets/ICONS/plusIcon.svg";
 import {
-  useCreateAvailabilitiesMutation,
-  useGetAllAvailabilitiesQuery,
-} from "../../features/availabilities/availabilitiesApi";
+  notifyError,
+  notifySuccess,
+} from "../../components/common/Toast/Toast";
+import { useCreateAvailabilitiesMutation } from "../../features/availabilities/availabilitiesApi";
 
 const RegistrationAvailabilities = () => {
   const [weakData, setWeakData] = useState([]);
 
   const { user } = useSelector((state) => state.auth);
-
-  const { data, isLoading, isError, isSuccess } = useGetAllAvailabilitiesQuery(
-    {
-      userId: user?._id,
-    },
-    { skip: !user?._id }
-  );
 
   // Redux mutation for sending data to server
   const [
@@ -241,80 +235,57 @@ const RegistrationAvailabilities = () => {
     };
     if (weakData?.length > 0) {
       // sending data through redux mutation
-      createAvailabilities(newData).then((res) => {
-        navigate("/registration-google-calender-connect");
-      });
+      createAvailabilities(newData)
+        .then((res) => {
+          notifySuccess("Availabilities Saved!");
+          navigate("/registration-google-calender-connect");
+        })
+        .catch((err) => {
+          notifyError("Error occurd while Saving Availabilities!");
+        });
     }
   };
 
   useEffect(() => {
-    if (data?.data?._id) {
-      const loadedData = data?.data?.availabilities?.map((avil) => {
-        return {
-          ...avil,
-          availabilities: avil?.availabilities?.map((times) => {
-            const startTimeHours = new Date(`${times?.start_time}`).getHours();
-            const startTimeMinutes = new Date(
-              `${times?.start_time}`
-            ).getMinutes();
-            const endTimeHours = new Date(`${times?.end_time}`).getHours();
-            const endTimeMinutes = new Date(`${times?.end_time}`).getMinutes();
-            return {
-              ...times,
-              start_time: setHours(
-                setMinutes(new Date(), startTimeMinutes),
-                startTimeHours
-              ),
-              end_time: setHours(
-                setMinutes(new Date(), endTimeMinutes),
-                endTimeHours
-              ),
-            };
-          }),
-        };
-      });
-      setWeakData(loadedData);
-    } else {
-      const emptyWeekData = [
-        {
-          name: "Lun",
-          availabilities: [],
-          available: false,
-        },
-        {
-          name: "Mar",
-          availabilities: [],
-          available: false,
-        },
-        {
-          name: "Mer",
-          availabilities: [],
-          available: false,
-        },
-        {
-          name: "Gio",
-          availabilities: [],
-          available: false,
-        },
-        {
-          name: "Ven",
-          availabilities: [],
-          available: false,
-        },
-        {
-          name: "Sab",
-          availabilities: [],
-          available: false,
-        },
-        {
-          name: "Dom",
-          availabilities: [],
-          available: false,
-        },
-      ];
-      setWeakData(emptyWeekData);
-    }
-  }, [data?.data?._id]);
+    const emptyWeekData = [
+      {
+        name: "Lun",
+        availabilities: [],
+        available: false,
+      },
+      {
+        name: "Mar",
+        availabilities: [],
+        available: false,
+      },
+      {
+        name: "Mer",
+        availabilities: [],
+        available: false,
+      },
+      {
+        name: "Gio",
+        availabilities: [],
+        available: false,
+      },
+      {
+        name: "Ven",
+        availabilities: [],
+        available: false,
+      },
+      {
+        name: "Sab",
+        availabilities: [],
+        available: false,
+      },
+      {
+        name: "Dom",
+        availabilities: [],
+        available: false,
+      },
+    ];
+    setWeakData(emptyWeekData);
+  }, []);
 
   return (
     <section className="flex justify-center items-center bg-primary py-16 px-4 border-[1px] border-[#EAEAEB]">

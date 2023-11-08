@@ -45,7 +45,23 @@ const VetLists = () => {
   ];
 
   const { data: vetLists, isLoading, isError } = useGetAllVetListsQuery();
-  console.log(vetLists?.vetList);
+
+  let content;
+  if (isLoading) {
+    content = <h1>Loading...</h1>;
+  }
+  if (!isLoading && !isError && vetLists?.vetList?.length > 0) {
+    content = (
+      <>
+        {vetLists?.vetList?.map((vetList) => (
+          <VetList vetInfo={vetList} key={vetList?.id} />
+        ))}
+      </>
+    );
+  }
+  if (!isLoading && !isError && vetLists?.vetList?.length === 0) {
+    content = <h1>No vet Found!</h1>;
+  }
 
   return (
     <div className="bg-primary pt-[60px] pb-[80px]">
@@ -53,11 +69,7 @@ const VetLists = () => {
         <h2 className="text-[18px] sm:text-[26px] md:text-[32px] font-bold leading-6 sm:leading-10 mb-4 sm:mb-7 md:mb-9">
           Scegli il veterinario, l’orario e prenota la visita
         </h2>
-        <div className="flex flex-col gap-4">
-          {vetLists?.vetList?.map((vetList) => (
-            <VetList vetInfo={vetList} key={vetList?.id} />
-          ))}
-        </div>
+        <div className="flex flex-col gap-4">{content}</div>
       </div>
     </div>
   );
