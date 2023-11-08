@@ -88,7 +88,7 @@ const VetList = ({ vetInfo }) => {
               {first_name + " " + last_name}
             </h1>
             <p className="text-[12px] sm:text-[14px] leading-5 font-medium mb-[10px]">
-              {doctor_type1}
+              {doctor_type1?.name}
             </p>
             <p className="flex gap-[6px] text-[#666666] text-[11px] sm:text-[13px] font-normal leading-[22px]">
               <span>
