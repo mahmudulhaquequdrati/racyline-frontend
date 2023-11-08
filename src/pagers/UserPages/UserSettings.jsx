@@ -96,8 +96,12 @@ const UserSettings = () => {
                     onChange={(e) => {
                       setUserData({ ...userData, email: e.target.value });
                     }}
-                    disabled
-                    className="rounded-lg py-2 px-4 bg-[#F3FEFE] text-[#00000066] outline-none border-[1px] border-none shadow w-full"
+                    disabled={user?.userLoginType === "google"}
+                    className={`rounded-lg py-2 px-4  outline-none border-[1px] border-none shadow w-full ${
+                      user?.userLoginType === "google"
+                        ? "bg-[#F3FEFE] text-[#00000066]"
+                        : ""
+                    } `}
                   />
                 </div>
               </div>

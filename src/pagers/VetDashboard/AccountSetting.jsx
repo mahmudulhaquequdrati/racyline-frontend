@@ -28,13 +28,13 @@ const type = [
 const AccountSetting = () => {
   const { user } = useSelector((state) => state.auth);
   const [selected, setSelected] = useState(people[0]);
-  const [selected2, setSelected2] = useState(type[0]);
+  const [selected2, setSelected2] = useState(user?.doctor_type2 || type[0]);
   const [userData, setUserData] = useState({
     first_name: user?.first_name,
     last_name: user?.last_name,
     email: user?.email,
-    doctor_type1: selected,
-    doctor_type2: selected2,
+    doctor_type1: user.doctor_type1 || "",
+    doctor_type2: user.doctor_type2 || [],
     veterinary_address: user?.veterinary_address,
   });
 
@@ -51,6 +51,7 @@ const AccountSetting = () => {
       doctor_type1: selected,
       doctor_type2: selected2,
       veterinary_address: userData?.veterinary_address,
+      userLoginType: user?.userLoginType,
     };
     updateUserData(updatedData);
   };
@@ -82,6 +83,29 @@ const AccountSetting = () => {
       notifyError("Error occurd while updating data!");
     }
   }, [data?.data?._id]);
+
+  function removeDuplicates(array) {
+    // console.log(array);
+    let uniqueArray = [];
+
+    for (const obj of array) {
+      const isDuplicate = uniqueArray.filter((item) => item.name === obj.name);
+
+      if (isDuplicate.length === 0) {
+        uniqueArray.push({ ...obj });
+      } else if (isDuplicate.length > 0) {
+        let u = uniqueArray.filter((uu) => uu.name !== obj.name);
+        uniqueArray = u;
+      }
+    }
+
+    return uniqueArray;
+  }
+
+  useEffect(() => {
+    const mergedArray = removeDuplicates(selected2);
+    setSelected2(mergedArray);
+  }, [selected2?.length]);
 
   return (
     <div className="p-4 md:p-8 lg:p-20 min-h-[100vh] bg-primary">
@@ -154,16 +178,16 @@ const AccountSetting = () => {
                             }
                             value={tp}
                           >
-                            {({ selected2 }) => (
+                            {({ selected }) => (
                               <>
                                 <span
                                   className={`block truncate ${
-                                    selected2 ? "font-medium" : "font-normal"
+                                    selected ? "font-medium" : "font-normal"
                                   }`}
                                 >
                                   {tp.name}
                                 </span>
-                                {selected2 ? (
+                                {selected ? (
                                   <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
                                     <CheckIcon
                                       className="h-5 w-5"
@@ -183,11 +207,25 @@ const AccountSetting = () => {
             </div>
             <div className="mt-3 mb-3">
               <div className="w-full">
-                <Listbox value={selected2} onChange={setSelected2}>
+                <Listbox
+                  value={selected2}
+                  onChange={
+                    // console.log(e);
+                    setSelected2
+                  }
+                  multiple
+                >
                   <div className="relative mt-1">
-                    <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-3 pl-4 pr-10 text-left border-[1px] border-[#E5E7EC] focus:outline-none  ">
-                      {selected2?.name ? (
-                        <span className="block truncate">{selected2.name}</span>
+                    <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-3 pl-4 pr-10 text-left border-[1px] border-[#E5E7EC] focus:outline-none  flex gap-2 items-center">
+                      {selected2?.length ? (
+                        selected2?.map((s, i) => {
+                          return (
+                            <span key={i} className="block truncate">
+                              {s.name}
+                              {selected2.length > i + 1 ? "," : ""}
+                            </span>
+                          );
+                        })
                       ) : (
                         <span className="block truncate text-gray-400">
                           {"Scegli gli animali che curi *"}
@@ -220,16 +258,16 @@ const AccountSetting = () => {
                             }
                             value={tp}
                           >
-                            {({ selected2 }) => (
+                            {({ selected }) => (
                               <>
                                 <span
                                   className={`block truncate ${
-                                    selected2 ? "font-medium" : "font-normal"
+                                    selected ? "font-medium" : "font-normal"
                                   }`}
                                 >
                                   {tp.name}
                                 </span>
-                                {selected2 ? (
+                                {selected ? (
                                   <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
                                     <CheckIcon
                                       className="h-5 w-5"
@@ -260,30 +298,32 @@ const AccountSetting = () => {
                 className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full"
               />
             </div>
-            <div className="mt-5">
-              <p className="font-bold mb-3">Contatto</p>
-              <div className="w-full">
-                <input
-                  type="email"
-                  value={userData?.email}
-                  onChange={(e) => {
-                    setUserData({ ...userData, email: e.target.value });
-                  }}
-                  disabled
-                  readOnly
-                  placeholder="mariorossi@gmail.com"
-                  className="rounded-lg text-[#00000066] bg-[#F3FEFE] py-2 px-4 outline-none border-[1px] border-none shadow w-full"
-                />
+            {user?.userLoginType === "google" && (
+              <div className="mt-5">
+                <p className="font-bold mb-3">Contatto</p>
+                <div className="w-full">
+                  <input
+                    type="email"
+                    value={userData?.email}
+                    onChange={(e) => {
+                      setUserData({ ...userData, email: e.target.value });
+                    }}
+                    disabled
+                    readOnly
+                    placeholder="mariorossi@gmail.com"
+                    className="rounded-lg text-[#00000066] bg-[#F3FEFE] py-2 px-4 outline-none border-[1px] border-none shadow w-full"
+                  />
+                </div>
+                {user?.userLoginType === "google" && (
+                  <p className="flex items-center mt-4 mb-4 text-sm w-full">
+                    <img src={GoogleIcon} alt="" />
+                    <span className="ml-2">
+                      Hai effettuato l’accesso con il tuo account Google
+                    </span>
+                  </p>
+                )}
               </div>
-              {user?.userLoginType === "google" && (
-                <p className="flex items-center mt-4 mb-4 text-sm w-full">
-                  <img src={GoogleIcon} alt="" />
-                  <span className="ml-2">
-                    Hai effettuato l’accesso con il tuo account Google
-                  </span>
-                </p>
-              )}
-            </div>
+            )}
           </div>
           <div className="mt-12">
             <button

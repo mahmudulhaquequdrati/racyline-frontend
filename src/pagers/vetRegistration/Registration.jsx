@@ -8,16 +8,33 @@ import { useNavigate } from "react-router-dom";
 import userIcon from "../../assets/ICONS/user.svg";
 import { useRegisterMutation } from "../../features/auth/authApi";
 import { userLoggedIn } from "../../features/auth/authSlice";
-
+const people = [
+  {
+    name: "Veterinary Doctor",
+  },
+];
+const type = [
+  {
+    name: "Dog",
+  },
+  {
+    name: "Cat",
+  },
+  {
+    name: "Parrot",
+  },
+];
 function Registration() {
   const navigate = useNavigate();
+  const [selected, setSelected] = useState({});
+  const [selected2, setSelected2] = useState([]);
   const [inputData, setInputData] = useState({
     first_name: "",
     last_name: "",
     email: "",
     password: "",
-    doctor_type1: "",
-    doctor_type2: "",
+    doctor_type1: selected,
+    doctor_type2: selected2,
     veterinary_address: "",
     profile_image_url: "",
   });
@@ -28,19 +45,25 @@ function Registration() {
   const [error, setError] = useState("");
   const [feildError, setFeildError] = useState(false);
   const registerUser = (e) => {
+    const data = {
+      ...inputData,
+      doctor_type2: selected2,
+      doctor_type1: selected?.name,
+    };
+
     e.preventDefault();
     if (
       inputData?.first_name !== "" &&
       inputData?.last_name !== "" &&
       inputData?.email !== "" &&
       inputData?.password !== "" &&
-      inputData?.doctor_type1 !== "" &&
-      inputData?.doctor_type2 !== "" &&
+      inputData?.doctor_type1 !== {} &&
+      inputData?.doctor_type2 !== [] &&
       inputData?.veterinary_address !== ""
     ) {
       setFeildError(false);
       setIsLoading(true);
-      register(inputData);
+      register(data);
     } else {
       setFeildError(true);
     }
@@ -87,22 +110,6 @@ function Registration() {
       });
     }
   };
-  const people = [
-    {
-      name: "Veterinary Doctor",
-    },
-  ];
-  const type = [
-    {
-      name: "Dog",
-    },
-    {
-      name: "Cat",
-    },
-    {
-      name: "Parrot",
-    },
-  ];
 
   return (
     <section className="flex justify-center items-center bg-primary py-16 px-4 border-[1px] border-[#EAEAEB]">
@@ -179,24 +186,17 @@ function Registration() {
             />
           </div>
           <div>
-            <Listbox
-              value={inputData.doctor_type1}
-              onChange={(value) =>
-                setInputData({ ...inputData, doctor_type1: value.name })
-              }
-            >
+            <Listbox value={selected} onChange={setSelected}>
               <div className="relative mt-1">
                 <Listbox.Button
                   className={`relative w-full cursor-default rounded-lg bg-white py-3 pl-4 pr-10 text-left border-[1px] ${
-                    feildError && inputData?.doctor_type1 === ""
+                    feildError && selected?.name === ""
                       ? "border-red-500"
                       : "border-[#E5E7EC] "
                   } focus:outline-none `}
                 >
-                  {inputData.doctor_type1 ? (
-                    <span className="block truncate">
-                      {inputData.doctor_type1}
-                    </span>
+                  {selected?.name ? (
+                    <span className="block truncate">{selected?.name}</span>
                   ) : (
                     <span className="block truncate text-gray-400">
                       {"Scegli che tipo di dottore sei *"}
@@ -256,24 +256,33 @@ function Registration() {
             </Listbox>
           </div>
           <div>
-            <Listbox
-              value={inputData.doctor_type2}
-              onChange={(value) =>
-                setInputData({ ...inputData, doctor_type2: value.name })
-              }
-            >
+            <Listbox value={selected2} onChange={setSelected2} multiple>
               <div className="relative mt-1">
                 <Listbox.Button
                   className={`relative w-full cursor-default rounded-lg bg-white py-3 pl-4 pr-10 text-left border-[1px] ${
-                    feildError && inputData?.doctor_type2 === ""
+                    feildError && selected2.length === 0
                       ? "border-red-500"
                       : "border-[#E5E7EC] "
-                  } focus:outline-none  `}
+                  } focus:outline-none flex gap-2 `}
                 >
-                  {inputData.doctor_type2 ? (
+                  {/* {inputData.doctor_type2 ? (
                     <span className="block truncate">
                       {inputData.doctor_type2}
                     </span>
+                  ) : (
+                    <span className="block truncate text-gray-400">
+                      {"Scegli gli animali che curi *"}
+                    </span>
+                  )} */}
+                  {selected2?.length ? (
+                    selected2?.map((s, i) => {
+                      return (
+                        <span key={i} className="block truncate">
+                          {s.name}
+                          {selected2.length > i + 1 ? "," : ""}
+                        </span>
+                      );
+                    })
                   ) : (
                     <span className="block truncate text-gray-400">
                       {"Scegli gli animali che curi *"}
@@ -306,16 +315,17 @@ function Registration() {
                         }
                         value={tp}
                       >
-                        {({ selected2 }) => (
+                        {({ selected }) => (
                           <>
                             <span
                               className={`block truncate ${
-                                selected2 ? "font-medium" : "font-normal"
+                                selected ? "font-semibold" : "font-normal"
                               }`}
                             >
                               {tp.name}
                             </span>
-                            {selected2 ? (
+                            {selected}
+                            {selected ? (
                               <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
                                 <CheckIcon
                                   className="h-5 w-5"

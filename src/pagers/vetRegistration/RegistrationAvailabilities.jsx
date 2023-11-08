@@ -111,7 +111,7 @@ const RegistrationAvailabilities = () => {
         let updatedWeakData = [...prevWeakData];
         const newfield = {
           start_time: setHours(setMinutes(new Date(), 0), 9),
-          end_time: setHours(setMinutes(new Date(), 0), 12),
+          end_time: setHours(setMinutes(new Date(), 0), 17),
         };
         updatedWeakData[index].availabilities = [newfield];
         updatedWeakData[index]["available"] = true;

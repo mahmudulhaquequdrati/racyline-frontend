@@ -4,31 +4,55 @@ import { Fragment, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useGoogleLoginDataMutation } from "../../features/auth/googleSetDataApi";
-
+const people = [
+  {
+    name: "Veterinary Doctor",
+  },
+];
+const type = [
+  {
+    name: "Dog",
+  },
+  {
+    name: "Cat",
+  },
+  {
+    name: "Parrot",
+  },
+];
 function RegistrationWithGoogle() {
   const navigate = useNavigate();
   //
+  const [selected, setSelected] = useState({});
+  const [selected2, setSelected2] = useState([]);
   const [googleLoginData, { data: googlenData, isError, isLoading }] =
     useGoogleLoginDataMutation();
   const { user } = useSelector((state) => state.auth);
   const [feildError, setFeildError] = useState(false);
   const [inputData, setInputData] = useState({
     user_id: user?._id,
-    doctor_type1: "",
-    doctor_type2: "",
+    doctor_type1: selected,
+    doctor_type2: selected2,
     veterinary_address: "",
   });
 
   const handleForm = (e) => {
+    const data = {
+      ...inputData,
+      doctor_type2: selected2,
+      doctor_type1: selected?.name,
+    };
     e.preventDefault();
     if (
-      inputData?.doctor_type1 !== "" &&
-      inputData?.doctor_type2 !== "" &&
+      inputData?.doctor_type1 !== {} &&
+      inputData?.doctor_type2 !== [] &&
       inputData?.veterinary_address !== ""
     ) {
       setFeildError(false);
-      googleLoginData(inputData).then((res) => {
-        if (res?.data) {
+      googleLoginData(data).then((res) => {
+        console.log(res);
+        if (res?.data?.data?.user?._id) {
+          console.log("yes");
           navigate("/vets/registration-availabilities");
         }
       });
@@ -49,24 +73,17 @@ function RegistrationWithGoogle() {
 
         <form onSubmit={handleForm} className="flex flex-col gap-y-4">
           <div>
-            <Listbox
-              value={inputData.doctor_type1}
-              onChange={(value) =>
-                setInputData({ ...inputData, doctor_type1: value.name })
-              }
-            >
+            <Listbox value={selected} onChange={setSelected}>
               <div className="relative mt-1">
                 <Listbox.Button
                   className={`relative w-full cursor-default rounded-lg bg-white py-3 pl-4 pr-10 text-left border-[1px] ${
-                    feildError && inputData?.doctor_type1 === ""
+                    feildError && selected?.name === ""
                       ? "border-red-500"
                       : "border-[#E5E7EC] "
                   } focus:outline-none `}
                 >
-                  {inputData.doctor_type1 ? (
-                    <span className="block truncate">
-                      {inputData.doctor_type1}
-                    </span>
+                  {selected?.name ? (
+                    <span className="block truncate">{selected.name}</span>
                   ) : (
                     <span className="block truncate text-gray-400">
                       {"Scegli che tipo di dottore sei *"}
@@ -126,24 +143,24 @@ function RegistrationWithGoogle() {
             </Listbox>
           </div>
           <div>
-            <Listbox
-              value={inputData.doctor_type2}
-              onChange={(value) =>
-                setInputData({ ...inputData, doctor_type2: value.name })
-              }
-            >
+            <Listbox value={selected2} onChange={setSelected2} multiple>
               <div className="relative mt-1">
                 <Listbox.Button
                   className={`relative w-full cursor-default rounded-lg bg-white py-3 pl-4 pr-10 text-left border-[1px] ${
-                    feildError && inputData?.doctor_type2 === ""
+                    feildError && selected2.length === 0
                       ? "border-red-500"
                       : "border-[#E5E7EC] "
-                  } focus:outline-none  `}
+                  } focus:outline-none flex gap-2 `}
                 >
-                  {inputData.doctor_type2 ? (
-                    <span className="block truncate">
-                      {inputData.doctor_type2}
-                    </span>
+                  {selected2?.length ? (
+                    selected2?.map((s, i) => {
+                      return (
+                        <span key={i} className="block truncate">
+                          {s.name}
+                          {selected2.length > i + 1 ? "," : ""}
+                        </span>
+                      );
+                    })
                   ) : (
                     <span className="block truncate text-gray-400">
                       {"Scegli gli animali che curi *"}
@@ -176,16 +193,16 @@ function RegistrationWithGoogle() {
                         }
                         value={tp}
                       >
-                        {({ selected2 }) => (
+                        {({ selected }) => (
                           <>
                             <span
                               className={`block truncate ${
-                                selected2 ? "font-medium" : "font-normal"
+                                selected ? "font-medium" : "font-normal"
                               }`}
                             >
                               {tp.name}
                             </span>
-                            {selected2 ? (
+                            {selected ? (
                               <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
                                 <CheckIcon
                                   className="h-5 w-5"
@@ -246,20 +263,3 @@ function RegistrationWithGoogle() {
 }
 
 export default RegistrationWithGoogle;
-
-const people = [
-  {
-    name: "Veterinary Doctor",
-  },
-];
-const type = [
-  {
-    name: "Dog",
-  },
-  {
-    name: "Cat",
-  },
-  {
-    name: "Parrot",
-  },
-];
