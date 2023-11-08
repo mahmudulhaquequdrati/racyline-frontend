@@ -2,7 +2,7 @@ import React from "react";
 
 const AppointmentError = () => {
   return (
-    <div className="flex justify-center pt-5 md:pt-16 pb-5 md:pb-60 bg-[#E8971F26]">
+    <div className="flex justify-center pt-5 md:pt-16 pb-5 md:pb-60 bg-primary">
       <div className="max-w-[755px] w-full flex flex-col gap-9 items-center">
         <span>
           <svg

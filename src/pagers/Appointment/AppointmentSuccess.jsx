@@ -6,7 +6,7 @@ const AppointmentSuccess = () => {
   console.log(data);
 
   return (
-    <div className="flex justify-center pt-5 md:pt-16 pb-5 md:pb-24 bg-[#E8971F26]">
+    <div className="flex justify-center pt-5 md:pt-16 pb-5 md:pb-24 bg-primary">
       <div className="max-w-[755px] w-full flex flex-col gap-9 items-center">
         <span>
           <svg
