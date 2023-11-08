@@ -56,7 +56,6 @@ function Registration() {
     };
 
     e.preventDefault();
-    console.log(data);
     if (
       data?.first_name !== "" &&
       data?.last_name !== "" &&
