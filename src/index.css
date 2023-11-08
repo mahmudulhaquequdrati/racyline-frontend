@@ -107,13 +107,13 @@ input[type="number"]::-webkit-outer-spin-button {
   left: 0;
   height: 15px;
   width: 15px;
-  border: 1px solid #e8971f;
+  border: 1px solid #339e9f;
   border-radius: 5px;
   margin-top: 5px;
 }
 
 .option input:checked ~ .customcheckbox {
-  background-color: #e8971f;
+  background-color: #339e9f;
 }
 
 .customcheckbox:after {

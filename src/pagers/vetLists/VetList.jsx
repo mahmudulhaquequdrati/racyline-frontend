@@ -71,7 +71,7 @@ const VetList = ({ vetInfo }) => {
   }, []);
 
   return (
-    <div className="flex flex-col md:flex-row bg-white rounded-lg overflow-hidden">
+    <div className="flex text-black flex-col md:flex-row bg-white rounded-lg overflow-hidden">
       <div className="w-full md:w-1/2 flex flex-col gap-6 p-6 md:border-r-[0.5px] md:border-[#E5E7EC]">
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
           <div className="w-[100px] h-[100px]">
@@ -111,13 +111,22 @@ const VetList = ({ vetInfo }) => {
           </div>
         </div>
         <div>
-          <h3 className="text-[14px] leading-5 font-medium mb-[12px]">
+          <h3 className="text-[16px] leading-5 font-medium mb-[12px]">
             Animali trattati
           </h3>
-          <div className="flex gap-1">{doctor_type2}</div>
+          <div className="flex gap-1">
+            {doctor_type2?.map((d, i) => {
+              return (
+                <span className="text-[14px]">
+                  {d.name}
+                  {doctor_type2.length > i + 1 ? "," : ""}
+                </span>
+              );
+            })}
+          </div>
         </div>
         <div>
-          <h3 className="text-[14px] leading-5 font-medium mb-[12px]">
+          <h3 className="text-[16px] leading-5 font-medium mb-[12px]">
             Disponibilità
           </h3>
           <div className="flex flex-col gap-2">

@@ -112,7 +112,7 @@ const Availabilities = () => {
         let updatedWeakData = [...prevWeakData];
         const newfield = {
           start_time: setHours(setMinutes(new Date(), 0), 9),
-          end_time: setHours(setMinutes(new Date(), 0), 12),
+          end_time: setHours(setMinutes(new Date(), 0), 17),
         };
         updatedWeakData[index].availabilities = [newfield];
         updatedWeakData[index]["available"] = true;
@@ -318,8 +318,8 @@ const Availabilities = () => {
 
   return (
     <section className="flex bg-primary py-16 border-[1px] border-[#EAEAEB]">
-      <div className="max-w-[1140px] w-full mx-auto p-4 md:p-8">
-        <div className="max-w-[638px] w-full rounded-lg p-6 md:p-8 lg:p-6 bg-white">
+      <div className="max-w-[1140px] w-full mx-auto py-4 px-4 md:py-8 md:px-0">
+        <div className="max-w-[638px] w-full rounded-lg p-6 md:p-8 lg:py-6 bg-white">
           <h1 className="text-[32px] font-bold leading-10 text-center mb-6">
             Inserisci le tue disponibilità
           </h1>
