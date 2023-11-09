@@ -238,7 +238,7 @@ const AccountSetting = () => {
               </div>
               <div className="mt-3 mb-3">
                 <div className="w-full">
-                  <Listbox value={selected2} onChange={setSelected2} multiple>
+                  {/* <Listbox value={selected2} onChange={setSelected2} multiple>
                     <div className="relative mt-1">
                       <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-3 pl-4 pr-10 text-left border-[1px] border-[#E5E7EC] focus:outline-none  flex gap-2 items-center">
                         {selected2?.length ? (
@@ -303,6 +303,80 @@ const AccountSetting = () => {
                               )}
                             </Listbox.Option>
                           ))}
+                        </Listbox.Options>
+                      </Transition>
+                    </div>
+                  </Listbox> */}
+
+                  <Listbox value={selected2} onChange={setSelected2} multiple>
+                    <div className="relative mt-1">
+                      <Listbox.Button
+                        className={`relative w-full cursor-default rounded-lg bg-white py-3 pl-4 pr-10 text-left border-[1px] focus:outline-none flex gap-2 `}
+                      >
+                        {selected2?.length ? (
+                          selected2?.map((s, i) => {
+                            return (
+                              <span key={i} className="block truncate">
+                                {s.name}
+                                {selected2.length > i + 1 ? "," : ""}
+                              </span>
+                            );
+                          })
+                        ) : (
+                          <span className="block truncate text-gray-400">
+                            {"Scegli gli animali che curi *"}
+                          </span>
+                        )}
+
+                        <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                          <ChevronDownIcon
+                            className="h-5 w-5 text-gray-400"
+                            aria-hidden="true"
+                          />
+                        </span>
+                      </Listbox.Button>
+                      <Transition
+                        as={Fragment}
+                        leave="transition ease-in duration-100"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
+                      >
+                        <Listbox.Options className="z-50 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                          {type.map((tp, tpIdx) => {
+                            return (
+                              <Listbox.Option
+                                key={tpIdx}
+                                className={({ active }) =>
+                                  `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                                    active
+                                      ? "bg-amber-100 text-amber-900"
+                                      : "text-gray-900"
+                                  }`
+                                }
+                                value={tp}
+                              >
+                                {({ selected }) => (
+                                  <>
+                                    <span
+                                      className={`block truncate ${
+                                        selected ? "font-medium" : "font-normal"
+                                      }`}
+                                    >
+                                      {tp.name}
+                                    </span>
+                                    {selected ? (
+                                      <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
+                                        <CheckIcon
+                                          className="h-5 w-5"
+                                          aria-hidden="true"
+                                        />
+                                      </span>
+                                    ) : null}
+                                  </>
+                                )}
+                              </Listbox.Option>
+                            );
+                          })}
                         </Listbox.Options>
                       </Transition>
                     </div>
@@ -441,7 +515,7 @@ const AccountSetting = () => {
               </svg>
             </span>
             <h3 className="mb-5 text-lg font-normal text-primary dark:text-gray-400">
-              Are you sure you want to delete this product?
+              Are you sure you want to delete this Account?
             </h3>
             <div className="flex justify-center gap-4">
               <Button

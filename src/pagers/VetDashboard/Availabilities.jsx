@@ -62,7 +62,7 @@ const Availabilities = () => {
           end_time: newEndTime,
         };
 
-        updatedWeakData[index].availabilities.push(newField);
+        updatedWeakData[index]["availabilities"].push(newField);
         return updatedWeakData;
       });
     } else {
@@ -72,7 +72,7 @@ const Availabilities = () => {
           start_time: setHours(setMinutes(new Date(), 0), 9),
           end_time: setHours(setMinutes(new Date(), 0), 17),
         };
-        updatedWeakData[index].availabilities = [newfield];
+        updatedWeakData[index]["availabilities"] = [newfield];
         updatedWeakData[index]["available"] = true;
         return updatedWeakData;
       });
@@ -107,7 +107,7 @@ const Availabilities = () => {
     if (weakData[index]?.available) {
       setWeakData((prevWeakData) => {
         const updatedWeakData = [...prevWeakData];
-        updatedWeakData[index].availabilities = [];
+        updatedWeakData[index]["availabilities"] = [];
         updatedWeakData[index]["available"] = false;
         return updatedWeakData;
       });
@@ -118,7 +118,7 @@ const Availabilities = () => {
           start_time: setHours(setMinutes(new Date(), 0), 9),
           end_time: setHours(setMinutes(new Date(), 0), 17),
         };
-        updatedWeakData[index].availabilities = [newfield];
+        updatedWeakData[index]["availabilities"] = [newfield];
         updatedWeakData[index]["available"] = true;
         return updatedWeakData;
       });

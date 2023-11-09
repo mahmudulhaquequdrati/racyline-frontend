@@ -269,15 +269,6 @@ function Registration() {
                       : "border-[#E5E7EC] "
                   } focus:outline-none flex gap-2 `}
                 >
-                  {/* {inputData.doctor_type2 ? (
-                    <span className="block truncate">
-                      {inputData.doctor_type2}
-                    </span>
-                  ) : (
-                    <span className="block truncate text-gray-400">
-                      {"Scegli gli animali che curi *"}
-                    </span>
-                  )} */}
                   {selected2?.length ? (
                     selected2?.map((s, i) => {
                       return (

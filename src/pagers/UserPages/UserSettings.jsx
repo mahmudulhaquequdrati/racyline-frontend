@@ -1,3 +1,4 @@
+import { Button, Modal } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -13,6 +14,7 @@ import {
 } from "../../features/userData/userDataApi";
 
 const UserSettings = () => {
+  const [openModal, setOpenModal] = useState(false);
   const { user } = useSelector((state) => state.auth);
   const [userData, setUserData] = useState({
     first_name: user?.first_name,
@@ -72,6 +74,7 @@ const UserSettings = () => {
   useEffect(() => {
     if (isAccountDeleted) {
       localStorage.clear();
+      setOpenModal(false);
       notifySuccess("User Account Deleted!");
       dispatch(userLoggedOut());
       navigate("/user/login");
@@ -175,7 +178,7 @@ const UserSettings = () => {
           </div>
           <div className="w-full mt-3">
             <button
-              onClick={() => handleDeleteAcc(user?._id)}
+              onClick={() => setOpenModal(true)}
               className={`w-full rounded-lg py-2 px-4  outline-none border-[1px] text-primary border-primary `}
             >
               {deleteAccLoading ? (
@@ -205,6 +208,53 @@ const UserSettings = () => {
           </div>
         </div>
       </div>
+
+      {/* Delete Model */}
+      <Modal
+        show={openModal}
+        size="md"
+        onClose={() => setOpenModal(false)}
+        popup
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className="text-center">
+            <span>
+              <svg
+                className="mx-auto mb-4 h-14 w-14 text-primary dark:text-gray-200"
+                stroke="currentColor"
+                fill="none"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                height="1em"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                ></path>
+              </svg>
+            </span>
+            <h3 className="mb-5 text-lg font-normal text-primary dark:text-gray-400">
+              Are you sure you want to delete this Account?
+            </h3>
+            <div className="flex justify-center gap-4">
+              <Button
+                color="failure"
+                onClick={() => handleDeleteAcc(user?._id)}
+              >
+                {"Yes, I'm sure"}
+              </Button>
+              <Button className="" onClick={() => setOpenModal(false)}>
+                No, cancel
+              </Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };

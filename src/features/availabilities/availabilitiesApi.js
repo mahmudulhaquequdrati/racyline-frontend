@@ -1,6 +1,6 @@
 import { apiSlice } from "../api/apiSlice";
 
-export const authApi = apiSlice.injectEndpoints({
+export const AvailabilitiesApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     createAvailabilities: builder.mutation({
       query: ({ availabilities, userId }) => ({
@@ -20,4 +20,4 @@ export const authApi = apiSlice.injectEndpoints({
 });
 
 export const { useCreateAvailabilitiesMutation, useGetAllAvailabilitiesQuery } =
-  authApi;
+  AvailabilitiesApi;
