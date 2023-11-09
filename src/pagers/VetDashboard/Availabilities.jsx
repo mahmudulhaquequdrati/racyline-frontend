@@ -9,7 +9,10 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Delete from "../../assets/ICONS/delete.svg";
 import PlusIcon from "../../assets/ICONS/plusIcon.svg";
-import { notifyError } from "../../components/common/Toast/Toast";
+import {
+  notifyError,
+  notifySuccess,
+} from "../../components/common/Toast/Toast";
 import {
   useCreateAvailabilitiesMutation,
   useGetAllAvailabilitiesQuery,
@@ -243,7 +246,13 @@ const Availabilities = () => {
     };
     if (weakData?.length > 0) {
       // sending data through redux mutation
-      createAvailabilities(newData);
+      createAvailabilities(newData)
+        .then((res) => {
+          notifySuccess("Availabilities Saved!");
+        })
+        .catch((err) => {
+          notifyError("Error occurd while Saving Availabilities!");
+        });
     }
     // navigate("/registration-google-calender-connect");
   };
