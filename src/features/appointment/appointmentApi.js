@@ -6,6 +6,8 @@ export const appointmentApi = apiSlice.injectEndpoints({
       query: ({ email }) => ({
         url: `/appointment-lists/${email}`,
       }),
+
+      providesTags: ["Appointment"],
     }),
     getAppointmentDetails: builder.query({
       query: (id) => ({
@@ -18,6 +20,7 @@ export const appointmentApi = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["Appointment"],
     }),
     editAppointment: builder.mutation({
       query: ({ data, id }) => {
@@ -27,6 +30,7 @@ export const appointmentApi = apiSlice.injectEndpoints({
           body: data,
         };
       },
+      providesTags: ["Appointment"],
     }),
     deleteAppointment: builder.mutation({
       query: ({ id }) => {

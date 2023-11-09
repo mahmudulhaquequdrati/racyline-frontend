@@ -280,7 +280,7 @@ const Appointment = () => {
               <div className="w-[100px] h-[100px]">
                 <img
                   src={data?.vetInfo?.profile_image_url}
-                  className="w-full rounded-full"
+                  className="w-full h-full rounded-full"
                   alt="vetUser"
                 />
               </div>

@@ -84,21 +84,17 @@ const UserSettings = () => {
               <div className="w-full">
                 <input
                   type="text"
-                  value={userData?.first_name}
-                  onChange={(e) => {
-                    setUserData({ ...userData, first_name: e.target.value });
-                  }}
-                  className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full"
+                  placeholder={user?.last_name ? user?.last_name : "Cognome"}
+                  readOnly
+                  className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full placeholder:text-black"
                 />
               </div>
               <div className="w-full">
                 <input
                   type="text"
-                  value={userData?.last_name}
-                  onChange={(e) => {
-                    setUserData({ ...userData, last_name: e.target.value });
-                  }}
-                  className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full"
+                  placeholder={user?.last_name ? user?.last_name : "Cognome"}
+                  readOnly
+                  className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full placeholder:text-black"
                 />
               </div>
             </div>
@@ -110,12 +106,9 @@ const UserSettings = () => {
                 <div className="w-full">
                   <input
                     type="number"
-                    value={userData?.phone}
-                    onChange={(e) => {
-                      setUserData({ ...userData, phone: e.target.value });
-                    }}
-                    placeholder="23454356"
-                    className="rounded-lg py-2 px-4  bg-white text-black outline-none border-[1px] border-none shadow w-full"
+                    placeholder={userData?.phone}
+                    readOnly
+                    className="rounded-lg py-2 px-4  bg-white text-black outline-none border-[1px] border-none shadow w-full placeholder:text-black"
                   />
                 </div>
                 <div>

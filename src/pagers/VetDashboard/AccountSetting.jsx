@@ -146,23 +146,17 @@ const AccountSetting = () => {
             <div className="w-full">
               <input
                 type="text"
-                value={userData?.first_name}
-                onChange={(e) => {
-                  setUserData({ ...userData, first_name: e.target.value });
-                }}
-                placeholder={user?.first_name}
-                className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full"
+                readOnly
+                placeholder={user?.first_name ? user?.first_name : "Nome"}
+                className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full placeholder:text-black"
               />
             </div>
             <div className="w-full mt-3">
               <input
                 type="text"
-                value={userData?.last_name}
-                onChange={(e) => {
-                  setUserData({ ...userData, last_name: e.target.value });
-                }}
-                placeholder={user?.last_name}
-                className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full"
+                readOnly
+                placeholder={user?.last_name ? user?.last_name : "Cognome"}
+                className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full placeholder:text-black"
               />
             </div>
           </div>
@@ -310,42 +304,40 @@ const AccountSetting = () => {
             <div className="w-full mt-3">
               <input
                 type="text"
-                value={userData?.veterinary_address}
-                onChange={(e) => {
-                  setUserData({
-                    ...userData,
-                    veterinary_address: e.target.value,
-                  });
-                }}
-                className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full"
+                placeholder={
+                  userData?.veterinary_address
+                    ? userData?.veterinary_address
+                    : "Indirizzo del tuo ufficio veterinario"
+                }
+                readOnly
+                className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full placeholder:text-black"
               />
             </div>
-            {user?.userLoginType === "google" && (
-              <div className="mt-5">
-                <p className="font-bold mb-3">Contatto</p>
-                <div className="w-full">
-                  <input
-                    type="email"
-                    value={userData?.email}
-                    onChange={(e) => {
-                      setUserData({ ...userData, email: e.target.value });
-                    }}
-                    disabled
-                    readOnly
-                    placeholder="mariorossi@gmail.com"
-                    className="rounded-lg text-[#00000066] bg-[#F3FEFE] py-2 px-4 outline-none border-[1px] border-none shadow w-full"
-                  />
-                </div>
-                {user?.userLoginType === "google" && (
-                  <p className="flex items-center mt-4 mb-4 text-sm w-full">
-                    <img src={GoogleIcon} alt="" />
-                    <span className="ml-2">
-                      Hai effettuato l’accesso con il tuo account Google
-                    </span>
-                  </p>
-                )}
+
+            <div className="mt-5">
+              <p className="font-bold mb-3">Contatto</p>
+              <div className="w-full">
+                <input
+                  type="email"
+                  value={userData?.email}
+                  onChange={(e) => {
+                    setUserData({ ...userData, email: e.target.value });
+                  }}
+                  disabled
+                  readOnly
+                  placeholder="mariorossi@gmail.com"
+                  className="rounded-lg text-[#00000066] bg-[#F3FEFE] py-2 px-4 outline-none border-[1px] border-none shadow w-full"
+                />
               </div>
-            )}
+              {user?.userLoginType === "google" && (
+                <p className="flex items-center mt-4 mb-4 text-sm w-full">
+                  <img src={GoogleIcon} alt="" />
+                  <span className="ml-2">
+                    Hai effettuato l’accesso con il tuo account Google
+                  </span>
+                </p>
+              )}
+            </div>
           </div>
           <div className="mt-12">
             <button
