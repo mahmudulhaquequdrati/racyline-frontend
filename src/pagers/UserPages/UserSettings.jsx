@@ -54,15 +54,20 @@ const UserSettings = () => {
   };
 
   useEffect(() => {
-    if (!isLoading && data?.data?._id) {
-      const { email, first_name, last_name, phone, _id } = data?.data;
-      notifySuccess("user data updated!");
-      setUserData({ first_name, last_name, phone, email });
+    if (isSuccess) {
+      if (data?.status === 400) {
+        notifyError(data?.message);
+      } else if (!isLoading && data?.data?._id) {
+        const { email, first_name, last_name, phone, _id } = data?.data;
+        notifySuccess("user data updated!");
+        setUserData({ first_name, last_name, phone, email });
+      }
     }
+
     if (!isLoading && isError) {
       notifyError("Error occurd while updating data!");
     }
-  }, [data?.data?._id]);
+  }, [isSuccess, data?.data?._id]);
 
   useEffect(() => {
     if (isAccountDeleted) {
