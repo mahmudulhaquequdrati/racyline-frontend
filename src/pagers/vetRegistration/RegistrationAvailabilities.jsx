@@ -139,7 +139,7 @@ const RegistrationAvailabilities = () => {
             return updatedWeakData;
           });
         } else {
-          alert("End time cannot be less than start time");
+          notifyError("End time cannot be less than start time");
         }
       } else {
         if (
@@ -159,7 +159,7 @@ const RegistrationAvailabilities = () => {
             return updatedWeakData;
           });
         } else {
-          alert("Start time cannot be grater than end time");
+          notifyError("Start time cannot be grater than end time");
         }
       }
     } else {
@@ -192,7 +192,7 @@ const RegistrationAvailabilities = () => {
               return updatedWeakData;
             });
           } else {
-            alert("End time cannot be less than start time");
+            notifyError("End time cannot be less than start time");
           }
         } else {
           if (
@@ -219,11 +219,11 @@ const RegistrationAvailabilities = () => {
               return updatedWeakData;
             });
           } else {
-            alert("Start time cannot be grater than end time");
+            notifyError("Start time cannot be grater than end time");
           }
         }
       } else {
-        alert("Previous time cannot be change");
+        notifyError("Previous time cannot be change");
       }
     }
   };
