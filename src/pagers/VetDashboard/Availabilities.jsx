@@ -10,6 +10,10 @@ import { useNavigate } from "react-router-dom";
 import Delete from "../../assets/ICONS/delete.svg";
 import PlusIcon from "../../assets/ICONS/plusIcon.svg";
 import {
+  notifyError,
+  notifySuccess,
+} from "../../components/common/Toast/Toast";
+import {
   useCreateAvailabilitiesMutation,
   useGetAllAvailabilitiesQuery,
 } from "../../features/availabilities/availabilitiesApi";
@@ -146,7 +150,7 @@ const Availabilities = () => {
             return updatedWeakData;
           });
         } else {
-          alert("End time cannot be less than start time");
+          notifyError("End time cannot be less than start time");
         }
       } else {
         if (
@@ -166,7 +170,7 @@ const Availabilities = () => {
             return updatedWeakData;
           });
         } else {
-          alert("Start time cannot be grater than end time");
+          notifyError("Start time cannot be grater than end time");
         }
       }
     } else {
@@ -199,7 +203,7 @@ const Availabilities = () => {
               return updatedWeakData;
             });
           } else {
-            alert("End time cannot be less than start time");
+            notifyError("End time cannot be less than start time");
           }
         } else {
           if (
@@ -226,11 +230,11 @@ const Availabilities = () => {
               return updatedWeakData;
             });
           } else {
-            alert("Start time cannot be grater than end time");
+            notifyError("Start time cannot be grater than end time");
           }
         }
       } else {
-        alert("Previous time cannot be change");
+        notifyError("Previous time cannot be change");
       }
     }
   };
@@ -242,7 +246,13 @@ const Availabilities = () => {
     };
     if (weakData?.length > 0) {
       // sending data through redux mutation
-      createAvailabilities(newData);
+      createAvailabilities(newData)
+        .then((res) => {
+          notifySuccess("Availabilities Saved!");
+        })
+        .catch((err) => {
+          notifyError("Error occurd while Saving Availabilities!");
+        });
     }
     // navigate("/registration-google-calender-connect");
   };
@@ -333,8 +343,8 @@ const Availabilities = () => {
             ) : (
               <>
                 {weakData?.map((res, i) => (
-                  <div className="border-b border-b-[#E5E7EC] pb-6">
-                    <div key={i} className="flex gap-6 justify-between  ">
+                  <div key={i} className="border-b border-b-[#E5E7EC] pb-6">
+                    <div className="flex gap-6 justify-between  ">
                       <div className="flex items-start gap-6">
                         <div className="mr-2 flex items-center mt-3">
                           <label className="option ">

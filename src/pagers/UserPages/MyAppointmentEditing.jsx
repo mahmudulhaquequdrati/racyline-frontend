@@ -15,6 +15,7 @@ const MyAppointmentEditing = () => {
     isLoading: appointmentLoading,
     isError,
   } = useGetAppointmentDetailsQuery(id);
+  const { data: { vetInfo } = {} } = data || {};
   const [
     editAppointment,
     { data: editAppointmentResponse, isLoading: editAppointmentLoading },
@@ -43,6 +44,8 @@ const MyAppointmentEditing = () => {
     "11:30 PM",
   ];
 
+  console.log(vetInfo);
+
   return (
     <div className="w-full bg-primary pt-[60px] p-4 md:p-8 pb-[80px]">
       <div className="max-w-[1150px] w-full mx-auto">
@@ -63,17 +66,17 @@ const MyAppointmentEditing = () => {
           <div className="flex gap-6">
             <div className="w-[100px] h-[100px]">
               <img
-                src={vetUser}
-                className="w-full rounded-full"
+                src={vetInfo?.profile_image_url}
+                className="w-full h-full rounded-full object-cover"
                 alt="vetUser"
               />
             </div>
             <div>
               <h1 className="text-[18px] leading-[22px] font-semibold mb-2">
-                Mario Rossi
+                {vetInfo?.first_name + " " + vetInfo?.last_name}
               </h1>
               <p className="text-[14px] leading-5 font-medium mb-[10px]">
-                Veterinario di medicina generale, Chirurgo veterinario
+                {vetInfo?.doctor_type1}
               </p>
               <p className="flex items-center gap-[6px] text-[#666666] text-[13px] font-normal leading-[22px]">
                 <span>
@@ -93,7 +96,7 @@ const MyAppointmentEditing = () => {
                     />
                   </svg>
                 </span>
-                <span>Via Bolledi, 6, Carpaneto Piacentino, 29013, PC</span>
+                <span>{vetInfo?.veterinary_address}</span>
               </p>
             </div>
           </div>

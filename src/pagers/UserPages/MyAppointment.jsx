@@ -56,8 +56,8 @@ const MyAppointment = () => {
                 <div className="flex gap-6">
                   <div className="w-[100px] h-[100px]">
                     <img
-                      src={vetUser}
-                      className="w-full rounded-full"
+                      src={vetInfo?.profile_image_url}
+                      className="w-full h-full rounded-full"
                       alt="vetUser"
                     />
                   </div>
