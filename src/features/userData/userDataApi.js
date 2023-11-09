@@ -12,7 +12,16 @@ export const updateUserDataApi = apiSlice.injectEndpoints({
         };
       },
     }),
+    deleteUser: builder.mutation({
+      query: (userId) => {
+        return {
+          url: `/delete-user/${userId}`,
+          method: "DELETE",
+        };
+      },
+    }),
   }),
 });
 
-export const { useUpdateUserDataMutation } = updateUserDataApi;
+export const { useUpdateUserDataMutation, useDeleteUserMutation } =
+  updateUserDataApi;

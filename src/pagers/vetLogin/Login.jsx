@@ -1,11 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import GoogleIcon from "../../assets/ICONS/google.svg";
-import {
-  notifyError,
-  notifySuccess,
-} from "../../components/common/Toast/Toast";
+import { notifyError } from "../../components/common/Toast/Toast";
 import { useLoginMutation } from "../../features/auth/authApi";
 import { userLoggedIn } from "../../features/auth/authSlice";
 import { useGoogleLoginMutation } from "../../features/auth/googleAuthApi";
@@ -23,27 +20,18 @@ function Login() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    login({ email, password, userType: "vet_admin" })
-      .then((res) => {
-        if (res?.data?.data?.accessToken) {
-          dispatch(userLoggedIn(res?.data?.data));
-          navigate("/vets/my-appointment");
-          notifySuccess("Login Success!");
-        }
-      })
-      .catch((err) => {
-        notifyError(err);
-      });
+    login({ email, password, userType: "vet_admin" });
   };
-  // useEffect(() => {
-  //   if (isError || googleError) {
-  //     alert("No User Found");
-  //   }
-  //   if (LoginInData?.data?.accessToken) {
-  //     dispatch(userLoggedIn(LoginInData?.data));
-  //     navigate("/vets/my-appointment");
-  //   }
-  // }, [LoginInData, isError, navigate]);
+
+  useEffect(() => {
+    if (isError || googleError) {
+      notifyError("Email or password isn't correct!");
+    }
+    if (LoginInData?.data?.accessToken) {
+      dispatch(userLoggedIn(LoginInData?.data));
+      navigate("/vets/my-appointment");
+    }
+  }, [LoginInData, isError, navigate]);
 
   async function handleGoogle() {
     var SCOPES =
