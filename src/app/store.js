@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { apiSlice } from "../features/api/apiSlice";
 import appointmentSlice from "../features/appointment/appointmentSlice";
 import authSlice from "../features/auth/authSlice";
+import availabilitiesSlice from "../features/availabilities/availabilitiesSlice";
 import { vetListApi } from "../features/vetLists/vetLists";
 
 export const store = configureStore({
@@ -10,6 +11,7 @@ export const store = configureStore({
     auth: authSlice,
     vetLists: vetListApi,
     appointment: appointmentSlice,
+    availabilities: availabilitiesSlice,
   },
   devTools: import.meta.env.MODE !== "production",
   middleware: (getDefaultMiddleware) => {

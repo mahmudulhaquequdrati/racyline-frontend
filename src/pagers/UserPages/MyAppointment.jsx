@@ -34,13 +34,15 @@ const MyAppointment = () => {
     content = <h1>Loading...</h1>;
   }
   if (!isLoading && !isError && data?.length > 0) {
+    const sortedArray = [...data]?.sort((a, b) => b.createdAt - a.createdAt);
+
     content = (
       <>
         <p className="text-[18px] leading-[24px] font-semibold mb-3">
           I prossimi appuntamenti
         </p>
         <div className="grid gap-5 grid-cols-1 sm:grid-cols-2">
-          {data?.map((appointment) => {
+          {sortedArray?.map((appointment) => {
             const { _id, vetInfo } = appointment;
             return (
               <div
@@ -128,6 +130,8 @@ const MyAppointment = () => {
       refetch();
     }
   });
+
+  console.log(data);
 
   return (
     <div className="w-full bg-primary pt-[60px] p-4 md:p-8 pb-[80px]">
