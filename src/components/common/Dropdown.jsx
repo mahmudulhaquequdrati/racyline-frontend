@@ -1,7 +1,7 @@
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { userLoggedOut } from "../../features/auth/authSlice";
 import { notifySuccess } from "./Toast/Toast";
 // import { ChevronDownIcon } from "@heroicons/react/20/solid";
@@ -9,6 +9,7 @@ import { notifySuccess } from "./Toast/Toast";
 export default function DropDown() {
   const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useDispatch();
   const handleLogut = () => {
     localStorage.clear();
@@ -17,6 +18,7 @@ export default function DropDown() {
     dispatch(userLoggedOut());
     navigate("/user/login");
   };
+
   return (
     <div className=" w-56 text-right">
       <Menu as="div" className="relative inline-block text-left">
@@ -57,8 +59,8 @@ export default function DropDown() {
                       <Link
                         to="/vets/my-appointment"
                         className={`${
-                          active
-                            ? "bg-[#e8981f26] text-gray-800"
+                          active || location?.pathname == "/vets/my-appointment"
+                            ? "bg-primary text-gray-800"
                             : "text-gray-900"
                         } group flex w-full items-center rounded-md px-4 py-2 text-sm`}
                       >
@@ -71,8 +73,9 @@ export default function DropDown() {
                       <Link
                         to="/vets/accountsettings"
                         className={`${
-                          active
-                            ? "bg-[#e8981f26] text-gray-800"
+                          active ||
+                          location?.pathname == "/vets/accountsettings"
+                            ? "bg-primary text-gray-800"
                             : "text-gray-900"
                         } group flex w-full items-center rounded-md px-4 py-2 text-sm`}
                       >
@@ -85,8 +88,9 @@ export default function DropDown() {
                       <Link
                         to="/vets/MyAvailabilities"
                         className={`${
-                          active
-                            ? "bg-[#e8981f26] text-gray-800"
+                          active ||
+                          location?.pathname == "/vets/MyAvailabilities"
+                            ? "bg-primary text-gray-800"
                             : "text-gray-900"
                         } group flex w-full items-center rounded-md px-4 py-2 text-sm`}
                       >
@@ -99,8 +103,8 @@ export default function DropDown() {
                       <Link
                         to="/vets/calender"
                         className={`${
-                          active
-                            ? "bg-[#e8981f26] text-gray-800"
+                          active || location?.pathname == "/vets/calender"
+                            ? "bg-primary text-gray-800"
                             : "text-gray-900"
                         } group flex w-full items-center rounded-md px-4 py-2 text-sm`}
                       >
@@ -118,8 +122,8 @@ export default function DropDown() {
                       <Link
                         to="/user/vet-lists"
                         className={`${
-                          active
-                            ? "bg-[#e8981f26] text-gray-800"
+                          active || location?.pathname == "/user/vet-lists"
+                            ? "bg-primary text-gray-800"
                             : "text-gray-900"
                         } group flex w-full items-center rounded-md px-4 py-2 text-sm`}
                       >
@@ -132,8 +136,9 @@ export default function DropDown() {
                       <Link
                         to="/user/accountsettings"
                         className={`${
-                          active
-                            ? "bg-[#e8981f26] text-gray-800"
+                          active ||
+                          location?.pathname == "/user/accountsettings"
+                            ? "bg-primary text-gray-800"
                             : "text-gray-900"
                         } group flex w-full items-center rounded-md px-4 py-2 text-sm`}
                       >
@@ -146,8 +151,8 @@ export default function DropDown() {
                       <Link
                         to="/user/my-appointment"
                         className={`${
-                          active
-                            ? "bg-[#e8981f26] text-gray-800"
+                          active || location?.pathname == "/user/my-appointment"
+                            ? "bg-primary text-gray-800"
                             : "text-gray-900"
                         } group flex w-full items-center rounded-md px-4 py-2 text-sm`}
                       >
@@ -163,7 +168,7 @@ export default function DropDown() {
                   <button
                     onClick={handleLogut}
                     className={`${
-                      active ? "bg-[#e8981f26] text-gray-800" : "text-gray-900"
+                      active ? "bg-primary text-gray-800" : "text-gray-900"
                     } group flex w-full items-center rounded-md px-4 py-2 text-sm`}
                   >
                     Logout
