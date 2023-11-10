@@ -62,7 +62,7 @@ const Appointment = () => {
     if (!isLoading && isError) {
       navigate("/user/appointment-error");
     }
-  }, [createdAppointmentResponse?.data?.userId]);
+  }, [createdAppointmentResponse?.data?.userId, isError]);
 
   return (
     <div className="bg-primary pt-[60px] pb-[80px]">

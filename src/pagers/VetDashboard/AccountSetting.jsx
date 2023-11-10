@@ -79,32 +79,37 @@ const AccountSetting = () => {
   };
 
   useEffect(() => {
-    if (!isLoading && data?.data?._id) {
-      const {
-        email,
-        first_name,
-        last_name,
-        phone,
-        doctor_type1,
-        doctor_type2,
-        veterinary_address,
-        _id,
-      } = data?.data;
-      notifySuccess("user data updated!");
-      setUserData({
-        first_name,
-        last_name,
-        phone,
-        email,
-        doctor_type1,
-        doctor_type2,
-        veterinary_address,
-      });
+    if (isSuccess) {
+      if (data?.status === 400) {
+        notifyError(data?.message);
+      } else if (!isLoading && data?.data?._id) {
+        const {
+          email,
+          first_name,
+          last_name,
+          phone,
+          doctor_type1,
+          doctor_type2,
+          veterinary_address,
+          _id,
+        } = data?.data;
+        notifySuccess("user data updated!");
+        setUserData({
+          first_name,
+          last_name,
+          phone,
+          email,
+          doctor_type1,
+          doctor_type2,
+          veterinary_address,
+        });
+      }
     }
+
     if (!isLoading && isError) {
       notifyError("Error occurd while updating data!");
     }
-  }, [data?.data?._id]);
+  }, [data?.data?._id, isSuccess]);
 
   function removeDuplicates(array) {
     // console.log(array);
@@ -364,7 +369,9 @@ const AccountSetting = () => {
                                     >
                                       {tp.name}
                                     </span>
-                                    {selected ? (
+                                    {selected2.some(
+                                      (item) => item.name === tp.name
+                                    ) ? (
                                       <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
                                         <CheckIcon
                                           className="h-5 w-5"
@@ -405,10 +412,12 @@ const AccountSetting = () => {
                     onChange={(e) => {
                       setUserData({ ...userData, email: e.target.value });
                     }}
-                    disabled
-                    readOnly
-                    placeholder="mariorossi@gmail.com"
-                    className="rounded-lg text-[#00000066] bg-[#F3FEFE] py-2 px-4 outline-none border-[1px] border-none shadow w-full"
+                    disabled={user?.userLoginType === "google"}
+                    className={`rounded-lg py-2 px-4  outline-none border-[1px] border-none shadow w-full ${
+                      user?.userLoginType === "google"
+                        ? "bg-[#F3FEFE] text-[#00000066]"
+                        : ""
+                    } `}
                   />
                 </div>
                 {user?.userLoginType === "google" && (

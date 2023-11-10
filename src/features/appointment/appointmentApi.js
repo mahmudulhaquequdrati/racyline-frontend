@@ -24,6 +24,7 @@ export const appointmentApi = apiSlice.injectEndpoints({
     }),
     editAppointment: builder.mutation({
       query: ({ data, id }) => {
+        console.log(data, id);
         return {
           url: `/edit-appointment/${id}`,
           method: "PATCH",

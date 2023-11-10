@@ -284,6 +284,7 @@ const Availabilities = () => {
         };
       });
       setWeakData(loadedData);
+      // dispatch(setAllWeakAvailabilitiesData(loadedData));
     } else {
       const emptyWeekData = [
         {
@@ -323,6 +324,7 @@ const Availabilities = () => {
         },
       ];
       setWeakData(emptyWeekData);
+      // dispatch(setAllWeakAvailabilitiesData(emptyWeekData));
     }
   }, [data?.data?._id]);
 
