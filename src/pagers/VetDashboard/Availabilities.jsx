@@ -19,6 +19,7 @@ import {
 } from "../../features/availabilities/availabilitiesApi";
 
 const Availabilities = () => {
+  const [storeWeekData, setStoreWeekData] = useState([]);
   const [weakData, setWeakData] = useState([]);
 
   const { user } = useSelector((state) => state.auth);
@@ -65,8 +66,39 @@ const Availabilities = () => {
         updatedWeakData[index]["availabilities"].push(newField);
         return updatedWeakData;
       });
+      setStoreWeekData((prevWeakData) => {
+        const updatedWeakData = [...prevWeakData];
+        const lastAvailability =
+          updatedWeakData[index].availabilities[
+            updatedWeakData[index].availabilities.length - 1
+          ];
+        const newStartTime = new Date(lastAvailability.end_time);
+        newStartTime.setMinutes(newStartTime.getMinutes() + 15);
+
+        const newEndTime = new Date(newStartTime);
+        newEndTime.setMinutes(newEndTime.getMinutes() + 30);
+
+        const newField = {
+          start_time: newStartTime,
+          end_time: newEndTime,
+        };
+
+        updatedWeakData[index]["availabilities"].push(newField);
+        return updatedWeakData;
+      });
     } else {
       setWeakData((prevWeakData) => {
+        let updatedWeakData = [...prevWeakData];
+        const newfield = {
+          start_time: setHours(setMinutes(new Date(), 0), 9),
+          end_time: setHours(setMinutes(new Date(), 0), 17),
+        };
+        updatedWeakData[index]["availabilities"] = [newfield];
+        updatedWeakData[index]["available"] = true;
+        return updatedWeakData;
+      });
+      setStoreWeekData((prevWeakData) => {
+        console.log("sdsdsdsd");
         let updatedWeakData = [...prevWeakData];
         const newfield = {
           start_time: setHours(setMinutes(new Date(), 0), 9),
@@ -90,8 +122,26 @@ const Availabilities = () => {
         updatedWeakData[elementIndex]["available"] = false;
         return updatedWeakData;
       });
+      // Updaing backup state
+      setStoreWeekData((prevWeakData) => {
+        const updatedWeakData = [...prevWeakData];
+        updatedWeakData[elementIndex].availabilities.splice(
+          availabilityIndex,
+          1
+        );
+        updatedWeakData[elementIndex]["available"] = false;
+        return updatedWeakData;
+      });
     } else {
       setWeakData((prevWeakData) => {
+        const updatedWeakData = [...prevWeakData];
+        updatedWeakData[elementIndex].availabilities.splice(
+          availabilityIndex,
+          1
+        );
+        return updatedWeakData;
+      });
+      setStoreWeekData((prevWeakData) => {
         const updatedWeakData = [...prevWeakData];
         updatedWeakData[elementIndex].availabilities.splice(
           availabilityIndex,
@@ -111,17 +161,35 @@ const Availabilities = () => {
         updatedWeakData[index]["available"] = false;
         return updatedWeakData;
       });
+      console.log("Removing");
     } else {
-      setWeakData((prevWeakData) => {
-        let updatedWeakData = [...prevWeakData];
-        const newfield = {
-          start_time: setHours(setMinutes(new Date(), 0), 9),
-          end_time: setHours(setMinutes(new Date(), 0), 17),
-        };
-        updatedWeakData[index]["availabilities"] = [newfield];
-        updatedWeakData[index]["available"] = true;
-        return updatedWeakData;
-      });
+      console.log("Adding");
+      if (!storeWeekData[index]?.available) {
+        setWeakData((prevWeakData) => {
+          let updatedWeakData = [...prevWeakData];
+          const newfield = {
+            start_time: setHours(setMinutes(new Date(), 0), 9),
+            end_time: setHours(setMinutes(new Date(), 0), 17),
+          };
+          updatedWeakData[index]["availabilities"] = [newfield];
+          updatedWeakData[index]["available"] = true;
+          return updatedWeakData;
+        });
+        setStoreWeekData((prevWeakData) => {
+          console.log("Inside backup state");
+          let updatedWeakData = [...prevWeakData];
+          const newfield = {
+            start_time: setHours(setMinutes(new Date(), 0), 9),
+            end_time: setHours(setMinutes(new Date(), 0), 17),
+          };
+          updatedWeakData[index]["availabilities"] = [newfield];
+          updatedWeakData[index]["available"] = true;
+          return updatedWeakData;
+        });
+      } else {
+        console.log("From another");
+        setWeakData(storeWeekData);
+      }
     }
   };
 
@@ -284,6 +352,8 @@ const Availabilities = () => {
         };
       });
       setWeakData(loadedData);
+      setStoreWeekData(loadedData);
+      // dispatch(setAllWeakAvailabilitiesData(loadedData));
     } else {
       const emptyWeekData = [
         {
@@ -323,8 +393,13 @@ const Availabilities = () => {
         },
       ];
       setWeakData(emptyWeekData);
+      setStoreWeekData(emptyWeekData);
+      // dispatch(setAllWeakAvailabilitiesData(emptyWeekData));
     }
   }, [data?.data?._id]);
+
+  console.log(storeWeekData, "storeWeekData");
+  console.log(weakData, "weakData");
 
   return (
     <section className="flex bg-primary py-16 border-[1px] border-[#EAEAEB]">
