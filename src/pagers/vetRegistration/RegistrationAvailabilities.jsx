@@ -96,21 +96,29 @@ const RegistrationAvailabilities = () => {
     if (weakData[index]?.available) {
       setWeakData((prevWeakData) => {
         const updatedWeakData = [...prevWeakData];
-        updatedWeakData[index].availabilities = [];
+        // updatedWeakData[index].availabilities = [];
         updatedWeakData[index]["available"] = false;
         return updatedWeakData;
       });
     } else {
-      setWeakData((prevWeakData) => {
-        let updatedWeakData = [...prevWeakData];
-        const newfield = {
-          start_time: setHours(setMinutes(new Date(), 0), 9),
-          end_time: setHours(setMinutes(new Date(), 0), 17),
-        };
-        updatedWeakData[index].availabilities = [newfield];
-        updatedWeakData[index]["available"] = true;
-        return updatedWeakData;
-      });
+      if (weakData[index].availabilities?.length == 0) {
+        setWeakData((prevWeakData) => {
+          let updatedWeakData = [...prevWeakData];
+          const newfield = {
+            start_time: setHours(setMinutes(new Date(), 0), 9),
+            end_time: setHours(setMinutes(new Date(), 0), 17),
+          };
+          updatedWeakData[index].availabilities = [newfield];
+          updatedWeakData[index]["available"] = true;
+          return updatedWeakData;
+        });
+      } else {
+        setWeakData((prevWeakData) => {
+          let updatedWeakData = [...prevWeakData];
+          updatedWeakData[index]["available"] = true;
+          return updatedWeakData;
+        });
+      }
     }
   };
 
@@ -229,9 +237,17 @@ const RegistrationAvailabilities = () => {
   };
 
   const onSubmit = () => {
+    const updatedWeakData = weakData?.map((res) => {
+      const data = {
+        name: res?.name,
+        availabilities: res?.available ? res?.availabilities : [],
+        available: res?.available,
+      };
+      return data;
+    });
     const newData = {
       userId: user?._id,
-      availabilities: weakData,
+      availabilities: updatedWeakData,
     };
     if (weakData?.length > 0) {
       // sending data through redux mutation
@@ -316,70 +332,78 @@ const RegistrationAvailabilities = () => {
                     </label>
                   </div>
                   <div className="hidden md:block">
-                    {res.availabilities?.length === 0 ? (
+                    {res.available ? (
+                      <>
+                        {res.availabilities?.length === 0 ? (
+                          <div className="text-gray-700 text-sm mt-3">
+                            Non disponibile
+                          </div>
+                        ) : (
+                          <div>
+                            {res.availabilities?.map((avl, avlI) => (
+                              <div
+                                key={avlI}
+                                className={`flex items-center gap-[10px] ${
+                                  avlI !== 0 && "mt-3"
+                                }`}
+                              >
+                                <div className="w-[85px]">
+                                  <DatePicker
+                                    selected={avl?.start_time}
+                                    onChange={(date) =>
+                                      handleAvailabilityChange(
+                                        i,
+                                        avlI,
+                                        "start_time",
+                                        date
+                                      )
+                                    }
+                                    showTimeSelect
+                                    showTimeSelectOnly
+                                    timeIntervals={15}
+                                    timeCaption=""
+                                    dateFormat="HH:mm"
+                                    timeFormat="HH:mm"
+                                    className="w-full rounded-lg py-3 px-4 outline-none border-[1px] border-[#E5E7EC] "
+                                  />
+                                </div>
+                                <hr className="w-[10px] border-black" />
+                                <div className="w-[85px]">
+                                  <DatePicker
+                                    selected={avl?.end_time}
+                                    onChange={(date) =>
+                                      handleAvailabilityChange(
+                                        i,
+                                        avlI,
+                                        "end_time",
+                                        date
+                                      )
+                                    }
+                                    showTimeSelect
+                                    showTimeSelectOnly
+                                    timeIntervals={15}
+                                    timeCaption=""
+                                    dateFormat="HH:mm"
+                                    timeFormat="HH:mm"
+                                    className="w-full rounded-lg py-3 px-4 outline-none border-[1px] border-[#E5E7EC] "
+                                  />
+                                </div>
+                                <div>
+                                  <img
+                                    className="cursor-pointer"
+                                    onClick={() => deleteFields(i, avlI)}
+                                    src={Delete}
+                                    alt=""
+                                  />
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </>
+                    ) : (
                       <div className="text-gray-700 text-sm mt-3">
                         Non disponibile
-                      </div>
-                    ) : (
-                      <div>
-                        {res.availabilities?.map((avl, avlI) => (
-                          <div
-                            key={avlI}
-                            className={`flex items-center gap-[10px] ${
-                              avlI !== 0 && "mt-3"
-                            }`}
-                          >
-                            <div className="w-[85px]">
-                              <DatePicker
-                                selected={avl?.start_time}
-                                onChange={(date) =>
-                                  handleAvailabilityChange(
-                                    i,
-                                    avlI,
-                                    "start_time",
-                                    date
-                                  )
-                                }
-                                showTimeSelect
-                                showTimeSelectOnly
-                                timeIntervals={15}
-                                timeCaption=""
-                                dateFormat="HH:mm"
-                                timeFormat="HH:mm"
-                                className="w-full rounded-lg py-3 px-4 outline-none border-[1px] border-[#E5E7EC] "
-                              />
-                            </div>
-                            <hr className="w-[10px] border-black" />
-                            <div className="w-[85px]">
-                              <DatePicker
-                                selected={avl?.end_time}
-                                onChange={(date) =>
-                                  handleAvailabilityChange(
-                                    i,
-                                    avlI,
-                                    "end_time",
-                                    date
-                                  )
-                                }
-                                showTimeSelect
-                                showTimeSelectOnly
-                                timeIntervals={15}
-                                timeCaption=""
-                                dateFormat="HH:mm"
-                                timeFormat="HH:mm"
-                                className="w-full rounded-lg py-3 px-4 outline-none border-[1px] border-[#E5E7EC] "
-                              />
-                            </div>
-                            <div>
-                              <img
-                                className="cursor-pointer"
-                                onClick={() => deleteFields(i, avlI)}
-                                src={Delete}
-                                alt=""
-                              />
-                            </div>
-                          </div>
-                        ))}
                       </div>
                     )}
                   </div>
@@ -394,72 +418,80 @@ const RegistrationAvailabilities = () => {
                 </div>
               </div>
               <div className="block md:hidden">
-                {res.availabilities?.length === 0 ? (
+                {res.available ? (
+                  <>
+                    {res.availabilities?.length === 0 ? (
+                      <div className="text-gray-700 text-sm mt-3">
+                        Non disponibile
+                      </div>
+                    ) : (
+                      <div>
+                        {res.availabilities?.map((avl, avlI) => (
+                          <div
+                            key={avlI}
+                            className={`flex items-center justify-between ${
+                              avlI !== 0 && "mt-3"
+                            }`}
+                          >
+                            <div className={`flex items-center gap-[10px] `}>
+                              <div className="w-[85px]">
+                                <DatePicker
+                                  selected={avl?.start_time}
+                                  onChange={(date) =>
+                                    handleAvailabilityChange(
+                                      i,
+                                      avlI,
+                                      "start_time",
+                                      date
+                                    )
+                                  }
+                                  showTimeSelect
+                                  showTimeSelectOnly
+                                  timeIntervals={15}
+                                  timeCaption=""
+                                  dateFormat="HH:mm"
+                                  timeFormat="HH:mm"
+                                  className="w-full rounded-lg py-3 px-4 outline-none border-[1px] border-[#E5E7EC] "
+                                />
+                              </div>
+                              <hr className="w-[10px] border-black" />
+                              <div className="w-[85px]">
+                                <DatePicker
+                                  selected={avl?.end_time}
+                                  onChange={(date) =>
+                                    handleAvailabilityChange(
+                                      i,
+                                      avlI,
+                                      "end_time",
+                                      date
+                                    )
+                                  }
+                                  showTimeSelect
+                                  showTimeSelectOnly
+                                  timeIntervals={15}
+                                  timeCaption=""
+                                  dateFormat="HH:mm"
+                                  timeFormat="HH:mm"
+                                  className="w-full rounded-lg py-3 px-4 outline-none border-[1px] border-[#E5E7EC] "
+                                />
+                              </div>
+                            </div>
+                            <div>
+                              <img
+                                className="cursor-pointer"
+                                onClick={() => deleteFields(i, avlI)}
+                                src={Delete}
+                                alt=""
+                              />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </>
+                ) : (
                   <div className="text-gray-700 text-sm mt-3">
                     Non disponibile
-                  </div>
-                ) : (
-                  <div>
-                    {res.availabilities?.map((avl, avlI) => (
-                      <div
-                        key={avlI}
-                        className={`flex items-center justify-between ${
-                          avlI !== 0 && "mt-3"
-                        }`}
-                      >
-                        <div className={`flex items-center gap-[10px] `}>
-                          <div className="w-[85px]">
-                            <DatePicker
-                              selected={avl?.start_time}
-                              onChange={(date) =>
-                                handleAvailabilityChange(
-                                  i,
-                                  avlI,
-                                  "start_time",
-                                  date
-                                )
-                              }
-                              showTimeSelect
-                              showTimeSelectOnly
-                              timeIntervals={15}
-                              timeCaption=""
-                              dateFormat="HH:mm"
-                              timeFormat="HH:mm"
-                              className="w-full rounded-lg py-3 px-4 outline-none border-[1px] border-[#E5E7EC] "
-                            />
-                          </div>
-                          <hr className="w-[10px] border-black" />
-                          <div className="w-[85px]">
-                            <DatePicker
-                              selected={avl?.end_time}
-                              onChange={(date) =>
-                                handleAvailabilityChange(
-                                  i,
-                                  avlI,
-                                  "end_time",
-                                  date
-                                )
-                              }
-                              showTimeSelect
-                              showTimeSelectOnly
-                              timeIntervals={15}
-                              timeCaption=""
-                              dateFormat="HH:mm"
-                              timeFormat="HH:mm"
-                              className="w-full rounded-lg py-3 px-4 outline-none border-[1px] border-[#E5E7EC] "
-                            />
-                          </div>
-                        </div>
-                        <div>
-                          <img
-                            className="cursor-pointer"
-                            onClick={() => deleteFields(i, avlI)}
-                            src={Delete}
-                            alt=""
-                          />
-                        </div>
-                      </div>
-                    ))}
                   </div>
                 )}
               </div>

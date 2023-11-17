@@ -9,7 +9,6 @@ import AppointmentError from "./pagers/Appointment/AppointmentError";
 import AppointmentSuccess from "./pagers/Appointment/AppointmentSuccess";
 import MyAppointment from "./pagers/UserPages/MyAppointment";
 import MyAppointmentEditing from "./pagers/UserPages/MyAppointmentEditing";
-import UserNumber from "./pagers/UserPages/UserNumber.jsx";
 import UserRegistration from "./pagers/UserPages/UserRegistration";
 import UserSettings from "./pagers/UserPages/UserSettings";
 import AccountSetting from "./pagers/VetDashboard/AccountSetting";
@@ -141,14 +140,6 @@ const App = () => {
           element={
             // <PublicRoute>
             <UserRegistration />
-            // </PublicRoute>
-          }
-        />
-        <Route
-          path="/user/user-number"
-          element={
-            // <PublicRoute>
-            <UserNumber />
             // </PublicRoute>
           }
         />
