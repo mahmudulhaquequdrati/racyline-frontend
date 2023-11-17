@@ -18,6 +18,9 @@ export default {
       borderColor: {
         primary: "#339E9F", // Replace with your custom color and class name
       },
+      backgroundColor: {
+        primary: "#FFF7EC",
+      },
     },
   },
   plugins: [require("flowbite/plugin")],

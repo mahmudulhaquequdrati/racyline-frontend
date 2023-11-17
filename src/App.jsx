@@ -4,6 +4,9 @@ import "react-toastify/dist/ReactToastify.css";
 import useAuthCheck from "../src/components/hooks/useAuthCheck.js";
 import Footer from "./components/common/Footer";
 import Header from "./components/common/Header";
+import AddPetsMedicalRecords from "./pagers/AnimalClinical/AddPetsMedicalRecords.jsx";
+import AddPetsMedicalRecordsUploaded from "./pagers/AnimalClinical/AddPetsMedicalRecordsUploaded.jsx";
+import MedicalRecord from "./pagers/AnimalClinical/MedicalRecord.jsx";
 import UserAppointment from "./pagers/Appointment/Appointment";
 import AppointmentError from "./pagers/Appointment/AppointmentError";
 import AppointmentSuccess from "./pagers/Appointment/AppointmentSuccess";
@@ -92,6 +95,32 @@ const App = () => {
             // </PublicRoute>
           }
         />
+        {/* ====================== New Files Start ==================== */}
+        <Route
+          path="/user/add-pets-medical-records"
+          element={
+            // <PublicRoute>
+            <AddPetsMedicalRecords />
+            // </PublicRoute>
+          }
+        />
+        <Route
+          path="/user/add-pets-medical-records-uploaded"
+          element={
+            // <PublicRoute>
+            <AddPetsMedicalRecordsUploaded />
+            // </PublicRoute>
+          }
+        />
+        <Route
+          path="/user/medical-record"
+          element={
+            // <PublicRoute>
+            <MedicalRecord />
+            // </PublicRoute>
+          }
+        />
+        {/* ====================== New Files End ==================== */}
         <Route
           path="/vets/my-appointment"
           element={
