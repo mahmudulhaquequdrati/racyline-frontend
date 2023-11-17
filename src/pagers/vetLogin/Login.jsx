@@ -4,10 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import GoogleIcon from "../../assets/ICONS/google.svg";
 import { notifyError } from "../../components/common/Toast/Toast";
 import { useLoginMutation } from "../../features/auth/authApi";
-<<<<<<< HEAD
-=======
 import { userLoggedIn } from "../../features/auth/authSlice";
->>>>>>> 8b1336c8ff2e0fe47912c8f17705cc9de86bdbfd
 import { useGoogleLoginMutation } from "../../features/auth/googleAuthApi";
 
 function Login() {
