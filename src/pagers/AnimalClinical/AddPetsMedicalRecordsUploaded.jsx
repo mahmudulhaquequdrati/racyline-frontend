@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import dogImg from "../../assets/pets/pets-dog.png";
 
 const plusIcons = (
@@ -34,12 +34,25 @@ function AddPetsMedicalRecordsUploaded() {
   const navigate = useNavigate();
 
   // handle files submit
-  const handleFils = () => {};
+  const handleFils = (data) => {
+    console.log("data -> ", data);
+    // function here ...
+  };
 
   //  handle form submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    login({ email, password, userType: "user" });
+    // function here ...
+  };
+
+  // Edit Animal
+  const EditRecord = () => {
+    // function here....
+  };
+
+  // Remove Animal
+  const removeHandle = () => {
+    // function here....
   };
 
   return (
@@ -47,7 +60,7 @@ function AddPetsMedicalRecordsUploaded() {
       {/* Same as */}
 
       <div className="max-w-[638px] w-full  rounded-lg px-4 py-12 md:p-8 lg:p-16 bg-white">
-        <h1 className="text-[32px] font-bold leading-10 text-center mb-6">
+        <h1 className="text-2xl md:text-3xl lg:text-[32px] font-bold leading-10 text-center mb-6">
           Aggiungi le cartelle cliniche dei tuoi animali
         </h1>
         <p className="text-center text-[15px] pb-8 text-[#00000099]">
@@ -69,7 +82,7 @@ function AddPetsMedicalRecordsUploaded() {
                 Aggiungi un nuovo animale
               </p>
               <input
-                onChange={() => handleFils()}
+                onChange={(e) => handleFils(e.target.files[0])}
                 type="file"
                 name="fils"
                 className="hidden"
@@ -94,11 +107,13 @@ function AddPetsMedicalRecordsUploaded() {
             </div>
             <div className="flex gap-4 mt-6">
               <button
+                onClick={() => EditRecord()}
                 className={`w-full rounded-lg py-3 px-4 outline-none text-secondary border-secondary border hover:bg-secondary hover:text-white transition duration-300`}
               >
                 Modifica cartella clinica
               </button>
               <button
+                onClick={() => removeHandle()}
                 className={`max-w-max rounded-lg py-3 px-4 outline-none text-secondary border-secondary border hover:bg-secondary hover:text-white transition duration-300`}
               >
                 Elimina
@@ -139,14 +154,6 @@ function AddPetsMedicalRecordsUploaded() {
         <p className="text-center text-[15px] mt-10 text-[#00000066]">
           * I campi sono obbligatori
         </p>
-      </div>
-      <div className="mt-4">
-        <Link to={"/vets/login"} className="no-underline">
-          <p className="text-center text-[15px]">
-            Sei un medico veterinario?
-            <span className={`text-primary`}>Clicca qui</span>
-          </p>
-        </Link>
       </div>
     </section>
   );
