@@ -29,16 +29,19 @@ const plusIcons = (
 );
 
 function AddPetsMedicalRecords() {
-  const [isLoading, setIsLoading] = useState();
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   // handle files submit
-  const handleFils = () => {};
+  const handleFils = (data) => {
+    console.log("data -> ", data);
+    // function here ...
+  };
 
   //  handle form submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    login({ email, password, userType: "user" });
+    // function here ...
   };
 
   return (
@@ -46,7 +49,7 @@ function AddPetsMedicalRecords() {
       {/* Same as */}
 
       <div className="max-w-[638px] w-full  rounded-lg px-4 py-12 md:p-8 lg:p-16 bg-white">
-        <h1 className="text-[32px] font-bold leading-10 text-center mb-6">
+        <h1 className="text-2xl md:text-3xl lg:text-[32px] font-bold leading-10 text-center mb-6">
           Aggiungi le cartelle cliniche dei tuoi animali
         </h1>
         <p className="text-center text-[15px] pb-8 text-[#00000099]">
@@ -67,7 +70,7 @@ function AddPetsMedicalRecords() {
               Aggiungi un nuovo animale
             </p>
             <input
-              onChange={() => handleFils()}
+              onChange={(e) => handleFils(e.target.files[0])}
               type="file"
               name="fils"
               className="hidden"

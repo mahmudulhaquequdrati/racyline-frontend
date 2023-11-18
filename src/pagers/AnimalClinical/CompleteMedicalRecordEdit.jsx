@@ -143,6 +143,12 @@ function CompleteMedicalRecordEdit() {
   //  handle form submit
   const handleSubmit = (e) => {
     e.preventDefault();
+    const data = {
+      ...inputData,
+      fills: "uploads files here..",
+    };
+
+    console.log("data ", data);
   };
 
   return (
@@ -150,7 +156,7 @@ function CompleteMedicalRecordEdit() {
       {/* Same as */}
 
       <div className="max-w-[638px] w-full  rounded-lg px-4 py-12 md:p-8 lg:p-16 bg-white">
-        <h1 className="text-[32px] font-bold leading-10 text-center mb-6">
+        <h1 className="text-2xl md:text-3xl lg:text-[32px] font-bold leading-10 text-center mb-6">
           Completa la cartella clinica
         </h1>
         <p className="text-center text-[15px] pb-8 text-[#00000099]">
@@ -226,11 +232,8 @@ function CompleteMedicalRecordEdit() {
                 <div className="p-4 mt-4 rounded-lg border">
                   <div className="flex flex-col md:flex-row justify-between items-center">
                     <p className="text-[14px]">
-                      Carica i file{" "}
-                      <span className="text-[#00000066]">
-                        {" "}
-                        {`(Max 3 file)`}{" "}
-                      </span>
+                      Carica i file
+                      <span className="text-[#00000066]">{`(Max 3 file)`}</span>
                     </p>
 
                     <p className="text-[13px] text-[#00000066]">

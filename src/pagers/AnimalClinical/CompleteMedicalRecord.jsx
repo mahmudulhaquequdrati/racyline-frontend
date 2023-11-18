@@ -127,7 +127,8 @@ function CompleteMedicalRecord() {
   const [error, setError] = useState("");
   const [fieldError, setFieldError] = useState(false);
   const [inputData, setInputData] = useState({
-    medicalData: "",
+    medicalHistory: "",
+    AdditionalNotes: "",
   });
 
   const handleInputChange = (event) => {
@@ -143,6 +144,12 @@ function CompleteMedicalRecord() {
   //  handle form submit
   const handleSubmit = (e) => {
     e.preventDefault();
+    const data = {
+      ...inputData,
+      fills: "uploads files here..",
+    };
+
+    console.log("data ", data);
   };
 
   return (
@@ -150,7 +157,7 @@ function CompleteMedicalRecord() {
       {/* Same as */}
 
       <div className="max-w-[638px] w-full  rounded-lg px-4 py-12 md:p-8 lg:p-16 bg-white">
-        <h1 className="text-[32px] font-bold leading-10 text-center mb-6">
+        <h1 className="text-2xl md:text-3xl lg:text-[32px] font-bold leading-10 text-center mb-6">
           Completa la cartella clinica
         </h1>
         <p className="text-center text-[15px] pb-8 text-[#00000099]">
@@ -268,15 +275,16 @@ function CompleteMedicalRecord() {
 
           <div className="flex flex-col gap-1 mt-10">
             <label
-              htmlFor="medicalHistory"
+              htmlFor="AdditionalNotes"
               className="text-lg font-bold leading-10"
             >
               Note aggiuntive
             </label>
             <textarea
               className="resize-none w-full  text-[15px] h-48 outline-none border border-gray-200 rounded-lg"
-              name="medicalHistory"
-              id="medicalHistory"
+              name="AdditionalNotes"
+              id="AdditionalNotes"
+              onChange={handleInputChange}
               placeholder="Aggiungi note aggiuntive o informazioni utili per il veterinario...."
             ></textarea>
           </div>
