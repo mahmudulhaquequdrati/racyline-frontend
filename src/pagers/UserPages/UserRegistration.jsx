@@ -42,8 +42,11 @@ function UserRegistration() {
       notifyError("User already exist!");
     }
     if (UserLoggedInData?.data?.accessToken) {
-      dispatch(userLoggedIn(UserLoggedInData?.data));
-      navigate("/user/vet-lists");
+      // dispatch(userLoggedIn(UserLoggedInData?.data));
+      // navigate("/user/vet-lists");
+      navigate("/user/add-pets-medical-records", {
+        state: { user: UserLoggedInData?.data },
+      });
     }
   }, [UserLoggedInData, isError, navigate]);
 

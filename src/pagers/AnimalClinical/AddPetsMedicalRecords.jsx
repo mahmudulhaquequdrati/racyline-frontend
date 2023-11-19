@@ -1,5 +1,7 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+
+const imgUploadToken = import.meta.env.VITE_IMGBB_API_KEY;
 
 const plusIcons = (
   <svg
@@ -9,7 +11,7 @@ const plusIcons = (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <g clip-path="url(#clip0_457_2801)">
+    <g clipPath="url(#clip0_457_2801)">
       <path
         d="M16.5111 29.8328C9.14707 29.8328 3.17773 23.8634 3.17773 16.4994C3.17773 9.13543 9.14707 3.16609 16.5111 3.16609C23.8751 3.16609 29.8444 9.13543 29.8444 16.4994C29.8444 23.8634 23.8751 29.8328 16.5111 29.8328ZM15.1777 15.1661H9.8444V17.8328H15.1777V23.1661H17.8444V17.8328H23.1777V15.1661H17.8444V9.83276H15.1777V15.1661Z"
         fill="#339E9F"
@@ -30,18 +32,37 @@ const plusIcons = (
 
 function AddPetsMedicalRecords() {
   const [isLoading, setIsLoading] = useState(false);
+  const [data, setData] = useState({});
   const navigate = useNavigate();
-
+  const location = useLocation();
+  console.log(data);
+  useEffect(() => {
+    setData(location.state.user);
+  }, []);
   // handle files submit
   const handleFils = (data) => {
-    console.log("data -> ", data);
+    setIsLoading(true);
     // function here ...
+    const img_hosting_url = `https://api.imgbb.com/1/upload?key=${imgUploadToken}`;
+    const formData = new FormData();
+    formData.append("image", data);
+    fetch(img_hosting_url, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        setIsLoading(false);
+        const imgUrl = res.data.display_url;
+        setData({ ...location?.state?.user, animalInfo: { imgUrl: imgUrl } });
+      });
   };
 
   //  handle form submit
   const handleSubmit = (e) => {
     e.preventDefault();
     // function here ...
+    navigate("/user/medical-record", { state: { data: data } });
   };
 
   return (
@@ -77,6 +98,44 @@ function AddPetsMedicalRecords() {
               id="Files"
             />
           </label>
+          {data?.animalInfo && (
+            <div className="p-3 rounded-lg border">
+              <div className="flex gap-6 items-center justify-start ">
+                <figure className="w-20 h-20 rounded-full overflow-hidden">
+                  <img
+                    className="w-full h-full"
+                    src={data?.animalInfo?.imgUrl}
+                    alt=""
+                  />
+                </figure>
+
+                <article>
+                  <h2 className="text-base font-bold">
+                    {" "}
+                    {data?.user?.first_name + " " + data?.user?.last_name}{" "}
+                  </h2>
+                  <p className="text-[15px] mt-1 text-[#00000066]">
+                    {" "}
+                    Cane . Labrador Retriever{" "}
+                  </p>
+                </article>
+              </div>
+              <div className="flex gap-4 mt-6">
+                <button
+                  // onClick={() => EditRecord()}
+                  className={`w-full rounded-lg py-3 px-4 outline-none text-secondary border-secondary border hover:bg-secondary hover:text-white transition duration-300`}
+                >
+                  Modifica cartella clinica
+                </button>
+                <button
+                  // onClick={() => removeHandle()}
+                  className={`max-w-max rounded-lg py-3 px-4 outline-none text-secondary border-secondary border hover:bg-secondary hover:text-white transition duration-300`}
+                >
+                  Elimina
+                </button>
+              </div>
+            </div>
+          )}
           <button
             type="submit"
             className={`w-full rounded-lg py-3 px-4 outline-none text-secondary border-secondary border hover:bg-secondary hover:text-white transition duration-300`}
