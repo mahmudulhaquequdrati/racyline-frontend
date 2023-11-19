@@ -4,7 +4,7 @@ import { CheckIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import { Fragment, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import userIcon from "../../assets/ICONS/user.svg";
 import { useRegisterMutation } from "../../features/auth/authApi";
 const genders = [
@@ -18,6 +18,8 @@ const genders = [
 
 function MedicalRecord() {
   const navigate = useNavigate();
+  const location = useLocation();
+  console.log(location.state)
   const [selected, setSelected] = useState({});
   const [inputData, setInputData] = useState({
     animalName: "",

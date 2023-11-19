@@ -91,7 +91,7 @@ function AddPetsMedicalRecordsUploaded() {
             </label>
           </div>
 
-          <div className="p-3 rounded-lg border">
+          {/* <div className="p-3 rounded-lg border">
             <div className="flex gap-6 items-center justify-start ">
               <figure className="w-20 h-20 rounded-full overflow-hidden">
                 <img className="w-full h-full" src={dogImg} alt="" />
@@ -119,7 +119,7 @@ function AddPetsMedicalRecordsUploaded() {
                 Elimina
               </button>
             </div>
-          </div>
+          </div> */}
 
           <button
             type="submit"
