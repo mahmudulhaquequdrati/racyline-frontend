@@ -37,7 +37,7 @@ function AddPetsMedicalRecords() {
   const location = useLocation();
   console.log(data);
   useEffect(() => {
-    setData(location.state.user);
+    setData(location?.state?.user);
   }, []);
   // handle files submit
   const handleFils = (data) => {
@@ -65,6 +65,10 @@ function AddPetsMedicalRecords() {
     navigate("/user/medical-record", { state: { data: data } });
   };
 
+  const handleRedirectAddPet = () => {
+    return navigate("/user/add-pet-info");
+  };
+
   return (
     <section className="flex flex-col justify-center items-center bg-primary pb-16 px-4 pt-8 border-[1px] border-[#EAEAEB]">
       {/* Same as */}
@@ -82,22 +86,28 @@ function AddPetsMedicalRecords() {
         <h3 className="text-lg font-bold leading-10 mb-4">I miei animali</h3>
 
         <form className="flex flex-col gap-y-4" onSubmit={handleSubmit}>
-          <label
+          {/* <label
             htmlFor="Files"
             className="flex gap-3 justify-center items-center py-8 border border-dashed mb-4 cursor-pointer rounded-lg"
+          > */}
+          <div
+            className="flex gap-3 justify-center items-center py-8 border border-dashed mb-4 cursor-pointer rounded-lg"
+            onClick={handleRedirectAddPet}
           >
             <span> {plusIcons} </span>
-            <p className="text-center text-[15px] text-[#000000]">
+            <span className="text-center text-[15px] text-[#000000]">
               Aggiungi un nuovo animale
-            </p>
-            <input
+            </span>
+          </div>
+
+          {/* <input
               onChange={(e) => handleFils(e.target.files[0])}
               type="file"
               name="fils"
               className="hidden"
               id="Files"
-            />
-          </label>
+            /> */}
+          {/* </label> */}
           {data?.animalInfo && (
             <div className="p-3 rounded-lg border">
               <div className="flex gap-6 items-center justify-start ">
