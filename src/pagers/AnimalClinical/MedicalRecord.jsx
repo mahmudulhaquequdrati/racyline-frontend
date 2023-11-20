@@ -19,7 +19,7 @@ const genders = [
 function MedicalRecord() {
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location.state)
+  console.log(location.state);
   const [selected, setSelected] = useState({});
   const [inputData, setInputData] = useState({
     animalName: "",
@@ -75,13 +75,54 @@ function MedicalRecord() {
   // form Submit here...
   const handleSubmit = (e) => {
     e.preventDefault();
-    const data = {
-      ...inputData,
-      gender: selected?.gender,
-    };
 
-    console.log(" data ", data);
+    const petsData = [
+      {
+        general_information: {
+          pet_photo: inputData?.profile_image_url,
+          animal_name: inputData?.animalName,
+          species: inputData?.specie,
+          race: inputData?.race,
+          date_of_birth: inputData?.dateOfBirth,
+          sex: selected?.gender,
+          microchip_number: inputData?.Microchip_number,
+          implantation_date: inputData?.ImplantationDate,
+        },
+        medical_history: {},
+      },
+    ];
+
+    const isExistPets = JSON.parse(localStorage.getItem("petsData"));
+
+    if (isExistPets?.length === 0) {
+      localStorage.setItem("petsData", JSON.stringify(petsData));
+    } else {
+      localStorage.removeItem("petsData");
+      localStorage.setItem("petsData", JSON.stringify(petsData));
+    }
+    navigate("/user/medical-note-empty");
   };
+
+  // "medical_history": {
+  //   "medical_history": "No significant medical history",
+  //   "medical_diary": [
+  //       {
+  //           "date": "2022-01-10T00:00:00.000Z",
+  //           "description": "Regular checkup",
+  //           "report_file": [
+  //               "https://example.com/report1.pdf"
+  //           ]
+  //       },
+  //       {
+  //           "date": "2022-05-22T00:00:00.000Z",
+  //           "description": "Vaccination",
+  //           "report_file": [
+  //               "https://example.com/report2.pdf"
+  //           ]
+  //       }
+  //   ],
+  //   "additional_notes": "No additional notes at the moment."
+  // }
 
   return (
     <section className="flex justify-center items-center bg-primary py-16 px-4 border-[1px] border-[#EAEAEB]">

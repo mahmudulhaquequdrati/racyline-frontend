@@ -101,7 +101,7 @@ const App = () => {
         />
         {/* ====================== New Files Start ==================== */}
         <Route
-          path="/user/add-pets-medical-records"
+          path="/user/all-pet-info"
           element={
             // <PublicRoute>
             <AddPetsMedicalRecords />
@@ -109,15 +109,7 @@ const App = () => {
           }
         />
         <Route
-          path="/user/add-pets-medical-records-uploaded"
-          element={
-            // <PublicRoute>
-            <AddPetsMedicalRecordsUploaded />
-            // </PublicRoute>
-          }
-        />
-        <Route
-          path="/user/medical-record"
+          path="/user/add-pet-info"
           element={
             // <PublicRoute>
             <MedicalRecord />
@@ -132,6 +124,15 @@ const App = () => {
             // </PublicRoute>
           }
         />
+        <Route
+          path="/user/add-pets-medical-records-uploaded"
+          element={
+            // <PublicRoute>
+            <AddPetsMedicalRecordsUploaded />
+            // </PublicRoute>
+          }
+        />
+
         <Route
           path="/user/medical-note-empty-uploaded"
           element={
