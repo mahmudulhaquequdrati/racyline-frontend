@@ -6,6 +6,10 @@ import Footer from "./components/common/Footer";
 import Header from "./components/common/Header";
 import AddPetsMedicalRecords from "./pagers/AnimalClinical/AddPetsMedicalRecords.jsx";
 import AddPetsMedicalRecordsUploaded from "./pagers/AnimalClinical/AddPetsMedicalRecordsUploaded.jsx";
+import CompleteMedicalRecord from "./pagers/AnimalClinical/CompleteMedicalRecord.jsx";
+import CompleteMedicalRecordEdit from "./pagers/AnimalClinical/CompleteMedicalRecordEdit.jsx";
+import MedicalNoteEmpty from "./pagers/AnimalClinical/MedicalNoteEmpty.jsx";
+import MedicalNoteEmptyUploaded from "./pagers/AnimalClinical/MedicalNoteEmptyUploaded.jsx";
 import MedicalRecord from "./pagers/AnimalClinical/MedicalRecord.jsx";
 import UserAppointment from "./pagers/Appointment/Appointment";
 import AppointmentError from "./pagers/Appointment/AppointmentError";
@@ -117,6 +121,38 @@ const App = () => {
           element={
             // <PublicRoute>
             <MedicalRecord />
+            // </PublicRoute>
+          }
+        />
+        <Route
+          path="/user/medical-note-empty"
+          element={
+            // <PublicRoute>
+            <MedicalNoteEmpty />
+            // </PublicRoute>
+          }
+        />
+        <Route
+          path="/user/medical-note-empty-uploaded"
+          element={
+            // <PublicRoute>
+            <MedicalNoteEmptyUploaded />
+            // </PublicRoute>
+          }
+        />
+        <Route
+          path="/user/complete-medical-record"
+          element={
+            // <PublicRoute>
+            <CompleteMedicalRecord />
+            // </PublicRoute>
+          }
+        />
+        <Route
+          path="/user/complete-medical-record-edit"
+          element={
+            // <PublicRoute>
+            <CompleteMedicalRecordEdit />
             // </PublicRoute>
           }
         />

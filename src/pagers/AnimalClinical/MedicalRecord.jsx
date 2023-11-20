@@ -4,7 +4,7 @@ import { CheckIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import { Fragment, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import userIcon from "../../assets/ICONS/user.svg";
 import { useRegisterMutation } from "../../features/auth/authApi";
 const genders = [
@@ -18,6 +18,8 @@ const genders = [
 
 function MedicalRecord() {
   const navigate = useNavigate();
+  const location = useLocation();
+  console.log(location.state)
   const [selected, setSelected] = useState({});
   const [inputData, setInputData] = useState({
     animalName: "",
@@ -35,16 +37,8 @@ function MedicalRecord() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [error, setError] = useState("");
   const [feildError, setFeildError] = useState(false);
-  const registerUser = (e) => {
-    e.preventDefault();
-    const data = {
-      ...inputData,
-      gender: selected?.gender,
-    };
 
-    console.log(" data ", data);
-  };
-
+  // input handle change set object value dynamicale
   const handleInputChange = (event) => {
     setInputData((inputs) => ({
       ...inputs,
@@ -62,25 +56,37 @@ function MedicalRecord() {
     let formData = new FormData();
     const maxFileSize = 5 * 1024 * 1024;
     const file = e.target.files[0];
-    if (file && file.size > maxFileSize) {
-      setError(
-        "File size exceeds the maximum allowed size (5MB). Please choose a smaller file."
-      );
-    } else {
-      setError("");
-      formData.append("image", file);
-      formData.append("key", `${import.meta.env.VITE_IMGBB_API_KEY}`);
-      setSelectedFile(file);
-      axios.post("https://api.imgbb.com/1/upload", formData).then((res) => {
-        setInputData({ ...inputData, profile_image_url: res.data.data.url });
-      });
-    }
+    console.log("file ", { file, maxFileSize });
+    // if (file && file.size > maxFileSize) {
+    //   setError(
+    //     "File size exceeds the maximum allowed size (5MB). Please choose a smaller file."
+    //   );
+    // } else {
+    //   setError("");
+    //   formData.append("image", file);
+    //   formData.append("key", `${import.meta.env.VITE_IMGBB_API_KEY}`);
+    //   setSelectedFile(file);
+    //   axios.post("https://api.imgbb.com/1/upload", formData).then((res) => {
+    //     setInputData({ ...inputData, profile_image_url: res.data.data.url });
+    //   });
+    // }
+  };
+
+  // form Submit here...
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const data = {
+      ...inputData,
+      gender: selected?.gender,
+    };
+
+    console.log(" data ", data);
   };
 
   return (
     <section className="flex justify-center items-center bg-primary py-16 px-4 border-[1px] border-[#EAEAEB]">
       <div className="max-w-[638px] w-full  rounded-lg px-4 py-12 md:p-8 lg:p-16 bg-white">
-        <h1 className="text-[32px] font-bold leading-10 text-center mb-6">
+        <h1 className="text-2xl md:text-3xl lg:text-[32px] font-bold leading-10 text-center mb-6">
           Cartella clinica
         </h1>
         <p className="text-center text-[15px] text-[#00000099]">
@@ -122,7 +128,7 @@ function MedicalRecord() {
           </div>
         </div>
         <form
-          onSubmit={registerUser}
+          onSubmit={handleSubmit}
           action=""
           className="flex flex-col gap-y-4"
         >

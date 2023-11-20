@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import dogImg from "../../assets/pets/pets-dog.png";
 
 const plusIcons = (
   <svg
@@ -29,11 +28,25 @@ const plusIcons = (
   </svg>
 );
 
-function AddPetsMedicalRecordsUploaded() {
+function MedicalNoteEmpty() {
   const [isLoading, setIsLoading] = useState();
   const navigate = useNavigate();
 
-  // handle files submit
+  const [inputData, setInputData] = useState({
+    medicalHistory: "",
+    AdditionalNotes: "",
+    medicalDiary: "",
+  });
+
+  // input handle change set object value dynamicale
+  const handleInputChange = (event) => {
+    setInputData((inputs) => ({
+      ...inputs,
+      [event.target.name]: event.target.value,
+    }));
+  };
+
+  // handle files upload
   const handleFils = (data) => {
     console.log("data -> ", data);
     // function here ...
@@ -42,17 +55,12 @@ function AddPetsMedicalRecordsUploaded() {
   //  handle form submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    // function here ...
-  };
+    const data = {
+      ...inputData,
+      medicalDiary: "file url here...",
+    };
 
-  // Edit Animal
-  const EditRecord = () => {
-    // function here....
-  };
-
-  // Remove Animal
-  const removeHandle = () => {
-    // function here....
+    console.log("data ", data);
   };
 
   return (
@@ -61,21 +69,37 @@ function AddPetsMedicalRecordsUploaded() {
 
       <div className="max-w-[638px] w-full  rounded-lg px-4 py-12 md:p-8 lg:p-16 bg-white">
         <h1 className="text-2xl md:text-3xl lg:text-[32px] font-bold leading-10 text-center mb-6">
-          Aggiungi le cartelle cliniche dei tuoi animali
+          Cartella clinica
         </h1>
         <p className="text-center text-[15px] pb-8 text-[#00000099]">
-          Salva tutte le informazioni dei tuoi animali creando per ognuno una
-          cartella clinica, in questo modo potrai aiutare anche il tuo
-          veterinario.
+          Completa questa sezione con la storia medica del tuo animale
         </p>
 
-        <h3 className="text-lg font-bold leading-10 mb-4">I miei animali</h3>
-
         <form className="flex flex-col gap-y-4" onSubmit={handleSubmit}>
-          <div>
+          <div className="flex flex-col gap-1">
+            <label
+              htmlFor="medicalHistory"
+              className="text-lg font-bold leading-10"
+            >
+              Anamnesi
+            </label>
+            <textarea
+              className="resize-none text-[15px] w-full h-48 outline-none border border-gray-200 rounded-lg"
+              name="medicalHistory"
+              id="medicalHistory"
+              onChange={handleInputChange}
+              placeholder="Descrivi le caratteristiche, sintomi o fatti di interesse riferiti al tuo animale..."
+            ></textarea>
+          </div>
+
+          <div className="mt-10">
+            <h3 className="text-lg font-bold leading-10">Diario Medico</h3>
+            <p className="text-[15px] text-[#000000] mb-5">
+              Aggiungi eventuali note mediche del tuo animale
+            </p>
             <label
               htmlFor="Files"
-              className="flex gap-3 justify-center items-center py-8 border border-dashed rounded-lg mb-4 cursor-pointer"
+              className="flex gap-3 justify-center items-center py-5 border border-dashed mb-4 cursor-pointer rounded-lg"
             >
               <span> {plusIcons} </span>
               <p className="text-center text-[15px] text-[#000000]">
@@ -91,39 +115,25 @@ function AddPetsMedicalRecordsUploaded() {
             </label>
           </div>
 
-          {/* <div className="p-3 rounded-lg border">
-            <div className="flex gap-6 items-center justify-start ">
-              <figure className="w-20 h-20 rounded-full overflow-hidden">
-                <img className="w-full h-full" src={dogImg} alt="" />
-              </figure>
-
-              <article>
-                <h2 className="text-base font-bold"> Rocky </h2>
-                <p className="text-[15px] mt-1 text-[#00000066]">
-                  {" "}
-                  Cane . Labrador Retriever{" "}
-                </p>
-              </article>
-            </div>
-            <div className="flex gap-4 mt-6">
-              <button
-                onClick={() => EditRecord()}
-                className={`w-full rounded-lg py-3 px-4 outline-none text-secondary border-secondary border hover:bg-secondary hover:text-white transition duration-300`}
-              >
-                Modifica cartella clinica
-              </button>
-              <button
-                onClick={() => removeHandle()}
-                className={`max-w-max rounded-lg py-3 px-4 outline-none text-secondary border-secondary border hover:bg-secondary hover:text-white transition duration-300`}
-              >
-                Elimina
-              </button>
-            </div>
-          </div> */}
+          <div className="flex flex-col gap-1 mt-10">
+            <label
+              htmlFor="AdditionalNotes"
+              className="text-lg font-bold leading-10"
+            >
+              Note aggiuntive
+            </label>
+            <textarea
+              className="resize-none w-full  text-[15px] h-48 outline-none border border-gray-200 rounded-lg"
+              name="AdditionalNotes"
+              id="AdditionalNotes"
+              onChange={handleInputChange}
+              placeholder="Aggiungi note aggiuntive o informazioni utili per il veterinario...."
+            ></textarea>
+          </div>
 
           <button
             type="submit"
-            className={`w-full rounded-lg py-3 px-4 outline-none bg-secondary text-white hover:text-secondary hover:bg-transparent hover:border hover:border-secondary transition duration-300`}
+            className={`mt-8 w-full rounded-lg py-3 px-4 outline-none hover:text-secondary border-secondary border bg-secondary hover:bg-transparent text-white transition duration-300`}
           >
             {isLoading ? (
               <div className="flex items-center justify-center">
@@ -146,7 +156,7 @@ function AddPetsMedicalRecordsUploaded() {
                 <span>Loading...</span>
               </div>
             ) : (
-              "Concludi la registrazione"
+              "Aggiungi il tuo animale"
             )}
           </button>
         </form>
@@ -159,4 +169,4 @@ function AddPetsMedicalRecordsUploaded() {
   );
 }
 
-export default AddPetsMedicalRecordsUploaded;
+export default MedicalNoteEmpty;
