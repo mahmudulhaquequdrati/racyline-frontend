@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const plusIcons = (
@@ -121,6 +121,28 @@ const checkIcons = (
   </svg>
 );
 
+const DiaryInitialize = [
+  {
+    _id: "326589734",
+    title: "Vaccinazione antirabbica dynamic",
+    decription: "",
+    date: "20/04/2019",
+    files: ["link-here.pdf", "name_file1.pdf"],
+  },
+  {
+    _id: "3265897334",
+    title: "Vaccinazione antirabbica extra",
+    decription: "",
+    date: "20/04/2019",
+    files: [
+      "link-here.pdf",
+      "name_file1.pdf",
+      "name_file2.pdf",
+      "name_file3.pdf",
+    ],
+  },
+];
+
 function CompleteMedicalRecord() {
   const [isLoading, setIsLoading] = useState();
   const navigate = useNavigate();
@@ -131,6 +153,41 @@ function CompleteMedicalRecord() {
     AdditionalNotes: "",
   });
 
+  // final systems
+  const [diaryData, setDiaryData] = useState({
+    title: "",
+    description: "",
+    date: "",
+  });
+  const [medicalDiary, setMedicalDiary] = useState();
+  const [newNoteOpen, setNewNoteOpen] = useState(false);
+
+  // initialize load data get
+  useEffect(() => {
+    const diaryDataL = JSON.parse(localStorage.getItem("diaryData"));
+    setDiaryData(diaryDataL);
+    console.log("diaryDataL useEffect", diaryDataL);
+    console.log("medicalDiary useEffect", medicalDiary);
+  }, [medicalDiary]);
+
+  // add Note handler
+  const addNoteHandler = () => {
+    const data = {
+      ...diaryData,
+      files: ["...link-here.pdf"],
+    };
+    // show all medical diary
+    setMedicalDiary([...medicalDiary, data]);
+
+    localStorage.removeItem("diaryData");
+    // set localStorage
+    localStorage.setItem("diaryData", JSON.stringify(medicalDiary));
+
+    console.log("data -> ", data);
+    console.log("medicalDiary -> ", medicalDiary);
+  };
+
+  // get Dynamic input value
   const handleInputChange = (event) => {
     setInputData((inputs) => ({
       ...inputs,
@@ -139,14 +196,16 @@ function CompleteMedicalRecord() {
   };
 
   // handle files submit
-  const handleFils = () => {};
+  const handleFils = () => {
+    // function here...
+  };
 
   //  handle form submit
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = {
       ...inputData,
-      fills: "uploads files here..",
+      medicalDiary,
     };
 
     console.log("data ", data);
@@ -176,12 +235,47 @@ function CompleteMedicalRecord() {
               className="resize-none text-[15px] w-full h-48 outline-none border border-gray-200 rounded-lg"
               name="medicalHistory"
               id="medicalHistory"
+              onChange={handleInputChange}
               placeholder="Descrivi le caratteristiche, sintomi o fatti di interesse riferiti al tuo animale..."
             ></textarea>
           </div>
 
+          {!medicalDiary && (
+            <div
+              className={`transition duration-300 w-full ${
+                medicalDiary
+                  ? "invisible opacity-0 h-0 "
+                  : "visible opacity-1 h-auto mt-10"
+              }`}
+            >
+              <h3 className="text-lg font-bold leading-10">Diario Medico</h3>
+              <p className="text-[15px] text-[#000000] mb-5">
+                Aggiungi eventuali note mediche del tuo animale
+              </p>
+              <button
+                onClick={() => {
+                  setNewNoteOpen(!newNoteOpen);
+                  setMedicalDiary([]);
+                }}
+                className="flex gap-3 justify-center items-center py-5 border border-dashed mb-4 cursor-pointer rounded-lg w-full"
+              >
+                <span> {plusIcons} </span>
+                <p className="text-center text-[15px] text-[#000000]">
+                  Aggiungi un nuovo animale
+                </p>
+              </button>
+            </div>
+          )}
+
+          {/* add medical diary */}
           <div>
-            <div className="mt-10 flex flex-col md:flex-row justify-between items-center">
+            <div
+              className={` ${
+                medicalDiary
+                  ? "visible opacity-1 h-auto mt-10 flex flex-col md:flex-row justify-between items-center"
+                  : "invisible opacity-0 h-0 "
+              } `}
+            >
               <div>
                 <h3 className="text-lg font-bold leading-10">Diario Medico</h3>
                 <p className="text-[15px] text-[#000000] mb-5">
@@ -189,89 +283,210 @@ function CompleteMedicalRecord() {
                 </p>
               </div>
 
-              <label
-                htmlFor="Files"
+              <button
+                onClick={() => setNewNoteOpen(!newNoteOpen)}
                 className="flex gap-3 justify-center items-center py-5 mb-4 cursor-pointer rounded-lg"
               >
-                <span> {plusIcons} </span>
+                <span>{plusIcons}</span>
+              </button>
+            </div>
+
+            <div
+              className={`transition duration-300 ${
+                newNoteOpen
+                  ? "visible opacity-1 h-auto p-4 border border-primary rounded-lg "
+                  : "invisible opacity-0 h-0 "
+              } `}
+            >
+              <p className="text-lg font-bold leading-10">
+                Aggiungi un nuova nota medica
+              </p>
+
+              <div>
                 <input
-                  onChange={() => handleFils()}
-                  type="file"
-                  name="fils"
-                  className="hidden"
-                  id="Files"
+                  type="text"
+                  value={inputData.medicalData}
+                  onChange={({ target }) =>
+                    setDiaryData({
+                      ...diaryData,
+                      title: target.value,
+                    })
+                  }
+                  placeholder="Data *"
+                  className={`w-full rounded-lg py-3 px-4 outline-none border-[1px] ${
+                    fieldError && inputData?.medicalData === ""
+                      ? "border-red-500"
+                      : "border-[#E5E7EC] "
+                  } `}
                 />
-              </label>
+
+                <input
+                  type="date"
+                  value={inputData.medicalData}
+                  onChange={({ target }) =>
+                    setDiaryData({
+                      ...diaryData,
+                      date: target.value,
+                    })
+                  }
+                  className={`w-full rounded-lg py-3 px-4 outline-none border-[1px] mt-5 ${
+                    fieldError && inputData?.medicalData === ""
+                      ? "border-red-500"
+                      : "border-[#E5E7EC] "
+                  } `}
+                />
+
+                <textarea
+                  className="resize-none w-full mt-5 text-[15px] h-48 outline-none border border-gray-200 rounded-lg"
+                  onChange={({ target }) =>
+                    setDiaryData({
+                      ...diaryData,
+                      description: target.value,
+                    })
+                  }
+                  placeholder="Inserisci una descrizione..."
+                ></textarea>
+
+                <div className="p-4 mt-4 rounded-lg border">
+                  <div className="flex flex-col md:flex-row justify-between items-center">
+                    <p className="text-[14px]">
+                      Carica i file{" "}
+                      <span className="text-[#00000066]">
+                        {" "}
+                        {`(Max 3 file)`}{" "}
+                      </span>
+                    </p>
+
+                    <p className="text-[13px] text-[#00000066]">
+                      JPG, PNG or PDF. Max size of 5MB.{" "}
+                    </p>
+                  </div>
+
+                  <div className="mt-6">
+                    <label
+                      htmlFor="Files"
+                      className="flex gap-3 justify-center items-center py-8 border border-dashed mb-4 cursor-pointer rounded-lg"
+                    >
+                      <span> {uploadIcons} </span>
+                      <p className="text-center text-[15px] text-[#000000]">
+                        Carica documento -{" "}
+                        <span className="text-primary underline ">
+                          Scegli il file{" "}
+                        </span>
+                      </p>
+                      <input
+                        onChange={() => handleFils()}
+                        type="file"
+                        name="fils"
+                        className="hidden"
+                        id="Files"
+                      />
+                    </label>
+
+                    <div>
+                      <div className="flex flex-col md:flex-row gap-2 items-center justify-between border-b py-4">
+                        <div className="flex gap-[10px]">
+                          <span> {loadingIcons}</span>
+                          <p> name_file1.pdf </p>
+                        </div>
+
+                        <button> {cancelLoadingIcons} </button>
+                      </div>
+
+                      <div className="flex flex-col md:flex-row gap-2 items-center justify-between border-b py-4">
+                        <div className="flex gap-[10px]">
+                          <span> {checkIcons}</span>
+                          <p> name_file1.pdf </p>
+                        </div>
+
+                        <button> {cancelIcons} </button>
+                      </div>
+
+                      <div className="flex flex-col md:flex-row gap-2 items-center justify-between py-4">
+                        <div className="flex gap-[10px]">
+                          <span> {checkIcons}</span>
+                          <p> name_file2.pdf </p>
+                        </div>
+
+                        <button> {cancelIcons} </button>
+                      </div>
+                    </div>
+
+                    <div
+                      onClick={() => addNoteHandler()}
+                      className={`mt-8 cursor-pointer text-center w-full rounded-lg py-3 px-4 outline-none hover:text-secondary border-secondary border bg-secondary hover:bg-transparent text-white transition duration-300`}
+                    >
+                      {isLoading ? (
+                        <div className="flex items-center justify-center">
+                          <svg
+                            aria-hidden="true"
+                            className="w-5 h-5 mr-2 text-gray-100 animate-spin fill-secondary"
+                            viewBox="0 0 100 101"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                              fill="currentColor"
+                            />
+                            <path
+                              d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                              fill="currentFill"
+                            />
+                          </svg>
+                          <span>Loading...</span>
+                        </div>
+                      ) : (
+                        "Aggiungi nota"
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div>
-            <h4 className="font-semibold text-base">Tutte le note</h4>
+          {/* all notes */}
+          {medicalDiary?.length > 0 && (
+            <div>
+              <h4 className="font-semibold text-base">Tutte le note</h4>
 
-            <div className="border rounded-lg p-4 mt-4">
-              <div className="flex flex-col md:flex-row items-center justify-between ">
-                <h5 className="font-normal text-[15px]">
-                  {" "}
-                  Vaccinazione antirabbica 1{" "}
-                </h5>
-                <p className="text-[#00000066]"> 20/04/2019 </p>
-              </div>
+              {medicalDiary.length &&
+                medicalDiary.map((item, idx) => (
+                  <div key={idx} className="border rounded-lg p-4 mt-4">
+                    <div className="flex flex-col md:flex-row items-center justify-between ">
+                      <h5 className="font-normal text-[15px]">{item?.title}</h5>
+                      <p className="text-[#00000066]"> {item.date} </p>
+                    </div>
 
-              <div className="py-3 flex gap-1 flex-wrap">
-                <span className="py-1.5 px-3 max-w-max rounded-lg text-[#00000066] bg-[#E5E7EC99]">
-                  name_file1.pdf
-                </span>
-              </div>
+                    <div className="py-3 flex gap-1 flex-wrap">
+                      {item.files &&
+                        item.files.map((file, FIdx) => (
+                          <span
+                            key={FIdx}
+                            className="py-1.5 px-3 max-w-max rounded-lg text-[#00000066] bg-[#E5E7EC99]"
+                          >
+                            name_file1.pdf
+                          </span>
+                        ))}
+                    </div>
 
-              <div className="flex gap-4 mt-2">
-                <button
-                  className={`w-full rounded-lg py-3 px-4 outline-none text-secondary border-secondary border hover:bg-secondary hover:text-white transition duration-300`}
-                >
-                  Modifica cartella clinica
-                </button>
-                <button
-                  className={`w-full rounded-lg py-3 px-4 outline-none text-secondary border-secondary border hover:bg-secondary hover:text-white transition duration-300`}
-                >
-                  Elimina
-                </button>
-              </div>
+                    <div className="flex gap-4 mt-2">
+                      <button
+                        className={`w-full rounded-lg py-3 px-4 outline-none text-secondary border-secondary border hover:bg-secondary hover:text-white transition duration-300`}
+                      >
+                        Modifica cartella clinica
+                      </button>
+                      <button
+                        className={`w-full rounded-lg py-3 px-4 outline-none text-secondary border-secondary border hover:bg-secondary hover:text-white transition duration-300`}
+                      >
+                        Elimina
+                      </button>
+                    </div>
+                  </div>
+                ))}
             </div>
-
-            <div className="border rounded-lg p-4 mt-4">
-              <div className="flex flex-col md:flex-row items-center justify-between ">
-                <h5 className="font-normal text-[15px]">
-                  {" "}
-                  Vaccinazione antirabbica 2
-                </h5>
-                <p className="text-[#00000066]"> 20/04/2019 </p>
-              </div>
-
-              <div className="py-3 flex gap-1 flex-wrap">
-                <span className="py-1.5 px-3 max-w-max rounded-lg text-[#00000066] bg-[#E5E7EC99]">
-                  name_file1.pdf
-                </span>
-                <span className="py-1.5 px-3 max-w-max rounded-lg text-[#00000066] bg-[#E5E7EC99]">
-                  name_file2.pdf
-                </span>
-                <span className="py-1.5 px-3 max-w-max rounded-lg text-[#00000066] bg-[#E5E7EC99]">
-                  name_file3.pdf
-                </span>
-              </div>
-
-              <div className="flex gap-4 mt-2">
-                <button
-                  className={`w-full rounded-lg py-3 px-4 outline-none text-secondary border-secondary border hover:bg-secondary hover:text-white transition duration-300`}
-                >
-                  Modifica cartella clinica
-                </button>
-                <button
-                  className={`w-full rounded-lg py-3 px-4 outline-none text-secondary border-secondary border hover:bg-secondary hover:text-white transition duration-300`}
-                >
-                  Elimina
-                </button>
-              </div>
-            </div>
-          </div>
+          )}
 
           <div className="flex flex-col gap-1 mt-10">
             <label
