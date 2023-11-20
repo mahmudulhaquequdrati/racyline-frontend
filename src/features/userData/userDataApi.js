@@ -19,8 +19,30 @@ export const updateUserDataApi = apiSlice.injectEndpoints({
         };
       },
     }),
+    googleCalenderInfo: builder.query({
+      query: ({ userId }) => {
+        return {
+          url: `/guser/get-google-calender/${userId}`,
+        };
+      },
+      providesTags: ["getUserData"],
+      keepUnusedDataFor: 0,
+    }),
+    removeGoogleCalender: builder.mutation({
+      query: ({ userId }) => {
+        return {
+          url: `/guser/remove-google-calender/${userId}`,
+          method: "DELETE",
+        };
+      },
+      invalidatesTags: ["getUserData"],
+    }),
   }),
 });
 
-export const { useUpdateUserDataMutation, useDeleteUserMutation } =
-  updateUserDataApi;
+export const {
+  useGoogleCalenderInfoQuery,
+  useUpdateUserDataMutation,
+  useDeleteUserMutation,
+  useRemoveGoogleCalenderMutation,
+} = updateUserDataApi;
