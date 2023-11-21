@@ -100,62 +100,11 @@ const App = () => {
           }
         />
         {/* ====================== New Files Start ==================== */}
-        <Route
-          path="/user/all-pet-info"
-          element={
-            // <PublicRoute>
-            <AddPetsMedicalRecords />
-            // </PublicRoute>
-          }
-        />
-        <Route
-          path="/user/add-pet-info"
-          element={
-            // <PublicRoute>
-            <MedicalRecord />
-            // </PublicRoute>
-          }
-        />
-        <Route
-          path="/user/medical-note-empty"
-          element={
-            // <PublicRoute>
-            <MedicalNoteEmpty />
-            // </PublicRoute>
-          }
-        />
-        <Route
-          path="/user/add-pets-medical-records-uploaded"
-          element={
-            // <PublicRoute>
-            <AddPetsMedicalRecordsUploaded />
-            // </PublicRoute>
-          }
-        />
-
-        <Route
-          path="/user/medical-note-empty-uploaded"
-          element={
-            // <PublicRoute>
-            <MedicalNoteEmptyUploaded />
-            // </PublicRoute>
-          }
-        />
+        <Route path="/user/all-pet-info" element={<AddPetsMedicalRecords />} />
+        <Route path="/user/add-pet-info" element={<MedicalRecord />} />
         <Route
           path="/user/complete-medical-record"
-          element={
-            // <PublicRoute>
-            <CompleteMedicalRecord />
-            // </PublicRoute>
-          }
-        />
-        <Route
-          path="/user/complete-medical-record-edit"
-          element={
-            // <PublicRoute>
-            <CompleteMedicalRecordEdit />
-            // </PublicRoute>
-          }
+          element={<CompleteMedicalRecord />}
         />
         {/* ====================== New Files End ==================== */}
         <Route

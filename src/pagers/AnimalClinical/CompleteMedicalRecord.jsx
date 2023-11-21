@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const plusIcons = (
   <svg
@@ -121,32 +121,10 @@ const checkIcons = (
   </svg>
 );
 
-// const DiaryInitialize = [
-//   {
-//     _id: "326589734",
-//     title: "Vaccinazione antirabbica dynamic",
-//     decription: "",
-//     date: "20/04/2019",
-//     report_files: ["link-here.pdf", "name_file1.pdf"],
-//   },
-//   {
-//     _id: "3265897334",
-//     title: "Vaccinazione antirabbica extra",
-//     decription: "",
-//     date: "20/04/2019",
-//     report_files: [
-//       "link-here.pdf",
-//       "name_file1.pdf",
-//       "name_file2.pdf",
-//       "name_file3.pdf",
-//     ],
-//   },
-// ];
-
 function CompleteMedicalRecord() {
   const [isLoading, setIsLoading] = useState();
   const navigate = useNavigate();
-  const [error, setError] = useState("");
+  const location = useLocation();
   const [fieldError, setFieldError] = useState(false);
   const [inputData, setInputData] = useState({
     medicalHistory: "",
@@ -165,6 +143,9 @@ function CompleteMedicalRecord() {
     date: "",
     report_files: [],
   });
+  const petsData = JSON.parse(localStorage.getItem("petsData"));
+  const pathName = location?.state?.pathname;
+  const selectedPetIndex = location?.state?.petInfoIndex;
 
   // add Note handler
   const addNoteHandler = () => {
@@ -197,7 +178,8 @@ function CompleteMedicalRecord() {
   };
 
   // deleting a note
-  const deleteNoteHandler = (noteId) => {
+  const deleteNoteHandler = (event, noteId) => {
+    event.preventDefault();
     setNotes((prevNotes) => {
       const previusNotes = [...prevNotes];
       previusNotes.splice(noteId, 1);
@@ -206,7 +188,8 @@ function CompleteMedicalRecord() {
   };
 
   // set info in edit note element
-  const editNoteHandler = (noteId) => {
+  const editNoteHandler = (event, noteId) => {
+    event.preventDefault();
     setNewNoteOpen({
       ...newNoteOpen,
       isOpen: true,
@@ -218,6 +201,7 @@ function CompleteMedicalRecord() {
 
   // get Dynamic input value
   const handleInputChange = (event) => {
+    event.preventDefault();
     setInputData((inputs) => ({
       ...inputs,
       [event.target.name]: event.target.value,
@@ -233,12 +217,43 @@ function CompleteMedicalRecord() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = {
-      ...inputData,
-      notes,
+      medical_history: { ...inputData },
+      medical_diary: notes,
     };
 
-    console.log("data", data);
+    const isExistPets = JSON.parse(localStorage.getItem("petsData"));
+
+    if (pathName === "/user/add-pet-info" && parseInt(selectedPetIndex)) {
+      console.log("Hello world", selectedPetIndex);
+      console.log(isExistPets[selectedPetIndex]);
+      isExistPets[selectedPetIndex]["medical_history"] = { ...inputData };
+      isExistPets[selectedPetIndex]["medical_diary"] = notes;
+      localStorage.setItem("petsData", JSON.stringify(isExistPets));
+    }
+    if (isExistPets?.length > 0) {
+      const lastPetInfo = isExistPets[isExistPets?.length - 1];
+      lastPetInfo["medical_history"] = data;
+      isExistPets[isExistPets?.length - 1] = lastPetInfo;
+      localStorage.removeItem("petsData");
+      localStorage.setItem("petsData", JSON.stringify(isExistPets));
+    }
+    navigate("/user/all-pet-info");
   };
+
+  useEffect(() => {
+    if (pathName === "/user/add-pet-info" && selectedPetIndex) {
+      const getPetInfo = petsData[parseInt(selectedPetIndex)];
+      setInputData({
+        medicalHistory:
+          getPetInfo?.medical_history?.medical_history?.medicalHistory,
+        AdditionalNotes:
+          getPetInfo?.medical_history?.medical_history?.AdditionalNotes,
+      });
+      setNotes(getPetInfo?.medical_history?.medical_diary);
+    }
+  }, [setInputData, setNotes]);
+
+  console.log(location);
 
   return (
     <section className="flex flex-col justify-center items-center bg-primary pb-16 px-4 pt-8 border-[1px] border-[#EAEAEB]">
@@ -252,7 +267,7 @@ function CompleteMedicalRecord() {
           Completa questa sezione con la storia medica del tuo animale
         </p>
 
-        <form className="flex flex-col gap-y-4" onSubmit={handleSubmit}>
+        <div className="flex flex-col gap-y-4">
           {/* Mdical history field start  */}
           <div className="flex flex-col gap-1">
             <label
@@ -265,6 +280,7 @@ function CompleteMedicalRecord() {
               className="resize-none text-[15px] w-full h-48 outline-none border border-gray-200 rounded-lg"
               name="medicalHistory"
               id="medicalHistory"
+              value={inputData?.medicalHistory}
               onChange={handleInputChange}
               placeholder="Descrivi le caratteristiche, sintomi o fatti di interesse riferiti al tuo animale..."
             ></textarea>
@@ -507,13 +523,13 @@ function CompleteMedicalRecord() {
 
                   <div className="flex gap-4 mt-2">
                     <button
-                      onClick={() => editNoteHandler(idx)}
+                      onClick={(e) => editNoteHandler(e, idx)}
                       className={`w-full rounded-lg py-3 px-4 outline-none text-secondary border-secondary border hover:bg-secondary hover:text-white transition duration-300`}
                     >
                       Modifica cartella clinica
                     </button>
                     <button
-                      onClick={() => deleteNoteHandler(idx)}
+                      onClick={(e) => deleteNoteHandler(e, idx)}
                       className={`w-full rounded-lg py-3 px-4 outline-none text-secondary border-secondary border hover:bg-secondary hover:text-white transition duration-300`}
                     >
                       Elimina
@@ -537,6 +553,7 @@ function CompleteMedicalRecord() {
               className="resize-none w-full  text-[15px] h-48 outline-none border border-gray-200 rounded-lg"
               name="AdditionalNotes"
               id="AdditionalNotes"
+              value={inputData?.AdditionalNotes}
               onChange={handleInputChange}
               placeholder="Aggiungi note aggiuntive o informazioni utili per il veterinario...."
             ></textarea>
@@ -546,7 +563,7 @@ function CompleteMedicalRecord() {
 
           {/* add your pet start here */}
           <button
-            type="submit"
+            onClick={handleSubmit}
             className={`mt-8 w-full rounded-lg py-3 px-4 outline-none hover:text-secondary border-secondary border bg-secondary hover:bg-transparent text-white transition duration-300`}
           >
             {isLoading ? (
@@ -574,7 +591,7 @@ function CompleteMedicalRecord() {
             )}
           </button>
           {/* add your pet ends here */}
-        </form>
+        </div>
 
         <p className="text-center text-[15px] mt-10 text-[#00000066]">
           * I campi sono obbligatori
