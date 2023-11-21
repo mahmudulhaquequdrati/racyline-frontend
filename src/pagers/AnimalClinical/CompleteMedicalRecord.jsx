@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import * as Bytescale from "@bytescale/sdk";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const plusIcons = (
@@ -225,8 +226,21 @@ function CompleteMedicalRecord() {
   };
 
   // handle files submit
-  const handleFils = () => {
-    // function here...
+  // apiKey: "public_FW25bmTFHXLaaFxVMCYrAv4Vnrw8", // Shipon - This is your API key.
+  const uploadManager = new Bytescale.UploadManager({
+    apiKey: "public_12a1ygXCesjuuNXCWLUK6bcYcbsY", // This is your API key.
+  });
+  const onFileSelected = async (event) => {
+    console.log("event ", event);
+    const file = event.target.files[0];
+    try {
+      const { fileUrl, filePath } = await uploadManager.upload({ data: file });
+      console.log("{ fileUrl, filePath } ", { fileUrl, filePath });
+      alert(`File uploaded:\n${fileUrl}`);
+    } catch (e) {
+      console.log("catch e ", e);
+      alert(`Error:\n${e.message}`);
+    }
   };
 
   //  handle form submit
@@ -405,7 +419,7 @@ function CompleteMedicalRecord() {
                         </span>
                       </p>
                       <input
-                        onChange={() => handleFils()}
+                        onChange={(e) => onFileSelected(e)}
                         type="file"
                         name="fils"
                         className="hidden"

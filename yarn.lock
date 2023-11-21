@@ -225,6 +225,28 @@
     "@babel/helper-validator-identifier" "^7.22.20"
     to-fast-properties "^2.0.0"
 
+"@bytescale/sdk@^3.10.0":
+  version "3.10.0"
+  resolved "https://registry.yarnpkg.com/@bytescale/sdk/-/sdk-3.10.0.tgz#c546f41df19caeaf1798c67688df8ff508ea58ff"
+  integrity sha512-aDdMh0vGJmb2QX1M4DOcVl/9LB1Zzb1C5wCVH1bGM3jgyhZYhrLIk8xcswhSnT8ohVnSVgt1Z56zuLkNWM6dEw==
+
+"@bytescale/upload-widget-react@^4.12.0":
+  version "4.12.0"
+  resolved "https://registry.yarnpkg.com/@bytescale/upload-widget-react/-/upload-widget-react-4.12.0.tgz#be55836876ae3f33c054e883e74d4992f10a36d1"
+  integrity sha512-TmOBQfzBpfmyOfw0Fs7Y7XpbQK6vCAcPLvFUdQYlWPprXgwBYITo2PK0tVTP32QRQTxfq0+mFOvNstoIHP47bQ==
+  dependencies:
+    "@bytescale/upload-widget" "^4.17.0"
+    lodash.isequal "^4.5.0"
+
+"@bytescale/upload-widget@^4.17.0":
+  version "4.17.0"
+  resolved "https://registry.yarnpkg.com/@bytescale/upload-widget/-/upload-widget-4.17.0.tgz#9fe5f84822c53fa488bc9f19318f9dc1c818ef62"
+  integrity sha512-BHEBMZuNK6IiTelg3FKZrcbQmWH8rrmfN17l3wvGm1hA2azjwkGZV0UjisBTE5KO6ktgxnXEVttAKcVs64Fejw==
+  dependencies:
+    "@bytescale/sdk" "^3.10.0"
+    classnames "^2.2.6"
+    preact "^10.6.5"
+
 "@esbuild/android-arm64@0.18.20":
   version "0.18.20"
   resolved "https://registry.yarnpkg.com/@esbuild/android-arm64/-/android-arm64-0.18.20.tgz#984b4f9c8d0377443cc2dfcef266d02244593622"
@@ -1912,6 +1934,11 @@ locate-path@^6.0.0:
   dependencies:
     p-locate "^5.0.0"
 
+lodash.isequal@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
+  integrity sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==
+
 lodash.memoize@^4.1.1:
   version "4.1.2"
   resolved "https://registry.npmjs.org/lodash.memoize/-/lodash.memoize-4.1.2.tgz"
@@ -2214,6 +2241,11 @@ postcss@^8.4.23, postcss@^8.4.27, postcss@^8.4.31:
     nanoid "^3.3.6"
     picocolors "^1.0.0"
     source-map-js "^1.0.2"
+
+preact@^10.6.5:
+  version "10.19.2"
+  resolved "https://registry.yarnpkg.com/preact/-/preact-10.19.2.tgz#841797620dba649aaac1f8be42d37c3202dcea8b"
+  integrity sha512-UA9DX/OJwv6YwP9Vn7Ti/vF80XL+YA5H2l7BpCtUr3ya8LWHFzpiO5R+N7dN16ujpIxhekRFuOOF82bXX7K/lg==
 
 prelude-ls@^1.2.1:
   version "1.2.1"
