@@ -315,8 +315,8 @@ const RegistrationAvailabilities = () => {
         </p>
         <div className="flex flex-col gap-y-8">
           {weakData?.map((res, i) => (
-            <div className="border-b border-b-[#E5E7EC] pb-6">
-              <div key={i} className="flex gap-6 justify-between  ">
+            <div key={i} className="border-b border-b-[#E5E7EC] pb-6">
+              <div className="flex gap-6 justify-between  ">
                 <div className="flex items-start gap-6">
                   <div className="mr-2 flex items-center mt-3">
                     <label className="option ">

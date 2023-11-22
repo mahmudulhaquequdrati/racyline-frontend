@@ -12,9 +12,9 @@ import {
   useDeleteUserMutation,
   useUpdateUserDataMutation,
 } from "../../features/userData/userDataApi";
+import AccountDeletatioModal from "./AccountDeletationModal";
 
 const UserSettings = () => {
-  const [openModal, setOpenModal] = useState(false);
   const { user } = useSelector((state) => state.auth);
   const [userData, setUserData] = useState({
     first_name: user?.first_name,
@@ -24,6 +24,16 @@ const UserSettings = () => {
   });
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  let [isOpen, setIsOpen] = useState(false);
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  function openModal() {
+    setIsOpen(true);
+  }
 
   // Updating User data through redux mutation
   const [updateUserData, { data, isLoading, isError, isSuccess }] =
@@ -49,7 +59,6 @@ const UserSettings = () => {
 
   // Sending user ID for deleteing account
   const handleDeleteAcc = (userId) => {
-    console.log(userId);
     if (userId) {
       deleteUser(userId);
     }
@@ -74,7 +83,7 @@ const UserSettings = () => {
   useEffect(() => {
     if (isAccountDeleted) {
       localStorage.clear();
-      setOpenModal(false);
+      setIsOpen(false);
       notifySuccess("User Account Deleted!");
       dispatch(userLoggedOut());
       navigate("/user/login");
@@ -92,16 +101,26 @@ const UserSettings = () => {
               <div className="w-full">
                 <input
                   type="text"
-                  placeholder={user?.last_name ? user?.last_name : "Cognome"}
-                  readOnly
+                  placeholder={
+                    userData?.first_name ? userData?.first_name : "Cognome"
+                  }
+                  value={userData?.first_name}
+                  onChange={(e) => {
+                    setUserData({ ...userData, first_name: e.target.value });
+                  }}
                   className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full placeholder:text-black"
                 />
               </div>
               <div className="w-full">
                 <input
                   type="text"
-                  placeholder={user?.last_name ? user?.last_name : "Cognome"}
-                  readOnly
+                  value={userData?.last_name}
+                  placeholder={
+                    userData?.last_name ? userData?.last_name : "Cognome"
+                  }
+                  onChange={(e) => {
+                    setUserData({ ...userData, last_name: e.target.value });
+                  }}
                   className="rounded-lg py-2 px-4 outline-none border-[1px] border-none shadow w-full placeholder:text-black"
                 />
               </div>
@@ -115,7 +134,10 @@ const UserSettings = () => {
                   <input
                     type="number"
                     placeholder={userData?.phone}
-                    readOnly
+                    value={userData?.phone}
+                    onChange={(e) => {
+                      setUserData({ ...userData, phone: e.target.value });
+                    }}
                     className="rounded-lg py-2 px-4  bg-white text-black outline-none border-[1px] border-none shadow w-full placeholder:text-black"
                   />
                 </div>
@@ -178,7 +200,7 @@ const UserSettings = () => {
           </div>
           <div className="w-full mt-3">
             <button
-              onClick={() => setOpenModal(true)}
+              onClick={openModal}
               className={`w-full rounded-lg py-2 px-4  outline-none border-[1px] text-primary border-primary `}
             >
               {deleteAccLoading ? (
@@ -209,52 +231,14 @@ const UserSettings = () => {
         </div>
       </div>
 
-      {/* Delete Model */}
-      <Modal
-        show={openModal}
-        size="md"
-        onClose={() => setOpenModal(false)}
-        popup
-      >
-        <Modal.Header />
-        <Modal.Body>
-          <div className="text-center">
-            <span>
-              <svg
-                className="mx-auto mb-4 h-14 w-14 text-primary dark:text-gray-200"
-                stroke="currentColor"
-                fill="none"
-                stroke-width="2"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-                height="1em"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                ></path>
-              </svg>
-            </span>
-            <h3 className="mb-5 text-lg font-normal text-primary dark:text-gray-400">
-              Are you sure you want to delete this Account?
-            </h3>
-            <div className="flex justify-center gap-4">
-              <Button
-                color="failure"
-                onClick={() => handleDeleteAcc(user?._id)}
-              >
-                {"Yes, I'm sure"}
-              </Button>
-              <Button className="" onClick={() => setOpenModal(false)}>
-                No, cancel
-              </Button>
-            </div>
-          </div>
-        </Modal.Body>
-      </Modal>
+      <AccountDeletatioModal
+        closeModal={closeModal}
+        isOpen={isOpen}
+        openModal={openModal}
+        setIsOpen={setIsOpen}
+        handleDeleteAcc={handleDeleteAcc}
+        userId={user?._id}
+      />
     </div>
   );
 };
