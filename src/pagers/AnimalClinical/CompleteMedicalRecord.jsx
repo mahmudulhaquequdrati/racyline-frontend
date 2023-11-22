@@ -124,12 +124,13 @@ const checkIcons = (
 );
 
 function CompleteMedicalRecord() {
+  const [selectedImages, setSelectedImages] = useState([]);
   const [notes, setNotes] = useState([]);
   const [note, setNote] = useState({
     title: "",
     description: "",
     date: "",
-    report_files: [],
+    report_file: [],
   });
 
   const [inputData, setInputData] = useState({
@@ -167,7 +168,7 @@ function CompleteMedicalRecord() {
         previusNotes[newNoteOpen?.noteIndex].title = note?.title;
         previusNotes[newNoteOpen?.noteIndex].description = note?.description;
         previusNotes[newNoteOpen?.noteIndex].date = note?.date;
-        previusNotes[newNoteOpen?.noteIndex].report_files = [];
+        previusNotes[newNoteOpen?.noteIndex].report_file = [];
         return previusNotes;
       });
     }
@@ -175,7 +176,7 @@ function CompleteMedicalRecord() {
       title: "",
       description: "",
       date: "",
-      report_files: [],
+      report_file: [],
     });
     setNewNoteOpen({
       ...newNoteOpen,
@@ -291,6 +292,8 @@ function CompleteMedicalRecord() {
     }
   }, [setInputData]);
 
+  console.log(note);
+
   return (
     <section className="flex flex-col justify-center items-center bg-primary pb-16 px-4 pt-8 border-[1px] border-[#EAEAEB]">
       {/* Same as */}
@@ -313,7 +316,7 @@ function CompleteMedicalRecord() {
               Anamnesi
             </label>
             <textarea
-              className="resize-none text-[15px] w-full h-48 outline-none border border-gray-200 rounded-lg"
+              className="resize-none text-[15px] p-2 w-full h-48 outline-none border border-gray-200 rounded-lg"
               name="medicalHistory"
               id="medicalHistory"
               value={inputData?.medicalHistory}
@@ -421,7 +424,7 @@ function CompleteMedicalRecord() {
                 />
 
                 <textarea
-                  className="resize-none w-full mt-5 text-[15px] h-48 outline-none border border-gray-200 rounded-lg"
+                  className="resize-none w-full p-2 mt-5 text-[15px] h-48 outline-none border border-gray-200 rounded-lg"
                   value={note?.description}
                   onChange={(e) =>
                     setNote({ ...note, description: e.target.value })
@@ -457,26 +460,34 @@ function CompleteMedicalRecord() {
                         </span>
                       </p>
                     </label>
-                    <ImageUploader />
-
+                    <ImageUploader
+                      note={note}
+                      setNote={setNote}
+                      selectedImages={selectedImages}
+                      setSelectedImages={setSelectedImages}
+                    />
                     {/* files name  */}
                     <div>
-                      <div className="flex flex-col md:flex-row gap-2 items-center justify-between border-b py-4">
+                      {Object.keys(selectedImages)?.map((key, i) => (
+                        <div
+                          key={i}
+                          className="flex flex-col md:flex-row gap-2 items-center justify-between border-b py-4"
+                        >
+                          <div className="flex gap-[10px]">
+                            <span> {checkIcons}</span>
+                            <p> {selectedImages[key]?.name} </p>
+                          </div>
+
+                          <button> {cancelIcons} </button>
+                        </div>
+                      ))}
+                      {/* <div className="flex flex-col md:flex-row gap-2 items-center justify-between border-b py-4">
                         <div className="flex gap-[10px]">
                           <span> {loadingIcons}</span>
                           <p> name_file1.pdf </p>
                         </div>
 
                         <button> {cancelLoadingIcons} </button>
-                      </div>
-
-                      <div className="flex flex-col md:flex-row gap-2 items-center justify-between border-b py-4">
-                        <div className="flex gap-[10px]">
-                          <span> {checkIcons}</span>
-                          <p> name_file1.pdf </p>
-                        </div>
-
-                        <button> {cancelIcons} </button>
                       </div>
 
                       <div className="flex flex-col md:flex-row gap-2 items-center justify-between py-4">
@@ -486,9 +497,8 @@ function CompleteMedicalRecord() {
                         </div>
 
                         <button> {cancelIcons} </button>
-                      </div>
+                      </div> */}
                     </div>
-
                     <div
                       onClick={(e) => addNoteHandler(e)}
                       className={`mt-8 cursor-pointer text-center w-full rounded-lg py-3 px-4 outline-none hover:text-secondary border-secondary border bg-secondary hover:bg-transparent text-white transition duration-300`}
@@ -540,13 +550,13 @@ function CompleteMedicalRecord() {
                   </div>
 
                   <div className="py-3 flex gap-1 flex-wrap">
-                    {item?.report_files &&
-                      item?.report_files.map((file, FIdx) => (
+                    {item?.selectedImage &&
+                      Object.keys(item?.selectedImage).map((file, FIdx) => (
                         <span
                           key={FIdx}
                           className="py-1.5 px-3 max-w-max rounded-lg text-[#00000066] bg-[#E5E7EC99]"
                         >
-                          {file}
+                          {item?.selectedImage[file].name}
                         </span>
                       ))}
                   </div>
@@ -580,7 +590,7 @@ function CompleteMedicalRecord() {
               Note aggiuntive
             </label>
             <textarea
-              className="resize-none w-full  text-[15px] h-48 outline-none border border-gray-200 rounded-lg"
+              className="resize-none w-full p-2  text-[15px] h-48 outline-none border border-gray-200 rounded-lg"
               name="AdditionalNotes"
               id="AdditionalNotes"
               value={inputData?.AdditionalNotes}

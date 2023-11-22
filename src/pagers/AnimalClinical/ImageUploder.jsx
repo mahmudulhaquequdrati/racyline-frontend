@@ -3,9 +3,12 @@ import axios from "axios";
 
 const API_KEY = "c8818fe821c0aee81ebf0b77344f0e2b";
 
-const ImageUploader = () => {
-  const [selectedImages, setSelectedImages] = useState([]);
-
+const ImageUploader = ({
+  note,
+  setNote,
+  selectedImages,
+  setSelectedImages,
+}) => {
   useEffect(() => {
     const uploadImages = async () => {
       if (selectedImages.length > 1) {
@@ -17,8 +20,11 @@ const ImageUploader = () => {
             `https://api.imgbb.com/1/upload?key=${API_KEY}`,
             formData
           );
-          const imageUrls = response.data.url;
-          console.log(response);
+          const imageUrls = response.data.data.url;
+          setNote((prev) => ({
+            ...prev,
+            report_file: [...prev?.report_file, imageUrls],
+          }));
         }
 
         try {
@@ -34,13 +40,16 @@ const ImageUploader = () => {
   const handleImageSelect = (event) => {
     const newSelectedImages = event.target.files;
     setSelectedImages(newSelectedImages);
+    setNote((prev) => ({
+      ...prev,
+      selectedImage: newSelectedImages,
+    }));
   };
-
-  console.log(selectedImages);
 
   return (
     <div>
       <input
+        className="hidden"
         type="file"
         id="multipleImg"
         multiple
