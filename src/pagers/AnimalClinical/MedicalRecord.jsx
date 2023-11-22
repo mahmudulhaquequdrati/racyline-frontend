@@ -57,7 +57,6 @@ function MedicalRecord() {
     let formData = new FormData();
     const maxFileSize = 5 * 1024 * 1024;
     const file = e.target.files[0];
-    console.log("file ", { file, maxFileSize });
     // if (file && file.size > maxFileSize) {
     //   setError(
     //     "File size exceeds the maximum allowed size (5MB). Please choose a smaller file."

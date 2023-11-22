@@ -35,6 +35,23 @@ export default function Header() {
             <DropDown />
           </div>
         )}
+        {user?.role === "user" && !user?.completed_medical_report && (
+          <div className="flex gap-3 md:gap-8 uppercase ">
+            <Link
+              to="/vets/login"
+              // onClick={() => navigate("/login")}
+              className="text-sm  cursor-pointer"
+            >
+              Sei un medico veterinario?{" "}
+            </Link>
+            <h2
+              onClick={() => navigate("/user/login")}
+              className={` cursor-pointer text-primary text-sm`}
+            >
+              accedi
+            </h2>
+          </div>
+        )}
       </div>
     </div>
   );

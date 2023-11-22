@@ -8,7 +8,12 @@ const UserProtected = ({ children }) => {
 
   const { user, accessToken } = state || {};
 
-  return user && user?.role === "user" && accessToken ? (
+  console.log(user);
+
+  return user &&
+    user?.role === "user" &&
+    user?.completed_medical_report &&
+    accessToken ? (
     children
   ) : (
     <Navigate to={{ pathname: "/user/login", state: { from: location } }} />

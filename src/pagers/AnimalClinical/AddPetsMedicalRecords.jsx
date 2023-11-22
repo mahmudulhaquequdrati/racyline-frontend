@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import defaultPetImage from "../../assets/pets/pets-dog.png";
+import { useCreatePetInfoMutation } from "../../features/petMedialReport/petMedicalReportApi";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserInfo, userLoggedIn } from "../../features/auth/authSlice";
 
 const plusIcons = (
   <svg
@@ -33,12 +36,24 @@ function AddPetsMedicalRecords() {
   const [petsInfo, setPetsInfo] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
+  const { user } = useSelector((state) => state.auth);
+  const [
+    createPetInfo,
+    { data: isCreatedPetResponse, isLoading, isError, isSuccess },
+  ] = useCreatePetInfoMutation();
+  const dispatch = useDispatch();
   const petsData = JSON.parse(localStorage.getItem("petsData"));
 
-  // Redirecet to vet lists page
+  // Saving the pet info
   const handleSubmit = (event) => {
     event.preventDefault();
-    return navigate("/user/vet-lists");
+    const data = {
+      user_id: user?._id,
+      data: petsInfo,
+    };
+    if (petsInfo?.length > 0) {
+      createPetInfo(data);
+    }
   };
 
   // Redirecting to add pet info page
@@ -68,6 +83,17 @@ function AddPetsMedicalRecords() {
   useEffect(() => {
     setPetsInfo(petsData);
   }, [setPetsInfo]);
+
+  // Redirecet to vet lists page
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(getUserInfo(isCreatedPetResponse));
+      localStorage.removeItem("petsData");
+      navigate("/user/vet-lists");
+    }
+  }, [isSuccess, dispatch]);
+
+  // console.log(user);
 
   return (
     <section className="flex flex-col justify-center items-center bg-primary pb-16 px-4 pt-8 border-[1px] border-[#EAEAEB]">

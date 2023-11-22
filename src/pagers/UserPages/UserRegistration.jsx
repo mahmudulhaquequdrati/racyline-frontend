@@ -44,7 +44,7 @@ function UserRegistration() {
     if (UserLoggedInData?.data?.accessToken) {
       // dispatch(userLoggedIn(UserLoggedInData?.data));
       // navigate("/user/vet-lists");
-      navigate("/user/add-pets-medical-records", {
+      navigate("/user/all-pet-info", {
         state: { user: UserLoggedInData?.data },
       });
     }

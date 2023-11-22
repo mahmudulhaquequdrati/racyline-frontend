@@ -1,5 +1,7 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import ImageUploader from "./ImageUploder";
 
 const plusIcons = (
   <svg
@@ -122,20 +124,6 @@ const checkIcons = (
 );
 
 function CompleteMedicalRecord() {
-  const [isLoading, setIsLoading] = useState();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [fieldError, setFieldError] = useState(false);
-  const [inputData, setInputData] = useState({
-    medicalHistory: "",
-    AdditionalNotes: "",
-  });
-
-  const [newNoteOpen, setNewNoteOpen] = useState({
-    isOpen: false,
-    isEditingMode: false,
-    noteIndex: null,
-  });
   const [notes, setNotes] = useState([]);
   const [note, setNote] = useState({
     title: "",
@@ -143,12 +131,30 @@ function CompleteMedicalRecord() {
     date: "",
     report_files: [],
   });
+
+  const [inputData, setInputData] = useState({
+    medicalHistory: "",
+    AdditionalNotes: "",
+  });
+  const [isLoading, setIsLoading] = useState();
+  const [fieldError, setFieldError] = useState(false);
+
+  const [newNoteOpen, setNewNoteOpen] = useState({
+    isOpen: false,
+    isEditingMode: false,
+    noteIndex: null,
+  });
+
   const petsData = JSON.parse(localStorage.getItem("petsData"));
+  const navigate = useNavigate();
+  const location = useLocation();
   const pathName = location?.state?.pathname;
   const selectedPetIndex = location?.state?.petInfoIndex;
 
   // add Note handler
-  const addNoteHandler = () => {
+  const addNoteHandler = (event) => {
+    event.preventDefault();
+
     if (!newNoteOpen?.isEditingMode && !newNoteOpen?.noteIndex) {
       setNotes((prevNotes) => {
         const previusNotes = [...prevNotes];
@@ -208,25 +214,22 @@ function CompleteMedicalRecord() {
     }));
   };
 
-  // handle files submit
-  const handleFils = () => {
-    // function here...
-  };
-
   //  handle form submit
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = {
-      medical_history: { ...inputData },
+      medical_history: inputData?.medicalHistory,
       medical_diary: notes,
+      additional_notes: inputData?.AdditionalNotes,
     };
 
     const isExistPets = JSON.parse(localStorage.getItem("petsData"));
 
     if (pathName === "/user/add-pet-info" && parseInt(selectedPetIndex)) {
-      console.log("Hello world", selectedPetIndex);
-      console.log(isExistPets[selectedPetIndex]);
-      isExistPets[selectedPetIndex]["medical_history"] = { ...inputData };
+      isExistPets[selectedPetIndex]["medical_history"] =
+        inputData?.medicalHistory;
+      isExistPets[selectedPetIndex]["additional_notes"] =
+        inputData?.AdditionalNotes;
       isExistPets[selectedPetIndex]["medical_diary"] = notes;
       localStorage.setItem("petsData", JSON.stringify(isExistPets));
     }
@@ -240,20 +243,53 @@ function CompleteMedicalRecord() {
     navigate("/user/all-pet-info");
   };
 
+  const API_KEY = "c8818fe821c0aee81ebf0b77344f0e2b";
+
+  // const uploadImages = async (event) => {
+  //   const selectedImages = event.target.files;
+
+  //   if (selectedImages?.length > 0) {
+  //     const formData = new FormData();
+  //     for (const image of selectedImages) {
+  //       formData.append("image", image); // Use the image file itself, not just the name
+  //     }
+  //     console.log(formData);
+  //   }
+  // };
+
+  //   for (const image of selectedImages) {
+  //   formData.append("image", image);
+  // }
+
+  // try {
+  //   const response = await axios.post(
+  //     `https://api.imgbb.com/1/upload?key=${API_KEY}`,
+  //     formData
+  //   );
+  //   const imageUrls = response.data.imageUrls;
+  //   console.log(imageUrls);
+  //   setUploadedImageUrls(imageUrls);
+  // } catch (error) {
+  //   console.error(error);
+  // }
+
   useEffect(() => {
     if (pathName === "/user/add-pet-info" && selectedPetIndex) {
       const getPetInfo = petsData[parseInt(selectedPetIndex)];
+      console.log(getPetInfo);
       setInputData({
         medicalHistory:
           getPetInfo?.medical_history?.medical_history?.medicalHistory,
         AdditionalNotes:
           getPetInfo?.medical_history?.medical_history?.AdditionalNotes,
       });
-      setNotes(getPetInfo?.medical_history?.medical_diary);
+      if (getPetInfo?.medical_history?.medical_diary?.length > 0) {
+        setNotes(getPetInfo?.medical_history?.medical_diary);
+      } else {
+        setNotes([]);
+      }
     }
-  }, [setInputData, setNotes]);
-
-  console.log(location);
+  }, [setInputData]);
 
   return (
     <section className="flex flex-col justify-center items-center bg-primary pb-16 px-4 pt-8 border-[1px] border-[#EAEAEB]">
@@ -410,7 +446,7 @@ function CompleteMedicalRecord() {
 
                   <div className="mt-6">
                     <label
-                      htmlFor="Files"
+                      htmlFor="multipleImg"
                       className="flex gap-3 justify-center items-center py-8 border border-dashed mb-4 cursor-pointer rounded-lg"
                     >
                       <span> {uploadIcons} </span>
@@ -420,14 +456,8 @@ function CompleteMedicalRecord() {
                           Scegli il file{" "}
                         </span>
                       </p>
-                      <input
-                        onChange={() => handleFils()}
-                        type="file"
-                        name="fils"
-                        className="hidden"
-                        id="Files"
-                      />
                     </label>
+                    <ImageUploader />
 
                     {/* files name  */}
                     <div>
@@ -460,7 +490,7 @@ function CompleteMedicalRecord() {
                     </div>
 
                     <div
-                      onClick={() => addNoteHandler()}
+                      onClick={(e) => addNoteHandler(e)}
                       className={`mt-8 cursor-pointer text-center w-full rounded-lg py-3 px-4 outline-none hover:text-secondary border-secondary border bg-secondary hover:bg-transparent text-white transition duration-300`}
                     >
                       {isLoading ? (

@@ -42,12 +42,12 @@ function RegistrationWithGoogle() {
     const data = {
       ...inputData,
       doctor_type2: selected2,
-      doctor_type1: selected?.name,
+      doctor_type1: selected,
     };
     e.preventDefault();
     if (
-      inputData?.doctor_type1 !== {} &&
-      inputData?.doctor_type2 !== [] &&
+      data?.doctor_type1?.name &&
+      data?.doctor_type2?.length > 0 &&
       inputData?.veterinary_address !== ""
     ) {
       setFeildError(false);
@@ -61,6 +61,8 @@ function RegistrationWithGoogle() {
       setFeildError(true);
     }
   };
+
+  // console.log(inputData);
 
   return (
     <section className="flex justify-center items-center bg-primary py-16 border-[1px] border-[#EAEAEB]">
