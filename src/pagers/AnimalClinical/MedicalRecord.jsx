@@ -2,11 +2,12 @@
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import userIcon from "../../assets/ICONS/user.svg";
 import { useRegisterMutation } from "../../features/auth/authApi";
+
 const genders = [
   {
     gender: "maschia",
@@ -19,7 +20,6 @@ const genders = [
 function MedicalRecord() {
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location.state);
   const [selected, setSelected] = useState({});
   const [inputData, setInputData] = useState({
     animalName: "",
@@ -33,10 +33,11 @@ function MedicalRecord() {
   });
   const [register, { data: UserLoggedInData, isLoading, isError }] =
     useRegisterMutation();
-  const dispatch = useDispatch();
   const [selectedFile, setSelectedFile] = useState(null);
   const [error, setError] = useState("");
   const [feildError, setFeildError] = useState(false);
+  const pathName = location?.state?.pathname;
+  const selectedPetIndex = location?.state?.petInfoIndex;
 
   // input handle change set object value dynamicale
   const handleInputChange = (event) => {
@@ -75,54 +76,58 @@ function MedicalRecord() {
   // form Submit here...
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const petsData = [
-      {
-        general_information: {
-          pet_photo: inputData?.profile_image_url,
-          animal_name: inputData?.animalName,
-          species: inputData?.specie,
-          race: inputData?.race,
-          date_of_birth: inputData?.dateOfBirth,
-          sex: selected?.gender,
-          microchip_number: inputData?.Microchip_number,
-          implantation_date: inputData?.ImplantationDate,
-        },
-        medical_history: {},
+    const petsData = [];
+    const petInfo = {
+      general_information: {
+        pet_photo: inputData?.profile_image_url,
+        animal_name: inputData?.animalName,
+        species: inputData?.specie,
+        race: inputData?.race,
+        date_of_birth: inputData?.dateOfBirth,
+        sex: selected?.gender,
+        microchip_number: inputData?.Microchip_number,
+        implantation_date: inputData?.ImplantationDate,
       },
-    ];
-
+      medical_history: {},
+    };
     const isExistPets = JSON.parse(localStorage.getItem("petsData"));
 
-    if (isExistPets?.length === 0) {
-      localStorage.setItem("petsData", JSON.stringify(petsData));
+    if (pathName === "/user/all-pet-info" && selectedPetIndex) {
+      isExistPets[selectedPetIndex]["general_information"] =
+        petInfo?.general_information;
+      localStorage.setItem("petsData", JSON.stringify(isExistPets));
     } else {
-      localStorage.removeItem("petsData");
-      localStorage.setItem("petsData", JSON.stringify(petsData));
+      if (!isExistPets || isExistPets?.length === 0) {
+        petsData.push(petInfo);
+        localStorage.setItem("petsData", JSON.stringify(petsData));
+      } else {
+        isExistPets.push(petInfo);
+        localStorage.setItem("petsData", JSON.stringify(isExistPets));
+      }
     }
-    navigate("/user/medical-note-empty");
+
+    return navigate("/user/complete-medical-record", {
+      replace: true,
+      state: { ...location, petInfoIndex: `${selectedPetIndex}` },
+    });
   };
 
-  // "medical_history": {
-  //   "medical_history": "No significant medical history",
-  //   "medical_diary": [
-  //       {
-  //           "date": "2022-01-10T00:00:00.000Z",
-  //           "description": "Regular checkup",
-  //           "report_file": [
-  //               "https://example.com/report1.pdf"
-  //           ]
-  //       },
-  //       {
-  //           "date": "2022-05-22T00:00:00.000Z",
-  //           "description": "Vaccination",
-  //           "report_file": [
-  //               "https://example.com/report2.pdf"
-  //           ]
-  //       }
-  //   ],
-  //   "additional_notes": "No additional notes at the moment."
-  // }
+  useEffect(() => {
+    const petsData = JSON.parse(localStorage.getItem("petsData"));
+
+    if (pathName === "/user/all-pet-info" && selectedPetIndex) {
+      const getPetInfo = petsData[parseInt(selectedPetIndex)];
+      setInputData({
+        animalName: getPetInfo?.general_information?.animal_name,
+        specie: getPetInfo?.general_information?.species,
+        race: getPetInfo?.general_information?.race,
+        dateOfBirth: getPetInfo?.general_information?.date_of_birth,
+        Microchip_number: getPetInfo?.general_information?.microchip_number,
+        ImplantationDate: getPetInfo?.general_information?.implantation_date,
+        profile_image_url: "",
+      });
+    }
+  }, [setInputData, setSelected]);
 
   return (
     <section className="flex justify-center items-center bg-primary py-16 px-4 border-[1px] border-[#EAEAEB]">
@@ -168,11 +173,7 @@ function MedicalRecord() {
             </div>
           </div>
         </div>
-        <form
-          onSubmit={handleSubmit}
-          action=""
-          className="flex flex-col gap-y-4"
-        >
+        <div className="flex flex-col gap-y-4">
           <div>
             <input
               type="text"
@@ -341,7 +342,7 @@ function MedicalRecord() {
           )}
           <div>
             <button
-              type="submit"
+              onClick={handleSubmit}
               className={`w-full rounded-lg py-3 px-4 outline-none  text-white bg-secondary`}
             >
               {isLoading ? (
@@ -364,6 +365,8 @@ function MedicalRecord() {
                   </svg>
                   <span>Loading...</span>
                 </div>
+              ) : pathName === "/user/all-pet-info" && selectedPetIndex ? (
+                "salvare"
               ) : (
                 "Avanti"
               )}
@@ -378,7 +381,7 @@ function MedicalRecord() {
               * I campi sono obbligatori
             </p>
           </div>
-        </form>
+        </div>
       </div>
     </section>
   );
