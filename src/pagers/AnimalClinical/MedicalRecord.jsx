@@ -20,13 +20,18 @@ const genders = [
 function MedicalRecord() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [selected, setSelected] = useState({});
+  const pathName = location?.state?.pathname;
+  const selectedPetIndex = location?.state?.petInfoIndex;
+  const isExistPets = JSON.parse(localStorage.getItem("petsData"));
+  const [selected, setSelected] = useState(
+    isExistPets[parseInt(selectedPetIndex)]?.general_information?.sex || {}
+  );
   const [inputData, setInputData] = useState({
     animalName: "",
     specie: "",
     race: "",
     dateOfBirth: "",
-    gender: selected,
+    sex: selected,
     Microchip_number: "",
     ImplantationDate: "",
     profile_image_url: "",
@@ -36,8 +41,6 @@ function MedicalRecord() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [error, setError] = useState("");
   const [feildError, setFeildError] = useState(false);
-  const pathName = location?.state?.pathname;
-  const selectedPetIndex = location?.state?.petInfoIndex;
 
   // input handle change set object value dynamicale
   const handleInputChange = (event) => {
@@ -83,13 +86,12 @@ function MedicalRecord() {
         species: inputData?.specie,
         race: inputData?.race,
         date_of_birth: inputData?.dateOfBirth,
-        sex: selected?.gender,
+        sex: selected,
         microchip_number: inputData?.Microchip_number,
         implantation_date: inputData?.ImplantationDate,
       },
       medical_history: {},
     };
-    const isExistPets = JSON.parse(localStorage.getItem("petsData"));
 
     if (pathName === "/user/all-pet-info" && selectedPetIndex) {
       isExistPets[selectedPetIndex]["general_information"] =
@@ -124,9 +126,11 @@ function MedicalRecord() {
         Microchip_number: getPetInfo?.general_information?.microchip_number,
         ImplantationDate: getPetInfo?.general_information?.implantation_date,
         profile_image_url: getPetInfo?.general_information?.pet_photo,
+        sex: getPetInfo?.general_information?.sex,
       });
     }
   }, [setInputData, setSelected]);
+  console.log(selected);
 
   return (
     <section className="flex justify-center items-center bg-primary py-16 px-4 border-[1px] border-[#EAEAEB]">
@@ -238,13 +242,13 @@ function MedicalRecord() {
               <div className="relative mt-1">
                 <Listbox.Button
                   className={`relative w-full cursor-default rounded-lg bg-white py-3 pl-4 pr-10 text-left border-[1px] ${
-                    feildError && selected?.gender === ""
+                    feildError && selected === ""
                       ? "border-red-500"
                       : "border-[#E5E7EC] "
                   } focus:outline-none `}
                 >
-                  {selected?.gender ? (
-                    <span className="block truncate">{selected?.gender}</span>
+                  {selected.gender ? (
+                    <span className="block truncate">{selected.gender}</span>
                   ) : (
                     <span className="block truncate text-gray-400">
                       {"Sesso *"}
