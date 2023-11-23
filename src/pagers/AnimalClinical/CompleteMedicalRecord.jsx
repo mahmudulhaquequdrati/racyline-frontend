@@ -136,7 +136,7 @@ function CompleteMedicalRecord() {
   const navigate = useNavigate();
   const location = useLocation();
   const pathName = location?.state?.pathname;
-  const selectedPetIndex = parseInt(location?.state?.petInfoIndex);
+  const selectedPetIndex = parseInt(location?.state?.petInfoIndex) || 0;
   const petsData = JSON.parse(localStorage.getItem("petsData"));
   // console.log(selectedPetIndex);
 
