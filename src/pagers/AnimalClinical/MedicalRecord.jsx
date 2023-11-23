@@ -21,7 +21,7 @@ function MedicalRecord() {
   const navigate = useNavigate();
   const location = useLocation();
   const pathName = location?.state?.pathname;
-  const selectedPetIndex = location?.state?.petInfoIndex;
+  const selectedPetIndex = location?.state?.petInfoIndex || 0;
   const isExistPets = JSON.parse(localStorage.getItem("petsData"));
   const [selected, setSelected] = useState(
     isExistPets[parseInt(selectedPetIndex)]?.general_information?.sex || {}
