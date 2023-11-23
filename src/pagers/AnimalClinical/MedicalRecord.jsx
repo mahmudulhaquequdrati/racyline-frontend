@@ -20,11 +20,13 @@ const genders = [
 function MedicalRecord() {
   const navigate = useNavigate();
   const location = useLocation();
-  const pathName = location?.state?.pathname;
-  const selectedPetIndex = location?.state?.petInfoIndex || 0;
+  const pathName = location?.pathname;
+  const selectedPetIndex = location?.state?.petInfoIndex;
   const isExistPets = JSON.parse(localStorage.getItem("petsData"));
   const [selected, setSelected] = useState(
-    isExistPets[parseInt(selectedPetIndex)]?.general_information?.sex || {}
+    selectedPetIndex !== undefined
+      ? isExistPets[parseInt(selectedPetIndex)]?.general_information?.sex
+      : 0
   );
   const [inputData, setInputData] = useState({
     animalName: "",
