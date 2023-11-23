@@ -131,8 +131,24 @@ function MedicalRecord() {
         sex: getPetInfo?.general_information?.sex,
       });
     }
-  }, [setInputData, setSelected]);
-  console.log(selected);
+  }, [setInputData]);
+
+  useEffect(() => {
+    if (isExistPets.length > 0) {
+      const getPetInfo = isExistPets[parseInt(selectedPetIndex)];
+      setInputData({
+        animalName: getPetInfo?.general_information?.animal_name,
+        specie: getPetInfo?.general_information?.species,
+        race: getPetInfo?.general_information?.race,
+        dateOfBirth: getPetInfo?.general_information?.date_of_birth,
+        Microchip_number: getPetInfo?.general_information?.microchip_number,
+        ImplantationDate: getPetInfo?.general_information?.implantation_date,
+        profile_image_url: getPetInfo?.general_information?.pet_photo,
+        sex: getPetInfo?.general_information?.sex,
+      });
+    }
+  }, [isExistPets.length]);
+  console.log(inputData);
 
   return (
     <section className="flex justify-center items-center bg-primary py-16 px-4 border-[1px] border-[#EAEAEB]">
@@ -151,6 +167,12 @@ function MedicalRecord() {
               {selectedFile ? (
                 <img
                   src={URL.createObjectURL(selectedFile)}
+                  alt=""
+                  className="w-[105px] h-[105px] rounded-full"
+                />
+              ) : inputData?.profile_image_url ? (
+                <img
+                  src={inputData?.profile_image_url}
                   alt=""
                   className="w-[105px] h-[105px] rounded-full"
                 />
@@ -183,7 +205,7 @@ function MedicalRecord() {
             <input
               type="text"
               name="animalName"
-              value={inputData.animalName}
+              value={inputData?.animalName}
               onChange={handleInputChange}
               placeholder="Nome dell’animale *"
               className={`w-full rounded-lg py-3 px-4 outline-none border-[1px] ${
@@ -198,7 +220,7 @@ function MedicalRecord() {
             <input
               type="text"
               name="specie"
-              value={inputData.specie}
+              value={inputData?.specie}
               onChange={handleInputChange}
               placeholder="Specie *"
               className={`w-full rounded-lg py-3 px-4 outline-none border-[1px] ${
@@ -213,7 +235,7 @@ function MedicalRecord() {
             <input
               type="text"
               name="race"
-              value={inputData.race}
+              value={inputData?.race}
               onChange={handleInputChange}
               placeholder="Razza "
               className={`w-full rounded-lg py-3 px-4 outline-none border-[1px] ${
@@ -228,7 +250,7 @@ function MedicalRecord() {
             <input
               type="text"
               name="dateOfBirth"
-              value={inputData.dateOfBirth}
+              value={inputData?.dateOfBirth}
               onChange={handleInputChange}
               placeholder="Data di nascita "
               className={`w-full rounded-lg py-3 px-4 outline-none border-[1px] ${
@@ -249,8 +271,8 @@ function MedicalRecord() {
                       : "border-[#E5E7EC] "
                   } focus:outline-none `}
                 >
-                  {selected.gender ? (
-                    <span className="block truncate">{selected.gender}</span>
+                  {selected?.gender ? (
+                    <span className="block truncate">{selected?.gender}</span>
                   ) : (
                     <span className="block truncate text-gray-400">
                       {"Sesso *"}
