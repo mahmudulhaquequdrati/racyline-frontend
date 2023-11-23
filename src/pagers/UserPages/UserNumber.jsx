@@ -1,9 +1,10 @@
 /* eslint-disable no-unused-vars */
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function UserNumber() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [inputData, setInputData] = useState({
     phone: "",
   });
@@ -17,7 +18,11 @@ function UserNumber() {
     if (inputData?.phone !== "") {
       setFeildError(false);
       setIsLoading(true);
-      register(inputData);
+      //! must save phone number to database
+      navigate("/user/all-pet-info", {
+        state: { user: location.state },
+      });
+      // register(inputData);
     } else {
       setFeildError(true);
     }

@@ -30,6 +30,8 @@ import RegistrationGoogleCalenderConnected from "./pagers/vetRegistration/Regist
 import RegistrationWithGoogle from "./pagers/vetRegistration/RegistrationWithGoogle";
 import UserProtected from "./routes/UserProtected";
 import VetProtected from "./routes/VetProtected";
+import UserNumber from "./pagers/UserPages/UserNumber.jsx";
+import AuthProtected from "./routes/AuthProtected.jsx";
 
 const App = () => {
   const isAuth = useAuthCheck();
@@ -159,6 +161,17 @@ const App = () => {
           element={
             // <PublicRoute>
             <UserLogin />
+            // </PublicRoute>
+          }
+        />
+        <Route
+          path="/user/login/phone-connect"
+          element={
+            // <PublicRoute>
+            <AuthProtected>
+              <UserNumber />
+            </AuthProtected>
+
             // </PublicRoute>
           }
         />

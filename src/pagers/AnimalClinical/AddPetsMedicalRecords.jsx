@@ -36,6 +36,7 @@ function AddPetsMedicalRecords() {
   const [petsInfo, setPetsInfo] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
+
   const { user } = useSelector((state) => state.auth);
   const [
     createPetInfo,

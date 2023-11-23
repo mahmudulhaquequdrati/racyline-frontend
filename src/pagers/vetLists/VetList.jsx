@@ -70,8 +70,6 @@ const VetList = ({ vetInfo }) => {
     setAppointmentDate({ ...appointmentDate, time: newDate });
   }, []);
 
-  console.log(doctor_type2);
-
   return (
     <div className="flex text-black flex-col md:flex-row bg-white rounded-lg overflow-hidden">
       <div className="w-full md:w-1/2 flex flex-col gap-6 p-6 md:border-r-[0.5px] md:border-[#E5E7EC]">

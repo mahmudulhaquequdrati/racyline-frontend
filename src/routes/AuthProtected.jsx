@@ -8,7 +8,7 @@ const AuthProtected = ({ children }) => {
   const { user, accessToken } = state || {};
 
   return !user && !accessToken ? (
-    <Navigate to={{ pathname: "/login", state: { from: location } }} />
+    <Navigate to={{ pathname: "/user/login", state: { from: location } }} />
   ) : (
     children
   );

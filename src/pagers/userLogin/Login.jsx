@@ -62,7 +62,16 @@ function UserLogin() {
               setNotUser("you are not a user");
               handleLogut();
             } else {
-              navigate("/user/vet-lists");
+              // if(res.data.user.data.)
+              if (res.data?.data?.user?.already_connected === true) {
+                navigate("/user/vet-lists");
+              } else {
+                navigate("/user/login/phone-connect", {
+                  state: {
+                    user: res.data?.user,
+                  },
+                });
+              }
             }
           });
         } catch (error) {

@@ -57,19 +57,19 @@ function MedicalRecord() {
     let formData = new FormData();
     const maxFileSize = 5 * 1024 * 1024;
     const file = e.target.files[0];
-    // if (file && file.size > maxFileSize) {
-    //   setError(
-    //     "File size exceeds the maximum allowed size (5MB). Please choose a smaller file."
-    //   );
-    // } else {
-    //   setError("");
-    //   formData.append("image", file);
-    //   formData.append("key", `${import.meta.env.VITE_IMGBB_API_KEY}`);
-    //   setSelectedFile(file);
-    //   axios.post("https://api.imgbb.com/1/upload", formData).then((res) => {
-    //     setInputData({ ...inputData, profile_image_url: res.data.data.url });
-    //   });
-    // }
+    if (file && file.size > maxFileSize) {
+      setError(
+        "File size exceeds the maximum allowed size (5MB). Please choose a smaller file."
+      );
+    } else {
+      setError("");
+      formData.append("image", file);
+      formData.append("key", `${import.meta.env.VITE_IMGBB_API_KEY}`);
+      setSelectedFile(file);
+      axios.post("https://api.imgbb.com/1/upload", formData).then((res) => {
+        setInputData({ ...inputData, profile_image_url: res.data.data.url });
+      });
+    }
   };
 
   // form Submit here...
@@ -123,7 +123,7 @@ function MedicalRecord() {
         dateOfBirth: getPetInfo?.general_information?.date_of_birth,
         Microchip_number: getPetInfo?.general_information?.microchip_number,
         ImplantationDate: getPetInfo?.general_information?.implantation_date,
-        profile_image_url: "",
+        profile_image_url: getPetInfo?.general_information?.pet_photo,
       });
     }
   }, [setInputData, setSelected]);
