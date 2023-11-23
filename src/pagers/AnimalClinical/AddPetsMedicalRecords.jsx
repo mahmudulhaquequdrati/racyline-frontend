@@ -74,7 +74,7 @@ function AddPetsMedicalRecords() {
   const handleEditPetsData = (event, petIndex) => {
     event.preventDefault();
 
-    return navigate("/user/add-pet-info", {
+    navigate("/user/add-pet-info", {
       replace: true,
       state: { ...location, petInfoIndex: `${petIndex}` },
     });
@@ -83,7 +83,7 @@ function AddPetsMedicalRecords() {
   // Getting pets data
   useEffect(() => {
     setPetsInfo(petsData);
-  }, [setPetsInfo]);
+  }, [setPetsInfo?.length]);
 
   // Redirecet to vet lists page
   useEffect(() => {

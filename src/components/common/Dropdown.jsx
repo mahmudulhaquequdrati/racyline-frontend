@@ -182,7 +182,7 @@ export default function DropDown() {
           </Transition>
         </Menu>
       )}
-      {user?.role === "vet_user" && (
+      {user?.role === "vet_admin" && (
         <Menu as="div" className="relative inline-block text-left">
           <div>
             <Menu.Button

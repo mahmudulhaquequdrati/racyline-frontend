@@ -63,7 +63,10 @@ function UserLogin() {
               handleLogut();
             } else {
               // if(res.data.user.data.)
-              if (res.data?.data?.user?.already_connected === true) {
+              if (
+                res.data?.data?.user?.already_connected === true &&
+                res.data?.data?.user?.completed_medical_report === true
+              ) {
                 navigate("/user/vet-lists");
               } else {
                 navigate("/user/login/phone-connect", {

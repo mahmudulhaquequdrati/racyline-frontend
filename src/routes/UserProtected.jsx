@@ -8,7 +8,7 @@ const UserProtected = ({ children }) => {
 
   const { user, accessToken } = state || {};
 
-  console.log(user);
+  // console.log(user);
 
   return user &&
     user?.role === "user" &&

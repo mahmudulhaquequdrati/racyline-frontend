@@ -24,9 +24,8 @@ function MedicalRecord() {
   const selectedPetIndex = location?.state?.petInfoIndex;
   const isExistPets = JSON.parse(localStorage.getItem("petsData"));
   const [selected, setSelected] = useState(
-    selectedPetIndex !== undefined
-      ? isExistPets[parseInt(selectedPetIndex)]?.general_information?.sex
-      : 0
+    selectedPetIndex !== undefined &&
+      isExistPets[parseInt(selectedPetIndex)]?.general_information?.sex
   );
   const [inputData, setInputData] = useState({
     animalName: "",
@@ -95,7 +94,7 @@ function MedicalRecord() {
       medical_history: {},
     };
 
-    if (pathName === "/user/all-pet-info" && selectedPetIndex) {
+    if (pathName === "/user/add-pet-info" && selectedPetIndex) {
       isExistPets[selectedPetIndex]["general_information"] =
         petInfo?.general_information;
       localStorage.setItem("petsData", JSON.stringify(isExistPets));
@@ -134,7 +133,7 @@ function MedicalRecord() {
   }, [setInputData]);
 
   useEffect(() => {
-    if (isExistPets.length > 0) {
+    if (isExistPets?.length > 0) {
       const getPetInfo = isExistPets[parseInt(selectedPetIndex)];
       setInputData({
         animalName: getPetInfo?.general_information?.animal_name,
@@ -147,8 +146,7 @@ function MedicalRecord() {
         sex: getPetInfo?.general_information?.sex,
       });
     }
-  }, [isExistPets.length]);
-  console.log(inputData);
+  }, [isExistPets?.length]);
 
   return (
     <section className="flex justify-center items-center bg-primary py-16 px-4 border-[1px] border-[#EAEAEB]">

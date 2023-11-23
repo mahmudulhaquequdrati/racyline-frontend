@@ -136,7 +136,9 @@ function CompleteMedicalRecord() {
   const navigate = useNavigate();
   const location = useLocation();
   const pathName = location?.pathname;
-  const selectedPetIndex = parseInt(location?.state?.petInfoIndex) || 0;
+  const selectedPetIndex =
+    location?.state?.petInfoIndex !== undefined &&
+    parseInt(location?.state?.petInfoIndex);
   const petsData = JSON.parse(localStorage.getItem("petsData"));
   // console.log(selectedPetIndex);
 
@@ -218,12 +220,12 @@ function CompleteMedicalRecord() {
     }));
   };
 
-  console.log(inputData);
+  // console.log(inputData);
 
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem("petsData"));
-    console.log(data[selectedPetIndex]?.medical_history?.medical_history);
-    console.log(data[selectedPetIndex]?.medical_history?.additional_notes);
+    // console.log(data[selectedPetIndex]?.medical_history?.medical_history);
+    // console.log(data[selectedPetIndex]?.medical_history?.additional_notes);
 
     setInputData((input) => ({
       ...input,
@@ -231,7 +233,7 @@ function CompleteMedicalRecord() {
       AdditionalNotes:
         data[selectedPetIndex]?.medical_history?.additional_notes,
     }));
-    console.log(inputData);
+    // console.log(inputData);
   }, [setInputData]);
 
   //  handle form submit
