@@ -179,9 +179,11 @@ function CompleteMedicalRecord() {
         previusNotes[newNoteOpen?.noteIndex].title = note?.title;
         previusNotes[newNoteOpen?.noteIndex].description = note?.description;
         previusNotes[newNoteOpen?.noteIndex].date = note?.date;
-        previusNotes[newNoteOpen?.noteIndex].report_file = [note?.report_file];
+        previusNotes[newNoteOpen?.noteIndex].report_file = [
+          ...note?.report_file,
+        ];
         previusNotes[newNoteOpen?.noteIndex].selectedImage = [
-          note?.selectedImage,
+          ...note?.selectedImage,
         ];
         return previusNotes;
       });

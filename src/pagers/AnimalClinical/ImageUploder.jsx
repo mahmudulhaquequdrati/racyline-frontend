@@ -11,27 +11,25 @@ const ImageUploader = ({
 }) => {
   useEffect(() => {
     const uploadImages = async () => {
-      if (selectedImages.length > 1) {
-        // Check if multiple images are selected
-        const formData = new FormData();
-        for (const image of selectedImages) {
-          formData.append("image", image);
-          const response = await axios.post(
-            `https://api.imgbb.com/1/upload?key=${API_KEY}`,
-            formData
-          );
-          const imageUrls = response.data.data.url;
-          setNote((prev) => ({
-            ...prev,
-            report_file: [...prev?.report_file, imageUrls],
-            selectedImage: [...prev?.selectedImage, image.name],
-          }));
-        }
+      // Check if multiple images are selected
+      const formData = new FormData();
+      for (const image of selectedImages) {
+        formData.append("image", image);
+        const response = await axios.post(
+          `https://api.imgbb.com/1/upload?key=${API_KEY}`,
+          formData
+        );
+        const imageUrls = response.data.data.url;
+        setNote((prev) => ({
+          ...prev,
+          report_file: [...prev?.report_file, imageUrls],
+          selectedImage: [...prev?.selectedImage, image.name],
+        }));
+      }
 
-        try {
-        } catch (error) {
-          console.error(error);
-        }
+      try {
+      } catch (error) {
+        console.error(error);
       }
     };
 
