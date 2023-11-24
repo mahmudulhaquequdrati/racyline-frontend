@@ -24,6 +24,7 @@ const ImageUploader = ({
           setNote((prev) => ({
             ...prev,
             report_file: [...prev?.report_file, imageUrls],
+            selectedImage: [...prev?.selectedImage, image.name],
           }));
         }
 
@@ -40,10 +41,6 @@ const ImageUploader = ({
   const handleImageSelect = (event) => {
     const newSelectedImages = event.target.files;
     setSelectedImages(newSelectedImages);
-    setNote((prev) => ({
-      ...prev,
-      selectedImage: newSelectedImages,
-    }));
   };
 
   return (

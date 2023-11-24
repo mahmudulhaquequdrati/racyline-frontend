@@ -133,13 +133,16 @@ function CompleteMedicalRecord() {
     parseInt(location?.state?.petInfoIndex);
   const petsData = JSON.parse(localStorage.getItem("petsData"));
   const [notes, setNotes] = useState(
-    petsData[selectedPetIndex]?.medical_history?.medical_diary
+    petsData[selectedPetIndex]?.medical_history?.medical_diary !== undefined
+      ? petsData[selectedPetIndex]?.medical_history?.medical_diary
+      : []
   );
   const [note, setNote] = useState({
     title: "",
     description: "",
     date: "",
     report_file: [],
+    selectedImage: [],
   });
 
   // console.log(selectedPetIndex);
@@ -176,7 +179,10 @@ function CompleteMedicalRecord() {
         previusNotes[newNoteOpen?.noteIndex].title = note?.title;
         previusNotes[newNoteOpen?.noteIndex].description = note?.description;
         previusNotes[newNoteOpen?.noteIndex].date = note?.date;
-        previusNotes[newNoteOpen?.noteIndex].report_file = [];
+        previusNotes[newNoteOpen?.noteIndex].report_file = [note?.report_file];
+        previusNotes[newNoteOpen?.noteIndex].selectedImage = [
+          note?.selectedImage,
+        ];
         return previusNotes;
       });
     }
@@ -185,6 +191,7 @@ function CompleteMedicalRecord() {
       description: "",
       date: "",
       report_file: [],
+      selectedImage: [],
     });
     setNewNoteOpen({
       ...newNoteOpen,
@@ -315,7 +322,7 @@ function CompleteMedicalRecord() {
     }
   }, [setInputData]);
 
-  console.log({ note });
+  console.log({ notes });
 
   return (
     <section className="flex flex-col justify-center items-center bg-primary pb-16 px-4 pt-8 border-[1px] border-[#EAEAEB]">
@@ -491,14 +498,14 @@ function CompleteMedicalRecord() {
                     />
                     {/* files name  */}
                     <div>
-                      {Object.keys(selectedImages)?.map((key, i) => (
+                      {note?.selectedImage?.map((key, i) => (
                         <div
                           key={i}
                           className="flex flex-col md:flex-row gap-2 items-center justify-between border-b py-4"
                         >
                           <div className="flex gap-[10px]">
                             <span> {checkIcons}</span>
-                            <p> {selectedImages[key]?.name} </p>
+                            <p> {key} </p>
                           </div>
 
                           <button> {cancelIcons} </button>
@@ -574,12 +581,12 @@ function CompleteMedicalRecord() {
 
                   <div className="py-3 flex gap-1 flex-wrap">
                     {item?.selectedImage &&
-                      Object.keys(item?.selectedImage).map((file, FIdx) => (
+                      item?.selectedImage?.map((file, FIdx) => (
                         <span
                           key={FIdx}
                           className="py-1.5 px-3 max-w-max rounded-lg text-[#00000066] bg-[#E5E7EC99]"
                         >
-                          {item?.selectedImage[file].name}
+                          {file}
                         </span>
                       ))}
                   </div>
