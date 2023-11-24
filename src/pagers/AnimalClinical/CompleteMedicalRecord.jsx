@@ -124,8 +124,17 @@ const checkIcons = (
 );
 
 function CompleteMedicalRecord() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const pathName = location?.pathname;
   const [selectedImages, setSelectedImages] = useState([]);
-  const [notes, setNotes] = useState([]);
+  const selectedPetIndex =
+    location?.state?.petInfoIndex !== undefined &&
+    parseInt(location?.state?.petInfoIndex);
+  const petsData = JSON.parse(localStorage.getItem("petsData"));
+  const [notes, setNotes] = useState(
+    petsData[selectedPetIndex]?.medical_history?.medical_diary
+  );
   const [note, setNote] = useState({
     title: "",
     description: "",
@@ -133,21 +142,15 @@ function CompleteMedicalRecord() {
     report_file: [],
   });
 
-  const navigate = useNavigate();
-  const location = useLocation();
-  const pathName = location?.pathname;
-  const selectedPetIndex =
-    location?.state?.petInfoIndex !== undefined &&
-    parseInt(location?.state?.petInfoIndex);
-  const petsData = JSON.parse(localStorage.getItem("petsData"));
   // console.log(selectedPetIndex);
-
+  console.log(notes);
   const [inputData, setInputData] = useState({
     medicalHistory:
       petsData[selectedPetIndex]?.medical_history?.medical_history || "",
     AdditionalNotes:
       petsData[selectedPetIndex]?.medical_history?.additional_notes || "",
   });
+  console.log(inputData);
   const [isLoading, setIsLoading] = useState();
   const [fieldError, setFieldError] = useState(false);
 
@@ -163,13 +166,13 @@ function CompleteMedicalRecord() {
 
     if (!newNoteOpen?.isEditingMode && !newNoteOpen?.noteIndex) {
       setNotes((prevNotes) => {
-        const previusNotes = [...prevNotes];
+        let previusNotes = [...prevNotes];
         previusNotes.push(note);
         return previusNotes;
       });
     } else if (newNoteOpen?.isEditingMode) {
       setNotes((prevNotes) => {
-        const previusNotes = [...prevNotes];
+        let previusNotes = [...prevNotes];
         previusNotes[newNoteOpen?.noteIndex].title = note?.title;
         previusNotes[newNoteOpen?.noteIndex].description = note?.description;
         previusNotes[newNoteOpen?.noteIndex].date = note?.date;
@@ -245,7 +248,7 @@ function CompleteMedicalRecord() {
       additional_notes: inputData?.AdditionalNotes || "",
     };
 
-    const isExistPets = JSON.parse(localStorage.getItem("petsData"));
+    let isExistPets = JSON.parse(localStorage.getItem("petsData"));
     if (pathName === "/user/add-pet-info" && parseInt(selectedPetIndex)) {
       isExistPets[selectedPetIndex]["medical_history"] =
         inputData?.medicalHistory;
@@ -311,6 +314,8 @@ function CompleteMedicalRecord() {
       }
     }
   }, [setInputData]);
+
+  console.log({ note });
 
   return (
     <section className="flex flex-col justify-center items-center bg-primary pb-16 px-4 pt-8 border-[1px] border-[#EAEAEB]">

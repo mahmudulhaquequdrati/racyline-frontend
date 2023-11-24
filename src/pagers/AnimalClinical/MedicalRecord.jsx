@@ -27,6 +27,7 @@ function MedicalRecord() {
     selectedPetIndex !== undefined &&
       isExistPets[parseInt(selectedPetIndex)]?.general_information?.sex
   );
+
   const [inputData, setInputData] = useState({
     animalName: "",
     specie: "",

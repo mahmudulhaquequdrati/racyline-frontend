@@ -59,7 +59,35 @@ function AddPetsMedicalRecords() {
 
   // Redirecting to add pet info page
   const handleRedirectAddPet = () => {
-    return navigate("/user/add-pet-info");
+    if (petsData) {
+      localStorage.setItem(
+        "petsData",
+        JSON.stringify([
+          ...petsData,
+          {
+            general_information: {},
+            medical_history: {},
+          },
+        ])
+      );
+    } else {
+      localStorage.setItem(
+        "petsData",
+        JSON.stringify([
+          {
+            general_information: {},
+            medical_history: {},
+          },
+        ])
+      );
+    }
+    return navigate("/user/add-pet-info", {
+      replace: true,
+      state: {
+        ...location,
+        petInfoIndex: `${petsData ? petsData?.length : 0}`,
+      },
+    });
   };
 
   // Deleting a pets info
@@ -94,7 +122,7 @@ function AddPetsMedicalRecords() {
     }
   }, [isSuccess, dispatch]);
 
-  // console.log(user);
+  console.log(petsData);
 
   return (
     <section className="flex flex-col justify-center items-center bg-primary pb-16 px-4 pt-8 border-[1px] border-[#EAEAEB]">
