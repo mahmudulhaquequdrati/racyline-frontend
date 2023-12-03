@@ -173,6 +173,10 @@ function CompleteMedicalRecord() {
         previusNotes.push(note);
         return previusNotes;
       });
+      setNewNoteOpen({
+        ...newNoteOpen,
+        isOpen: false,
+      });
     } else if (newNoteOpen?.isEditingMode) {
       setNotes((prevNotes) => {
         let previusNotes = [...prevNotes];
@@ -187,6 +191,11 @@ function CompleteMedicalRecord() {
         ];
         return previusNotes;
       });
+      setNewNoteOpen({
+        isOpen: false,
+        isEditingMode: false,
+        noteIndex: null,
+      });
     }
     setNote({
       title: "",
@@ -194,10 +203,6 @@ function CompleteMedicalRecord() {
       date: "",
       report_file: [],
       selectedImage: [],
-    });
-    setNewNoteOpen({
-      ...newNoteOpen,
-      isOpen: false,
     });
   };
 
@@ -324,7 +329,15 @@ function CompleteMedicalRecord() {
     }
   }, [setInputData]);
 
-  console.log({ notes });
+  const handleDeleteImg = (ind) => {
+    setNote((prev) => {
+      return {
+        ...prev,
+        selectedImage: note.selectedImage?.filter((d, i) => i !== ind),
+        report_file: note.report_file?.filter((d, i) => i !== ind),
+      };
+    });
+  };
 
   return (
     <section className="flex flex-col justify-center items-center bg-primary pb-16 px-4 pt-8 border-[1px] border-[#EAEAEB]">
@@ -359,18 +372,20 @@ function CompleteMedicalRecord() {
           {/* Mdical history field ends  */}
 
           {/* Add note component start */}
-          {!newNoteOpen?.isOpen && (
-            <div
-              className={`transition duration-300 w-full ${
-                newNoteOpen?.isOpen
-                  ? "invisible opacity-0 h-0 "
-                  : "visible opacity-1 h-auto mt-10"
-              }`}
-            >
+          <div
+            className={` ${
+              !newNoteOpen?.isOpen && notes?.length > 0
+                ? "flex flex-col mt-10 md:flex-row justify-between items-center"
+                : "h-auto mt-10"
+            } `}
+          >
+            <div>
               <h3 className="text-lg font-bold leading-10">Diario Medico</h3>
               <p className="text-[15px] text-[#000000] mb-5">
                 Aggiungi eventuali note mediche del tuo animale
               </p>
+            </div>
+            {!newNoteOpen?.isOpen && notes?.length < 1 && (
               <button
                 onClick={() => {
                   setNewNoteOpen({
@@ -378,31 +393,17 @@ function CompleteMedicalRecord() {
                     isOpen: !newNoteOpen?.isOpen,
                   });
                 }}
-                className="flex gap-3 justify-center items-center py-5 border border-dashed mb-4 cursor-pointer rounded-lg w-full"
+                className={`${
+                  newNoteOpen?.isOpen || notes?.length > 1 ? "hidden" : "flex"
+                } gap-3 justify-center items-center py-5 border border-dashed mb-4 cursor-pointer rounded-lg w-full`}
               >
                 <span> {plusIcons} </span>
                 <p className="text-center text-[15px] text-[#000000]">
-                  Aggiungi un nuovo animale
+                  Aggiungi un nuova nota medica
                 </p>
               </button>
-            </div>
-          )}
-          {/* add medical diary */}
-          <div>
-            <div
-              className={` ${
-                newNoteOpen?.isOpen
-                  ? "visible opacity-1 h-auto mt-10 flex flex-col md:flex-row justify-between items-center"
-                  : "invisible opacity-0 h-0 "
-              } `}
-            >
-              <div>
-                <h3 className="text-lg font-bold leading-10">Diario Medico</h3>
-                <p className="text-[15px] text-[#000000] mb-5">
-                  Aggiungi eventuali note mediche del tuo animale
-                </p>
-              </div>
-
+            )}
+            {!newNoteOpen?.isOpen && notes?.length > 0 && (
               <button
                 onClick={() => {
                   setNewNoteOpen({
@@ -410,12 +411,16 @@ function CompleteMedicalRecord() {
                     isOpen: !newNoteOpen?.isOpen,
                   });
                 }}
-                className="flex gap-3 justify-center items-center py-5 mb-4 cursor-pointer rounded-lg"
+                className={`${
+                  !newNoteOpen?.isOpen || notes?.length > 1 ? "flex" : "hidden"
+                } gap-3 justify-center items-center py-5 mb-4 cursor-pointer rounded-lg`}
               >
                 <span>{plusIcons}</span>
               </button>
-            </div>
-
+            )}
+          </div>
+          {/* add medical diary */}
+          <div>
             {/* Add note component start here  */}
 
             <div
@@ -426,12 +431,14 @@ function CompleteMedicalRecord() {
               } `}
             >
               <p className="text-lg font-bold leading-10">
-                Aggiungi un nuova nota medica
+                {newNoteOpen?.isEditingMode
+                  ? "Modifica la nota medica"
+                  : "Aggiungi un nuova nota medica"}
               </p>
 
               <div>
                 {/* Data field  */}
-                <input
+                {/* <input
                   type="text"
                   value={note?.title}
                   onChange={(e) => setNote({ ...note, title: e.target.value })}
@@ -441,7 +448,7 @@ function CompleteMedicalRecord() {
                       ? "border-red-500"
                       : "border-[#E5E7EC] "
                   } `}
-                />
+                /> */}
 
                 {/* date input  */}
                 <input
@@ -510,26 +517,11 @@ function CompleteMedicalRecord() {
                             <p> {key} </p>
                           </div>
 
-                          <button> {cancelIcons} </button>
+                          <button onClick={() => handleDeleteImg(i)}>
+                            {cancelIcons}{" "}
+                          </button>
                         </div>
                       ))}
-                      {/* <div className="flex flex-col md:flex-row gap-2 items-center justify-between border-b py-4">
-                        <div className="flex gap-[10px]">
-                          <span> {loadingIcons}</span>
-                          <p> name_file1.pdf </p>
-                        </div>
-
-                        <button> {cancelLoadingIcons} </button>
-                      </div>
-
-                      <div className="flex flex-col md:flex-row gap-2 items-center justify-between py-4">
-                        <div className="flex gap-[10px]">
-                          <span> {checkIcons}</span>
-                          <p> name_file2.pdf </p>
-                        </div>
-
-                        <button> {cancelIcons} </button>
-                      </div> */}
                     </div>
                     <div
                       onClick={(e) => addNoteHandler(e)}
@@ -568,49 +560,96 @@ function CompleteMedicalRecord() {
 
             {/* Add note component ends here  */}
           </div>
+          {newNoteOpen?.isEditingMode ? (
+            <>
+              {notes
+                ?.filter((fill, i) => i !== newNoteOpen?.noteIndex)
+                ?.map((item, idx) => (
+                  <div key={idx} className="border rounded-lg p-4 mt-4">
+                    <div className="flex flex-col md:flex-row items-center justify-between ">
+                      <h5 className="font-normal text-[15px]">
+                        {item?.description}
+                      </h5>
+                      <p className="text-[#00000066]"> {item?.date} </p>
+                    </div>
 
-          {/* all notes */}
-          {notes?.length > 0 && (
-            <div>
-              <h4 className="font-semibold text-base">Tutte le note</h4>
+                    <div className="py-3 flex gap-1 flex-wrap">
+                      {item?.selectedImage &&
+                        item?.selectedImage?.map((file, FIdx) => (
+                          <span
+                            key={FIdx}
+                            className="py-1.5 px-3 max-w-max rounded-lg text-[#00000066] bg-[#E5E7EC99]"
+                          >
+                            {file}
+                          </span>
+                        ))}
+                    </div>
 
-              {notes?.map((item, idx) => (
-                <div key={idx} className="border rounded-lg p-4 mt-4">
-                  <div className="flex flex-col md:flex-row items-center justify-between ">
-                    <h5 className="font-normal text-[15px]">{item?.title}</h5>
-                    <p className="text-[#00000066]"> {item?.date} </p>
+                    <div className="flex gap-4 mt-2">
+                      <button
+                        onClick={(e) => editNoteHandler(e, idx)}
+                        className={`w-full rounded-lg py-3 px-4 outline-none text-secondary border-secondary border hover:bg-secondary hover:text-white transition duration-300`}
+                      >
+                        Modifica cartella clinica
+                      </button>
+                      <button
+                        onClick={(e) => deleteNoteHandler(e, idx)}
+                        className={`w-full rounded-lg py-3 px-4 outline-none text-secondary border-secondary border hover:bg-secondary hover:text-white transition duration-300`}
+                      >
+                        Elimina
+                      </button>
+                    </div>
                   </div>
+                ))}
+            </>
+          ) : (
+            <>
+              {notes?.length > 0 && (
+                <div>
+                  <h4 className="font-semibold text-base">Tutte le note</h4>
 
-                  <div className="py-3 flex gap-1 flex-wrap">
-                    {item?.selectedImage &&
-                      item?.selectedImage?.map((file, FIdx) => (
-                        <span
-                          key={FIdx}
-                          className="py-1.5 px-3 max-w-max rounded-lg text-[#00000066] bg-[#E5E7EC99]"
+                  {notes?.map((item, idx) => (
+                    <div key={idx} className="border rounded-lg p-4 mt-4">
+                      <div className="flex flex-col md:flex-row items-center justify-between ">
+                        <h5 className="font-normal text-[15px]">
+                          {item?.description}
+                        </h5>
+                        <p className="text-[#00000066]"> {item?.date} </p>
+                      </div>
+
+                      <div className="py-3 flex gap-1 flex-wrap">
+                        {item?.selectedImage &&
+                          item?.selectedImage?.map((file, FIdx) => (
+                            <span
+                              key={FIdx}
+                              className="py-1.5 px-3 max-w-max rounded-lg text-[#00000066] bg-[#E5E7EC99]"
+                            >
+                              {file}
+                            </span>
+                          ))}
+                      </div>
+
+                      <div className="flex gap-4 mt-2">
+                        <button
+                          onClick={(e) => editNoteHandler(e, idx)}
+                          className={`w-full rounded-lg py-3 px-4 outline-none text-secondary border-secondary border hover:bg-secondary hover:text-white transition duration-300`}
                         >
-                          {file}
-                        </span>
-                      ))}
-                  </div>
-
-                  <div className="flex gap-4 mt-2">
-                    <button
-                      onClick={(e) => editNoteHandler(e, idx)}
-                      className={`w-full rounded-lg py-3 px-4 outline-none text-secondary border-secondary border hover:bg-secondary hover:text-white transition duration-300`}
-                    >
-                      Modifica cartella clinica
-                    </button>
-                    <button
-                      onClick={(e) => deleteNoteHandler(e, idx)}
-                      className={`w-full rounded-lg py-3 px-4 outline-none text-secondary border-secondary border hover:bg-secondary hover:text-white transition duration-300`}
-                    >
-                      Elimina
-                    </button>
-                  </div>
+                          Modifica cartella clinica
+                        </button>
+                        <button
+                          onClick={(e) => deleteNoteHandler(e, idx)}
+                          className={`w-full rounded-lg py-3 px-4 outline-none text-secondary border-secondary border hover:bg-secondary hover:text-white transition duration-300`}
+                        >
+                          Elimina
+                        </button>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              )}
+            </>
           )}
+          {/* all notes */}
 
           {/* Note aggiuntive start here */}
 

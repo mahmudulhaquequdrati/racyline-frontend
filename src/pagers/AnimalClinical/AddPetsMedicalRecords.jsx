@@ -44,7 +44,7 @@ function AddPetsMedicalRecords() {
   ] = useCreatePetInfoMutation();
   const dispatch = useDispatch();
   const petsData = JSON.parse(localStorage.getItem("petsData"));
-
+  console.log(user);
   // Saving the pet info
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -54,6 +54,10 @@ function AddPetsMedicalRecords() {
     };
     if (petsInfo?.length > 0) {
       createPetInfo(data);
+    } else {
+      dispatch(getUserInfo(user));
+      localStorage.removeItem("petsData");
+      navigate("/user/vet-lists");
     }
   };
 
@@ -121,8 +125,6 @@ function AddPetsMedicalRecords() {
       navigate("/user/vet-lists");
     }
   }, [isSuccess, dispatch]);
-
-  console.log(petsData);
 
   return (
     <section className="flex flex-col justify-center items-center bg-primary pb-16 px-4 pt-8 border-[1px] border-[#EAEAEB]">
@@ -193,12 +195,21 @@ function AddPetsMedicalRecords() {
                 </div>
               </div>
             ))}
-          <button
-            onClick={(e) => handleSubmit(e)}
-            className={`w-full rounded-lg py-3 px-4 outline-none text-secondary border-secondary border hover:bg-secondary hover:text-white transition duration-300`}
-          >
-            Salta e concludi la registrazione
-          </button>
+          {petsData?.length > 0 ? (
+            <button
+              onClick={(e) => handleSubmit(e)}
+              className={`w-full rounded-lg py-3 px-4 outline-none text-white bg-secondary border-secondary border hover:bg-white hover:text-secondary transition duration-300`}
+            >
+              Concludi la registrazione
+            </button>
+          ) : (
+            <button
+              onClick={(e) => handleSubmit(e)}
+              className={`w-full rounded-lg py-3 px-4 outline-none text-secondary border-secondary border hover:bg-secondary hover:text-white transition duration-300`}
+            >
+              Salta e concludi la registrazione
+            </button>
+          )}
         </div>
 
         <p className="text-center text-[15px] mt-10 text-[#00000066]">

@@ -10,10 +10,10 @@ import { useRegisterMutation } from "../../features/auth/authApi";
 
 const genders = [
   {
-    gender: "maschia",
+    gender: "Maschia",
   },
   {
-    gender: "femmina",
+    gender: "Femmina",
   },
 ];
 
@@ -330,8 +330,6 @@ function MedicalRecord() {
               </div>
             </Listbox>
           </div>
-
-          <hr className="outline-1 border[#ddd]" />
 
           <h3 className="text-lg font-bold leading-10">Microchip</h3>
           <div>

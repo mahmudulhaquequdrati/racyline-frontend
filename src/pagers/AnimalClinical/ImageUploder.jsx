@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { notifyError } from "../../components/common/Toast/Toast";
 
 const API_KEY = "c8818fe821c0aee81ebf0b77344f0e2b";
 
@@ -38,7 +39,22 @@ const ImageUploader = ({
 
   const handleImageSelect = (event) => {
     const newSelectedImages = event.target.files;
-    setSelectedImages(newSelectedImages);
+    if (newSelectedImages.length <= 3) {
+      // Check the size of each selected image
+      const isValidSize = Array.from(newSelectedImages).every(
+        (file) => file.size <= 5 * 1024 * 1024 // 5 MB in bytes
+      );
+
+      if (isValidSize) {
+        setSelectedImages(newSelectedImages);
+      } else {
+        // Handle case where at least one file exceeds 5 MB
+        notifyError("Please make sure all selected images are within 5 MB.");
+      }
+    } else {
+      // Handle case where the number of selected images is not between 3 and 5
+      notifyError("Please select maximum 3 images.");
+    }
   };
 
   return (
