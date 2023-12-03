@@ -116,7 +116,7 @@ const VetList = ({ vetInfo }) => {
           </h3>
           <div className="flex gap-1">
             {doctor_type2?.length > 0 && (
-              <>
+              <div>
                 {doctor_type2?.map((d, i) => {
                   return (
                     <span className="text-[14px]">
@@ -125,7 +125,7 @@ const VetList = ({ vetInfo }) => {
                     </span>
                   );
                 })}
-              </>
+              </div>
             )}
           </div>
         </div>

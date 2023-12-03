@@ -53,6 +53,7 @@ export default function VetCalender({ setNewDate }) {
   return (
     <div className="max-w-[1140px] w-full mx-auto">
       <Calendar
+        minDate={new Date()}
         onChange={onChange}
         value={value}
         className={"customizeCalender"}

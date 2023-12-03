@@ -47,9 +47,9 @@ const Appointment = () => {
       phone: appointment?.phone,
       userEmail: appointment?.email,
       reasonVisit: appointment?.reasonVisit,
-      appointmentDate: "",
-      appointmentTime: "",
-      vetInfo: data?.vetInfo,
+      appointmentDate: data?.appointDate?.date,
+      appointmentTime: data?.appointDate?.time,
+      vetInfo: { ...data?.vetInfo, doctor_type1: data?.vetInfo?.name },
     };
 
     createAppointment(appointmentData);

@@ -52,7 +52,7 @@ const AppointmentSuccess = () => {
                 {data?.vetInfo?.first_name + " " + data?.vetInfo?.last_name}
               </h1>
               <p className="text-[14px] leading-5 font-medium mb-[10px]">
-                {data?.vetInfo?.doctor_type1}
+                {data?.vetInfo?.doctor_type1?.name}
               </p>
               <p className="flex items-center gap-[6px] text-[#666666] text-[13px] font-normal leading-[22px]">
                 <span>
