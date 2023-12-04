@@ -52,11 +52,11 @@ const VetLists = () => {
   }
   if (!isLoading && !isError && vetLists?.vetList?.length > 0) {
     content = (
-      <>
+      <div>
         {vetLists?.vetList?.map((vetList) => (
           <VetList vetInfo={vetList} key={vetList?.id} />
         ))}
-      </>
+      </div>
     );
   }
   if (!isLoading && !isError && vetLists?.vetList?.length === 0) {

@@ -3,11 +3,11 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { sendDataToAppontment } from "../../features/appointment/appointmentSlice";
 import VetCalender from "./Calender";
+import { notifyError } from "../../components/common/Toast/Toast";
 
 const VetList = ({ vetInfo }) => {
-  const [newDate, setNewDate] = useState(null);
   const [appointmentDate, setAppointmentDate] = useState({
-    time: newDate,
+    time: null,
     date: new Date(),
   });
   const dispatch = useDispatch();
@@ -47,28 +47,28 @@ const VetList = ({ vetInfo }) => {
     "11:30 PM",
   ];
   const handelGetAppointment = () => {
-    const appointmentData = {
-      vetInfo: {
-        vetId: _id,
-        vetEmail: email,
-        first_name,
-        last_name,
-        profile_image_url,
-        veterinary_address,
-        doctor_type1,
-      },
-      appointDate: {
-        time: appointmentDate?.time,
-        date: appointmentDate?.date,
-      },
-    };
-    dispatch(sendDataToAppontment(appointmentData));
-    navigate("/user/new-appointment");
+    if (appointmentDate?.time !== null) {
+      const appointmentData = {
+        vetInfo: {
+          vetId: _id,
+          vetEmail: email,
+          first_name,
+          last_name,
+          profile_image_url,
+          veterinary_address,
+          doctor_type1,
+        },
+        appointDate: {
+          time: appointmentDate?.time,
+          date: appointmentDate?.date,
+        },
+      };
+      dispatch(sendDataToAppontment(appointmentData));
+      navigate("/user/new-appointment");
+    } else {
+      notifyError("Please select the time!");
+    }
   };
-
-  useEffect(() => {
-    setAppointmentDate({ ...appointmentDate, time: newDate });
-  }, []);
 
   return (
     <div className="flex text-black flex-col md:flex-row bg-white rounded-lg overflow-hidden">
@@ -181,7 +181,10 @@ const VetList = ({ vetInfo }) => {
       <div className="w-full md:w-1/2 p-6 border-l-[0.5px] border-[#E5E7EC]">
         <div className="flex flex-col sm:flex-row gap-4 mb-4">
           <div className="w-full sm:w-1/2">
-            <VetCalender setNewDate={setNewDate} />
+            <VetCalender
+              appointmentDate={appointmentDate}
+              setAppointmentDate={setAppointmentDate}
+            />
           </div>
           <div className="w-full sm:w-1/2 flex flex-wrap gap-3">
             {time?.map((t, index) => (
@@ -190,7 +193,6 @@ const VetList = ({ vetInfo }) => {
                   setAppointmentDate({
                     ...appointmentDate,
                     time: t,
-                    date: new Date(),
                   })
                 }
                 key={index}

@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import GoogleIcon from "../../assets/ICONS/google.svg";
 import { notifyError } from "../../components/common/Toast/Toast";
 import { useLoginMutation } from "../../features/auth/authApi";
-import { userLoggedIn } from "../../features/auth/authSlice";
+import { userLoggedIn, userLoggedOut } from "../../features/auth/authSlice";
 import { useGoogleLoginMutation } from "../../features/auth/googleAuthApi";
 
 function Login() {
@@ -17,6 +17,11 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
+  const handleLogut = () => {
+    localStorage.clear();
+    dispatch(userLoggedOut());
+    navigate("/vets/login");
+  };
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -48,11 +53,17 @@ function Login() {
           }
           googleLogin({ code: response.code, role: "vet_admin" }).then(
             (res) => {
-              dispatch(userLoggedIn(res?.data?.data));
-              if (res?.data?.data?.user?.already_connected) {
-                navigate("/vets/my-appointment");
+              console.log(res);
+              if (res?.data?.data?.user?.role === "user") {
+                notifyError("you are not a user!");
+                handleLogut();
               } else {
-                navigate("/registration-with-google");
+                dispatch(userLoggedIn(res?.data?.data));
+                if (res?.data?.data?.user?.already_connected) {
+                  navigate("/vets/my-appointment");
+                } else {
+                  navigate("/registration-with-google");
+                }
               }
             }
           );

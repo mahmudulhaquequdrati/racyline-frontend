@@ -1,16 +1,18 @@
 /* eslint-disable no-unused-vars */
+import axios from "axios";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 
 function UserNumber() {
+  const { user } = useSelector((state) => state.auth);
+  console.log(user);
   const navigate = useNavigate();
   const location = useLocation();
   const [inputData, setInputData] = useState({
     phone: "",
   });
   const [isLoading, setIsLoading] = useState(false);
-  // const [register, { data: UserLoggedInData, isError }] = useRegisterMutation();
-  // const dispatch = useDispatch();
   const [error, setError] = useState("");
   const [feildError, setFeildError] = useState(false);
   const registerUser = (e) => {
@@ -19,24 +21,26 @@ function UserNumber() {
       setFeildError(false);
       setIsLoading(true);
       //! must save phone number to database
-      navigate("/user/all-pet-info", {
-        state: { user: location.state },
-      });
+      axios
+        .post(`${import.meta.env.VITE_SERVER_LINK}/guser/update/${user?._id}`, {
+          phone: inputData?.phone,
+        })
+        .then((res) => {
+          if (res?.data) {
+            navigate("/user/all-pet-info", {
+              state: { user: location.state },
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
       // register(inputData);
     } else {
       setFeildError(true);
     }
   };
-
-  // useEffect(() => {
-  //   if (isError) {
-  //     alert("Something went wrong");
-  //   }
-  //   if (UserLoggedInData?.data?.accessToken) {
-  //     dispatch(userLoggedIn(UserLoggedInData?.data));
-  //     navigate("/user/vet-lists");
-  //   }
-  // }, [UserLoggedInData, isError, navigate]);
 
   const handleInputChange = (event) => {
     setInputData((inputs) => ({

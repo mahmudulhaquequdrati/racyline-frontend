@@ -12,9 +12,13 @@ import {
   useUpdateUserDataMutation,
 } from "../../features/userData/userDataApi";
 import AccountDeletatioModal from "./AccountDeletationModal";
+import { useGetUserInfoQuery } from "../../features/auth/authApi";
 
 const UserSettings = () => {
-  const { user } = useSelector((state) => state.auth);
+  const { user, accessToken } = useSelector((state) => state.auth);
+  const { data: userupdate } = useGetUserInfoQuery(undefined, {
+    skip: !accessToken,
+  });
   const [userData, setUserData] = useState({
     first_name: user?.first_name,
     last_name: user?.last_name,
@@ -70,6 +74,7 @@ const UserSettings = () => {
       } else if (!isLoading && data?.data?._id) {
         const { email, first_name, last_name, phone, _id } = data?.data;
         notifySuccess("user data updated!");
+        console.log(userupdate);
         setUserData({ first_name, last_name, phone, email });
       }
     }

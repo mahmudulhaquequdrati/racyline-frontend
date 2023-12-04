@@ -18,7 +18,6 @@ function UserLogin() {
   ] = useGoogleLoginMutation();
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [notUser, setNotUser] = useState("");
   const dispatch = useDispatch();
   const handleLogut = () => {
     localStorage.clear();
@@ -59,7 +58,7 @@ function UserLogin() {
           }
           googleLogin({ code: response.code, role: "user" }).then((res) => {
             if (res?.data?.data?.user?.role === "vet_admin") {
-              setNotUser("you are not a user");
+              notifyError("you are not a user!");
               handleLogut();
             } else {
               // if(res.data.user.data.)
@@ -159,15 +158,6 @@ function UserLogin() {
               </p>
             </button>
           </div>
-          {notUser && (
-            <div>
-              <Link to={"/user/registration"} className="no-underline">
-                <p className="text-center text-[15px] text-red-500">
-                  {notUser}
-                </p>
-              </Link>
-            </div>
-          )}
           <div>
             <Link to={"/user/registration"} className="no-underline">
               <p className="text-center text-[15px]">

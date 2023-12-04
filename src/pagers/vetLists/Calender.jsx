@@ -1,5 +1,5 @@
 import moment from "moment/moment";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
@@ -35,27 +35,21 @@ const PrevIcon = () => {
   );
 };
 
-export default function VetCalender({ setNewDate }) {
-  const [value, onChange] = useState(new Date());
-  var daysOfWeek = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
-
-  var dayName = daysOfWeek[value.getDay()];
-  setNewDate(dayName);
-
+export default function VetCalender({ appointmentDate, setAppointmentDate }) {
+  const onDateChange = (val) => {
+    setAppointmentDate((prev) => {
+      return {
+        ...prev,
+        date: val,
+      };
+    });
+  };
   return (
     <div className="max-w-[1140px] w-full mx-auto">
       <Calendar
         minDate={new Date()}
-        onChange={onChange}
-        value={value}
+        onChange={onDateChange}
+        value={appointmentDate?.date}
         className={"customizeCalender"}
         prev2Label={null}
         next2Label={null}
