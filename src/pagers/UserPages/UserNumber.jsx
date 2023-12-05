@@ -6,7 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 function UserNumber() {
   const { user } = useSelector((state) => state.auth);
-  console.log(user);
+
   const navigate = useNavigate();
   const location = useLocation();
   const [inputData, setInputData] = useState({

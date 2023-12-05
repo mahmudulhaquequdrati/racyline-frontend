@@ -56,13 +56,13 @@ const Appointment = () => {
   };
 
   useEffect(() => {
-    if (createdAppointmentResponse?.data?.userId && !isError) {
+    if (createdAppointmentResponse?.data?._id && !isError) {
       navigate("/user/appointment-success");
     }
     if (!isLoading && isError) {
       navigate("/user/appointment-error");
     }
-  }, [createdAppointmentResponse?.data?.userId, isError]);
+  }, [createdAppointmentResponse?.data?._id, isError]);
 
   return (
     <div className="bg-primary pt-[60px] pb-[80px]">

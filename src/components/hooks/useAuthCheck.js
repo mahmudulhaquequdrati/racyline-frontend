@@ -18,7 +18,7 @@ const useAuthCheck = () => {
   } = useGetUserInfoQuery(undefined, { skip: !accessToken });
 
   const dispatch = useDispatch();
-
+  console.log(userData);
   useEffect(() => {
     if (!accessToken || isError) {
       setIsAuth(true);

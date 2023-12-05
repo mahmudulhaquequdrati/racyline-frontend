@@ -6,7 +6,7 @@ import {
   notifyError,
   notifySuccess,
 } from "../../components/common/Toast/Toast";
-import { userLoggedOut } from "../../features/auth/authSlice";
+import { getUserInfo, userLoggedOut } from "../../features/auth/authSlice";
 import {
   useDeleteUserMutation,
   useUpdateUserDataMutation,
@@ -15,10 +15,11 @@ import AccountDeletatioModal from "./AccountDeletationModal";
 import { useGetUserInfoQuery } from "../../features/auth/authApi";
 
 const UserSettings = () => {
-  const { user, accessToken } = useSelector((state) => state.auth);
-  const { data: userupdate } = useGetUserInfoQuery(undefined, {
+  const { accessToken } = useSelector((state) => state.auth);
+  const { data: userupdate, refetch } = useGetUserInfoQuery(undefined, {
     skip: !accessToken,
   });
+  const user = userupdate?.user;
   const [userData, setUserData] = useState({
     first_name: user?.first_name,
     last_name: user?.last_name,
@@ -46,7 +47,7 @@ const UserSettings = () => {
     deleteUser,
     { isLoading: deleteAccLoading, isSuccess: isAccountDeleted },
   ] = useDeleteUserMutation();
-
+  console.log(user);
   // Sending data to redux query
   const handleSubmitData = () => {
     const updatedData = {
@@ -72,9 +73,9 @@ const UserSettings = () => {
       if (data?.status === 400) {
         notifyError(data?.message);
       } else if (!isLoading && data?.data?._id) {
+        refetch();
         const { email, first_name, last_name, phone, _id } = data?.data;
         notifySuccess("user data updated!");
-        console.log(userupdate);
         setUserData({ first_name, last_name, phone, email });
       }
     }

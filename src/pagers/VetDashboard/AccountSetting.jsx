@@ -14,6 +14,7 @@ import {
   useUpdateUserDataMutation,
 } from "../../features/userData/userDataApi";
 import AccountDeletatioModal from "../UserPages/AccountDeletationModal";
+import { useGetUserInfoQuery } from "../../features/auth/authApi";
 
 const people = [
   {
@@ -32,7 +33,11 @@ const type = [
   },
 ];
 const AccountSetting = () => {
-  const { user } = useSelector((state) => state.auth);
+  const { accessToken } = useSelector((state) => state.auth);
+  const { data: userupdate, refetch } = useGetUserInfoQuery(undefined, {
+    skip: !accessToken,
+  });
+  const user = userupdate?.user;
   const [selected, setSelected] = useState(people[0]);
   const [selected2, setSelected2] = useState(user?.doctor_type2 || [type[0]]);
   const [userData, setUserData] = useState({
@@ -83,6 +88,7 @@ const AccountSetting = () => {
       if (data?.status === 400) {
         notifyError(data?.message);
       } else if (!isLoading && data?.data?._id) {
+        refetch();
         const {
           email,
           first_name,
