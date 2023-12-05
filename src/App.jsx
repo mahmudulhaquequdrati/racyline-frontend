@@ -19,7 +19,7 @@ import VetAppointment from "./pagers/VetDashboard/Appointment";
 import Availabilities from "./pagers/VetDashboard/Availabilities";
 import Calender from "./pagers/VetDashboard/Calender";
 import ConnectCalender from "./pagers/VetDashboard/ConnectCalender.jsx";
-import Dashboard from "./pagers/VetDashboard/Dashboard";
+import LandingPage from "./pagers/VetDashboard/LandingPage";
 import UserLogin from "./pagers/userLogin/Login";
 import VetLists from "./pagers/vetLists/VetLists";
 import Login from "./pagers/vetLogin/Login";
@@ -32,7 +32,6 @@ import UserProtected from "./routes/UserProtected";
 import VetProtected from "./routes/VetProtected";
 import UserNumber from "./pagers/UserPages/UserNumber.jsx";
 import AuthProtected from "./routes/AuthProtected.jsx";
-
 const App = () => {
   const isAuth = useAuthCheck();
 
@@ -41,34 +40,19 @@ const App = () => {
       <ToastContainer />
       <Header />
       <Routes>
-        {/* Public Routes  */}
-        {/* Public Routes  */}
-        {/* Public Routes  */}
-        <Route path="/" element={<Dashboard />} />
+        <Route path="/" element={<LandingPage />} />
         <Route
           path="/registration-with-google"
-          element={
-            // <AuthProtected>
-            <RegistrationWithGoogle />
-            // </AuthProtected>
-          }
+          element={<RegistrationWithGoogle />}
         />
 
         <Route
           path="/registration-google-calender-connect"
-          element={
-            // <AuthProtected>
-            <RegistrationGoogleCalenderConnect />
-            // </AuthProtected>
-          }
+          element={<RegistrationGoogleCalenderConnect />}
         />
         <Route
           path="/registration-google-calender-connected"
-          element={
-            // <AuthProtected>
-            <RegistrationGoogleCalenderConnected />
-            // </AuthProtected>
-          }
+          element={<RegistrationGoogleCalenderConnected />}
         />
         <Route
           path="/vets/registration-availabilities"
@@ -78,25 +62,10 @@ const App = () => {
             </VetProtected>
           }
         />
+
         {/* Vets Routes  */}
-        {/* Vets Routes  */}
-        {/* Vets Routes  */}
-        <Route
-          path="/vets/registration"
-          element={
-            // <PublicRoute>
-            <Registration />
-            // </PublicRoute>
-          }
-        />
-        <Route
-          path="/vets/login"
-          element={
-            // <PublicRoute>
-            <Login />
-            // </PublicRoute>
-          }
-        />
+        <Route path="/vets/registration" element={<Registration />} />
+        <Route path="/vets/login" element={<Login />} />
         {/* ====================== New Files Start ==================== */}
         <Route path="/user/all-pet-info" element={<AddPetsMedicalRecords />} />
         <Route path="/user/add-pet-info" element={<MedicalRecord />} />
@@ -146,33 +115,14 @@ const App = () => {
           }
         />
         {/* User Routes  */}
-        {/* User Routes  */}
-        {/* User Routes  */}
-        <Route
-          path="/user/registration"
-          element={
-            // <PublicRoute>
-            <UserRegistration />
-            // </PublicRoute>
-          }
-        />
-        <Route
-          path="/user/login"
-          element={
-            // <PublicRoute>
-            <UserLogin />
-            // </PublicRoute>
-          }
-        />
+        <Route path="/user/registration" element={<UserRegistration />} />
+        <Route path="/user/login" element={<UserLogin />} />
         <Route
           path="/user/login/phone-connect"
           element={
-            // <PublicRoute>
             <AuthProtected>
               <UserNumber />
             </AuthProtected>
-
-            // </PublicRoute>
           }
         />
         <Route
