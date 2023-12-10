@@ -4,22 +4,20 @@ export const PetMedicalReportApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     createPetInfo: builder.mutation({
       query: (data) => {
-        console.log(data)
         return {
-            url: `pets/report/`,
-            method: "POST",
-            body: data,
-          }
+          url: `pets/report/`,
+          method: "POST",
+          body: data,
+        }
       }
     }),
-    // getAllAvailabilities: builder.query({
-    //   query: ({ userId }) => ({
-    //     url: `getAvailabilities/${userId}`,
-    //   }),
-    //   invalidatesTags: ["Availabilities"],
-    // }),
+    getPetMedicalReportByUserId: builder.query({
+      query: (id) => ({
+        url: `/pets/report/byuser/${id}`,
+      }),
+    }),
   }),
 });
 
-export const { useCreatePetInfoMutation } =
-PetMedicalReportApi;
+export const { useCreatePetInfoMutation, useGetPetMedicalReportByUserIdQuery } =
+  PetMedicalReportApi;

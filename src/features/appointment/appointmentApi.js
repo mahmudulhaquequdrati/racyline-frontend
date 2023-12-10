@@ -14,6 +14,11 @@ export const appointmentApi = apiSlice.injectEndpoints({
         url: `/appointment/${id}`,
       }),
     }),
+    getVetAppointmentDetails: builder.query({
+      query: (id) => ({
+        url: `/specificVetUserData/${id}`,
+      }),
+    }),
     createAppointment: builder.mutation({
       query: (data) => ({
         url: "/create-appointment",
@@ -51,4 +56,5 @@ export const {
   useGetAllAppointmentsQuery,
   useEditAppointmentMutation,
   useDeleteAppointmentMutation,
+  useGetVetAppointmentDetailsQuery,
 } = appointmentApi;

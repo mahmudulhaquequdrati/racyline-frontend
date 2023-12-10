@@ -4,23 +4,12 @@ import { Fragment, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useCreateAppointmentMutation } from "../../features/appointment/appointmentApi";
-
-const type = [
-  {
-    name: "Dog",
-  },
-  {
-    name: "Cat",
-  },
-  {
-    name: "Parrot",
-  },
-];
+import { useGetPetMedicalReportByUserIdQuery } from "../../features/petMedialReport/petMedicalReportApi";
 
 const Appointment = () => {
   const state = useSelector((state) => state.auth);
   const { user, accessToken } = state || {};
-  const [animale, selectAnimale] = useState(type[0]);
+  const [animale, selectAnimale] = useState({});
   const [appointment, setAppointment] = useState({
     firstName: user?.first_name,
     lastName: user?.last_name,
@@ -35,6 +24,12 @@ const Appointment = () => {
     createAppointment,
     { data: createdAppointmentResponse, isLoading, isError },
   ] = useCreateAppointmentMutation();
+  const {
+    data: animalData,
+    isLoading: animalLoading,
+    isError: animalError,
+    refetch,
+  } = useGetPetMedicalReportByUserIdQuery(user?._id);
 
   const { data } = useSelector((state) => state.appointment);
 
@@ -50,11 +45,14 @@ const Appointment = () => {
       appointmentDate: data?.appointDate?.date,
       appointmentTime: data?.appointDate?.time,
       vetInfo: { ...data?.vetInfo, doctor_type1: data?.vetInfo?.name },
+      animaleId: animale?.id,
     };
 
     createAppointment(appointmentData);
   };
-
+  useEffect(() => {
+    refetch();
+  }, []);
   useEffect(() => {
     if (createdAppointmentResponse?.data?._id && !isError) {
       navigate("/user/appointment-success");
@@ -141,7 +139,15 @@ const Appointment = () => {
                   Animale
                 </label>
                 <div className="w-full mt-3">
-                  <Listbox value={animale} onChange={selectAnimale}>
+                  <Listbox
+                    value={animale}
+                    onChange={(value) =>
+                      selectAnimale({
+                        name: value?.general_information?.animal_name,
+                        id: value?._id,
+                      })
+                    }
+                  >
                     <div className="relative mt-1">
                       <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-3 pl-4 pr-10 text-left border-[1px] border-[#E5E7EC] focus:outline-none  ">
                         {animale?.name ? (
@@ -166,39 +172,64 @@ const Appointment = () => {
                         leaveTo="opacity-0"
                       >
                         <Listbox.Options className="z-50 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                          {type.map((tp, tpIdx) => (
+                          {animalData?.data?.data?.length > 0 ? (
+                            animalData?.data?.data.map((tp, tpIdx) => (
+                              <Listbox.Option
+                                key={tpIdx}
+                                className={({ active }) =>
+                                  `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                                    active
+                                      ? "bg-amber-100 text-amber-900"
+                                      : "text-gray-900"
+                                  }`
+                                }
+                                value={tp}
+                              >
+                                {({ animale }) => (
+                                  <>
+                                    <span
+                                      className={`block truncate ${
+                                        animale ? "font-medium" : "font-normal"
+                                      }`}
+                                    >
+                                      {tp.general_information?.animal_name}
+                                    </span>
+                                    {animale ? (
+                                      <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
+                                        <CheckIcon
+                                          className="h-5 w-5"
+                                          aria-hidden="true"
+                                        />
+                                      </span>
+                                    ) : null}
+                                  </>
+                                )}
+                              </Listbox.Option>
+                            ))
+                          ) : (
                             <Listbox.Option
-                              key={tpIdx}
-                              className={({ active }) =>
-                                `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                                  active
-                                    ? "bg-amber-100 text-amber-900"
-                                    : "text-gray-900"
-                                }`
-                              }
-                              value={tp}
+                              className={`relative cursor-default select-none py-2 pl-10 pr-4 text-gray-900`}
                             >
                               {({ animale }) => (
-                                <>
-                                  <span
-                                    className={`block truncate ${
-                                      animale ? "font-medium" : "font-normal"
-                                    }`}
+                                <div className="my-2">
+                                  <p>
+                                    Non è stata ancora aggiunta nessuna cartella
+                                    clinica. Aggiungine una per continuare la
+                                    prenotazione.
+                                  </p>
+                                  <button
+                                    onClick={() =>
+                                      navigate("/user/single-pet-info")
+                                    }
+                                    type="button"
+                                    className="border border-primary text-primary bg-white hover:bg-secondary hover:text-white rounded px-5 py-2 w-full my-2"
                                   >
-                                    {tp.name}
-                                  </span>
-                                  {animale ? (
-                                    <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
-                                      <CheckIcon
-                                        className="h-5 w-5"
-                                        aria-hidden="true"
-                                      />
-                                    </span>
-                                  ) : null}
-                                </>
+                                    Aggiungi una cartella clinica
+                                  </button>
+                                </div>
                               )}
                             </Listbox.Option>
-                          ))}
+                          )}
                         </Listbox.Options>
                       </Transition>
                     </div>

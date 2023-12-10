@@ -44,7 +44,6 @@ function AddPetsMedicalRecords() {
   ] = useCreatePetInfoMutation();
   const dispatch = useDispatch();
   const petsData = JSON.parse(localStorage.getItem("petsData"));
-  console.log(user);
   // Saving the pet info
   const handleSubmit = (event) => {
     event.preventDefault();
