@@ -208,7 +208,7 @@ const Appointment = () => {
                             ))
                           ) : (
                             <Listbox.Option
-                              className={`relative cursor-default select-none py-2 pl-10 pr-4 text-gray-900`}
+                              className={`relative cursor-default select-none py-2 pl-4 pr-4 text-gray-900`}
                             >
                               {({ animale }) => (
                                 <div className="my-2">
@@ -219,7 +219,7 @@ const Appointment = () => {
                                   </p>
                                   <button
                                     onClick={() =>
-                                      navigate("/user/single-pet-info")
+                                      navigate("/user/add-single-pet-info")
                                     }
                                     type="button"
                                     className="border border-primary text-primary bg-white hover:bg-secondary hover:text-white rounded px-5 py-2 w-full my-2"
