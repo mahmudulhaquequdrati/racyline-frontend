@@ -54,7 +54,7 @@ function AddPetsMedicalRecords() {
     if (petsInfo?.length > 0) {
       createPetInfo(data);
     } else {
-      dispatch(getUserInfo(user));
+      dispatch(getUserInfo({ ...user, completed_medical_report: true }));
       localStorage.removeItem("petsData");
       navigate("/user/vet-lists");
     }
@@ -117,6 +117,7 @@ function AddPetsMedicalRecords() {
   }, [setPetsInfo?.length]);
 
   // Redirecet to vet lists page
+  console.log(isCreatedPetResponse);
   useEffect(() => {
     if (isSuccess) {
       dispatch(getUserInfo(isCreatedPetResponse));
