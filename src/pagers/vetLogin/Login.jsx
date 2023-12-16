@@ -53,7 +53,7 @@ function Login() {
           }
           googleLogin({ code: response.code, role: "vet_admin" }).then(
             (res) => {
-              console.log(res);
+              // console.log(res);
               if (res?.data?.data?.user?.role === "user") {
                 notifyError("you are not a user!");
                 handleLogut();
@@ -68,7 +68,7 @@ function Login() {
             }
           );
         } catch (error) {
-          console.log(error);
+          console.error(error);
         }
       },
     });

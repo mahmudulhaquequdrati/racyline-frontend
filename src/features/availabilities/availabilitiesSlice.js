@@ -10,7 +10,7 @@ const availabilitiesSlice = createSlice({
   initialState,
   reducers: {
     setAllWeakAvailabilitiesData: (state, action) => {
-      console.log(action.payload);
+      // console.log(action.payload);
       state.weakAvailabilitiesData = action.payload;
     },
     setTokensss: (state, action) => {

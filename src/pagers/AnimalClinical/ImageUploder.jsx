@@ -56,7 +56,7 @@ const ImageUploader = ({
       notifyError("Please select maximum 3 images.");
     }
   };
-  console.log(note?.report_file?.length);
+  // console.log(note?.report_file?.length);
   return (
     <div>
       <input

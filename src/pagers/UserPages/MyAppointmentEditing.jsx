@@ -121,10 +121,15 @@ const MyAppointmentEditing = () => {
             .filter((fill) =>
               moment(fill?.appointmentDate).isBefore(moment(new Date()))
             )
-            ?.map((appointment) => {
+            ?.map((appointment, i) => {
               const { _id, vetInfo } = appointment;
+              let timeHour = appointment?.appointmentTime?.split(":")[0];
+              let timeMin = appointment?.appointmentTime
+                ?.split(":")[1]
+                ?.split(" ")[0];
               return (
                 <div
+                  key={i}
                   className="max-w-[550px] w-full flex flex-col gap-8 rounded bg-white p-6 opacity-60"
                   style={{
                     boxShadow: "0px 1px 3px 0px rgba(232, 151, 31, 0.15)",
@@ -132,8 +137,15 @@ const MyAppointmentEditing = () => {
                 >
                   <p className="text-[15px] font-normal leading-6">
                     Stai prenotando un appuntamento per le{" "}
-                    {appointment?.appointmentTime} di Martedì{" "}
-                    {moment(appointment?.appointmentDate).format("DD MMM YYYY")}{" "}
+                    {appointment?.appointmentTime?.includes("PM")
+                      ? `${12 + Number(timeHour) + `:` + timeMin}`
+                      : timeHour < 10
+                      ? `0${timeHour + `:` + timeMin}`
+                      : `${timeHour + `:` + timeMin}`}{" "}
+                    di Martedì{" "}
+                    {moment(appointment?.appointmentDate).format(
+                      "DD MMMM YYYY"
+                    )}{" "}
                     con il/la Dottore/Dottoressa
                   </p>
                   <div className="flex gap-6">
@@ -181,6 +193,9 @@ const MyAppointmentEditing = () => {
     );
   }
 
+  // console.log(appointmentDate);
+  let timeHour = appointmentDate?.time?.split(":")[0];
+  let timeMin = appointmentDate?.time?.split(":")[1]?.split(" ")[0];
   return (
     <div className="w-full bg-primary pt-[60px] p-4 md:p-8 pb-[80px]">
       <div className="max-w-[1150px] w-full mx-auto">
@@ -195,9 +210,14 @@ const MyAppointmentEditing = () => {
           style={{ boxShadow: "0px 1px 3px 0px rgba(232, 151, 31, 0.15)" }}
         >
           <p className="text-[15px] font-normal leading-6">
-            Stai prenotando un appuntamento per le {data?.appointmentTime} di
-            Martedì {moment(appointmentData?.date).format("DD MMM YYYY")} con
-            il/la Dottore/Dottoressa
+            Stai prenotando un appuntamento per le{" "}
+            {appointmentDate?.time?.includes("PM")
+              ? `${12 + Number(timeHour) + `:` + timeMin}`
+              : timeHour < 10
+              ? `0${timeHour + `:` + timeMin}`
+              : `${timeHour + `:` + timeMin}`}{" "}
+            di Martedì {moment(appointmentDate?.date).format("DD MMMM YYYY")}{" "}
+            con il/la Dottore/Dottoressa
           </p>
           <div className="flex gap-6">
             <div className="w-[100px] h-[100px]">

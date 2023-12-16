@@ -48,19 +48,31 @@ const MyAppointment = () => {
             .filter((fill) =>
               moment(fill?.appointmentDate).isSameOrAfter(moment(new Date()))
             )
-            ?.map((appointment) => {
+            ?.map((appointment, i) => {
               const { _id, vetInfo } = appointment;
+              let timeHour = appointment?.appointmentTime?.split(":")[0];
+              let timeMin = appointment?.appointmentTime
+                ?.split(":")[1]
+                ?.split(" ")[0];
               return (
                 <div
                   className="max-w-[550px] w-full flex flex-col gap-8 rounded bg-white p-6"
                   style={{
                     boxShadow: "0px 1px 3px 0px rgba(232, 151, 31, 0.15)",
                   }}
+                  key={i}
                 >
                   <p className="text-[15px] font-normal leading-6">
                     Stai prenotando un appuntamento per le{" "}
-                    {appointment?.appointmentTime} di Martedì{" "}
-                    {moment(appointment?.appointmentDate).format("DD MMM YYYY")}{" "}
+                    {appointment?.appointmentTime?.includes("PM")
+                      ? `${12 + Number(timeHour) + `:` + timeMin}`
+                      : timeHour < 10
+                      ? `0${timeHour + `:` + timeMin}`
+                      : `${timeHour + `:` + timeMin}`}{" "}
+                    di Martedì{" "}
+                    {moment(appointment?.appointmentDate).format(
+                      "DD MMMM YYYY"
+                    )}{" "}
                     con il/la Dottore/Dottoressa
                   </p>
                   <div className="flex gap-6">
@@ -137,7 +149,7 @@ const MyAppointment = () => {
   }
 
   if (isError) {
-    console.log("Something went wrong!");
+    console.error("Something went wrong!");
   }
 
   useEffect(() => {
@@ -166,10 +178,11 @@ const MyAppointment = () => {
                   .filter((fill) =>
                     moment(fill?.appointmentDate).isBefore(moment(new Date()))
                   )
-                  ?.map((appointment) => {
+                  ?.map((appointment, i) => {
                     const { _id, vetInfo } = appointment;
                     return (
                       <div
+                        key={i}
                         className="max-w-[550px] w-full flex flex-col gap-8 rounded bg-white p-6 opacity-60"
                         style={{
                           boxShadow: "0px 1px 3px 0px rgba(232, 151, 31, 0.15)",

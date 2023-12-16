@@ -47,7 +47,7 @@ const UserSettings = () => {
     deleteUser,
     { isLoading: deleteAccLoading, isSuccess: isAccountDeleted },
   ] = useDeleteUserMutation();
-  console.log(user);
+  // console.log(user);
   // Sending data to redux query
   const handleSubmitData = () => {
     const updatedData = {

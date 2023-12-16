@@ -46,7 +46,7 @@ const Calender = () => {
               }
             )
             .then((res) => {
-              console.log(res);
+              // console.log(res);
               if (res?.data) {
                 refetch();
                 notifySuccess("Google calender connected!");
@@ -56,7 +56,7 @@ const Calender = () => {
               notifyError(err?.response?.data?.message);
             });
         } catch (error) {
-          console.log(error);
+          console.error(error);
         }
       },
     });

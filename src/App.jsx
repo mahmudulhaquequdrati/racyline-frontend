@@ -35,8 +35,71 @@ import AuthProtected from "./routes/AuthProtected.jsx";
 import SingleMedicalRecord from "./pagers/AnimalClinical/SingleAnimalClinical/SingleMedicalRecord.jsx";
 import CompleteSingleMedicalRecord from "./pagers/AnimalClinical/SingleAnimalClinical/CompleteSingleMedicalRecord.jsx";
 import SingleAddPetsMedicalRecords from "./pagers/AnimalClinical/SingleAnimalClinical/SingleAddPetsMedicalRecords.jsx";
+import moment from "moment";
 const App = () => {
   const isAuth = useAuthCheck();
+  moment.defineLocale("it", {
+    months:
+      "Gennaio_Febbraio_Marzo_Aprile_Maggio_Giugno_Luglio_Agosto_Settembre_Ottobre_Novembre_Dicembre".split(
+        "_"
+      ),
+    monthsShort: "Gen_Feb_Mar_Apr_Mag_Giu_Lug_Ago_Set_Ott_Nov_Dic".split("_"),
+    monthsParseExact: true,
+    weekdays: "Domenica_Lunedì_Martedì_Mercoledì_Giovedì_Venerdì_Sabato".split(
+      "_"
+    ),
+    weekdaysShort: "Dom_Lun_Mar_Mer_Gio_Ven_Sab".split("_"),
+    weekdaysMin: "do_lu_ma_me_gi_ve_sa".split("_"),
+    weekdaysParseExact: true,
+    longDateFormat: {
+      LT: "HH:mm",
+      LTS: "HH:mm:ss",
+      L: "DD/MM/YYYY",
+      LL: "D MMMM YYYY",
+      LLL: "D MMMM YYYY HH:mm",
+      LLLL: "dddd D MMMM YYYY HH:mm",
+    },
+    calendar: {
+      sameDay: "[Oggi alle] LT",
+      nextDay: "[Domani alle] LT",
+      nextWeek: "dddd [alle] LT",
+      lastDay: "[Ieri alle] LT",
+      lastWeek: "dddd [scorso alle] LT",
+      sameElse: "L",
+    },
+    relativeTime: {
+      future: "tra %s",
+      past: "%s fa",
+      s: "alcuni secondi",
+      m: "un minuto",
+      mm: "%d minuti",
+      h: "un'ora",
+      hh: "%d ore",
+      d: "un giorno",
+      dd: "%d giorni",
+      M: "un mese",
+      MM: "%d mesi",
+      y: "un anno",
+      yy: "%d anni",
+    },
+    dayOfMonthOrdinalParse: /\d{1,2}º/,
+    ordinal: "%dº",
+    meridiemParse: /AM|PM/i,
+    isPM: function (input) {
+      return input.toLowerCase() === "pm";
+    },
+    meridiem: function (hours, minutes, isLower) {
+      if (hours < 12) {
+        return "AM";
+      } else {
+        return "PM";
+      }
+    },
+    week: {
+      dow: 1, // Monday is the first day of the week.
+      doy: 4, // Used to determine first week of the year.
+    },
+  });
 
   return !isAuth ? null : (
     <main className="">

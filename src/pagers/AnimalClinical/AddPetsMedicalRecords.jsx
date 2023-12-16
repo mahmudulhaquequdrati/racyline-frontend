@@ -117,7 +117,7 @@ function AddPetsMedicalRecords() {
   }, [setPetsInfo?.length]);
 
   // Redirecet to vet lists page
-  console.log(isCreatedPetResponse);
+  // console.log(isCreatedPetResponse);
   useEffect(() => {
     if (isSuccess) {
       dispatch(getUserInfo(isCreatedPetResponse));

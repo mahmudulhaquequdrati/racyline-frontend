@@ -3,7 +3,9 @@ import { useSelector } from "react-redux";
 
 const AppointmentSuccess = () => {
   const { data } = useSelector((state) => state.appointment);
-  console.log(data);
+  // console.log(data?.appointDate);
+  let timeHour = data?.appointDate?.time?.split(":")[0];
+  let timeMin = data?.appointDate?.time?.split(":")[1]?.split(" ")[0];
 
   return (
     <div className="flex justify-center pt-5 md:pt-16 pb-5 md:pb-24 bg-primary">
@@ -36,8 +38,14 @@ const AppointmentSuccess = () => {
           style={{ boxShadow: "0px 1px 3px 0px rgba(232, 151, 31, 0.15)" }}
         >
           <p className="text-[15px] font-normal leading-6">
-            Stai prenotando un appuntamento per le 13:30 di Martedì 25 Ottobre
-            2023 con il/la Dottore/Dottoressa
+            Stai prenotando un appuntamento per le{" "}
+            {data?.appointDate?.time.includes("PM")
+              ? `${12 + Number(timeHour) + `:` + timeMin}`
+              : timeHour < 10
+              ? `0${timeHour + `:` + timeMin}`
+              : `${timeHour + `:` + timeMin}`}{" "}
+            di Martedì {moment(data?.appointDate?.date).format("DD MMMM YYYY")}{" "}
+            con il/la Dottore/Dottoressa
           </p>
           <div className="flex gap-6">
             <div className="w-[100px] h-[100px]">

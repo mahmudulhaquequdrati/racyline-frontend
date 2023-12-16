@@ -33,7 +33,7 @@ function UserNumber() {
           }
         })
         .catch((err) => {
-          console.log(err);
+          console.error(err);
         });
 
       // register(inputData);

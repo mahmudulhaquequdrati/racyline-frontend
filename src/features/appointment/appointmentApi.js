@@ -29,7 +29,7 @@ export const appointmentApi = apiSlice.injectEndpoints({
     }),
     editAppointment: builder.mutation({
       query: ({ data, id }) => {
-        console.log(data, id);
+        // console.log(data, id);
         return {
           url: `/edit-appointment/${id}`,
           method: "PATCH",
@@ -40,7 +40,7 @@ export const appointmentApi = apiSlice.injectEndpoints({
     }),
     deleteAppointment: builder.mutation({
       query: ({ id }) => {
-        console.log(id);
+        // console.log(id);
         return {
           url: `/appointment/${id}`,
           method: "DELETE",

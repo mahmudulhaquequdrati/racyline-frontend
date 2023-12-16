@@ -146,14 +146,14 @@ function CompleteMedicalRecord() {
   });
 
   // console.log(selectedPetIndex);
-  console.log(notes);
+  // console.log(notes);
   const [inputData, setInputData] = useState({
     medicalHistory:
       petsData[selectedPetIndex]?.medical_history?.medical_history || "",
     AdditionalNotes:
       petsData[selectedPetIndex]?.medical_history?.additional_notes || "",
   });
-  console.log(inputData);
+  // console.log(inputData);
   const [isLoading, setIsLoading] = useState();
   const [fieldError, setFieldError] = useState(false);
 
@@ -314,7 +314,7 @@ function CompleteMedicalRecord() {
   useEffect(() => {
     if (pathName === "/user/add-pet-info" && selectedPetIndex) {
       const getPetInfo = petsData[parseInt(selectedPetIndex)];
-      console.log(getPetInfo);
+      // console.log(getPetInfo);
       setInputData({
         medicalHistory:
           getPetInfo?.medical_history?.medical_history?.medicalHistory,
