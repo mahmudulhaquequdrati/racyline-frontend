@@ -56,7 +56,7 @@ const ImageUploader = ({
       notifyError("Please select maximum 3 images.");
     }
   };
-
+  console.log(note?.report_file?.length);
   return (
     <div>
       <input
@@ -65,6 +65,7 @@ const ImageUploader = ({
         id="multipleImg"
         multiple
         onChange={handleImageSelect}
+        disabled={note?.report_file?.length == 3}
       />
     </div>
   );

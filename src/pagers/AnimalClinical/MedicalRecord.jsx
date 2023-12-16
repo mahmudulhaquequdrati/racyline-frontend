@@ -10,7 +10,7 @@ import { useRegisterMutation } from "../../features/auth/authApi";
 
 const genders = [
   {
-    gender: "Maschia",
+    gender: "Maschio",
   },
   {
     gender: "Femmina",

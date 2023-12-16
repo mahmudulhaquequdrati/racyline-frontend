@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useCreateAppointmentMutation } from "../../features/appointment/appointmentApi";
 import { useGetPetMedicalReportByUserIdQuery } from "../../features/petMedialReport/petMedicalReportApi";
+import moment from "moment";
 
 const Appointment = () => {
   const state = useSelector((state) => state.auth);
@@ -305,8 +306,9 @@ const Appointment = () => {
             style={{ boxShadow: "0px 1px 3px 0px rgba(232, 151, 31, 0.15)" }}
           >
             <p className="text-[15px] font-normal leading-6">
-              Stai prenotando un appuntamento per le 13:30 di Martedì 25 Ottobre
-              2023 con il/la Dottore/Dottoressa
+              Stai prenotando un appuntamento per le {data?.appointDate?.time}{" "}
+              di Martedì {moment(data?.appointDate?.date).format("DD-MM-YYYY")}{" "}
+              con il/la Dottore/Dottoressa
             </p>
             <div className="flex gap-6">
               <div className="w-[100px] h-[100px]">

@@ -518,7 +518,7 @@ const Availabilities = () => {
           </div>
 
           <div className="mt-8">
-            {isLoading ? (
+            {creatingAvailabilities ? (
               <div className="flex items-center justify-center w-full rounded-lg py-3 px-4 outline-none  text-white bg-secondary">
                 <svg
                   aria-hidden="true"
