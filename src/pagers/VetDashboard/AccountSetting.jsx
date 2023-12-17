@@ -37,17 +37,19 @@ const AccountSetting = () => {
   const { data: userupdate, refetch } = useGetUserInfoQuery(undefined, {
     skip: !accessToken,
   });
+  console.log(userupdate);
   const user = userupdate?.user;
   const [selected, setSelected] = useState(people[0]);
   const [selected2, setSelected2] = useState(user?.doctor_type2 || [type[0]]);
   const [userData, setUserData] = useState({
-    first_name: user?.first_name,
-    last_name: user?.last_name,
-    email: user?.email,
-    doctor_type1: user.doctor_type1 || "",
-    doctor_type2: user.doctor_type2 || [],
-    veterinary_address: user?.veterinary_address,
+    first_name: "",
+    last_name: "",
+    email: "",
+    doctor_type1: "",
+    doctor_type2: "",
+    veterinary_address: "",
   });
+  console.log(userData);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(false);
@@ -82,6 +84,19 @@ const AccountSetting = () => {
       deleteUser(userId);
     }
   };
+  useEffect(() => {
+    refetch();
+    if (user) {
+      setUserData({
+        first_name: user?.first_name,
+        last_name: user?.last_name,
+        email: user?.email,
+        doctor_type1: user.doctor_type1 || "",
+        doctor_type2: user.doctor_type2 || [],
+        veterinary_address: user?.veterinary_address,
+      });
+    }
+  }, [user]);
 
   useEffect(() => {
     if (isSuccess) {

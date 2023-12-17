@@ -21,10 +21,10 @@ const UserSettings = () => {
   });
   const user = userupdate?.user;
   const [userData, setUserData] = useState({
-    first_name: user?.first_name,
-    last_name: user?.last_name,
-    phone: user?.phone,
-    email: user?.email,
+    first_name: "",
+    last_name: "",
+    phone: "",
+    email: "",
   });
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -67,6 +67,18 @@ const UserSettings = () => {
       deleteUser(userId);
     }
   };
+
+  useEffect(() => {
+    refetch();
+    if (user) {
+      setUserData({
+        first_name: user?.first_name,
+        last_name: user?.last_name,
+        phone: user?.phone,
+        email: user?.email,
+      });
+    }
+  }, [user]);
 
   useEffect(() => {
     if (isSuccess) {
