@@ -35,8 +35,13 @@ const PrevIcon = () => {
   );
 };
 
-export default function VetCalender({ appointmentDate, setAppointmentDate }) {
+export default function VetCalender({
+  appointmentDate,
+  setAppointmentDate,
+  vetAvailabilities,
+}) {
   const onDateChange = (val) => {
+    console.log(val);
     setAppointmentDate((prev) => {
       return {
         ...prev,
@@ -44,6 +49,9 @@ export default function VetCalender({ appointmentDate, setAppointmentDate }) {
       };
     });
   };
+  const disabledWeeks = vetAvailabilities
+    .filter((day) => !day.available)
+    .map((day) => moment().startOf("week").day(day.name).format("dddd"));
   return (
     <div className="max-w-[1140px] w-full mx-auto">
       <Calendar
@@ -51,6 +59,10 @@ export default function VetCalender({ appointmentDate, setAppointmentDate }) {
         onChange={onDateChange}
         value={appointmentDate?.date}
         className={"customizeCalender"}
+        tileDisabled={({ date }) => {
+          const weekName = moment(date).format("dddd");
+          return disabledWeeks.includes(weekName);
+        }}
         prev2Label={null}
         next2Label={null}
         nextLabel={<NextIcon />}

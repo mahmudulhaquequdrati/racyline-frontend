@@ -22,31 +22,9 @@ const VetList = ({ vetInfo }) => {
     availability,
     doctor_type1,
     profile_image_url,
+    appointments,
     doctor_type2 = [],
   } = vetInfo || {};
-  const time = [
-    "1:30 PM",
-    "2:00 PM",
-    "2:30 PM",
-    "3:00 PM",
-    "3:30 PM",
-    "4:00 PM",
-    "4:30 PM",
-    "5:00 PM",
-    "5:30 PM",
-    "6:00 PM",
-    "6:30 PM",
-    "7:00 PM",
-    "7:30 PM",
-    "8:00 PM",
-    "8:30 PM",
-    "9:00 PM",
-    "9:30 PM",
-    "10:00 PM",
-    "10:30 PM",
-    "11:00 PM",
-    "11:30 PM",
-  ];
   const handelGetAppointment = () => {
     if (appointmentDate?.time !== null) {
       const appointmentData = {
@@ -70,6 +48,36 @@ const VetList = ({ vetInfo }) => {
       notifyError("Please select the time!");
     }
   };
+
+  // current date
+  const current_day = moment(appointmentDate.date).locale("it").format("ddd");
+  const timeSlots = [];
+  let timeSlots2 = [];
+  const current_day_data = availability?.availabilities?.filter(
+    (t) => t?.name == current_day
+  );
+  const current_appointment_data = appointments?.filter((d) =>
+    moment(d?.appointmentDate).isSame(moment(appointmentDate.date))
+  );
+  if (current_appointment_data && current_appointment_data?.length > 0) {
+    timeSlots2 = current_appointment_data?.map((item) => item.appointmentTime);
+  }
+  console.log(timeSlots2);
+  current_day_data?.map((timeData, i) => {
+    // Iterate through each time interval
+    timeData?.availabilities?.forEach((interval) => {
+      const startTime = moment(interval.start_time);
+      const endTime = moment(interval.end_time);
+
+      // Generate time slots at 30-minute intervals within the interval
+      while (startTime.isSameOrBefore(endTime)) {
+        timeSlots.push(startTime.format("HH:mm"));
+        startTime.add(30, "minutes");
+      }
+    });
+  });
+
+  console.log(timeSlots);
 
   return (
     <div className="flex text-black flex-col md:flex-row bg-white rounded-lg overflow-hidden">
@@ -176,21 +184,30 @@ const VetList = ({ vetInfo }) => {
             <VetCalender
               appointmentDate={appointmentDate}
               setAppointmentDate={setAppointmentDate}
+              vetAvailabilities={availability?.availabilities}
             />
           </div>
+
           <div className="w-full sm:w-1/2 flex flex-wrap gap-3">
-            {time?.map((t, index) => (
+            {timeSlots.map((t, i) => (
               <p
-                onClick={() =>
-                  setAppointmentDate({
-                    ...appointmentDate,
-                    time: t,
-                  })
-                }
-                key={index}
-                className={`flex items-center justify-center w-[70px] text-center text-[13px] hover:rounded-full hover:bg-[#7D7D7D] cursor-pointer hover:text-white ${
-                  appointmentDate?.time == t &&
-                  "bg-[#7D7D7D] rounded-full text-white"
+                onClick={() => {
+                  if (!timeSlots2.includes(t)) {
+                    setAppointmentDate({
+                      ...appointmentDate,
+                      time: t,
+                    });
+                  }
+                }}
+                key={i}
+                className={`flex items-center justify-center w-[70px] text-center text-[13px] hover:rounded-full hover:bg-[#7D7D7D] cursor-pointer ${
+                  timeSlots2.includes(t)
+                    ? "bg-[#a8a8a8] rounded-full text-white cursor-not-allowed"
+                    : ` ${
+                        appointmentDate?.time === t
+                          ? "bg-[#7D7D7D] rounded-full text-white"
+                          : "hover:text-white"
+                      }`
                 }`}
               >
                 {t}
