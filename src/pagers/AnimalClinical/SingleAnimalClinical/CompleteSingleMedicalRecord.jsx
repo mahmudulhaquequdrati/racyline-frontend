@@ -156,7 +156,7 @@ function CompleteSingleMedicalRecord() {
     AdditionalNotes:
       petsData[selectedPetIndex]?.medical_history?.additional_notes || "",
   });
-  console.log(inputData);
+  // console.log(location?.state?.state);
   const [isLoading, setIsLoading] = useState();
   const [fieldError, setFieldError] = useState(false);
 
@@ -294,8 +294,13 @@ function CompleteSingleMedicalRecord() {
         data: isExistPets,
       }).then((res) => {
         if (res?.data) {
-          localStorage.removeItem("petsData");
-          navigate("/user/new-appointment");
+          if (location?.state?.state === "from_my_animal") {
+            localStorage.removeItem("petsData");
+            navigate("/user/my-animals");
+          } else {
+            localStorage.removeItem("petsData");
+            navigate("/user/new-appointment");
+          }
         }
       });
     }
