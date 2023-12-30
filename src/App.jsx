@@ -34,7 +34,6 @@ import UserNumber from "./pagers/UserPages/UserNumber.jsx";
 import AuthProtected from "./routes/AuthProtected.jsx";
 import SingleMedicalRecord from "./pagers/AnimalClinical/SingleAnimalClinical/SingleMedicalRecord.jsx";
 import CompleteSingleMedicalRecord from "./pagers/AnimalClinical/SingleAnimalClinical/CompleteSingleMedicalRecord.jsx";
-import SingleAddPetsMedicalRecords from "./pagers/AnimalClinical/SingleAnimalClinical/SingleAddPetsMedicalRecords.jsx";
 import moment from "moment";
 const App = () => {
   const isAuth = useAuthCheck();
@@ -134,10 +133,10 @@ const App = () => {
         <Route path="/vets/login" element={<Login />} />
         {/* ====================== New Files Start ==================== */}
         <Route path="/user/all-pet-info" element={<AddPetsMedicalRecords />} />
-        <Route
+        {/* <Route
           path="/user/add-single-pet-info"
           element={<SingleAddPetsMedicalRecords />}
-        />
+        /> */}
         <Route path="/user/single-pet-info" element={<SingleMedicalRecord />} />
         <Route path="/user/add-pet-info" element={<MedicalRecord />} />
         <Route
