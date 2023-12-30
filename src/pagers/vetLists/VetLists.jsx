@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useGetAllVetListsQuery } from "../../features/vetLists/vetLists";
 import VetList from "./VetList";
 
@@ -44,7 +45,12 @@ const VetLists = () => {
     },
   ];
 
-  const { data: vetLists, isLoading, isError } = useGetAllVetListsQuery();
+  const {
+    data: vetLists,
+    isLoading,
+    isError,
+    refetch,
+  } = useGetAllVetListsQuery();
 
   let content;
   if (isLoading) {
@@ -62,7 +68,9 @@ const VetLists = () => {
   if (!isLoading && !isError && vetLists?.vetList?.length === 0) {
     content = <h1>No vet Found!</h1>;
   }
-
+  useEffect(() => {
+    refetch();
+  }, []);
   return (
     <div className="bg-primary pt-[60px] pb-[80px]">
       <div className="max-w-[1140px] w-full mx-auto p-4 md:p-8 lg:p-0">
