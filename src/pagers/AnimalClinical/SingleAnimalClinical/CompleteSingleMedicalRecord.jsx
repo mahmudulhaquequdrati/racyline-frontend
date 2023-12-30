@@ -2,6 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ImageUploader from "./ImageUploder";
+import { useCreatePetInfoMutation } from "../../../features/petMedialReport/petMedicalReportApi";
+import { useSelector } from "react-redux";
 
 const plusIcons = (
   <svg
@@ -123,8 +125,9 @@ const checkIcons = (
   </svg>
 );
 
-function CompleteMedicalRecord() {
+function CompleteSingleMedicalRecord() {
   const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
   const location = useLocation();
   const pathName = location?.pathname;
   const [selectedImages, setSelectedImages] = useState([]);
@@ -145,15 +148,15 @@ function CompleteMedicalRecord() {
     selectedImage: [],
   });
 
-  // console.log(selectedPetIndex);
-  // console.log(notes);
+  const [createPetInfo, { data: isCreatedPetResponse, isError, isSuccess }] =
+    useCreatePetInfoMutation();
   const [inputData, setInputData] = useState({
     medicalHistory:
       petsData[selectedPetIndex]?.medical_history?.medical_history || "",
     AdditionalNotes:
       petsData[selectedPetIndex]?.medical_history?.additional_notes || "",
   });
-  // console.log(inputData);
+  console.log(inputData);
   const [isLoading, setIsLoading] = useState();
   const [fieldError, setFieldError] = useState(false);
 
@@ -270,6 +273,15 @@ function CompleteMedicalRecord() {
         inputData?.AdditionalNotes;
       isExistPets[selectedPetIndex]["medical_diary"] = notes;
       localStorage.setItem("petsData", JSON.stringify(isExistPets));
+      createPetInfo({
+        user_id: user?._id,
+        data: isExistPets,
+      }).then((res) => {
+        if (res?.data) {
+          localStorage.removeItem("petsData");
+          navigate("/user/new-appointment");
+        }
+      });
     }
     if (isExistPets?.length > 0) {
       const lastPetInfo = isExistPets[isExistPets?.length - 1];
@@ -277,8 +289,17 @@ function CompleteMedicalRecord() {
       isExistPets[isExistPets?.length - 1] = lastPetInfo;
       localStorage.removeItem("petsData");
       localStorage.setItem("petsData", JSON.stringify(isExistPets));
+      createPetInfo({
+        user_id: user?._id,
+        data: isExistPets,
+      }).then((res) => {
+        if (res?.data) {
+          localStorage.removeItem("petsData");
+          navigate("/user/new-appointment");
+        }
+      });
     }
-    navigate("/user/add-single-pet-info");
+    // navigate("/user/all-pet-info");
   };
 
   const API_KEY = "c8818fe821c0aee81ebf0b77344f0e2b";
@@ -314,7 +335,7 @@ function CompleteMedicalRecord() {
   useEffect(() => {
     if (pathName === "/user/add-pet-info" && selectedPetIndex) {
       const getPetInfo = petsData[parseInt(selectedPetIndex)];
-      // console.log(getPetInfo);
+      console.log(getPetInfo);
       setInputData({
         medicalHistory:
           getPetInfo?.medical_history?.medical_history?.medicalHistory,
@@ -340,104 +361,105 @@ function CompleteMedicalRecord() {
   };
 
   return (
-    <section className="bg-primary pb-16 px-4 pt-8 border-[1px] border-[#EAEAEB]">
+    <section className="flex flex-col justify-center items-center bg-primary pb-16 px-4 pt-8 border-[1px] border-[#EAEAEB]">
       {/* Same as */}
 
-      <div className="max-w-[1140px] w-full mx-auto">
-        <h1 className="text-2xl font-bold mb-5">
-          Aggiungi nuova cartella clinica
+      <div className="max-w-[638px] w-full  rounded-lg px-4 py-12 md:p-8 lg:p-16 bg-white">
+        <h1 className="text-2xl md:text-3xl lg:text-[32px] font-bold leading-10 text-center mb-6">
+          Completa la cartella clinica
         </h1>
-        <div className="max-w-[638px] w-full  rounded-lg px-4 py-12 md:p-8 lg:p-16 bg-white">
-          <div className="flex flex-col gap-y-4">
-            {/* Mdical history field start  */}
-            <div className="flex flex-col gap-1">
-              <label
-                htmlFor="medicalHistory"
-                className="text-lg font-bold leading-10"
-              >
-                Anamnesi
-              </label>
-              <textarea
-                className="resize-none text-[15px] p-2 w-full h-48 outline-none border border-gray-200 rounded-lg"
-                name="medicalHistory"
-                id="medicalHistory"
-                value={inputData?.medicalHistory}
-                onChange={handleInputChange}
-                placeholder="Descrivi le caratteristiche, sintomi o fatti di interesse riferiti al tuo animale..."
-              ></textarea>
-            </div>
-            {/* Mdical history field ends  */}
+        <p className="text-center text-[15px] pb-8 text-[#00000099]">
+          Completa questa sezione con la storia medica del tuo animale
+        </p>
 
-            {/* Add note component start */}
+        <div className="flex flex-col gap-y-4">
+          {/* Mdical history field start  */}
+          <div className="flex flex-col gap-1">
+            <label
+              htmlFor="medicalHistory"
+              className="text-lg font-bold leading-10"
+            >
+              Anamnesi
+            </label>
+            <textarea
+              className="resize-none text-[15px] p-2 w-full h-48 outline-none border border-gray-200 rounded-lg"
+              name="medicalHistory"
+              id="medicalHistory"
+              value={inputData?.medicalHistory}
+              onChange={handleInputChange}
+              placeholder="Descrivi le caratteristiche, sintomi o fatti di interesse riferiti al tuo animale..."
+            ></textarea>
+          </div>
+          {/* Mdical history field ends  */}
+
+          {/* Add note component start */}
+          <div
+            className={` ${
+              !newNoteOpen?.isOpen && notes?.length > 0
+                ? "flex flex-col mt-10 md:flex-row justify-between items-center"
+                : "h-auto mt-10"
+            } `}
+          >
+            <div>
+              <h3 className="text-lg font-bold leading-10">Diario Medico</h3>
+              <p className="text-[15px] text-[#000000] mb-5">
+                Aggiungi eventuali note mediche del tuo animale
+              </p>
+            </div>
+            {!newNoteOpen?.isOpen && notes?.length < 1 && (
+              <button
+                onClick={() => {
+                  setNewNoteOpen({
+                    ...newNoteOpen,
+                    isOpen: !newNoteOpen?.isOpen,
+                  });
+                }}
+                className={`${
+                  newNoteOpen?.isOpen || notes?.length > 1 ? "hidden" : "flex"
+                } gap-3 justify-center items-center py-5 border border-dashed mb-4 cursor-pointer rounded-lg w-full`}
+              >
+                <span> {plusIcons} </span>
+                <p className="text-center text-[15px] text-[#000000]">
+                  Aggiungi un nuova nota medica
+                </p>
+              </button>
+            )}
+            {!newNoteOpen?.isOpen && notes?.length > 0 && (
+              <button
+                onClick={() => {
+                  setNewNoteOpen({
+                    ...newNoteOpen,
+                    isOpen: !newNoteOpen?.isOpen,
+                  });
+                }}
+                className={`${
+                  !newNoteOpen?.isOpen || notes?.length > 1 ? "flex" : "hidden"
+                } gap-3 justify-center items-center py-5 mb-4 cursor-pointer rounded-lg`}
+              >
+                <span>{plusIcons}</span>
+              </button>
+            )}
+          </div>
+          {/* add medical diary */}
+          <div>
+            {/* Add note component start here  */}
+
             <div
-              className={` ${
-                !newNoteOpen?.isOpen && notes?.length > 0
-                  ? "flex flex-col mt-10 md:flex-row justify-between items-center"
-                  : "h-auto mt-10"
+              className={`transition duration-300 ${
+                newNoteOpen?.isOpen
+                  ? "visible opacity-1 h-auto p-4 border border-primary rounded-lg "
+                  : "invisible opacity-0 h-0 "
               } `}
             >
+              <p className="text-lg font-bold leading-10">
+                {newNoteOpen?.isEditingMode
+                  ? "Modifica la nota medica"
+                  : "Aggiungi un nuova nota medica"}
+              </p>
+
               <div>
-                <h3 className="text-lg font-bold leading-10">Diario Medico</h3>
-                <p className="text-[15px] text-[#000000] mb-5">
-                  Aggiungi eventuali note mediche del tuo animale
-                </p>
-              </div>
-              {!newNoteOpen?.isOpen && notes?.length < 1 && (
-                <button
-                  onClick={() => {
-                    setNewNoteOpen({
-                      ...newNoteOpen,
-                      isOpen: !newNoteOpen?.isOpen,
-                    });
-                  }}
-                  className={`${
-                    newNoteOpen?.isOpen || notes?.length > 1 ? "hidden" : "flex"
-                  } gap-3 justify-center items-center py-5 border border-dashed mb-4 cursor-pointer rounded-lg w-full`}
-                >
-                  <span> {plusIcons} </span>
-                  <p className="text-center text-[15px] text-[#000000]">
-                    Aggiungi un nuova nota medica
-                  </p>
-                </button>
-              )}
-              {!newNoteOpen?.isOpen && notes?.length > 0 && (
-                <button
-                  onClick={() => {
-                    setNewNoteOpen({
-                      ...newNoteOpen,
-                      isOpen: !newNoteOpen?.isOpen,
-                    });
-                  }}
-                  className={`${
-                    !newNoteOpen?.isOpen || notes?.length > 1
-                      ? "flex"
-                      : "hidden"
-                  } gap-3 justify-center items-center py-5 mb-4 cursor-pointer rounded-lg`}
-                >
-                  <span>{plusIcons}</span>
-                </button>
-              )}
-            </div>
-            {/* add medical diary */}
-            <div>
-              {/* Add note component start here  */}
-
-              <div
-                className={`transition duration-300 ${
-                  newNoteOpen?.isOpen
-                    ? "visible opacity-1 h-auto p-4 border border-primary rounded-lg "
-                    : "invisible opacity-0 h-0 "
-                } `}
-              >
-                <p className="text-lg font-bold leading-10">
-                  {newNoteOpen?.isEditingMode
-                    ? "Modifica la nota medica"
-                    : "Aggiungi un nuova nota medica"}
-                </p>
-
-                <div>
-                  {/* Data field  */}
-                  {/* <input
+                {/* Data field  */}
+                {/* <input
                   type="text"
                   value={note?.title}
                   onChange={(e) => setNote({ ...note, title: e.target.value })}
@@ -449,121 +471,165 @@ function CompleteMedicalRecord() {
                   } `}
                 /> */}
 
-                  {/* date input  */}
-                  <input
-                    type="date"
-                    value={note?.date}
-                    onChange={(e) => setNote({ ...note, date: e.target.value })}
-                    className={`w-full rounded-lg py-3 px-4 outline-none border-[1px] mt-5 ${
-                      fieldError && inputData?.medicalData === ""
-                        ? "border-red-500"
-                        : "border-[#E5E7EC] "
-                    } `}
-                  />
+                {/* date input  */}
+                <input
+                  type="date"
+                  value={note?.date}
+                  onChange={(e) => setNote({ ...note, date: e.target.value })}
+                  className={`w-full rounded-lg py-3 px-4 outline-none border-[1px] mt-5 ${
+                    fieldError && inputData?.medicalData === ""
+                      ? "border-red-500"
+                      : "border-[#E5E7EC] "
+                  } `}
+                />
 
-                  <textarea
-                    className="resize-none w-full p-2 mt-5 text-[15px] h-48 outline-none border border-gray-200 rounded-lg"
-                    value={note?.description}
-                    onChange={(e) =>
-                      setNote({ ...note, description: e.target.value })
-                    }
-                    placeholder="Inserisci una descrizione..."
-                  ></textarea>
+                <textarea
+                  className="resize-none w-full p-2 mt-5 text-[15px] h-48 outline-none border border-gray-200 rounded-lg"
+                  value={note?.description}
+                  onChange={(e) =>
+                    setNote({ ...note, description: e.target.value })
+                  }
+                  placeholder="Inserisci una descrizione..."
+                ></textarea>
 
-                  <div className="p-4 mt-4 rounded-lg border">
-                    <div className="flex flex-col md:flex-row justify-between items-center">
-                      <p className="text-[14px]">
-                        Carica i file{" "}
-                        <span className="text-[#00000066]">
-                          {" "}
-                          {`(Max 3 file)`}{" "}
+                <div className="p-4 mt-4 rounded-lg border">
+                  <div className="flex flex-col md:flex-row justify-between items-center">
+                    <p className="text-[14px]">
+                      Carica i file{" "}
+                      <span className="text-[#00000066]">
+                        {" "}
+                        {`(Max 3 file)`}{" "}
+                      </span>
+                    </p>
+
+                    <p className="text-[13px] text-[#00000066]">
+                      JPG, PNG or PDF. Max size of 5MB.{" "}
+                    </p>
+                  </div>
+
+                  <div className="mt-6">
+                    <label
+                      htmlFor="multipleImg"
+                      className="flex gap-3 justify-center items-center py-8 border border-dashed mb-4 cursor-pointer rounded-lg"
+                    >
+                      <span> {uploadIcons} </span>
+                      <p className="text-center text-[15px] text-[#000000]">
+                        Carica documento -{" "}
+                        <span className="text-primary underline ">
+                          Scegli il file{" "}
                         </span>
                       </p>
+                    </label>
+                    <ImageUploader
+                      note={note}
+                      setNote={setNote}
+                      selectedImages={selectedImages}
+                      setSelectedImages={setSelectedImages}
+                    />
+                    {/* files name  */}
+                    <div>
+                      {note?.selectedImage?.map((key, i) => (
+                        <div
+                          key={i}
+                          className="flex flex-col md:flex-row gap-2 items-center justify-between border-b py-4"
+                        >
+                          <div className="flex gap-[10px]">
+                            <span> {checkIcons}</span>
+                            <p> {key} </p>
+                          </div>
 
-                      <p className="text-[13px] text-[#00000066]">
-                        JPG, PNG or PDF. Max size of 5MB.{" "}
-                      </p>
+                          <button onClick={() => handleDeleteImg(i)}>
+                            {cancelIcons}{" "}
+                          </button>
+                        </div>
+                      ))}
                     </div>
-
-                    <div className="mt-6">
-                      <label
-                        htmlFor="multipleImg"
-                        className="flex gap-3 justify-center items-center py-8 border border-dashed mb-4 cursor-pointer rounded-lg"
-                      >
-                        <span> {uploadIcons} </span>
-                        <p className="text-center text-[15px] text-[#000000]">
-                          Carica documento -{" "}
-                          <span className="text-primary underline ">
-                            Scegli il file{" "}
-                          </span>
-                        </p>
-                      </label>
-                      <ImageUploader
-                        note={note}
-                        setNote={setNote}
-                        selectedImages={selectedImages}
-                        setSelectedImages={setSelectedImages}
-                      />
-                      {/* files name  */}
-                      <div>
-                        {note?.selectedImage?.map((key, i) => (
-                          <div
-                            key={i}
-                            className="flex flex-col md:flex-row gap-2 items-center justify-between border-b py-4"
+                    <div
+                      onClick={(e) => addNoteHandler(e)}
+                      className={`mt-8 cursor-pointer text-center w-full rounded-lg py-3 px-4 outline-none hover:text-secondary border-secondary border bg-secondary hover:bg-transparent text-white transition duration-300`}
+                    >
+                      {isLoading ? (
+                        <div className="flex items-center justify-center">
+                          <svg
+                            aria-hidden="true"
+                            className="w-5 h-5 mr-2 text-gray-100 animate-spin fill-secondary"
+                            viewBox="0 0 100 101"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
-                            <div className="flex gap-[10px]">
-                              <span> {checkIcons}</span>
-                              <p> {key} </p>
-                            </div>
-
-                            <button onClick={() => handleDeleteImg(i)}>
-                              {cancelIcons}{" "}
-                            </button>
-                          </div>
-                        ))}
-                      </div>
-                      <div
-                        onClick={(e) => addNoteHandler(e)}
-                        className={`mt-8 cursor-pointer text-center w-full rounded-lg py-3 px-4 outline-none hover:text-secondary border-secondary border bg-secondary hover:bg-transparent text-white transition duration-300`}
-                      >
-                        {isLoading ? (
-                          <div className="flex items-center justify-center">
-                            <svg
-                              aria-hidden="true"
-                              className="w-5 h-5 mr-2 text-gray-100 animate-spin fill-secondary"
-                              viewBox="0 0 100 101"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                                fill="currentColor"
-                              />
-                              <path
-                                d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                                fill="currentFill"
-                              />
-                            </svg>
-                            <span>Loading...</span>
-                          </div>
-                        ) : newNoteOpen?.isEditingMode ? (
-                          "Modifica nota"
-                        ) : (
-                          "Aggiungi nota"
-                        )}
-                      </div>
+                            <path
+                              d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                              fill="currentColor"
+                            />
+                            <path
+                              d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                              fill="currentFill"
+                            />
+                          </svg>
+                          <span>Loading...</span>
+                        </div>
+                      ) : newNoteOpen?.isEditingMode ? (
+                        "Modifica nota"
+                      ) : (
+                        "Aggiungi nota"
+                      )}
                     </div>
                   </div>
                 </div>
               </div>
-
-              {/* Add note component ends here  */}
             </div>
-            {newNoteOpen?.isEditingMode ? (
-              <>
-                {notes
-                  ?.filter((fill, i) => i !== newNoteOpen?.noteIndex)
-                  ?.map((item, idx) => (
+
+            {/* Add note component ends here  */}
+          </div>
+          {newNoteOpen?.isEditingMode ? (
+            <>
+              {notes
+                ?.filter((fill, i) => i !== newNoteOpen?.noteIndex)
+                ?.map((item, idx) => (
+                  <div key={idx} className="border rounded-lg p-4 mt-4">
+                    <div className="flex flex-col md:flex-row items-center justify-between ">
+                      <h5 className="font-normal text-[15px]">
+                        {item?.description}
+                      </h5>
+                      <p className="text-[#00000066]"> {item?.date} </p>
+                    </div>
+
+                    <div className="py-3 flex gap-1 flex-wrap">
+                      {item?.selectedImage &&
+                        item?.selectedImage?.map((file, FIdx) => (
+                          <span
+                            key={FIdx}
+                            className="py-1.5 px-3 max-w-max rounded-lg text-[#00000066] bg-[#E5E7EC99]"
+                          >
+                            {file}
+                          </span>
+                        ))}
+                    </div>
+
+                    <div className="flex gap-4 mt-2">
+                      <button
+                        onClick={(e) => editNoteHandler(e, idx)}
+                        className={`w-full rounded-lg py-3 px-4 outline-none text-secondary border-secondary border hover:bg-secondary hover:text-white transition duration-300`}
+                      >
+                        Modifica cartella clinica
+                      </button>
+                      <button
+                        onClick={(e) => deleteNoteHandler(e, idx)}
+                        className={`w-full rounded-lg py-3 px-4 outline-none text-secondary border-secondary border hover:bg-secondary hover:text-white transition duration-300`}
+                      >
+                        Elimina
+                      </button>
+                    </div>
+                  </div>
+                ))}
+            </>
+          ) : (
+            <>
+              {notes?.length > 0 && (
+                <div>
+                  <h4 className="font-semibold text-base">Tutte le note</h4>
+
+                  {notes?.map((item, idx) => (
                     <div key={idx} className="border rounded-lg p-4 mt-4">
                       <div className="flex flex-col md:flex-row items-center justify-between ">
                         <h5 className="font-normal text-[15px]">
@@ -600,116 +666,67 @@ function CompleteMedicalRecord() {
                       </div>
                     </div>
                   ))}
-              </>
-            ) : (
-              <>
-                {notes?.length > 0 && (
-                  <div>
-                    <h4 className="font-semibold text-base">Tutte le note</h4>
-
-                    {notes?.map((item, idx) => (
-                      <div key={idx} className="border rounded-lg p-4 mt-4">
-                        <div className="flex flex-col md:flex-row items-center justify-between ">
-                          <h5 className="font-normal text-[15px]">
-                            {item?.description}
-                          </h5>
-                          <p className="text-[#00000066]"> {item?.date} </p>
-                        </div>
-
-                        <div className="py-3 flex gap-1 flex-wrap">
-                          {item?.selectedImage &&
-                            item?.selectedImage?.map((file, FIdx) => (
-                              <span
-                                key={FIdx}
-                                className="py-1.5 px-3 max-w-max rounded-lg text-[#00000066] bg-[#E5E7EC99]"
-                              >
-                                {file}
-                              </span>
-                            ))}
-                        </div>
-
-                        <div className="flex gap-4 mt-2">
-                          <button
-                            onClick={(e) => editNoteHandler(e, idx)}
-                            className={`w-full rounded-lg py-3 px-4 outline-none text-secondary border-secondary border hover:bg-secondary hover:text-white transition duration-300`}
-                          >
-                            Modifica cartella clinica
-                          </button>
-                          <button
-                            onClick={(e) => deleteNoteHandler(e, idx)}
-                            className={`w-full rounded-lg py-3 px-4 outline-none text-secondary border-secondary border hover:bg-secondary hover:text-white transition duration-300`}
-                          >
-                            Elimina
-                          </button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </>
-            )}
-            {/* all notes */}
-
-            {/* Note aggiuntive start here */}
-
-            <div className="flex flex-col gap-1 mt-10">
-              <label
-                htmlFor="AdditionalNotes"
-                className="text-lg font-bold leading-10"
-              >
-                Note aggiuntive
-              </label>
-              <textarea
-                className="resize-none w-full p-2  text-[15px] h-48 outline-none border border-gray-200 rounded-lg"
-                name="AdditionalNotes"
-                id="AdditionalNotes"
-                value={inputData?.AdditionalNotes}
-                onChange={handleInputChange}
-                placeholder="Aggiungi note aggiuntive o informazioni utili per il veterinario...."
-              ></textarea>
-            </div>
-
-            {/* Note aggiuntive ends here */}
-
-            {/* add your pet start here */}
-            <button
-              onClick={handleSubmit}
-              className={`mt-8 w-full rounded-lg py-3 px-4 outline-none hover:text-secondary border-secondary border bg-secondary hover:bg-transparent text-white transition duration-300`}
-            >
-              {isLoading ? (
-                <div className="flex items-center justify-center">
-                  <svg
-                    aria-hidden="true"
-                    className="w-5 h-5 mr-2 text-gray-100 animate-spin fill-secondary"
-                    viewBox="0 0 100 101"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                      fill="currentColor"
-                    />
-                    <path
-                      d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                      fill="currentFill"
-                    />
-                  </svg>
-                  <span>Loading...</span>
                 </div>
-              ) : (
-                "Aggiungi il tuo animale"
               )}
-            </button>
-            {/* add your pet ends here */}
+            </>
+          )}
+          {/* all notes */}
+
+          {/* Note aggiuntive start here */}
+
+          <div className="flex flex-col gap-1 mt-10">
+            <label
+              htmlFor="AdditionalNotes"
+              className="text-lg font-bold leading-10"
+            >
+              Note aggiuntive
+            </label>
+            <textarea
+              className="resize-none w-full p-2  text-[15px] h-48 outline-none border border-gray-200 rounded-lg"
+              name="AdditionalNotes"
+              id="AdditionalNotes"
+              value={inputData?.AdditionalNotes}
+              onChange={handleInputChange}
+              placeholder="Aggiungi note aggiuntive o informazioni utili per il veterinario...."
+            ></textarea>
           </div>
 
-          <p className="text-center text-[15px] mt-10 text-[#00000066]">
-            * I campi sono obbligatori
-          </p>
+          {/* Note aggiuntive ends here */}
+
+          {/* add your pet start here */}
+          <button
+            onClick={handleSubmit}
+            className={`mt-8 w-full rounded-lg py-3 px-4 outline-none hover:text-secondary border-secondary border bg-secondary hover:bg-transparent text-white transition duration-300`}
+          >
+            {isLoading ? (
+              <div className="flex items-center justify-center">
+                <svg
+                  aria-hidden="true"
+                  className="w-5 h-5 mr-2 text-gray-100 animate-spin fill-secondary"
+                  viewBox="0 0 100 101"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                    fill="currentFill"
+                  />
+                </svg>
+                <span>Loading...</span>
+              </div>
+            ) : (
+              "Aggiungi il tuo animale"
+            )}
+          </button>
+          {/* add your pet ends here */}
         </div>
       </div>
     </section>
   );
 }
 
-export default CompleteMedicalRecord;
+export default CompleteSingleMedicalRecord;
