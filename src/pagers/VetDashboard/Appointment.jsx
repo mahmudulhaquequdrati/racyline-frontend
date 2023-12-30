@@ -49,35 +49,32 @@ const Appointment = () => {
         <div>
           <div className="overflow-x-auto h-full">
             <table className="w-full shadow bg-white rounded h-full">
-              <thead>
-                <tr className="bg-gray-50 px-10">
-                  <th
-                    align="left"
-                    className="border-t px-10 py-2 whitespace-nowrap"
-                  >
+              <thead className="">
+                <tr className="bg-gray-50 px-5">
+                  <th align="left" className="border-t px-5 py-2 ">
                     Utente
                   </th>
                   <th
                     align="left"
-                    className="border-t px-10 py-2 whitespace-nowrap"
+                    className="border-t px-5 py-2 whitespace-nowrap"
                   >
                     Data e orario
                   </th>
                   <th
                     align="left"
-                    className="border-t px-10 py-2 whitespace-nowrap"
+                    className="border-t px-5 py-2 whitespace-nowrap"
                   >
                     Motivazioni della visita
                   </th>
                   <th
                     align="left"
-                    className="border-t px-10 py-2 whitespace-nowrap"
+                    className="border-t px-5 py-2 whitespace-nowrap"
                   >
                     Cartella clinica dell’animale
                   </th>
                   <th
                     align="left"
-                    className="border-t px-10 py-2 whitespace-nowrap"
+                    className="border-t px-5 py-2 whitespace-nowrap"
                   >
                     Azioni
                   </th>
@@ -88,14 +85,14 @@ const Appointment = () => {
                   ? "Loading...."
                   : allAppointmentList?.data?.map((res) => (
                       <tr key={res}>
-                        <td align="left" className="border-t px-10 py-2">
-                          <div className="flex justify-start">
+                        <td align="left" className="border-t px-5 py-2 ">
+                          <div className="flex justify-between  ">
                             <img
                               src={Pets}
                               className="w-16 h-16 rounded-full"
                               alt=""
                             />
-                            <div className="ml-5">
+                            <div className="ml-5 ">
                               <p className="font-bold">
                                 {res?.firstName} {res?.lastName}
                               </p>
@@ -104,19 +101,17 @@ const Appointment = () => {
                             </div>
                           </div>
                         </td>
-                        <td align="left" className="border-t px-10 py-2">
+                        <td align="left" className="border-t px-5 py-2">
                           <p className="text-gray-400 whitespace-nowrap">
                             {moment(res?.appointmentDate).format("DD/MM/YYYY")},{" "}
                             {res?.appointmentTime}
                           </p>
                         </td>
-                        <td align="left" className="border-t px-10 py-2">
-                          <p className="text-gray-400 w-[500px]">
-                            {res?.reasonVisit}
-                          </p>
+                        <td align="left" className="border-t px-5 py-2">
+                          <p className="text-gray-400 ">{res?.reasonVisit}</p>
                         </td>
-                        <td align="left" className="border-t px-10 py-2">
-                          <div className="flex justify-between w-[400px] border px-5 py-2 rounded">
+                        <td align="left" className="border-t px-5 py-2">
+                          <div className="flex justify-between gap-12 !border px-5 py-2 rounded">
                             <div>
                               <p>Rex</p>
                               <p className="text-gray-400">Cane</p>
@@ -131,14 +126,18 @@ const Appointment = () => {
                             </div>
                           </div>
                         </td>
-                        <td align="left" className="border-t px-10 py-2">
+                        <td align="left" className="border-t px-5 py-2">
                           <Popover className="relative">
                             {({ open }) => (
                               <>
-                                <Popover.Button>
-                                  <div className="cursor-pointer">
+                                <Popover.Button
+                                  className={
+                                    "cursor-pointer  group inline-flex items-center rounded-md px-3 py-2 text-base font-medium  focus:outline-none "
+                                  }
+                                >
+                                  <div className=" ">
                                     <svg
-                                      class="w-6 h-6 text-gray-800 dark:text-white"
+                                      class="w-6 h-6 text-gray-800"
                                       aria-hidden="true"
                                       xmlns="http://www.w3.org/2000/svg"
                                       fill="none"
@@ -162,7 +161,7 @@ const Appointment = () => {
                                   leaveFrom="opacity-100 translate-y-0"
                                   leaveTo="opacity-0 translate-y-1"
                                 >
-                                  <Popover.Panel className="absolute left-[-100%] z-10 mt-3 w-[200px] max-w-sm -translate-x-1/2 transform px-4 sm:px-0 lg:max-w-3xl">
+                                  <Popover.Panel className="absolute -left-24 !z-[9999] mt-3 w-[200px] max-w-sm -translate-x-1/2 transform px-4 sm:px-0 lg:max-w-3xl">
                                     <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black/5">
                                       <div className="relative bg-white p-5 cursor-pointer ">
                                         <p className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out  focus:outline-none focus-visible:ring focus-visible:ring-orange-500/50">
