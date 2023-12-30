@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { sendDataToAppontment } from "../../features/appointment/appointmentSlice";
 import VetCalender from "./Calender";
 import { notifyError } from "../../components/common/Toast/Toast";
+import moment from "moment";
 
 const VetList = ({ vetInfo }) => {
   const [appointmentDate, setAppointmentDate] = useState({
@@ -143,20 +144,11 @@ const VetList = ({ vetInfo }) => {
                     </p>
                     <p className="text-right text-[13px] font-normal leading-[22px] text-[#666666]">
                       {availabilities?.availabilities?.map((avil) => {
-                        const startTimeHours = new Date(
-                          `${avil?.start_time}`
-                        ).getHours();
-                        const startTimeMinutes = new Date(
-                          `${avil?.start_time}`
-                        ).getMinutes();
-                        const endTimeHours = new Date(
-                          `${avil?.end_time}`
-                        ).getHours();
-                        const endTimeMinutes = new Date(
-                          `${avil?.end_time}`
-                        ).getMinutes();
                         return (
-                          <p>{`${startTimeHours}.${startTimeMinutes} - ${endTimeHours}.${endTimeMinutes}`}</p>
+                          <p>
+                            {moment(avil?.start_time).format("HH:mm")} -{" "}
+                            {moment(avil?.end_time).format("HH:mm")}
+                          </p>
                         );
                       })}
                     </p>
