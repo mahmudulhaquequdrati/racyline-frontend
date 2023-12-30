@@ -26,8 +26,8 @@ function RegistrationGoogleCalenderConnect() {
               }/guser/connect/google-calender`,
               {
                 code: response.code,
-                user_id: JSON.parse(localStorage.getItem("authUser"))?.user
-                  ?._id,
+                user_id: JSON.parse(localStorage.getItem("authNutraNextUser"))
+                  ?.user?._id,
               }
             )
             .then((res) => {

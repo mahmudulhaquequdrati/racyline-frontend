@@ -35,7 +35,7 @@ export default function Header() {
             <DropDown />
           </div>
         )}
-        {user?.role === "user" && !user?.completed_medical_report && (
+        {/* {user?.role === "user" && !user?.completed_medical_report && (
           <div className="flex gap-3 md:gap-8 uppercase ">
             <Link
               to="/vets/login"
@@ -51,7 +51,7 @@ export default function Header() {
               accedi
             </h2>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );
