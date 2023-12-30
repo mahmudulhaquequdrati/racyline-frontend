@@ -42,7 +42,7 @@ export const appointmentApi = apiSlice.injectEndpoints({
       query: ({ id }) => {
         // console.log(id);
         return {
-          url: `/appointment/${id}`,
+          url: `/appointment/delete/${id}`,
           method: "DELETE",
         };
       },

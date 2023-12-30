@@ -133,12 +133,26 @@ const App = () => {
         <Route path="/vets/registration" element={<Registration />} />
         <Route path="/vets/login" element={<Login />} />
         {/* ====================== New Files Start ==================== */}
-        <Route path="/user/all-pet-info" element={<AddPetsMedicalRecords />} />
+        <Route
+          path="/user/all-pet-info"
+          element={
+            // <UserProtected>
+            <AddPetsMedicalRecords />
+            // </UserProtected>
+          }
+        />
         {/* <Route
           path="/user/add-single-pet-info"
           element={<SingleAddPetsMedicalRecords />}
         /> */}
-        <Route path="/user/single-pet-info" element={<SingleMedicalRecord />} />
+        <Route
+          path="/user/single-pet-info"
+          element={
+            <UserProtected>
+              <SingleMedicalRecord />
+            </UserProtected>
+          }
+        />
         <Route path="/user/add-pet-info" element={<MedicalRecord />} />
         <Route
           path="/user/complete-single-medical-record"

@@ -27,7 +27,9 @@ const MyAppointment = () => {
 
   // Deleting an appiontment
   const handleDeleteAppointment = (id) => {
-    deleteAppointment({ id });
+    deleteAppointment({ id }).then((res) => {
+      refetch();
+    });
   };
 
   let content;
@@ -50,6 +52,7 @@ const MyAppointment = () => {
             )
             ?.map((appointment, i) => {
               const { _id, vetInfo } = appointment;
+              console.log(_id);
               let timeHour = appointment?.appointmentTime?.split(":")[0];
               let timeMin = appointment?.appointmentTime
                 ?.split(":")[1]

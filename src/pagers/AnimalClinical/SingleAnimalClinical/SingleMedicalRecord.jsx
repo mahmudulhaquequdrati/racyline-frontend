@@ -21,6 +21,7 @@ function SingleMedicalRecord() {
   const navigate = useNavigate();
   const location = useLocation();
   const pathName = location?.pathname;
+  console.log(location?.state);
   const selectedPetIndex = location?.state?.petInfoIndex;
   const isExistPets = JSON.parse(localStorage.getItem("petsData"));
   const [selected, setSelected] = useState(
