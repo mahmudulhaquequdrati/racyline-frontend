@@ -52,7 +52,7 @@ const MyAppointment = () => {
             )
             ?.map((appointment, i) => {
               const { _id, vetInfo } = appointment;
-              console.log(_id);
+              // console.log(_id);
               let timeHour = appointment?.appointmentTime?.split(":")[0];
               let timeMin = appointment?.appointmentTime
                 ?.split(":")[1]
@@ -70,7 +70,7 @@ const MyAppointment = () => {
                     {appointment?.appointmentTime?.includes("PM")
                       ? `${12 + Number(timeHour) + `:` + timeMin}`
                       : timeHour < 10
-                      ? `0${timeHour + `:` + timeMin}`
+                      ? `${timeHour + `:` + timeMin}`
                       : `${timeHour + `:` + timeMin}`}{" "}
                     di Martedì{" "}
                     {moment(appointment?.appointmentDate).format(
@@ -160,6 +160,10 @@ const MyAppointment = () => {
       refetch();
     }
   });
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   return (
     <div className="w-full bg-primary pt-[60px] p-4 md:p-8 pb-[80px]">

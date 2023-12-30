@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useCreateAppointmentMutation } from "../../features/appointment/appointmentApi";
 import { useGetPetMedicalReportByUserIdQuery } from "../../features/petMedialReport/petMedicalReportApi";
+import { toast } from "react-toastify";
 
 const Appointment = () => {
   const state = useSelector((state) => state.auth);
@@ -31,10 +32,22 @@ const Appointment = () => {
     refetch,
   } = useGetPetMedicalReportByUserIdQuery(user?._id);
 
-  const { data } = useSelector((state) => state.appointment);
+  const { data: dt } = useSelector((state) => state.appointment);
+  const [data, setData] = useState({});
+  useEffect(() => {
+    if (!dt) {
+      const vet_info = JSON.parse(sessionStorage.getItem("vet_info"));
+      if (vet_info) {
+        setData(vet_info);
+      }
+    } else {
+      setData(dt);
+    }
+  }, []);
 
   const submitHandle = async (e) => {
     e.preventDefault();
+    if (!animale?.id) return toast.error("per favore seleziona un animale");
     const appointmentData = {
       userId: user?._id,
       firstName: appointment?.firstName,
@@ -55,12 +68,19 @@ const Appointment = () => {
   }, []);
   useEffect(() => {
     if (createdAppointmentResponse?.data?._id && !isError) {
+      sessionStorage.removeItem("vet_info");
       navigate("/user/appointment-success");
     }
     if (!isLoading && isError) {
+      // sessionStorage.removeItem("vet_info");
       navigate("/user/appointment-error");
     }
   }, [createdAppointmentResponse?.data?._id, isError]);
+  let timeHour = data?.appointDate?.time?.split(":")[0];
+  let timeMin = data?.appointDate?.time?.split(":")[1]?.split(" ")[0];
+
+  console.log(data?.appointDate);
+
   // console.log(animale);
 
   // const [dropdowValue, setDropdownValue] = useState([]);
@@ -406,8 +426,10 @@ const Appointment = () => {
             style={{ boxShadow: "0px 1px 3px 0px rgba(232, 151, 31, 0.15)" }}
           >
             <p className="text-[15px] font-normal leading-6">
-              Stai prenotando un appuntamento per le 13:30 di Martedì 25 Ottobre
-              2023 con il/la Dottore/Dottoressa
+              Stai prenotando un appuntamento per le {data?.appointDate?.time}{" "}
+              di Martedì{" "}
+              {moment(data?.appointDate?.date).format("DD MMMM YYYY")} con il/la
+              Dottore/Dottoressa
             </p>
             <div className="flex gap-6">
               <div className="w-[100px] h-[100px]">

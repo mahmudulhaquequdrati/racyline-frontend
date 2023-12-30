@@ -40,6 +40,7 @@ export default function VetCalender({
   setAppointmentDate,
   vetAvailabilities,
 }) {
+  // console.log(appointmentDate?.time);
   const onDateChange = (val) => {
     console.log(val);
     setAppointmentDate((prev) => {
@@ -50,7 +51,7 @@ export default function VetCalender({
     });
   };
   const disabledWeeks = vetAvailabilities
-    .filter((day) => !day.available)
+    ?.filter((day) => !day.available)
     .map((day) => moment().startOf("week").day(day.name).format("dddd"));
   return (
     <div className="max-w-[1140px] w-full mx-auto">
@@ -61,7 +62,7 @@ export default function VetCalender({
         className={"customizeCalender"}
         tileDisabled={({ date }) => {
           const weekName = moment(date).format("dddd");
-          return disabledWeeks.includes(weekName);
+          return disabledWeeks?.includes(weekName);
         }}
         prev2Label={null}
         next2Label={null}

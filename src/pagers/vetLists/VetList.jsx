@@ -25,6 +25,7 @@ const VetList = ({ vetInfo }) => {
     appointments,
     doctor_type2 = [],
   } = vetInfo || {};
+
   const handelGetAppointment = () => {
     if (appointmentDate?.time !== null) {
       const appointmentData = {
@@ -36,6 +37,8 @@ const VetList = ({ vetInfo }) => {
           profile_image_url,
           veterinary_address,
           doctor_type1,
+          availability,
+          appointments,
         },
         appointDate: {
           time: appointmentDate?.time,
@@ -43,11 +46,13 @@ const VetList = ({ vetInfo }) => {
         },
       };
       dispatch(sendDataToAppontment(appointmentData));
+      sessionStorage.setItem("vet_info", JSON.stringify(appointmentData));
       navigate("/user/new-appointment");
     } else {
       notifyError("Please select the time!");
     }
   };
+  console.log("appointments", appointments);
 
   // current date
   const current_day = moment(appointmentDate.date).locale("it").format("ddd");
@@ -62,7 +67,7 @@ const VetList = ({ vetInfo }) => {
   if (current_appointment_data && current_appointment_data?.length > 0) {
     timeSlots2 = current_appointment_data?.map((item) => item.appointmentTime);
   }
-  console.log(timeSlots2);
+  // console.log(timeSlots2);
   current_day_data?.map((timeData, i) => {
     // Iterate through each time interval
     timeData?.availabilities?.forEach((interval) => {
@@ -72,12 +77,12 @@ const VetList = ({ vetInfo }) => {
       // Generate time slots at 30-minute intervals within the interval
       while (startTime.isSameOrBefore(endTime)) {
         timeSlots.push(startTime.format("HH:mm"));
-        startTime.add(30, "minutes");
+        startTime.add(15, "minutes");
       }
     });
   });
 
-  console.log(timeSlots);
+  // console.log(timeSlots);
 
   return (
     <div className="flex text-black flex-col md:flex-row bg-white rounded-lg overflow-hidden">
@@ -128,7 +133,7 @@ const VetList = ({ vetInfo }) => {
               <div>
                 {doctor_type2?.map((d, i) => {
                   return (
-                    <span className="text-[14px]">
+                    <span className="text-[14px]" key={i}>
                       {d.name}
                       {doctor_type2.length > i + 1 ? "," : ""}
                     </span>
@@ -151,9 +156,9 @@ const VetList = ({ vetInfo }) => {
                       {availabilities?.name}
                     </p>
                     <p className="text-right text-[13px] font-normal leading-[22px] text-[#666666]">
-                      {availabilities?.availabilities?.map((avil) => {
+                      {availabilities?.availabilities?.map((avil, i) => {
                         return (
-                          <p>
+                          <p key={i}>
                             {moment(avil?.start_time).format("HH:mm")} -{" "}
                             {moment(avil?.end_time).format("HH:mm")}
                           </p>
@@ -205,8 +210,8 @@ const VetList = ({ vetInfo }) => {
                     ? "bg-[#a8a8a8] rounded-full text-white cursor-not-allowed"
                     : ` ${
                         appointmentDate?.time === t
-                          ? "bg-[#7D7D7D] rounded-full text-white"
-                          : "hover:text-white"
+                          ? "bg-[#7D7D7D] rounded-full text-white py-1"
+                          : "hover:text-white py-1"
                       }`
                 }`}
               >
