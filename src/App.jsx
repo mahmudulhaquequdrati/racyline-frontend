@@ -35,6 +35,7 @@ import AuthProtected from "./routes/AuthProtected.jsx";
 import SingleMedicalRecord from "./pagers/AnimalClinical/SingleAnimalClinical/SingleMedicalRecord.jsx";
 import CompleteSingleMedicalRecord from "./pagers/AnimalClinical/SingleAnimalClinical/CompleteSingleMedicalRecord.jsx";
 import moment from "moment";
+import MyAnimals from "./pagers/myAnimals/MyAnimals.jsx";
 const App = () => {
   const isAuth = useAuthCheck();
   moment.defineLocale("it", {
@@ -236,6 +237,14 @@ const App = () => {
           element={
             <UserProtected>
               <MyAppointment />
+            </UserProtected>
+          }
+        />
+        <Route
+          path="/user/my-animals"
+          element={
+            <UserProtected>
+              <MyAnimals />
             </UserProtected>
           }
         />
