@@ -8,7 +8,7 @@ const useAuthCheck = () => {
   const [isAuth, setIsAuth] = useState(false);
   const navigate = useNavigate();
   const state = useSelector((state) => state.auth);
-  // const user = JSON.parse(localStorage.getItem("authUser"))?.user;
+  // const user = JSON.parse(localStorage.getItem("authNutraNextUser"))?.user;
   const { accessToken } = state || {};
 
   const {

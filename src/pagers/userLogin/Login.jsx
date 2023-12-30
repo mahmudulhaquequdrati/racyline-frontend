@@ -20,7 +20,7 @@ function UserLogin() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const dispatch = useDispatch();
   const handleLogut = () => {
-    localStorage.clear();
+    localStorage.removeItem("authNutraNextUser");
     dispatch(userLoggedOut());
     navigate("/user/login");
   };
@@ -38,10 +38,11 @@ function UserLogin() {
     }
     if (LoginInData?.data?.accessToken) {
       notifySuccess("welcome back!");
+
       dispatch(userLoggedIn(LoginInData?.data));
       navigate("/user/vet-lists");
     }
-  }, [isLoggedIn, LoginInData, isError, navigate]);
+  }, [LoginInData, isError, navigate]);
 
   async function handleGoogle() {
     var SCOPES =

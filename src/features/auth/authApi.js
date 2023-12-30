@@ -14,7 +14,7 @@ export const authApi = apiSlice.injectEndpoints({
         try {
           const result = await queryFulfilled;
           localStorage.setItem(
-            "authUser",
+            "authNutraNextUser",
             JSON.stringify({
               accessToken: result.data.data.accessToken,
               user: result.data.data.user,
@@ -42,7 +42,7 @@ export const authApi = apiSlice.injectEndpoints({
         try {
           const result = await queryFulfilled;
           localStorage.setItem(
-            "authUser",
+            "authNutraNextUser",
             JSON.stringify({
               accessToken: result.data.data.accessToken,
               user: result.data.data.user,

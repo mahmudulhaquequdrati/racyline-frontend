@@ -12,7 +12,7 @@ const UserProtected = ({ children }) => {
 
   return user &&
     user?.role === "user" &&
-    user?.completed_medical_report &&
+    // user?.completed_medical_report &&
     accessToken ? (
     children
   ) : (

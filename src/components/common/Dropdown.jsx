@@ -20,7 +20,7 @@ export default function DropDown() {
 
   return (
     <div className=" w-56 text-right">
-      {user?.role === "user" && user?.completed_medical_report && (
+      {user?.role === "user" && (
         <Menu as="div" className="relative inline-block text-left">
           <div>
             <Menu.Button
@@ -116,7 +116,7 @@ export default function DropDown() {
                   </>
                 )}
 
-                {user?.role === "user" && user?.completed_medical_report && (
+                {user?.role === "user" && (
                   <>
                     <Menu.Item>
                       {({ active }) => (

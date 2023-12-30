@@ -133,7 +133,14 @@ const App = () => {
         <Route path="/vets/registration" element={<Registration />} />
         <Route path="/vets/login" element={<Login />} />
         {/* ====================== New Files Start ==================== */}
-        <Route path="/user/all-pet-info" element={<AddPetsMedicalRecords />} />
+        <Route
+          path="/user/all-pet-info"
+          element={
+            <UserProtected>
+              <AddPetsMedicalRecords />
+            </UserProtected>
+          }
+        />
         <Route
           path="/user/add-single-pet-info"
           element={<SingleAddPetsMedicalRecords />}
