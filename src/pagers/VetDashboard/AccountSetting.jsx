@@ -18,19 +18,114 @@ import { useGetUserInfoQuery } from "../../features/auth/authApi";
 
 const people = [
   {
-    name: "Veterinary Doctor",
+    name: "Medico Veterinario",
   },
+  {
+    name: "Chirurgo Veterinario",
+  },
+  {
+    name: "Veterinario Clinico",
+  },
+  {
+    name: "Veterinario Olistico ",
+  },
+  {
+    name: "Veterinario di Medicina ",
+  },
+  {
+    name: "Interna Veterinario di",
+  },
+  {
+    name: "Emergenza e Cura Critica",
+  },
+  {
+    name: "Veterinario ",
+  },
+  {
+    name: "Comportamentale ",
+  },
+  {
+    name: "Radiologo Veterinario ",
+  },
+  {
+    name: "Veterinario di Medicina",
+  },
+  {
+    name: "Preventiva Epidemiologo",
+  },
+  {
+    name: "Veterinario Nutrizionista ",
+  },
+  {
+    name: "Veterinario Patologo ",
+  },
+  {
+    name: "Veterinario Dermatologo ",
+  },
+  {
+    name: "Veterinario Oftalmologo",
+  },
+  {
+    name: "Veterinario Odontoiatra ",
+  },
+  {
+    name: "Veterinario Anestesista",
+  },
+  {
+    name: "Veterinario Cardiologo ",
+  },
+  {
+    name: "Veterinario Neurologo",
+  },
+  {
+    name: "Veterinario ",
+  },
+  {
+    name: "Endocrinologo ",
+  },
+  {
+    name: "Veterinario Oncologo ",
+  },
+  {
+    name: "Veterinario Ortopedista",
+  },
+  {
+    name: "Esotici e Selvatici",
+  },
+  {
+    name: "Veterinario di ",
+  },
+  {
+    name: "Riproduzione Epatologo ",
+  },
+  {
+    name: "Veterinario",
+  },
+  {},
 ];
 const type = [
-  {
-    name: "Dog",
-  },
-  {
-    name: "Cat",
-  },
-  {
-    name: "Parrot",
-  },
+  { name: "Cane" },
+  { name: "Gatto" },
+  { name: "Coniglio" },
+  { name: "Cavallo" },
+  { name: "Pappagallo" },
+  { name: "Tartaruga" },
+  { name: "Criceto" },
+  { name: "Pecora" },
+  { name: "Capra" },
+  { name: "Maiale" },
+  { name: "Mucca" },
+  { name: "Gallina" },
+  { name: "Anatra" },
+  { name: "Oca" },
+  { name: "Pesce rosso" },
+  { name: "Canarino" },
+  { name: "Serpente" },
+  { name: "Porcellino d'India" },
+  { name: "Furetto" },
+  { name: "Asino" },
+  { name: "Gerbillo" },
+  { name: "Chinchilla" },
 ];
 const AccountSetting = () => {
   const { accessToken } = useSelector((state) => state.auth);

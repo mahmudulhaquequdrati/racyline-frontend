@@ -1,5 +1,6 @@
 import React from "react";
 import TikSuccess from "../../assets/ICONS/tiksuccess.svg";
+import { Link } from "react-router-dom";
 const HeroSection = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -24,9 +25,11 @@ const HeroSection = () => {
           </p>
         </div>
         <div>
-          <button className="bg-[#339E9F] px-10 py-3 text-white rounded-lg mt-10">
-            Prenota ora la visita
-          </button>
+          <Link to={"/user/vet-lists"}>
+            <button className="bg-[#339E9F] px-10 py-3 text-white rounded-lg mt-10">
+              Prenota ora la visita
+            </button>
+          </Link>
         </div>
       </div>
       <div className="py-20 pl-10 pr-10 md:pl-20 md:pr-60 text-white bg-[#339E9F]">

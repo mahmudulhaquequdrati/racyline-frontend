@@ -217,9 +217,9 @@ const App = () => {
         <Route
           path="/user/vet-lists"
           element={
-            <UserProtected>
-              <VetLists />
-            </UserProtected>
+            // <UserProtected>
+            <VetLists />
+            // </UserProtected>
           }
         />
         <Route
