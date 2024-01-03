@@ -11,7 +11,7 @@ import EighthSection from "../../components/LandingComponent/EighthSection";
 export default function LandingPage() {
   return (
     <section className="bg-primary">
-      <div className="">
+      <div className="overflow-hidden">
         <HeroSection />
         <SecondSection />
         <ThirdSection />

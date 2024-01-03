@@ -5,9 +5,9 @@ export const SecondSection = () => {
     <div className="flex flex-col items-center gap-[10px] md:gap-[60px] px-5 md:px-[250px] py-[80px] relative bg-white">
       <div className="w-full md:w-[700px] gap-[10px] flex flex-col items-center relative ">
         <p className="relative mt-[-1.00px] font-h2 ">
-          <p className="font-bold text-3xl md:px-20 text-center">
+          <span className="font-bold text-3xl md:px-20 text-center inline-block">
             Integratore NutraNext – Il Futuro del Benessere Animale
-          </p>
+          </span>
         </p>
         <p className="relative text-center">
           Il nostro primo prodotto è una rivoluzione negli integratori per

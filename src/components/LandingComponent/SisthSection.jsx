@@ -5,15 +5,15 @@ import CancelIcon from "../../assets/ICONS/Cancel.svg";
 
 const SisthSection = () => {
   return (
-    <div>
+    <div className="container max-w-[1140px] mx-auto">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="py-10 md:py-20 pl-10 md:pl-[11.5rem] pr-10 md:pr-40">
-          <h1 className="font-bold text-3xl">Informazioni sul prodotto</h1>
+        <div className="py-10 md:py-20 px-10 lg:px-0 md:px-6 ">
+          <h1 className="font-bold text-4xl">Informazioni sul prodotto</h1>
           <p>Modalità d’uso</p>
         </div>
-        <div className="py-10 md:py-20 pl-5 pr-5 md:pr-36 ">
-          <div className="w-full md:px-4">
-            <div className="mx-auto w-full md:w-[593px] p-2 border-b">
+        <div className="py-10 md:py-20 px-5 md:px-0  ">
+          <div className="w-full lg:px-4">
+            <div className="mx-auto w-full lg:w-[593px] p-2 border-b">
               <Disclosure>
                 {({ open }) => (
                   <>
@@ -61,7 +61,7 @@ const SisthSection = () => {
                 )}
               </Disclosure>
             </div>
-            <div className="mx-auto w-full md:w-[593px] p-2 border-b">
+            <div className="mx-auto w-full lg:w-[593px] p-2 border-b">
               <Disclosure>
                 {({ open }) => (
                   <>
@@ -109,7 +109,7 @@ const SisthSection = () => {
                 )}
               </Disclosure>
             </div>
-            <div className="mx-auto w-full md:w-[593px] p-2 border-b">
+            <div className="mx-auto w-full lg:w-[593px] p-2 border-b">
               <Disclosure>
                 {({ open }) => (
                   <>
@@ -157,7 +157,7 @@ const SisthSection = () => {
                 )}
               </Disclosure>
             </div>
-            <div className="mx-auto w-full md:w-[593px] p-2 border-b">
+            <div className="mx-auto w-full lg:w-[593px] p-2 border-b">
               <Disclosure>
                 {({ open }) => (
                   <>
@@ -205,7 +205,7 @@ const SisthSection = () => {
                 )}
               </Disclosure>
             </div>
-            <div className="mx-auto w-full md:w-[593px] p-2 border-b">
+            <div className="mx-auto w-full lg:w-[593px] p-2 border-b">
               <Disclosure>
                 {({ open }) => (
                   <>

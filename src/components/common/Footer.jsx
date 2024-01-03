@@ -2,7 +2,7 @@ import logo from "../../assets/logo.png";
 
 const Footer = () => {
   return (
-    <footer className="py-[16px] md:py-8 px-5 md:px-28 flex justify-center">
+    <footer className="py-[16px] md:py-8 px-5 md:px-6 xl:px-28 flex justify-center">
       <div className="max-w-[1140px] w-full mx-auto">
         <div className="">
           <div className="w-[125px] mb-3">
