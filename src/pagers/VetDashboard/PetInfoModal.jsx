@@ -16,7 +16,7 @@ const PetInfoModal = ({ isOpen, setIsOpen, singleData }) => {
         setData(res?.data?.data[0]);
       });
   }, []);
-  console.log(data);
+  // console.log(data);
   return (
     <div>
       <Transition appear show={isOpen} as={Fragment}>
@@ -144,11 +144,11 @@ const PetInfoModal = ({ isOpen, setIsOpen, singleData }) => {
                   </div>
                   <div className="mt-3">
                     <h2 className="font-bold text-lg">Anamnesi</h2>
-                    <p>{data?.general_information?.medical_history}</p>
+                    <p>{data?.medical_history?.medical_history}</p>
                   </div>
                   <div className="mt-3">
-                    <h2 className="font-bold text-lg">Note aggiuntive</h2>
-                    {data?.general_information?.medical_diary?.map((res, i) => (
+                    <h2 className="font-bold text-lg my-4">Diario Medico</h2>
+                    {data?.medical_history?.medical_diary?.map((res, i) => (
                       <div
                         key={i}
                         className="flex justify-between items-center p-3 border rounded"
@@ -168,9 +168,9 @@ const PetInfoModal = ({ isOpen, setIsOpen, singleData }) => {
                       </div>
                     ))}
                   </div>
-                  <div className="mt-3">
+                  <div className="mt-6 ">
                     <h2 className="font-bold text-lg">Note aggiuntive</h2>
-                    <p>{data?.general_information?.additional_notes}</p>
+                    <p>{data?.medical_history?.additional_notes}</p>
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
