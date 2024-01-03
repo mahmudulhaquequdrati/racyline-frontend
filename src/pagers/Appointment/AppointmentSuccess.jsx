@@ -42,7 +42,7 @@ const AppointmentSuccess = () => {
             {data?.appointDate?.time.includes("PM")
               ? `${12 + Number(timeHour) + `:` + timeMin}`
               : timeHour < 10
-              ? `0${timeHour + `:` + timeMin}`
+              ? `${timeHour + `:` + timeMin}`
               : `${timeHour + `:` + timeMin}`}{" "}
             di Martedì {moment(data?.appointDate?.date).format("DD MMMM YYYY")}{" "}
             con il/la Dottore/Dottoressa

@@ -21,7 +21,7 @@ function SingleMedicalRecord() {
   const navigate = useNavigate();
   const location = useLocation();
   const pathName = location?.pathname;
-  console.log(location?.state);
+  // console.log(location?.state);
   const selectedPetIndex = location?.state?.petInfoIndex;
   const isExistPets = JSON.parse(localStorage.getItem("petsData"));
   const [selected, setSelected] = useState(
@@ -39,8 +39,8 @@ function SingleMedicalRecord() {
     ImplantationDate: "",
     profile_image_url: "",
   });
-  const [register, { data: UserLoggedInData, isLoading, isError }] =
-    useRegisterMutation();
+  const [loading, setLoading] = useState(false);
+
   const [selectedFile, setSelectedFile] = useState(null);
   const [error, setError] = useState("");
   const [feildError, setFeildError] = useState(false);
@@ -60,10 +60,12 @@ function SingleMedicalRecord() {
   };
 
   const handleFileChange = (e) => {
+    setLoading(true);
     let formData = new FormData();
     const maxFileSize = 5 * 1024 * 1024;
     const file = e.target.files[0];
     if (file && file.size > maxFileSize) {
+      setLoading(false);
       setError(
         "File size exceeds the maximum allowed size (5MB). Please choose a smaller file."
       );
@@ -74,6 +76,7 @@ function SingleMedicalRecord() {
       setSelectedFile(file);
       axios.post("https://api.imgbb.com/1/upload", formData).then((res) => {
         setInputData({ ...inputData, profile_image_url: res.data.data.url });
+        setLoading(false);
       });
     }
   };
@@ -368,9 +371,10 @@ function SingleMedicalRecord() {
           <div>
             <button
               onClick={handleSubmit}
+              disabled={loading}
               className={`w-full rounded-lg py-3 px-4 outline-none  text-white bg-secondary`}
             >
-              {isLoading ? (
+              {loading ? (
                 <div className="flex items-center justify-center">
                   <svg
                     aria-hidden="true"
