@@ -1,11 +1,22 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import CancelIcon from "../../assets/ICONS/Cancel.svg";
 import defaultPetImage from "../../assets/pets/pets-dog.png";
-const PetInfoModal = ({ isOpen, setIsOpen }) => {
+import moment from "moment";
+import axios from "axios";
+const PetInfoModal = ({ isOpen, setIsOpen, singleData }) => {
   function closeModal() {
     setIsOpen(false);
   }
+  const [data, setData] = useState({});
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_SERVER_LINK}/pets/report/${singleData}`)
+      .then((res) => {
+        setData(res?.data?.data[0]);
+      });
+  }, []);
+  console.log(data);
   return (
     <div>
       <Transition appear show={isOpen} as={Fragment}>
@@ -85,11 +96,15 @@ const PetInfoModal = ({ isOpen, setIsOpen }) => {
                       </thead>
                       <tbody>
                         <tr>
-                          <td>Rocky</td>
-                          <td>Cane</td>
-                          <td>Labrador</td>
-                          <td>11/12/2019</td>
-                          <td>Maschio</td>
+                          <td>{data?.general_information?.animal_name}</td>
+                          <td>{data?.general_information?.species}</td>
+                          <td> {data?.general_information?.race}</td>
+                          <td>
+                            {moment(
+                              data?.general_information?.date_of_birth
+                            ).format("DD/MM/YYYY")}
+                          </td>
+                          <td> {data?.general_information?.sex?.gender}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -113,47 +128,49 @@ const PetInfoModal = ({ isOpen, setIsOpen }) => {
                       </thead>
                       <tbody>
                         <tr>
-                          <td>0123456789</td>
-                          <td>10/11/2022</td>
+                          <td>
+                            {" "}
+                            {data?.general_information?.microchip_number}
+                          </td>
+                          <td>
+                            {" "}
+                            {moment(
+                              data?.general_information?.implantation_date
+                            ).format("DD/MM/YYYY")}
+                          </td>
                         </tr>
                       </tbody>
                     </table>
                   </div>
                   <div className="mt-3">
                     <h2 className="font-bold text-lg">Anamnesi</h2>
-                    <p>
-                      Lorem ipsum dolor sit amet consectetur. Nunc condimentum
-                      sed aenean auctor massa rhoncus in. Ut imperdiet nunc
-                      blandit quis sed nullam ipsum. Felis sem in velit sed
-                      lacus cum viverra eget eget. Sed pellentesque natoque
-                      tincidunt suspendisse. Gravida eget nunc non scelerisque.
-                      Scelerisque aliquam aenean ullamcorper consequat enim
-                      vitae enim placerat sit.
-                    </p>
+                    <p>{data?.general_information?.medical_history}</p>
                   </div>
                   <div className="mt-3">
                     <h2 className="font-bold text-lg">Note aggiuntive</h2>
-                    <div className="flex justify-between items-center p-3 border rounded">
-                      <div>
-                        <p>
-                          Lorem ipsum cras eleifend lectus sagittis vitae vel
-                          mi. At porttitor id quis sagittis a. Convallis sed sit
-                          sed eleifend lobortis congue sed. Sit a pellentesque.
-                        </p>
-                        <button className="text-primary border border-secondary rounded px-10 py-1">
-                          name_file1.pdf
-                        </button>
+                    {data?.general_information?.medical_diary?.map((res, i) => (
+                      <div
+                        key={i}
+                        className="flex justify-between items-center p-3 border rounded"
+                      >
+                        <div>
+                          <p>
+                            Lorem ipsum cras eleifend lectus sagittis vitae vel
+                            mi. At porttitor id quis sagittis a. Convallis sed
+                            sit sed eleifend lobortis congue sed. Sit a
+                            pellentesque.
+                          </p>
+                          <button className="text-primary border border-secondary rounded px-10 py-1">
+                            name_file1.pdf
+                          </button>
+                        </div>
+                        <div>20/04/2019</div>
                       </div>
-                      <div>20/04/2019</div>
-                    </div>
+                    ))}
                   </div>
                   <div className="mt-3">
                     <h2 className="font-bold text-lg">Note aggiuntive</h2>
-                    <p>
-                      Lorem ipsum cras eleifend lectus sagittis vitae vel mi. At
-                      porttitor id quis sagittis a. Convallis sed sit sed
-                      eleifend lobortis congue sed. Sit a pellentesque.
-                    </p>
+                    <p>{data?.general_information?.additional_notes}</p>
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

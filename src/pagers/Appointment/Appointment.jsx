@@ -79,8 +79,6 @@ const Appointment = () => {
   let timeHour = data?.appointDate?.time?.split(":")[0];
   let timeMin = data?.appointDate?.time?.split(":")[1]?.split(" ")[0];
 
-  console.log(data?.appointDate);
-
   // console.log(animale);
 
   // const [dropdowValue, setDropdownValue] = useState([]);
@@ -93,7 +91,7 @@ const Appointment = () => {
   //   });
   //   setDropdownValue(data);
   // }, [animalData?.data?.length]);
-
+  console.log(animale);
   return (
     <div className="bg-primary pt-[60px] pb-[80px]">
       <div className="max-w-[1140px] w-full mx-auto flex flex-col md:flex-row gap-20">
@@ -173,12 +171,12 @@ const Appointment = () => {
                 <div className="w-full mt-3">
                   <Listbox
                     value={animale}
-                    onChange={(value) =>
+                    onChange={(value) => {
                       selectAnimale({
-                        name: value?.general_information?.animal_name,
+                        name: value.data[0]?.general_information?.animal_name,
                         id: value?._id,
-                      })
-                    }
+                      });
+                    }}
                   >
                     <div className="relative mt-1">
                       <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-3 pl-4 pr-10 text-left border-[1px] border-[#E5E7EC] focus:outline-none  ">
@@ -204,69 +202,6 @@ const Appointment = () => {
                         leaveTo="opacity-0"
                       >
                         <Listbox.Options className="z-50 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                          {/* {dropdowValue?.length > 0 ? (
-                            dropdowValue?.map((tp, tpIdx) => {
-                              return (
-                                <Listbox.Option
-                                  key={tpIdx}
-                                  className={({ active }) =>
-                                    `relative cursor-default select-none py-2 pl-10 pr-4   ${
-                                      active
-                                        ? "bg-amber-100 text-amber-900"
-                                        : "text-gray-900"
-                                    }`
-                                  }
-                                  value={tp}
-                                >
-                                  {({ selected }) => (
-                                    <>
-                                      {console.log(selected)}
-                                      <span
-                                        className={`block truncate ${
-                                          selected
-                                            ? "font-medium  text-amber-900"
-                                            : "font-normal"
-                                        }`}
-                                      >
-                                        {tp?.animal_name}
-                                      </span>
-                                      {selected ? (
-                                        <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
-                                          <CheckIcon
-                                            className="h-5 w-5"
-                                            aria-hidden="true"
-                                          />
-                                        </span>
-                                      ) : null}
-                                    </>
-                                  )}
-                                </Listbox.Option>
-                              );
-                            })
-                          ) : (
-                            <Listbox.Option
-                              className={`relative cursor-default select-none py-2 pl-4 pr-4 text-gray-900`}
-                            >
-                              {({ animale }) => (
-                                <div className="my-2">
-                                  <p>
-                                    Non è stata ancora aggiunta nessuna cartella
-                                    clinica. Aggiungine una per continuare la
-                                    prenotazione.
-                                  </p>
-                                  <button
-                                    onClick={() =>
-                                      navigate("/user/single-pet-info")
-                                    }
-                                    type="button"
-                                    className="border border-primary text-primary bg-white hover:bg-secondary hover:text-white rounded px-5 py-2 w-full my-2"
-                                  >
-                                    Aggiungi una cartella clinica
-                                  </button>
-                                </div>
-                              )}
-                            </Listbox.Option>
-                          )} */}
                           {animalData?.data?.length > 0 ? (
                             animalData?.data.map((tp, tpIdx) => {
                               const inputBox = document.getElementById(
@@ -292,7 +227,7 @@ const Appointment = () => {
                                         : "text-gray-900"
                                     } hover:text-gray-900 `
                                   }
-                                  value={tp?.data[0]}
+                                  value={tp}
                                 >
                                   {({ selected }) => (
                                     <>
