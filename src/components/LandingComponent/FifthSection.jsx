@@ -13,7 +13,7 @@ const FifthSection = () => {
         </p>
       </div>
       <div className="flex flex-col md:flex-row md:justify-center md:items-center md:gap-10 gap-7 flex-wrap my-20 mx-10 md:mx-40">
-        <div className="w-[354px] h-[330px] px-2 border shadow py-10 rounded">
+        <div className="w-[354px] h-[330px] px-2 border shadow py-10 rounded mx-auto">
           <div className="flex justify-center">
             <div className="w-20 h-20 bg-gray-50"></div>
           </div>
@@ -27,7 +27,7 @@ const FifthSection = () => {
             </p>
           </div>
         </div>
-        <div className="w-[354px] h-[330px] px-2 border shadow py-10 rounded">
+        <div className="w-[354px] h-[330px] px-2 border shadow py-10 rounded mx-auto">
           <div className="flex justify-center">
             <div className="w-20 h-20 bg-gray-50"></div>
           </div>
@@ -41,7 +41,7 @@ const FifthSection = () => {
             </p>
           </div>
         </div>
-        <div className="w-[354px] h-[330px] px-2 border shadow py-10 rounded">
+        <div className="w-[354px] h-[330px] px-2 border shadow py-10 rounded mx-auto">
           <div className="flex justify-center">
             <div className="w-20 h-20 bg-gray-50"></div>
           </div>
@@ -55,7 +55,7 @@ const FifthSection = () => {
             </p>
           </div>
         </div>
-        <div className="w-[354px] h-[330px] px-2 border shadow py-10 rounded">
+        <div className="w-[354px] h-[330px] px-2 border shadow py-10 rounded mx-auto">
           <div className="flex justify-center">
             <div className="w-20 h-20 bg-gray-50"></div>
           </div>
@@ -69,7 +69,7 @@ const FifthSection = () => {
             </p>
           </div>
         </div>
-        <div className="w-[354px] h-[330px] px-2 border shadow py-10 rounded">
+        <div className="w-[354px] h-[330px] px-2 border shadow py-10 rounded mx-auto">
           <div className="flex justify-center">
             <div className="w-20 h-20 bg-gray-50"></div>
           </div>

@@ -40,11 +40,12 @@ const Appointment = () => {
       (item) =>
         item.firstName.toLowerCase().includes(searchInput.toLowerCase()) ||
         item.lastName.toLowerCase().includes(searchInput.toLowerCase()) ||
-        item.phone.includes(searchInput)
+        item.phone.includes(searchInput) ||
+        item.email.includes(searchInput)
     );
     return data;
   };
-  console.log(filteredData());
+  // console.log(filteredData());
   const handleSearchChange = (e) => {
     setSearchInput(e.target.value);
   };

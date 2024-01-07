@@ -2,16 +2,16 @@ import React from "react";
 import ActionCover from "../../assets/ICONS/Call to Action V5.svg";
 const ThirdSection = () => {
   return (
-    <div>
-      <div className="grid grid-cols-1 md:grid-cols-2 md:gap-4 p-10 md:p-0">
-        <div className="py-20 pl-10 pr-10 md:pl-[11.5rem] md:pr-40">
-          <div className="bg-gray-50 relative w-[200px] md:w-[564px] md:h-[452px] h-[150px] rounded-[8px] overflow-hidden">
+    <div className="">
+      <div className="grid grid-cols-1 md:grid-cols-2 md:gap-12 p-10 md:p-6 lg:p-0 container mx-auto max-w-[1140px]">
+        <div className="py-20  mx-auto w-full ">
+          <div className="bg-gray-50 relative w-full lg:w-[520px] md:h-[432px] h-[280px] rounded-[8px] overflow-hidden">
             <div className="flex h-full justify-center items-center text-gray-300 font-medium md:text-[45px] text-center">
               Image Placeholder
             </div>
           </div>
         </div>
-        <div className="md:py-20 md:pl-20 md:pr-36 md:mt-10">
+        <div className="md:py-20  md:mt-10 w-full">
           <h1 className="font-bold text-3xl">
             Alga Schizochytrium - L'ORO VERDE DEI MARI
           </h1>
@@ -34,8 +34,8 @@ const ThirdSection = () => {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-10 md:p-0">
-        <div className="md:py-20 md:pl-[11.5rem] md:pr-20 md:mt-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 md:gap-12 p-10 md:p-6 lg:p-0 container mx-auto max-w-[1140px]">
+        <div className="md:py-20  md:mt-10 w-full">
           <h1 className="font-bold text-3xl">
             Hermetia Illucens – POTENTE ANTIBATTERICO NATURALE
           </h1>
@@ -56,16 +56,16 @@ const ThirdSection = () => {
             </button>
           </div>
         </div>
-        <div className="py-20 pl-20 pr-36">
-          <div className="bg-gray-50 relative w-[200px] md:w-[564px] md:h-[452px] h-[150px] rounded-[8px] overflow-hidden">
+        <div className="py-20  mx-auto w-full ">
+          <div className="bg-gray-50 relative w-full lg:w-[520px] md:h-[432px] h-[280px] rounded-[8px] overflow-hidden">
             <div className="flex h-full justify-center items-center text-gray-300 font-medium md:text-[45px] text-center">
               Image Placeholder
             </div>
           </div>
         </div>
       </div>
-      <div className="bg-white flex justify-center items-center py-20">
-        <div className="bg-gray-50 relative w-[200px] md:w-[564px] md:h-[452px] h-[150px] rounded-[8px] overflow-hidden">
+      <div className="bg-white flex justify-center items-center py-20 container mx-auto max-w-[1140px] md:p-6 p-10 lg:p-0">
+        <div className="bg-gray-50 relative w-full md:w-[564px] md:h-[452px] h-[280px] rounded-[8px] overflow-hidden">
           <div className="flex h-full justify-center items-center text-gray-300 font-medium md:text-[45px] text-center">
             Image Placeholder
           </div>

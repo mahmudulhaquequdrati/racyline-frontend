@@ -36,6 +36,8 @@ import SingleMedicalRecord from "./pagers/AnimalClinical/SingleAnimalClinical/Si
 import CompleteSingleMedicalRecord from "./pagers/AnimalClinical/SingleAnimalClinical/CompleteSingleMedicalRecord.jsx";
 import moment from "moment";
 import MyAnimals from "./pagers/myAnimals/MyAnimals.jsx";
+import ProductInfo from "./pagers/VetDashboard/ProductInfo.jsx";
+import AdminDashboard from "./pagers/adminPages/AdminDashboard.jsx";
 const App = () => {
   const isAuth = useAuthCheck();
   moment.defineLocale("it", {
@@ -107,6 +109,8 @@ const App = () => {
       <Header />
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/product-info" element={<ProductInfo />} />
         <Route
           path="/registration-with-google"
           element={<RegistrationWithGoogle />}
