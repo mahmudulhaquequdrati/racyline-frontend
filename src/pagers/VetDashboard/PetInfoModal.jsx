@@ -16,7 +16,9 @@ const PetInfoModal = ({ isOpen, setIsOpen, singleData }) => {
         setData(res?.data?.data[0]);
       });
   }, []);
-  // console.log(data);
+  const openImage = (url) => {
+    window.open(url, "_blank");
+  };
   return (
     <div>
       <Transition appear show={isOpen} as={Fragment}>
@@ -63,7 +65,11 @@ const PetInfoModal = ({ isOpen, setIsOpen, singleData }) => {
                     <figure className="w-20 h-20 object-cover rounded-full overflow-hidden">
                       <img
                         className="w-full h-full"
-                        src={defaultPetImage}
+                        src={
+                          data?.general_information?.pet_photo
+                            ? data?.general_information?.pet_photo
+                            : defaultPetImage
+                        }
                         alt=""
                       />
                     </figure>
@@ -151,20 +157,20 @@ const PetInfoModal = ({ isOpen, setIsOpen, singleData }) => {
                     {data?.medical_history?.medical_diary?.map((res, i) => (
                       <div
                         key={i}
-                        className="flex justify-between items-center p-3 border rounded"
+                        className="flex justify-between items-center p-3 border rounded w-1/2"
                       >
                         <div>
-                          <p>
-                            Lorem ipsum cras eleifend lectus sagittis vitae vel
-                            mi. At porttitor id quis sagittis a. Convallis sed
-                            sit sed eleifend lobortis congue sed. Sit a
-                            pellentesque.
-                          </p>
-                          <button className="text-primary border border-secondary rounded px-10 py-1">
-                            name_file1.pdf
-                          </button>
+                          <p>{res?.description}</p>
+                          {res?.report_file?.map((f) => (
+                            <button
+                              onClick={() => openImage(f?.url)}
+                              className="text-primary border border-secondary rounded px-10 py-1"
+                            >
+                              {f?.name}
+                            </button>
+                          ))}
                         </div>
-                        <div>20/04/2019</div>
+                        <div>{moment(res?.date).format("DD/MM/YYYY")}</div>
                       </div>
                     ))}
                   </div>

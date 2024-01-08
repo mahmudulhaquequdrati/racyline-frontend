@@ -134,7 +134,7 @@ const AccountSetting = () => {
   });
   console.log(userupdate);
   const user = userupdate?.user;
-  const [selected, setSelected] = useState(people[0]);
+  const [selected, setSelected] = useState(user?.doctor_type1 || [people[0]]);
   const [selected2, setSelected2] = useState(user?.doctor_type2 || [type[0]]);
   const [userData, setUserData] = useState({
     first_name: "",
@@ -186,11 +186,13 @@ const AccountSetting = () => {
         first_name: user?.first_name,
         last_name: user?.last_name,
         email: user?.email,
-        doctor_type1: user.doctor_type1 || "",
+        doctor_type1: user.doctor_type1 || [],
         doctor_type2: user.doctor_type2 || [],
         veterinary_address: user?.veterinary_address,
       });
     }
+    setSelected(user.doctor_type1);
+    setSelected2(user.doctor_type2);
   }, [user]);
 
   useEffect(() => {
@@ -246,9 +248,11 @@ const AccountSetting = () => {
   }
 
   useEffect(() => {
+    const mergedArray1 = removeDuplicates(selected);
+    setSelected(mergedArray1);
     const mergedArray = removeDuplicates(selected2);
     setSelected2(mergedArray);
-  }, [selected2?.length]);
+  }, [selected2?.length, selected?.length]);
 
   useEffect(() => {
     if (isAccountDeleted) {
@@ -259,7 +263,7 @@ const AccountSetting = () => {
       navigate("/vets/login");
     }
   }, [isAccountDeleted, navigate]);
-
+  console.log(selected);
   return (
     <>
       <div className="p-4 md:p-8 lg:p-20 min-h-[100vh] bg-primary">
@@ -301,16 +305,23 @@ const AccountSetting = () => {
               <p className="font-bold mb-3">Lavorative</p>
               <div>
                 <div className="w-full">
-                  <Listbox value={selected} onChange={setSelected}>
+                  <Listbox value={selected} onChange={setSelected} multiple>
                     <div className="relative mt-1">
-                      <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-3 pl-4 pr-10 text-left border-[1px] border-[#E5E7EC] focus:outline-none  ">
-                        {selected.name ? (
-                          <span className="block truncate">
-                            {selected.name}
-                          </span>
+                      <Listbox.Button
+                        className={`relative w-full cursor-default rounded-lg bg-white py-3 pl-4 pr-10 text-left border-[1px]border-[#E5E7EC] focus:outline-none flex gap-2 `}
+                      >
+                        {selected?.length ? (
+                          selected?.map((s, i) => {
+                            return (
+                              <span key={i} className="block truncate">
+                                {s.name}
+                                {selected.length > i + 1 ? "," : ""}
+                              </span>
+                            );
+                          })
                         ) : (
                           <span className="block truncate text-gray-400">
-                            {"Scegli gli animali che curi *"}
+                            {"Scegli che tipo di dottore sei *"}
                           </span>
                         )}
 
@@ -328,7 +339,7 @@ const AccountSetting = () => {
                         leaveTo="opacity-0"
                       >
                         <Listbox.Options className="z-50 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                          {people?.map((tp, tpIdx) => (
+                          {people.map((tp, tpIdx) => (
                             <Listbox.Option
                               key={tpIdx}
                               className={({ active }) =>
@@ -340,16 +351,19 @@ const AccountSetting = () => {
                               }
                               value={tp}
                             >
-                              {({ selected }) => (
+                              {({ s }) => (
                                 <>
                                   <span
                                     className={`block truncate ${
-                                      selected ? "font-medium" : "font-normal"
+                                      s ? "font-semibold" : "font-normal"
                                     }`}
                                   >
                                     {tp.name}
                                   </span>
-                                  {selected ? (
+                                  {s}
+                                  {selected.some(
+                                    (item) => item.name === tp.name
+                                  ) ? (
                                     <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
                                       <CheckIcon
                                         className="h-5 w-5"

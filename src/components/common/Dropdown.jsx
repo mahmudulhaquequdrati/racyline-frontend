@@ -24,7 +24,7 @@ export default function DropDown() {
         <Menu as="div" className="relative inline-block text-left">
           <div>
             <Menu.Button
-              className={`inline-flex gap-2 items-center text-primary`}
+              className={`inline-flex gap-2 items-center text-primary whitespace-nowrap`}
             >
               Il mio profilo{" "}
               <svg
@@ -52,133 +52,6 @@ export default function DropDown() {
           >
             <Menu.Items className="absolute right-0 mt-3 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
               <div className="px-2 py-1 ">
-                {user?.role === "vet_admin" && (
-                  <>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <Link
-                          to="/vets/my-appointment"
-                          className={`${
-                            active ||
-                            location?.pathname == "/vets/my-appointment"
-                              ? "bg-primary text-gray-800"
-                              : "text-gray-900"
-                          } group flex w-full items-center rounded-md px-4 py-2 text-sm`}
-                        >
-                          Appointment List
-                        </Link>
-                      )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <Link
-                          to="/vets/accountsettings"
-                          className={`${
-                            active ||
-                            location?.pathname == "/vets/accountsettings"
-                              ? "bg-primary text-gray-800"
-                              : "text-gray-900"
-                          } group flex w-full items-center rounded-md px-4 py-2 text-sm`}
-                        >
-                          Account Settings
-                        </Link>
-                      )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <Link
-                          to="/vets/MyAvailabilities"
-                          className={`${
-                            active ||
-                            location?.pathname == "/vets/MyAvailabilities"
-                              ? "bg-primary text-gray-800"
-                              : "text-gray-900"
-                          } group flex w-full items-center rounded-md px-4 py-2 text-sm`}
-                        >
-                          Availability
-                        </Link>
-                      )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <Link
-                          to="/vets/calender"
-                          className={`${
-                            active || location?.pathname == "/vets/calender"
-                              ? "bg-primary text-gray-800"
-                              : "text-gray-900"
-                          } group flex w-full items-center rounded-md px-4 py-2 text-sm`}
-                        >
-                          Calendar
-                        </Link>
-                      )}
-                    </Menu.Item>
-                  </>
-                )}
-
-                {user?.role === "user" && (
-                  <>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <Link
-                          to="/user/vet-lists"
-                          className={`${
-                            active || location?.pathname == "/user/vet-lists"
-                              ? "bg-primary text-gray-800"
-                              : "text-gray-900"
-                          } group flex w-full items-center rounded-md px-4 py-2 text-sm`}
-                        >
-                          Vet lists
-                        </Link>
-                      )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <Link
-                          to="/user/my-animals"
-                          className={`${
-                            active || location?.pathname == "/user/my-animal"
-                              ? "bg-primary text-gray-800"
-                              : "text-gray-900"
-                          } group flex w-full items-center rounded-md px-4 py-2 text-sm`}
-                        >
-                          My Animals
-                        </Link>
-                      )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <Link
-                          to="/user/accountsettings"
-                          className={`${
-                            active ||
-                            location?.pathname == "/user/accountsettings"
-                              ? "bg-primary text-gray-800"
-                              : "text-gray-900"
-                          } group flex w-full items-center rounded-md px-4 py-2 text-sm`}
-                        >
-                          Account Setting
-                        </Link>
-                      )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <Link
-                          to="/user/my-appointment"
-                          className={`${
-                            active ||
-                            location?.pathname == "/user/my-appointment"
-                              ? "bg-primary text-gray-800"
-                              : "text-gray-900"
-                          } group flex w-full items-center rounded-md px-4 py-2 text-sm`}
-                        >
-                          My Appointments
-                        </Link>
-                      )}
-                    </Menu.Item>
-                  </>
-                )}
-
                 <Menu.Item>
                   {({ active }) => (
                     <button
@@ -228,69 +101,6 @@ export default function DropDown() {
           >
             <Menu.Items className="absolute right-0 mt-3 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
               <div className="px-2 py-1 ">
-                {user?.role === "vet_admin" && (
-                  <>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <Link
-                          to="/vets/my-appointment"
-                          className={`${
-                            active ||
-                            location?.pathname == "/vets/my-appointment"
-                              ? "bg-primary text-gray-800"
-                              : "text-gray-900"
-                          } group flex w-full items-center rounded-md px-4 py-2 text-sm`}
-                        >
-                          Appointment List
-                        </Link>
-                      )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <Link
-                          to="/vets/accountsettings"
-                          className={`${
-                            active ||
-                            location?.pathname == "/vets/accountsettings"
-                              ? "bg-primary text-gray-800"
-                              : "text-gray-900"
-                          } group flex w-full items-center rounded-md px-4 py-2 text-sm`}
-                        >
-                          Account Settings
-                        </Link>
-                      )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <Link
-                          to="/vets/MyAvailabilities"
-                          className={`${
-                            active ||
-                            location?.pathname == "/vets/MyAvailabilities"
-                              ? "bg-primary text-gray-800"
-                              : "text-gray-900"
-                          } group flex w-full items-center rounded-md px-4 py-2 text-sm`}
-                        >
-                          Availability
-                        </Link>
-                      )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <Link
-                          to="/vets/calender"
-                          className={`${
-                            active || location?.pathname == "/vets/calender"
-                              ? "bg-primary text-gray-800"
-                              : "text-gray-900"
-                          } group flex w-full items-center rounded-md px-4 py-2 text-sm`}
-                        >
-                          Calendar
-                        </Link>
-                      )}
-                    </Menu.Item>
-                  </>
-                )}
                 <Menu.Item>
                   {({ active }) => (
                     <button

@@ -23,7 +23,10 @@ const ImageUploader = ({
         const imageUrls = response.data.data.url;
         setNote((prev) => ({
           ...prev,
-          report_file: [...prev?.report_file, imageUrls],
+          report_file: [
+            ...prev?.report_file,
+            { url: imageUrls, name: image.name },
+          ],
           selectedImage: [...prev?.selectedImage, image.name],
         }));
       }

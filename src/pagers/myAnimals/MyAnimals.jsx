@@ -81,7 +81,6 @@ export default function MyAnimals() {
 
           {animalData?.data?.length > 0 &&
             animalData?.data?.map((petInfo, index) => {
-              //   console.log(petInfo);
               return (
                 <div key={index} className="p-3 rounded-lg border bg-white">
                   <div className="flex gap-6 items-center justify-start ">
@@ -113,7 +112,9 @@ export default function MyAnimals() {
                   </div>
                   <div className="flex gap-4 mt-6">
                     <button
-                      onClick={(e) => handleEditPetsData(e, index)}
+                      onClick={(e) =>
+                        navigate(`/user/my-animals/${petInfo?._id}`)
+                      }
                       className={`w-full rounded-lg py-3 px-4 outline-none text-secondary border-secondary border hover:bg-secondary hover:text-white transition duration-300`}
                     >
                       Visualizza cartella clinica

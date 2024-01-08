@@ -38,6 +38,7 @@ import moment from "moment";
 import MyAnimals from "./pagers/myAnimals/MyAnimals.jsx";
 import ProductInfo from "./pagers/VetDashboard/ProductInfo.jsx";
 import AdminDashboard from "./pagers/adminPages/AdminDashboard.jsx";
+import AnimalDetails from "./pagers/myAnimals/AnimalDetails.jsx";
 const App = () => {
   const isAuth = useAuthCheck();
   moment.defineLocale("it", {
@@ -263,6 +264,14 @@ const App = () => {
           element={
             <UserProtected>
               <MyAnimals />
+            </UserProtected>
+          }
+        />
+        <Route
+          path="/user/my-animals/:id"
+          element={
+            <UserProtected>
+              <AnimalDetails />
             </UserProtected>
           }
         />

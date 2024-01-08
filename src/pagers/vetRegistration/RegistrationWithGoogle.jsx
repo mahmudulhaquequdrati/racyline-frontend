@@ -119,7 +119,7 @@ const type = [
 function RegistrationWithGoogle() {
   const navigate = useNavigate();
   //
-  const [selected, setSelected] = useState({});
+  const [selected, setSelected] = useState([]);
   const [selected2, setSelected2] = useState([]);
   const [googleLoginData, { data: googlenData, isError, isLoading }] =
     useGoogleLoginDataMutation();
@@ -141,7 +141,7 @@ function RegistrationWithGoogle() {
     };
     e.preventDefault();
     if (
-      data?.doctor_type1?.name &&
+      data?.doctor_type1?.length > 0 &&
       data?.doctor_type2?.length > 0 &&
       inputData?.veterinary_address !== ""
     ) {
@@ -171,17 +171,24 @@ function RegistrationWithGoogle() {
 
         <form onSubmit={handleForm} className="flex flex-col gap-y-4">
           <div>
-            <Listbox value={selected} onChange={setSelected}>
+            <Listbox value={selected} onChange={setSelected} multiple>
               <div className="relative mt-1">
                 <Listbox.Button
                   className={`relative w-full cursor-default rounded-lg bg-white py-3 pl-4 pr-10 text-left border-[1px] ${
-                    feildError && selected?.name === ""
+                    feildError && selected.length === 0
                       ? "border-red-500"
                       : "border-[#E5E7EC] "
-                  } focus:outline-none `}
+                  } focus:outline-none flex gap-2 `}
                 >
-                  {selected?.name ? (
-                    <span className="block truncate">{selected.name}</span>
+                  {selected?.length ? (
+                    selected?.map((s, i) => {
+                      return (
+                        <span key={i} className="block truncate">
+                          {s.name}
+                          {selected.length > i + 1 ? "," : ""}
+                        </span>
+                      );
+                    })
                   ) : (
                     <span className="block truncate text-gray-400">
                       {"Scegli che tipo di dottore sei *"}
@@ -202,9 +209,9 @@ function RegistrationWithGoogle() {
                   leaveTo="opacity-0"
                 >
                   <Listbox.Options className="z-50 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                    {people.map((person, personIdx) => (
+                    {people.map((tp, tpIdx) => (
                       <Listbox.Option
-                        key={personIdx}
+                        key={tpIdx}
                         className={({ active }) =>
                           `relative cursor-default select-none py-2 pl-10 pr-4 ${
                             active
@@ -212,17 +219,18 @@ function RegistrationWithGoogle() {
                               : "text-gray-900"
                           }`
                         }
-                        value={person}
+                        value={tp}
                       >
                         {({ selected }) => (
                           <>
                             <span
                               className={`block truncate ${
-                                selected ? "font-medium" : "font-normal"
+                                selected ? "font-semibold" : "font-normal"
                               }`}
                             >
-                              {person.name}
+                              {tp.name}
                             </span>
+                            {selected}
                             {selected ? (
                               <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
                                 <CheckIcon
