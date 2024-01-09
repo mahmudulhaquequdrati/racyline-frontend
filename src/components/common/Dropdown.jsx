@@ -13,7 +13,7 @@ export default function DropDown() {
   const dispatch = useDispatch();
   const handleLogut = () => {
     localStorage.clear();
-    notifySuccess("Logged out!");
+    notifySuccess("Disconnesso!");
     dispatch(userLoggedOut());
     navigate("/user/login");
   };

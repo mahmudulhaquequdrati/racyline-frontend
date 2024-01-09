@@ -87,13 +87,15 @@ const UserSettings = () => {
       } else if (!isLoading && data?.data?._id) {
         refetch();
         const { email, first_name, last_name, phone, _id } = data?.data;
-        notifySuccess("user data updated!");
+        notifySuccess("Dati utente aggiornati!");
         setUserData({ first_name, last_name, phone, email });
       }
     }
 
     if (!isLoading && isError) {
-      notifyError("Error occurd while updating data!");
+      notifyError(
+        "Si è verificato un errore durante l'aggiornamento dei dati!"
+      );
     }
   }, [isSuccess, data?.data?._id]);
 
@@ -101,7 +103,7 @@ const UserSettings = () => {
     if (isAccountDeleted) {
       localStorage.clear();
       setIsOpen(false);
-      notifySuccess("User Account Deleted!");
+      notifySuccess("Account utente eliminato!");
       dispatch(userLoggedOut());
       navigate("/user/login");
     }

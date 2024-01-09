@@ -92,13 +92,15 @@ const MyAppointmentEditing = () => {
 
   useEffect(() => {
     if (!editAppointmentError && editAppointmentResponse?.data?._id) {
-      notifySuccess("Appointment updated!");
+      notifySuccess("Appuntamento aggiornato!");
       refetch();
       navigate("/user/my-appointment");
       return;
     }
     if (!editAppointmentLoading && editAppointmentError) {
-      notifyError("Error occurred while updating appointment");
+      notifyError(
+        "Si è verificato un errore durante l'aggiornamento dell'appuntamento"
+      );
       return;
     }
   }, [editAppointmentError, editAppointmentLoading, editAppointmentResponse]);

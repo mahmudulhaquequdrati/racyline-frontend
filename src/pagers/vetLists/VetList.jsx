@@ -49,7 +49,7 @@ const VetList = ({ vetInfo }) => {
       sessionStorage.setItem("vet_info", JSON.stringify(appointmentData));
       navigate("/user/new-appointment");
     } else {
-      notifyError("Please select the time!");
+      notifyError("Selezionare l'ora!");
     }
   };
   console.log("appointments", appointments);

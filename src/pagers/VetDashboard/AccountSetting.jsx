@@ -211,7 +211,7 @@ const AccountSetting = () => {
           veterinary_address,
           _id,
         } = data?.data;
-        notifySuccess("user data updated!");
+        notifySuccess("dati utente aggiornati!");
         setUserData({
           first_name,
           last_name,
@@ -225,7 +225,9 @@ const AccountSetting = () => {
     }
 
     if (!isLoading && isError) {
-      notifyError("Error occurd while updating data!");
+      notifyError(
+        "Si è verificato un errore durante l'aggiornamento dei dati!"
+      );
     }
   }, [data?.data?._id, isSuccess]);
 
@@ -258,7 +260,7 @@ const AccountSetting = () => {
     if (isAccountDeleted) {
       localStorage.clear();
       setOpenModal(false);
-      notifySuccess("User Account Deleted!");
+      notifySuccess("Account utente eliminato!");
       dispatch(userLoggedOut());
       navigate("/vets/login");
     }

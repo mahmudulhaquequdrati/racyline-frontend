@@ -23,7 +23,7 @@ const AdminDashboard = () => {
     axios
       .delete(`${import.meta.env.VITE_SERVER_LINK}/appointment/delete/${id}`)
       .then((res) => {
-        notifySuccess("Appoinment Successfully Deleted!");
+        notifySuccess("Appuntamento eliminato con successo!");
         if (res?.data?.success) {
           refetch();
         }

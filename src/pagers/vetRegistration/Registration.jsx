@@ -170,11 +170,11 @@ function Registration() {
 
   useEffect(() => {
     if (isError) {
-      notifyError("Something went wrong");
+      notifyError("Qualcosa è andato storto, riprova!");
     }
     if (UserLoggedInData?.data?.accessToken) {
       dispatch(userLoggedIn(UserLoggedInData?.data));
-      notifySuccess("Registration Success!");
+      notifySuccess("Successo della registrazione!");
       navigate("/vets/registration-availabilities");
     }
   }, [UserLoggedInData, isError, navigate]);

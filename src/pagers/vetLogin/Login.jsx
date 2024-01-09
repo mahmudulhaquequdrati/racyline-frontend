@@ -30,7 +30,7 @@ function Login() {
 
   useEffect(() => {
     if (isError || googleError) {
-      notifyError("Email or password isn't correct!");
+      notifyError("L'e-mail o la password non sono corrette!");
     }
     if (LoginInData?.data?.accessToken) {
       dispatch(userLoggedIn(LoginInData?.data));
@@ -55,7 +55,7 @@ function Login() {
             (res) => {
               // console.log(res);
               if (res?.data?.data?.user?.role === "user") {
-                notifyError("you are not a user!");
+                notifyError("Non sei un utente!");
                 handleLogut();
               } else {
                 dispatch(userLoggedIn(res?.data?.data));

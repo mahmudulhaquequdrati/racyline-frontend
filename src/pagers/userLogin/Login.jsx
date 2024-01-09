@@ -34,10 +34,10 @@ function UserLogin() {
   };
   useEffect(() => {
     if (isError) {
-      notifyError("Email or password isn't correct!");
+      notifyError("L'e-mail o la password non sono corrette!");
     }
     if (LoginInData?.data?.accessToken) {
-      notifySuccess("welcome back!");
+      notifySuccess("Bentornato!");
 
       dispatch(userLoggedIn(LoginInData?.data));
       navigate("/user/vet-lists");
@@ -59,7 +59,7 @@ function UserLogin() {
           }
           googleLogin({ code: response.code, role: "user" }).then((res) => {
             if (res?.data?.data?.user?.role === "vet_admin") {
-              notifyError("you are not a user!");
+              notifyError("Non sei un utente!");
               handleLogut();
             } else {
               // if(res.data.user.data.)

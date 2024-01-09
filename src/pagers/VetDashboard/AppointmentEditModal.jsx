@@ -29,7 +29,7 @@ const AppointmentEditModal = ({ isOpen, setIsOpen, singleData, refetch }) => {
       .then((res) => {
         if (res?.data) {
           refetch();
-          notifySuccess("Appoinment Updated !");
+          notifySuccess("Appuntamento aggiornato !");
           closeModal();
           setIsLoading(false);
         }

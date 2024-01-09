@@ -147,7 +147,9 @@ const RegistrationAvailabilities = () => {
             return updatedWeakData;
           });
         } else {
-          notifyError("End time cannot be less than start time");
+          notifyError(
+            "L'ora di fine non può essere inferiore all'ora di inizio"
+          );
         }
       } else {
         if (
@@ -167,7 +169,9 @@ const RegistrationAvailabilities = () => {
             return updatedWeakData;
           });
         } else {
-          notifyError("Start time cannot be grater than end time");
+          notifyError(
+            "L'ora di inizio non può essere superiore all'ora di fine"
+          );
         }
       }
     } else {
@@ -200,7 +204,9 @@ const RegistrationAvailabilities = () => {
               return updatedWeakData;
             });
           } else {
-            notifyError("End time cannot be less than start time");
+            notifyError(
+              "L'ora di fine non può essere inferiore all'ora di inizio"
+            );
           }
         } else {
           if (
@@ -227,11 +233,13 @@ const RegistrationAvailabilities = () => {
               return updatedWeakData;
             });
           } else {
-            notifyError("Start time cannot be grater than end time");
+            notifyError(
+              "L'ora di inizio non può essere superiore all'ora di fine"
+            );
           }
         }
       } else {
-        notifyError("Previous time cannot be change");
+        notifyError("L'ora precedente non può essere modificata");
       }
     }
   };
@@ -255,12 +263,12 @@ const RegistrationAvailabilities = () => {
       createAvailabilities(newData)
         .then((res) => {
           setIsLoading(false);
-          notifySuccess("Availabilities Saved!");
+          notifySuccess("Disponibilità salvate!");
           navigate("/registration-google-calender-connect");
         })
         .catch((err) => {
           setIsLoading(false);
-          notifyError("Error occurd while Saving Availabilities!");
+          notifyError("Errore durante il salvataggio delle disponibilità!");
         });
     }
   };

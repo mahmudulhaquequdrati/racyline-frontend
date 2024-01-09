@@ -39,7 +39,7 @@ function UserRegistration() {
 
   useEffect(() => {
     if (isError) {
-      notifyError("User already exist!");
+      notifyError("L'utente esiste già!");
     }
     if (UserLoggedInData?.data?.accessToken) {
       // dispatch(userLoggedIn(UserLoggedInData?.data));

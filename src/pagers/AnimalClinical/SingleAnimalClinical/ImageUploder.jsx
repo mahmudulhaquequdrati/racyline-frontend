@@ -52,11 +52,13 @@ const ImageUploader = ({
         setSelectedImages(newSelectedImages);
       } else {
         // Handle case where at least one file exceeds 5 MB
-        notifyError("Please make sure all selected images are within 5 MB.");
+        notifyError(
+          "Assicurarsi che tutte le immagini selezionate non superino i 5 MB."
+        );
       }
     } else {
       // Handle case where the number of selected images is not between 3 and 5
-      notifyError("Please select maximum 3 images.");
+      notifyError("Selezionare un massimo di 3 immagini.");
     }
   };
 

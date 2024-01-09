@@ -49,7 +49,7 @@ const Calender = () => {
               // console.log(res);
               if (res?.data) {
                 refetch();
-                notifySuccess("Google calender connected!");
+                notifySuccess("Calendario di Google collegato!");
               }
             })
             .catch((err) => {
@@ -70,7 +70,7 @@ const Calender = () => {
   useEffect(() => {
     if (isRemoveCalenderResponse?.data?._id) {
       refetch();
-      notifySuccess("Google calender Disconnected!");
+      notifySuccess("Calendario di Google Disconnesso!");
     }
   }, [isRemoveCalenderResponse?.data?._id, refetch]);
 

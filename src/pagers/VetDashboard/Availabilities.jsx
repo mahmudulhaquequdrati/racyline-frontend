@@ -150,7 +150,9 @@ const Availabilities = () => {
             return updatedWeakData;
           });
         } else {
-          notifyError("End time cannot be less than start time");
+          notifyError(
+            "L'ora di fine non può essere inferiore all'ora di inizio"
+          );
         }
       } else {
         if (
@@ -170,7 +172,9 @@ const Availabilities = () => {
             return updatedWeakData;
           });
         } else {
-          notifyError("Start time cannot be grater than end time");
+          notifyError(
+            "L'ora di inizio non può essere superiore all'ora di fine"
+          );
         }
       }
     } else {
@@ -203,7 +207,9 @@ const Availabilities = () => {
               return updatedWeakData;
             });
           } else {
-            notifyError("End time cannot be less than start time");
+            notifyError(
+              "L'ora di fine non può essere inferiore all'ora di inizio"
+            );
           }
         } else {
           if (
@@ -230,11 +236,13 @@ const Availabilities = () => {
               return updatedWeakData;
             });
           } else {
-            notifyError("Start time cannot be grater than end time");
+            notifyError(
+              "L'ora di inizio non può essere superiore all'ora di fine"
+            );
           }
         }
       } else {
-        notifyError("Previous time cannot be change");
+        notifyError("L'ora precedente non può essere modificata");
       }
     }
   };
@@ -248,10 +256,12 @@ const Availabilities = () => {
       // sending data through redux mutation
       createAvailabilities(newData)
         .then((res) => {
-          notifySuccess("Availabilities Saved!");
+          notifySuccess("Disponibilità salvate!");
         })
         .catch((err) => {
-          notifyError("Error occurd while Saving Availabilities!");
+          notifyError(
+            "Si è verificato un errore durante il salvataggio delle disponibilità!"
+          );
         });
     }
     // navigate("/registration-google-calender-connect");
