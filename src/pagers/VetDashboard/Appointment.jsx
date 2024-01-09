@@ -7,9 +7,11 @@ import moment from "moment";
 import axios from "axios";
 import { notifySuccess } from "../../components/common/Toast/Toast";
 import PetInfoModal from "./PetInfoModal";
+import AppointmentEditModal from "./AppointmentEditModal";
 
 const Appointment = () => {
   const { user } = useSelector((state) => state.auth);
+  const [editModalOpen, setEditModalOpen] = useState(false);
   const {
     data: allAppointmentList,
     isLoading: allAppointmentListLoading,
@@ -32,6 +34,10 @@ const Appointment = () => {
   function openModal(data) {
     setSingleData(data?.animaleId);
     setIsOpen(true);
+  }
+  function openEditModal(data) {
+    setSingleData(data);
+    setEditModalOpen(true);
   }
   const [searchInput, setSearchInput] = useState("");
 
@@ -253,7 +259,10 @@ const Appointment = () => {
                                       leaveTo="opacity-0 translate-y-1"
                                     >
                                       <Popover.Panel className="absolute -left-[100%] !z-[99999] mt-3 w-[200px] max-w-sm -translate-x-1/2 transform px-4 sm:px-0 lg:max-w-3xl">
-                                        <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black/5">
+                                        <div
+                                          onClick={() => openEditModal(res)}
+                                          className="cursor-pointer overflow-hidden rounded-lg shadow-lg ring-1 ring-black/5"
+                                        >
                                           <div className="relative bg-white p-5 cursor-pointer ">
                                             <p className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out  focus:outline-none focus-visible:ring focus-visible:ring-orange-500/50">
                                               <div className="ml-4">
@@ -293,6 +302,14 @@ const Appointment = () => {
           </div>
         </div>
       </div>
+      {editModalOpen && (
+        <AppointmentEditModal
+          singleData={singleData}
+          isOpen={editModalOpen}
+          setIsOpen={setEditModalOpen}
+          refetch={refetch}
+        />
+      )}
     </div>
   );
 };

@@ -9,7 +9,15 @@
   <body>
     <div id="root"></div>
     <script src="https://accounts.google.com/gsi/client"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-56VWY12GMG"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
 
+  gtag('config', 'G-56VWY12GMG');
+</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/locale/de.js"></script>
     <script type="module" src="/src/main.jsx"></script>
