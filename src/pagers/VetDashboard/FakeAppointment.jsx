@@ -6,6 +6,7 @@ import { notifySuccess } from "../../components/common/Toast/Toast";
 import AppointmentEditModal from "./AppointmentEditModal";
 import { fakeAppointment } from "../../features/fakeData/appointment";
 import FakePetInfoModal from "./FakePetInfoModal";
+import FakAppointmentEditModal from "./FakAppointmentEditModal";
 
 const FakeAppointment = () => {
   const { user } = useSelector((state) => state.auth);
@@ -17,8 +18,7 @@ const FakeAppointment = () => {
     notifySuccess("Appuntamento eliminato con successo!");
   };
   const [singleData, setSingleData] = useState({});
-  function openModal(data) {
-    setSingleData(data?.animaleId);
+  function openModal() {
     setIsOpen(true);
   }
   function openEditModal(data) {
@@ -269,11 +269,12 @@ const FakeAppointment = () => {
         </div>
       </div>
       {editModalOpen && (
-        <AppointmentEditModal
+        <FakAppointmentEditModal
           singleData={singleData}
           isOpen={editModalOpen}
           setIsOpen={setEditModalOpen}
-          // refetch={refetch}
+          allAppointmentList={allAppointmentList}
+          setAllAppointmentList={setAllAppointmentList}
         />
       )}
     </div>
