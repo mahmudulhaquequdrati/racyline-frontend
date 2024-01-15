@@ -15,7 +15,7 @@ import MyAppointmentEditing from "./pagers/UserPages/MyAppointmentEditing";
 import UserRegistration from "./pagers/UserPages/UserRegistration";
 import UserSettings from "./pagers/UserPages/UserSettings";
 import AccountSetting from "./pagers/VetDashboard/AccountSetting";
-import VetAppointment from "./pagers/VetDashboard/Appointment";
+import VetAppointment from "./pagers/VetDashboard/VetAppointment";
 import Availabilities from "./pagers/VetDashboard/Availabilities";
 import Calender from "./pagers/VetDashboard/Calender";
 import ConnectCalender from "./pagers/VetDashboard/ConnectCalender.jsx";

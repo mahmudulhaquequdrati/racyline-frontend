@@ -6,8 +6,7 @@ const VetProtected = ({ children }) => {
   const state = useSelector((state) => state.auth);
 
   const { user, accessToken } = state || {};
-
-  return user && user?.role === "vet_admin" && accessToken ? (
+  return user && user?.role === "vet_admin" && accessToken && user?.active ? (
     children
   ) : (
     <Navigate to={{ pathname: "/vets/login", state: { from: location } }} />

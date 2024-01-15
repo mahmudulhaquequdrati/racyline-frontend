@@ -3,19 +3,13 @@ import { Dialog, Transition } from "@headlessui/react";
 import CancelIcon from "../../assets/ICONS/Cancel.svg";
 import defaultPetImage from "../../assets/pets/pets-dog.png";
 import moment from "moment";
-import axios from "axios";
-const PetInfoModal = ({ isOpen, setIsOpen, singleData }) => {
+import { petInfo } from "../../features/fakeData/petInfo";
+const FakePetInfoModal = ({ isOpen, setIsOpen }) => {
   function closeModal() {
     setIsOpen(false);
   }
-  const [data, setData] = useState({});
-  useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_SERVER_LINK}/pets/report/${singleData}`)
-      .then((res) => {
-        setData(res?.data?.data[0]);
-      });
-  }, []);
+  const [data, setData] = useState(petInfo);
+
   const openImage = (url) => {
     window.open(url, "_blank");
   };
@@ -188,4 +182,4 @@ const PetInfoModal = ({ isOpen, setIsOpen, singleData }) => {
   );
 };
 
-export default PetInfoModal;
+export default FakePetInfoModal;

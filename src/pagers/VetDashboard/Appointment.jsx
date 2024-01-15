@@ -259,11 +259,11 @@ const Appointment = () => {
                                       leaveTo="opacity-0 translate-y-1"
                                     >
                                       <Popover.Panel className="absolute -left-[100%] !z-[99999] mt-3 w-[200px] max-w-sm -translate-x-1/2 transform px-4 sm:px-0 lg:max-w-3xl">
-                                        <div
-                                          onClick={() => openEditModal(res)}
-                                          className="cursor-pointer overflow-hidden rounded-lg shadow-lg ring-1 ring-black/5"
-                                        >
-                                          <div className="relative bg-white p-5 cursor-pointer ">
+                                        <div className="cursor-pointer overflow-hidden rounded-lg shadow-lg ring-1 ring-black/5">
+                                          <div
+                                            onClick={() => openEditModal(res)}
+                                            className="relative bg-white p-5 cursor-pointer "
+                                          >
                                             <p className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out  focus:outline-none focus-visible:ring focus-visible:ring-orange-500/50">
                                               <div className="ml-4">
                                                 <p className="text-sm font-medium text-gray-900">

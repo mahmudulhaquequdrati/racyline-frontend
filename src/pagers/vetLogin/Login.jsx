@@ -74,7 +74,9 @@ function Login() {
     });
     client.requestCode();
   }
-
+  useEffect(() => {
+    handleLogut();
+  }, []);
   return (
     <section className="flex justify-center items-center bg-primary pb-16 px-4 pt-8 border-[1px] border-[#EAEAEB]">
       <div className="max-w-[638px] w-full  rounded-lg px-4 py-12 md:p-8 lg:p-16 bg-white">
