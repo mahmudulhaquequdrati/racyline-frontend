@@ -57,7 +57,7 @@ const FakeAppointment = () => {
         </div>
         <div>
           <div>
-            <div className="min-h-min bg-transparent">
+            <div className="min-h-min overflow-x-auto bg-transparent">
               <table className="h-min w-full shadow bg-transparent rounded   ">
                 <thead className="bg-white">
                   <tr className="bg-gray-50 px-5 ">

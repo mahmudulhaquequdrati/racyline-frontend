@@ -60,9 +60,11 @@ const VetLists = () => {
   if (!isLoading && !isError && vetLists?.vetList?.length > 0) {
     content = (
       <div>
-        {vetLists?.vetList?.map((vetList, i) => (
-          <VetList vetInfo={vetList} key={i} />
-        ))}
+        {vetLists?.vetList
+          ?.filter((vet) => vet.approved)
+          ?.map((vetList, i) => (
+            <VetList vetInfo={vetList} key={i} />
+          ))}
       </div>
     );
   }

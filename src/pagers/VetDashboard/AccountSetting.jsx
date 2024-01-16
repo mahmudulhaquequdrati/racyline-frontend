@@ -310,7 +310,7 @@ const AccountSetting = () => {
                   <Listbox value={selected} onChange={setSelected} multiple>
                     <div className="relative mt-1">
                       <Listbox.Button
-                        className={`relative w-full cursor-default rounded-lg bg-white py-3 pl-4 pr-10 text-left border-[1px]border-[#E5E7EC] focus:outline-none flex gap-2 `}
+                        className={`relative w-full cursor-default rounded-lg bg-white py-3 pl-4 pr-10 text-left border-[1px] border-[#E5E7EC] focus:outline-none flex gap-2 `}
                       >
                         {selected?.length ? (
                           selected?.map((s, i) => {
