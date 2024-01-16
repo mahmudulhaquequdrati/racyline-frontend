@@ -268,9 +268,9 @@ const AccountSetting = () => {
   console.log(selected);
   return (
     <>
-      <div className="p-4 md:p-8 lg:p-20 min-h-[100vh] bg-primary">
-        <div className="max-w-[1140px] w-full mx-auto">
-          <div className="max-w-[570px] w-full">
+      <div className="bg-white p-10 rounded w-[80%]">
+        <div className=" w-full mx-auto">
+          <div className=" w-full">
             <div className="w-full">
               <h1 className="text-[32px] font-bold">
                 Impostazioni dell’account

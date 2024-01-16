@@ -42,9 +42,9 @@ const FakeAppointment = () => {
     setSearchInput(e.target.value);
   };
   return (
-    <div className="bg-primary">
+    <div className="">
       {isOpen && <FakePetInfoModal isOpen={isOpen} setIsOpen={setIsOpen} />}
-      <div className="max-w-[1140px] w-full mx-auto py-20">
+      <div className=" w-full mx-auto">
         <h1 className="font-bold text-3xl">Gestisci gli appuntamenti</h1>
         <div className="py-5">
           <input
@@ -126,7 +126,7 @@ const FakeAppointment = () => {
                               <p className="text-gray-500">Cane</p>
                             </div>
                             <div>
-                              <button className="border border-primary px-5 py-3 rounded text-primary whitespace-nowrap">
+                              <button className="border border-primary px-5 py-2 rounded text-primary whitespace-nowrap">
                                 Visualizza la cartella
                               </button>
                             </div>

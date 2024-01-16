@@ -39,6 +39,7 @@ import MyAnimals from "./pagers/myAnimals/MyAnimals.jsx";
 import ProductInfo from "./pagers/VetDashboard/ProductInfo.jsx";
 import AdminDashboard from "./pagers/adminPages/AdminDashboard.jsx";
 import AnimalDetails from "./pagers/myAnimals/AnimalDetails.jsx";
+import VetsDashboard from "./pagers/VetDashboard/VetsDashboard.jsx";
 const App = () => {
   const isAuth = useAuthCheck();
   moment.defineLocale("it", {
@@ -168,38 +169,21 @@ const App = () => {
           element={<CompleteMedicalRecord />}
         />
         {/* ====================== New Files End ==================== */}
-        <Route
+        {/* <Route
           path="/vets/my-appointment"
           element={
             <VetProtected>
+              <VetsDashboard />
               <VetAppointment />
             </VetProtected>
           }
-        />
-        <Route
-          path="/vets/accountsettings"
-          element={
-            <VetProtected>
-              <AccountSetting />
-            </VetProtected>
-          }
-        />
-        <Route
-          path="/vets/MyAvailabilities"
-          element={
-            <VetProtected>
-              <Availabilities />
-            </VetProtected>
-          }
-        />
-        <Route
-          path="/vets/calender"
-          element={
-            <VetProtected>
-              <Calender />
-            </VetProtected>
-          }
-        />
+        /> */}
+        <Route path="/vets" element={<VetsDashboard />}>
+          <Route path="my-appointment" element={<VetAppointment />} />
+          <Route path="MyAvailabilities" element={<Availabilities />} />
+          <Route path="accountsettings" element={<AccountSetting />} />
+          <Route path="calender" element={<Calender />} />
+        </Route>
         <Route
           path="/vets/calender-connected"
           element={

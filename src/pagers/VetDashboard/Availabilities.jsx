@@ -339,8 +339,8 @@ const Availabilities = () => {
   }, [data?.data?._id]);
 
   return (
-    <section className="flex bg-primary py-16 border-[1px] border-[#EAEAEB]">
-      <div className="max-w-[1140px] w-full mx-auto py-4 px-4 md:py-8 md:px-0">
+    <section className="flex ">
+      <div className=" w-full px-4 md:px-0">
         <div className="max-w-[638px] w-full rounded-lg p-6 md:p-8 lg:py-6 bg-white">
           <h1 className="text-[32px] font-bold leading-10 text-center mb-6">
             Inserisci le tue disponibilità
