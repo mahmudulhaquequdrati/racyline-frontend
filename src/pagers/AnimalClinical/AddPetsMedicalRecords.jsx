@@ -4,6 +4,7 @@ import defaultPetImage from "../../assets/pets/pets-dog.png";
 import { useCreatePetInfoMutation } from "../../features/petMedialReport/petMedicalReportApi";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserInfo, userLoggedIn } from "../../features/auth/authSlice";
+import { useUpdateMedicalForUserMutation } from "../../features/auth/authApi";
 
 const plusIcons = (
   <svg
@@ -42,6 +43,15 @@ function AddPetsMedicalRecords() {
     createPetInfo,
     { data: isCreatedPetResponse, isLoading, isError, isSuccess },
   ] = useCreatePetInfoMutation();
+  const [
+    updateMedicalForUser,
+    {
+      data: isUpdatedMedicalForUserResponse,
+      isLoading: isLoadingUpdateMedicalForUser,
+      isError: isErrorUpdateMedicalForUser,
+      isSuccess: isSuccessUpdateMedicalForUser,
+    },
+  ] = useUpdateMedicalForUserMutation();
   const dispatch = useDispatch();
   const petsData = JSON.parse(localStorage.getItem("petsData"));
   // Saving the pet info
@@ -54,6 +64,12 @@ function AddPetsMedicalRecords() {
     if (petsInfo?.length > 0) {
       createPetInfo(data);
     } else {
+      console.log("came");
+      const data = {
+        userId: user?._id,
+        completed_medical_report: true,
+      };
+      updateMedicalForUser(data);
       dispatch(getUserInfo({ ...user, completed_medical_report: true }));
       localStorage.removeItem("petsData");
       navigate("/user/vet-lists");

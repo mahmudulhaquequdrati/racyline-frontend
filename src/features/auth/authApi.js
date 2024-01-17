@@ -62,8 +62,39 @@ export const authApi = apiSlice.injectEndpoints({
     getUserInfo: builder.query({
       query: () => `user/userInfo`,
     }),
+    updateMedicalForUser: builder.mutation({
+      query: (data) => ({
+        url: `/user/updateMedical/${data?.userId}`,
+        method: "PUT",
+        body: {
+          completed_medical_report: data?.completed_medical_report,
+        },
+      }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+          // console.log(result);
+          const data = JSON.parse(localStorage.getItem("authNutraNextUser"));
+          const token = data?.accessToken;
+          const user = result?.data;
+          localStorage.setItem(
+            "authNutraNextUser",
+            JSON.stringify({
+              accessToken: token,
+              user: user,
+            })
+          );
+        } catch (error) {
+          // do nothing
+        }
+      },
+    }),
   }),
 });
 
-export const { useRegisterMutation, useLoginMutation, useGetUserInfoQuery } =
-  authApi;
+export const {
+  useRegisterMutation,
+  useLoginMutation,
+  useGetUserInfoQuery,
+  useUpdateMedicalForUserMutation,
+} = authApi;
