@@ -13,13 +13,13 @@ export default function LandingPage() {
     <section className="bg-primary">
       <div className="overflow-hidden">
         <HeroSection />
-        <SecondSection />
+        {/* <SecondSection />
         <ThirdSection />
         <FourthSection />
         <FifthSection />
         <SisthSection />
         <SeventhSection />
-        <EighthSection />
+        <EighthSection /> */}
       </div>
     </section>
   );
