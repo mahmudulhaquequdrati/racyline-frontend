@@ -64,7 +64,7 @@ const Appointment = () => {
           setIsOpen={setIsOpen}
         />
       )}
-      <div className="max-w-[1140px] w-full mx-auto py-20">
+      <div className=" w-full mx-auto">
         <h1 className="font-bold text-3xl">Gestisci gli appuntamenti</h1>
         <div className="py-5">
           <input
@@ -77,7 +77,7 @@ const Appointment = () => {
         </div>
         <div>
           <div>
-            <div className="min-h-min bg-transparent">
+            <div className="min-h-min overflow-x-auto bg-transparent">
               <table className="h-min w-full shadow bg-transparent rounded   ">
                 <thead className="bg-white">
                   <tr className="bg-gray-50 px-5 ">
@@ -123,7 +123,7 @@ const Appointment = () => {
                           <tr key={res} className="w-max opacity-50">
                             <td align="left" className="border-t px-5 py-5 ">
                               <div className="flex justify-between">
-                                <div>
+                                <div className="whitespace-nowrap">
                                   <p className="font-bold">
                                     {res?.firstName} {res?.lastName}
                                   </p>
@@ -184,7 +184,7 @@ const Appointment = () => {
                             <td align="left" className="border-t px-5 py-5 ">
                               <div className="flex justify-between">
                                 <div>
-                                  <p className="font-bold">
+                                  <p className="font-bold whitespace-nowrap">
                                     {res?.firstName} {res?.lastName}
                                   </p>
                                   <p className="text-gray-500">
