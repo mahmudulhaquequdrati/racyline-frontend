@@ -51,7 +51,7 @@ const VetLists = () => {
     isError,
     refetch,
   } = useGetAllVetListsQuery();
-  console.log(vetLists);
+  // console.log(vetLists);
 
   let content;
   if (isLoading) {
@@ -61,7 +61,7 @@ const VetLists = () => {
     content = (
       <div>
         {vetLists?.vetList
-          ?.filter((vet) => vet.approved)
+          ?.filter((vet) => vet.approved && vet.active)
           ?.map((vetList, i) => (
             <VetList vetInfo={vetList} key={i} />
           ))}

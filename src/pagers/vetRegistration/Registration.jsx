@@ -210,8 +210,8 @@ function Registration() {
       });
     }
   };
-  console.log(selected);
-  console.log(selected2);
+  // console.log(selected);
+  // console.log(selected2);
   return (
     <section className="flex justify-center items-center bg-primary py-16 px-4 border-[1px] border-[#EAEAEB]">
       <div className="max-w-[638px] w-full  rounded-lg px-4 py-12 md:p-8 lg:p-16 bg-white">

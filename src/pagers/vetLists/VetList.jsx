@@ -52,7 +52,7 @@ const VetList = ({ vetInfo }) => {
       notifyError("Selezionare l'ora!");
     }
   };
-  console.log("appointments", appointments);
+  // console.log("appointments", appointments);
 
   // current date
   const current_day = moment(appointmentDate.date).locale("it").format("ddd");

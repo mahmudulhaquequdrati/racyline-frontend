@@ -64,7 +64,7 @@ function AddPetsMedicalRecords() {
     if (petsInfo?.length > 0) {
       createPetInfo(data);
     } else {
-      console.log("came");
+      // console.log("came");
       const data = {
         userId: user?._id,
         completed_medical_report: true,

@@ -132,7 +132,7 @@ const AccountSetting = () => {
   const { data: userupdate, refetch } = useGetUserInfoQuery(undefined, {
     skip: !accessToken,
   });
-  console.log(userupdate);
+  // console.log(userupdate);
   const user = userupdate?.user;
   const [selected, setSelected] = useState(user?.doctor_type1 || [people[0]]);
   const [selected2, setSelected2] = useState(user?.doctor_type2 || [type[0]]);
@@ -144,7 +144,7 @@ const AccountSetting = () => {
     doctor_type2: "",
     veterinary_address: "",
   });
-  console.log(userData);
+  // console.log(userData);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(false);
@@ -265,7 +265,7 @@ const AccountSetting = () => {
       navigate("/vets/login");
     }
   }, [isAccountDeleted, navigate]);
-  console.log(selected);
+  // console.log(selected);
   return (
     <>
       <div className="bg-white p-10 rounded w-[80%]">

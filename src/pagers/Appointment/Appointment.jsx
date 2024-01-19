@@ -91,7 +91,7 @@ const Appointment = () => {
   //   });
   //   setDropdownValue(data);
   // }, [animalData?.data?.length]);
-  console.log(animale);
+  // console.log(animale);
   return (
     <div className="bg-primary pt-[60px] pb-[80px]">
       <div className="max-w-[1140px] w-full mx-auto flex flex-col md:flex-row gap-20">
