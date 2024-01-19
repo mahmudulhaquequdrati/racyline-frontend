@@ -60,7 +60,7 @@ export default function VetsDashboard() {
             </div>
           </div>
         </div>
-        <div className="w-full md:w-[70%]">
+        <div className="w-full md:w-[75%]">
           <Outlet />
         </div>
       </div>

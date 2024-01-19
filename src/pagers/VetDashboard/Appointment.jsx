@@ -8,6 +8,7 @@ import axios from "axios";
 import { notifySuccess } from "../../components/common/Toast/Toast";
 import PetInfoModal from "./PetInfoModal";
 import AppointmentEditModal from "./AppointmentEditModal";
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 
 const Appointment = () => {
   const { user } = useSelector((state) => state.auth);
@@ -77,8 +78,8 @@ const Appointment = () => {
         </div>
         <div>
           <div>
-            <div className="min-h-min overflow-x-auto bg-transparent">
-              <table className="h-min w-full shadow bg-transparent rounded   ">
+            <div className="min-h-min  overflow-x-auto bg-transparent">
+              <table className="h-min w-full shadow  bg-transparent rounded   ">
                 <thead className="bg-white">
                   <tr className="bg-gray-50 px-5 ">
                     <th align="left" className="border-t px-5 py-5 ">
@@ -110,7 +111,7 @@ const Appointment = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white">
+                <tbody className="bg-white  ">
                   {allAppointmentListLoading
                     ? "Loading...."
                     : (searchInput === ""
@@ -224,7 +225,7 @@ const Appointment = () => {
                               </div>
                             </td>
                             <td align="left" className="border-t px-5 py-2">
-                              <Popover className="relative !z-[99999] ">
+                              {/* <Popover className="relative !z-[999] ">
                                 {({ open }) => (
                                   <>
                                     <Popover.Button
@@ -291,7 +292,62 @@ const Appointment = () => {
                                     </Transition>
                                   </>
                                 )}
-                              </Popover>
+                              </Popover> */}
+                              <DropdownMenu.Root>
+                                <DropdownMenu.Trigger asChild>
+                                  <div className="cursor-pointer  group inline-flex items-center rounded-md px-3 py-2 text-base font-medium  focus:outline-none  ">
+                                    <svg
+                                      class="w-6 h-6 text-gray-800"
+                                      aria-hidden="true"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      fill="none"
+                                      viewBox="0 0 17 4"
+                                    >
+                                      <path
+                                        stroke="currentColor"
+                                        stroke-linecap="round"
+                                        stroke-width="2"
+                                        d="M2.49 2h.01m6 0h.01m5.99 0h.01"
+                                      />
+                                    </svg>
+                                  </div>
+                                </DropdownMenu.Trigger>
+
+                                <DropdownMenu.Portal>
+                                  <DropdownMenu.Content
+                                    className="min-w-[220px] bg-white rounded-md p-[5px] shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)] will-change-[opacity,transform] data-[side=top]:animate-slideDownAndFade data-[side=right]:animate-slideLeftAndFade data-[side=bottom]:animate-slideUpAndFade data-[side=left]:animate-slideRightAndFade"
+                                    sideOffset={5}
+                                    align="end"
+                                  >
+                                    <DropdownMenu.Item
+                                      className="group text-[13px] leading-none  rounded-[3px] flex items-center h-[25px] px-[5px] relative pl-[25px] select-none outline-none cursor-pointer data-[disabled]:pointer-events-none   mt-3 mb-3"
+                                      onClick={() => openEditModal(res)}
+                                    >
+                                      <p className=" flex items-center rounded-lg p-2 transition duration-150 ease-in-out  focus:outline-none focus-visible:ring focus-visible:ring-orange-500/50">
+                                        <div className="">
+                                          <p className="text-sm font-medium text-gray-900">
+                                            Modifica
+                                          </p>
+                                        </div>
+                                      </p>
+                                    </DropdownMenu.Item>
+                                    <DropdownMenu.Item
+                                      className="group text-[13px] leading-none  rounded-[3px] flex items-center h-[25px] px-[5px] relative pl-[25px] select-none outline-none cursor-pointer data-[disabled]:pointer-events-none   mt-3 mb-3"
+                                      onClick={() =>
+                                        deleteAppointment(res?._id)
+                                      }
+                                    >
+                                      <p className=" flex  items-center rounded-lg p-2 transition duration-150 ease-in-out  focus:outline-none focus-visible:ring focus-visible:ring-orange-500/50">
+                                        <div className="">
+                                          <p className="text-sm font-medium text-red-400">
+                                            Elimina
+                                          </p>
+                                        </div>
+                                      </p>
+                                    </DropdownMenu.Item>
+                                  </DropdownMenu.Content>
+                                </DropdownMenu.Portal>
+                              </DropdownMenu.Root>
                             </td>
                           </tr>
                         )

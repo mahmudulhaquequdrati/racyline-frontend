@@ -150,6 +150,20 @@ export default function DropDown() {
                     <Menu.Item>
                       {({ active }) => (
                         <Link
+                          to="/user/my-animals"
+                          className={`${
+                            active || location?.pathname == "/user/my-animals"
+                              ? "bg-primary text-gray-800"
+                              : "text-gray-900"
+                          } group flex w-full items-center rounded-md px-4 py-2 text-sm`}
+                        >
+                          My Animals
+                        </Link>
+                      )}
+                    </Menu.Item>
+                    <Menu.Item>
+                      {({ active }) => (
+                        <Link
                           to="/user/my-appointment"
                           className={`${
                             active ||
