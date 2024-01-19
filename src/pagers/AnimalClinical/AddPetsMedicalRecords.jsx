@@ -5,6 +5,7 @@ import { useCreatePetInfoMutation } from "../../features/petMedialReport/petMedi
 import { useDispatch, useSelector } from "react-redux";
 import { getUserInfo, userLoggedIn } from "../../features/auth/authSlice";
 import { useUpdateMedicalForUserMutation } from "../../features/auth/authApi";
+import emailjs from "@emailjs/browser";
 
 const plusIcons = (
   <svg
@@ -72,7 +73,27 @@ function AddPetsMedicalRecords() {
       updateMedicalForUser(data);
       dispatch(getUserInfo({ ...user, completed_medical_report: true }));
       localStorage.removeItem("petsData");
-      navigate("/user/vet-lists");
+      emailjs
+        .send(
+          "service_is7aog9",
+          "template_7jsih7q",
+          {
+            name: user?.first_name + " " + user.last_name,
+            email: user?.email,
+          },
+          "user_x2aq1Ig2bYqnAn0XQwwE1"
+        )
+        .then(
+          (result) => {
+            console.log(result.text);
+          },
+          (error) => {
+            console.log(error.text);
+          }
+        )
+        .finally(() => {
+          navigate("/user/vet-lists");
+        });
     }
   };
 
@@ -138,7 +159,27 @@ function AddPetsMedicalRecords() {
     if (isSuccess) {
       dispatch(getUserInfo(isCreatedPetResponse));
       localStorage.removeItem("petsData");
-      navigate("/user/vet-lists");
+      emailjs
+        .send(
+          "service_is7aog9",
+          "template_7jsih7q",
+          {
+            name: user?.first_name + " " + user.last_name,
+            email: user?.email,
+          },
+          "user_x2aq1Ig2bYqnAn0XQwwE1"
+        )
+        .then(
+          (result) => {
+            console.log(result.text);
+          },
+          (error) => {
+            console.log(error.text);
+          }
+        )
+        .finally(() => {
+          navigate("/user/vet-lists");
+        });
     }
   }, [isSuccess, dispatch]);
 
