@@ -45,14 +45,14 @@ const Appointment = () => {
   const filteredData = () => {
     const data = allAppointmentList?.data?.filter(
       (item) =>
-        item.firstName.toLowerCase().includes(searchInput.toLowerCase()) ||
-        item.lastName.toLowerCase().includes(searchInput.toLowerCase()) ||
-        item.phone.includes(searchInput) ||
-        item.email.includes(searchInput)
+        item?.firstName?.toLowerCase()?.includes(searchInput?.toLowerCase()) ||
+        item?.lastName?.toLowerCase()?.includes(searchInput?.toLowerCase()) ||
+        item?.phone?.includes(searchInput) ||
+        item?.userEmail?.includes(searchInput)
     );
     return data;
   };
-  // console.log(filteredData());
+  console.log(allAppointmentList?.data);
   const handleSearchChange = (e) => {
     setSearchInput(e.target.value);
   };
