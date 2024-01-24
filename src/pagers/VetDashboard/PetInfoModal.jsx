@@ -64,7 +64,7 @@ const PetInfoModal = ({ isOpen, setIsOpen, singleData }) => {
                   <div className="mt-2">
                     <figure className="w-20 h-20 object-cover rounded-full overflow-hidden">
                       <img
-                        className="w-full h-full"
+                        className="w-full h-full rounded-full object-cover"
                         src={
                           data?.general_information?.pet_photo
                             ? data?.general_information?.pet_photo

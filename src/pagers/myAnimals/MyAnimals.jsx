@@ -86,7 +86,7 @@ export default function MyAnimals() {
                   <div className="flex gap-6 items-center justify-start ">
                     <figure className="w-20 h-20 object-cover rounded-full overflow-hidden">
                       <img
-                        className="w-full h-full"
+                        className="w-full h-full object-cover rounded-full"
                         src={
                           petInfo?.data[0]?.general_information?.pet_photo ||
                           defaultPetImage

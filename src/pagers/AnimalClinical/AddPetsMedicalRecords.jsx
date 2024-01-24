@@ -216,7 +216,7 @@ function AddPetsMedicalRecords() {
                 <div className="flex gap-6 items-center justify-start ">
                   <figure className="w-20 h-20 object-cover rounded-full overflow-hidden">
                     <img
-                      className="w-full h-full"
+                      className="w-full h-full rounded-full object-cover"
                       src={
                         petInfo?.general_information?.pet_photo ||
                         defaultPetImage

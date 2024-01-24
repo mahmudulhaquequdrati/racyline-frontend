@@ -171,16 +171,20 @@ function SingleMedicalRecord() {
                 <img
                   src={URL.createObjectURL(selectedFile)}
                   alt=""
-                  className="w-[105px] h-[105px] rounded-full"
+                  className="w-[105px] h-[105px] rounded-full  object-cover "
                 />
               ) : inputData?.profile_image_url ? (
                 <img
                   src={inputData?.profile_image_url}
                   alt=""
-                  className="w-[105px] h-[105px] rounded-full"
+                  className="w-[105px] h-[105px] rounded-full object-cover"
                 />
               ) : (
-                <img src={userIcon} alt="" className="w-[32px] h-[32px]" />
+                <img
+                  src={userIcon}
+                  alt=""
+                  className="w-[32px] h-[32px] object-cover"
+                />
               )}
             </div>
             <div className="flex flex-col gap-y-[10px]">
