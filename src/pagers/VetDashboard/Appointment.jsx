@@ -65,11 +65,11 @@ const Appointment = () => {
           setIsOpen={setIsOpen}
         />
       )}
-      <div className=" w-full mx-auto">
+      <div className=" w-full mx-auto bg-white p-6">
         <h1 className="font-bold text-3xl">Gestisci gli appuntamenti</h1>
         <div className="py-5">
           <input
-            className="w-full bg-white px-10 py-3 rounded outline-none"
+            className="w-full bg-white px-4 py-3 rounded outline-none border border-gray-200 "
             type="text"
             value={searchInput}
             onChange={handleSearchChange}
@@ -78,8 +78,8 @@ const Appointment = () => {
         </div>
         <div>
           <div>
-            <div className="min-h-min  overflow-x-auto bg-transparent">
-              <table className="h-min w-full shadow  bg-transparent rounded   ">
+            <div className="min-h-min  overflow-x-auto bg-transparent rounded border-t-0 border">
+              <table className="h-min w-full shadow  bg-transparent">
                 <thead className="bg-white">
                   <tr className="bg-gray-50 px-5 ">
                     <th align="left" className="border-t px-5 py-5 ">
@@ -151,8 +151,18 @@ const Appointment = () => {
                             <td align="left" className="border-t px-5 py-3">
                               <div className="flex justify-between gap-12 !border px-5 py-3 rounded">
                                 <div>
-                                  <p>Rex</p>
-                                  <p className="text-gray-500">Cane</p>
+                                  <p>
+                                    {
+                                      res?.animaleId?.data[0]
+                                        ?.general_information?.animal_name
+                                    }
+                                  </p>
+                                  <p className="text-gray-500">
+                                    {
+                                      res?.animaleId?.data[0]
+                                        ?.general_information?.species
+                                    }
+                                  </p>
                                 </div>
                                 <div>
                                   <button className="border border-primary px-5 py-3 rounded text-primary whitespace-nowrap">
@@ -164,7 +174,7 @@ const Appointment = () => {
                             <td align="left" className="border-t px-5 py-2">
                               <div className=" ">
                                 <svg
-                                  class="w-6 h-6 text-gray-800"
+                                  className="w-6 h-6 text-gray-800"
                                   aria-hidden="true"
                                   xmlns="http://www.w3.org/2000/svg"
                                   fill="none"
@@ -172,8 +182,8 @@ const Appointment = () => {
                                 >
                                   <path
                                     stroke="currentColor"
-                                    stroke-linecap="round"
-                                    stroke-width="2"
+                                    strokeLinecap="round"
+                                    strokeWidth="2"
                                     d="M2.49 2h.01m6 0h.01m5.99 0h.01"
                                   />
                                 </svg>
@@ -211,8 +221,18 @@ const Appointment = () => {
                             <td align="left" className="border-t px-5 py-3">
                               <div className="flex justify-between gap-12 !border px-5 py-3 rounded">
                                 <div>
-                                  <p>Rex</p>
-                                  <p className="text-gray-500">Cane</p>
+                                  <p>
+                                    {
+                                      res?.animaleId?.data[0]
+                                        ?.general_information?.animal_name
+                                    }
+                                  </p>
+                                  <p className="text-gray-500">
+                                    {
+                                      res?.animaleId?.data[0]
+                                        ?.general_information?.species
+                                    }
+                                  </p>
                                 </div>
                                 <div>
                                   <button
@@ -235,7 +255,7 @@ const Appointment = () => {
                                     >
                                       <div className=" ">
                                         <svg
-                                          class="w-6 h-6 text-gray-800"
+                                          className="w-6 h-6 text-gray-800"
                                           aria-hidden="true"
                                           xmlns="http://www.w3.org/2000/svg"
                                           fill="none"
@@ -243,8 +263,8 @@ const Appointment = () => {
                                         >
                                           <path
                                             stroke="currentColor"
-                                            stroke-linecap="round"
-                                            stroke-width="2"
+                                            strokeLinecap="round"
+                                            strokeWidth="2"
                                             d="M2.49 2h.01m6 0h.01m5.99 0h.01"
                                           />
                                         </svg>
@@ -297,7 +317,7 @@ const Appointment = () => {
                                 <DropdownMenu.Trigger asChild>
                                   <div className="cursor-pointer  group inline-flex items-center rounded-md px-3 py-2 text-base font-medium  focus:outline-none  ">
                                     <svg
-                                      class="w-6 h-6 text-gray-800"
+                                      className="w-6 h-6 text-gray-800"
                                       aria-hidden="true"
                                       xmlns="http://www.w3.org/2000/svg"
                                       fill="none"
@@ -305,8 +325,8 @@ const Appointment = () => {
                                     >
                                       <path
                                         stroke="currentColor"
-                                        stroke-linecap="round"
-                                        stroke-width="2"
+                                        strokeLinecap="round"
+                                        strokeWidth="2"
                                         d="M2.49 2h.01m6 0h.01m5.99 0h.01"
                                       />
                                     </svg>

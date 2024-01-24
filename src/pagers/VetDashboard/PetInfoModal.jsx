@@ -108,7 +108,11 @@ const PetInfoModal = ({ isOpen, setIsOpen, singleData }) => {
                           <td>
                             {moment(
                               data?.general_information?.date_of_birth
-                            ).format("DD/MM/YYYY")}
+                            ).format("DD/MM/YYYY") === "Invalid date"
+                              ? "-"
+                              : moment(
+                                  data?.general_information?.date_of_birth
+                                ).format("DD/MM/YYYY")}
                           </td>
                           <td> {data?.general_information?.sex?.gender}</td>
                         </tr>
@@ -142,7 +146,11 @@ const PetInfoModal = ({ isOpen, setIsOpen, singleData }) => {
                             {" "}
                             {moment(
                               data?.general_information?.implantation_date
-                            ).format("DD/MM/YYYY")}
+                            ).format("DD/MM/YYYY") === "Invalid date"
+                              ? "-"
+                              : moment(
+                                  data?.general_information?.implantation_date
+                                ).format("DD/MM/YYYY")}
                           </td>
                         </tr>
                       </tbody>
@@ -161,8 +169,9 @@ const PetInfoModal = ({ isOpen, setIsOpen, singleData }) => {
                       >
                         <div>
                           <p>{res?.description}</p>
-                          {res?.report_file?.map((f) => (
+                          {res?.report_file?.map((f, i) => (
                             <button
+                              key={i}
                               onClick={() => openImage(f?.url)}
                               className="text-primary border border-secondary rounded px-10 py-1 mr-2"
                             >

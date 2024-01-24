@@ -59,7 +59,12 @@ const VetLists = () => {
   }
   if (!isLoading && !isError && vetLists?.vetList?.length > 0) {
     content = (
-      <div>
+      <div className="grid grid-cols-1 gap-4">
+        {vetLists?.vetList
+          ?.filter((vet) => vet.approved && vet.active)
+          ?.map((vetList, i) => (
+            <VetList vetInfo={vetList} key={i} />
+          ))}
         {vetLists?.vetList
           ?.filter((vet) => vet.approved && vet.active)
           ?.map((vetList, i) => (

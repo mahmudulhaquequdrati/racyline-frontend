@@ -16,6 +16,7 @@ const Calender = () => {
     data: googleCalenderResponse,
     isLoading,
     refetch,
+    isError,
   } = useGoogleCalenderInfoQuery({ userId: user?._id }, { skip: !user?._id });
 
   const [removeGoogleCalender, { data: isRemoveCalenderResponse }] =
@@ -65,6 +66,18 @@ const Calender = () => {
 
   const handleRemoveGoogleCalender = () => {
     removeGoogleCalender({ userId: user?._id });
+    // .unwrap()
+    // .then((res) => {
+    //   refetch();
+    //   // notifySuccess("Calendario di Google Disconnesso!");
+
+    //   console.log(res);
+    //   // call this one useGoogleCalenderInfoQuery again
+    //   // how to do that with RTK query
+    // })
+    // .catch((err) => {
+    //   // console.log(err);
+    // });
   };
 
   useEffect(() => {
@@ -76,17 +89,19 @@ const Calender = () => {
 
   return (
     <>
-      {googleCalenderResponse?.data?.email ? (
+      {googleCalenderResponse?.data?.email && !isError ? (
         <div className="">
           <div className=" w-full mx-auto">
-            <h1 className="font-bold text-2xl mb-6">Calendario</h1>
-            <div className="w-full md:w-1/2 bg-white p-10 rounded-md mt-3">
-              <p className="text-gray-400">
-                Account attualmente connesso al Calendario Google
-              </p>
-              <p className="font-bold text-lg">
-                {googleCalenderResponse?.data?.email}
-              </p>
+            <div className="w-full md:w-1/2 bg-white p-6 rounded-md ">
+              <h1 className="font-bold text-2xl mb-6">Calendario</h1>
+              <div className="border p-5 rounded">
+                <p className="text-gray-400">
+                  Account attualmente connesso al Calendario Google
+                </p>
+                <p className="font-bold text-lg">
+                  {googleCalenderResponse?.data?.email}
+                </p>
+              </div>
             </div>
             <div className="mt-8">
               <button
@@ -99,18 +114,20 @@ const Calender = () => {
           </div>
         </div>
       ) : (
-        <div className="p-4 md:p-8 lg:p-20 min-h-[100vh] bg-primary">
+        <div className=" bg-primary">
           <div className="max-w-[1140px] w-full mx-auto">
-            <h1 className="font-bold text-2xl mb-6">Calendario</h1>
-            <div className="w-full md:w-1/2 bg-white p-10 rounded-md mt-3">
-              <p className="text-[22px] font-semibold mb-6 leading-8">
-                Sincronizza i tuoi appuntamenti con il tuo Calendario Google
-              </p>
-              <p className="text-[15px] font-normal text-gray-400 leading-6">
-                Se vuoi fai puoi connettere il tuo calendario Google e
-                sincronizzare tutti gli appuntamenti dei tuoi clienti sul tuo
-                calendario.
-              </p>
+            <div className="w-full md:w-1/2 bg-white p-6 rounded-md ">
+              <h1 className="font-bold text-2xl mb-6">Calendario</h1>
+              <div className="border p-5 rounded">
+                <p className="text-[22px] font-semibold mb-6 leading-8">
+                  Sincronizza i tuoi appuntamenti con il tuo Calendario Google
+                </p>
+                <p className="text-[15px] font-normal text-gray-400 leading-6">
+                  Se vuoi fai puoi connettere il tuo calendario Google e
+                  sincronizzare tutti gli appuntamenti dei tuoi clienti sul tuo
+                  calendario.
+                </p>
+              </div>
             </div>
             <div className="mt-8">
               <button

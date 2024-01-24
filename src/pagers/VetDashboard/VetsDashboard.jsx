@@ -6,7 +6,7 @@ export default function VetsDashboard() {
   return (
     <div className="bg-primary">
       <div className="flex gap-4 px-10 w-full py-20 ">
-        <div className="hidden md:block w-max bg-white h-[200px] p-5 lg:p-7 rounded-md">
+        <div className="hidden md:block w-max bg-white h-min p-5 lg:p-7 rounded-md whitespace-nowrap">
           <div className="flex flex-col gap-2">
             <div
               onClick={() => navigate("/vets/my-appointment")}
@@ -60,7 +60,7 @@ export default function VetsDashboard() {
             </div>
           </div>
         </div>
-        <div className="w-full md:w-[75%]">
+        <div className="w-full md:min-w-[75%]">
           <Outlet />
         </div>
       </div>

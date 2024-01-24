@@ -27,7 +27,7 @@ export default function AccountDeletatioModal({
                     className="mx-auto mb-4 h-14 w-14 text-primary dark:text-gray-200"
                     stroke="currentColor"
                     fill="none"
-                    stroke-width="2"
+                    strokeWidth="2"
                     viewBox="0 0 24 24"
                     aria-hidden="true"
                     height="1em"
@@ -35,7 +35,7 @@ export default function AccountDeletatioModal({
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      stroke-linecap="round"
+                      strokeLinecap="round"
                       stroke-linejoin="round"
                       d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                     ></path>

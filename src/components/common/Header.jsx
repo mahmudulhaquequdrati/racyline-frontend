@@ -10,7 +10,7 @@ export default function Header() {
 
   return (
     <div className="px-4 md:px-8 py-[1.30rem] bg-[#fff] flex justify-center items-center">
-      <div className="max-w-[1140px] w-full mx-auto flex justify-between items-center">
+      <div className=" w-full mx-auto flex justify-between items-center">
         <Link to={"/"}>
           <img src={logo} className="w-[80%] md:w-[100%]" alt="logo" />
         </Link>

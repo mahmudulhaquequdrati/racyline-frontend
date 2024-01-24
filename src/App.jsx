@@ -42,7 +42,7 @@ import AnimalDetails from "./pagers/myAnimals/AnimalDetails.jsx";
 import VetsDashboard from "./pagers/VetDashboard/VetsDashboard.jsx";
 const App = () => {
   const isAuth = useAuthCheck();
-  moment.defineLocale("it", {
+  moment?.defineLocale("it", {
     months:
       "Gennaio_Febbraio_Marzo_Aprile_Maggio_Giugno_Luglio_Agosto_Settembre_Ottobre_Novembre_Dicembre".split(
         "_"
