@@ -65,11 +65,11 @@ const VetLists = () => {
           ?.map((vetList, i) => (
             <VetList vetInfo={vetList} key={i} />
           ))}
-        {vetLists?.vetList
+        {/* {vetLists?.vetList
           ?.filter((vet) => vet.approved && vet.active)
           ?.map((vetList, i) => (
             <VetList vetInfo={vetList} key={i} />
-          ))}
+          ))} */}
       </div>
     );
   }
