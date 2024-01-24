@@ -46,13 +46,15 @@ export default function VetCalender({
     setAppointmentDate((prev) => {
       return {
         ...prev,
-        date: val,
+        date: moment(val),
       };
     });
   };
   const disabledWeeks = vetAvailabilities
     ?.filter((day) => !day.available)
     .map((day) => moment().startOf("week").day(day.name).format("dddd"));
+  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  console.log(Date());
   return (
     <div className="max-w-[1140px] w-full mx-auto">
       <Calendar
