@@ -1,11 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import defaultPetImage from "../../assets/pets/pets-dog.png";
 import moment from "moment";
 
 export default function AnimalDetails() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [data, setData] = useState({});
   useEffect(() => {
     axios
@@ -149,7 +150,7 @@ export default function AnimalDetails() {
         </div>
 
         <button
-          onClick={() => handleEditPetsData(e, index)}
+          onClick={() => navigate(`/user/edit-pet-info/${id}`)}
           className="bg-[#339E9F] px-10 py-3 text-white rounded text-center mt-10 w-full"
         >
           Modifica la cartella clinica

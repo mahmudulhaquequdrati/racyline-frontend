@@ -40,6 +40,8 @@ import ProductInfo from "./pagers/VetDashboard/ProductInfo.jsx";
 import AdminDashboard from "./pagers/adminPages/AdminDashboard.jsx";
 import AnimalDetails from "./pagers/myAnimals/AnimalDetails.jsx";
 import VetsDashboard from "./pagers/VetDashboard/VetsDashboard.jsx";
+import EditMedicalRecord from "./pagers/AnimalClinical/AnimalClinicalEdit/EditMedicalRecord.jsx";
+import CompleteEditMedicalRecord from "./pagers/AnimalClinical/AnimalClinicalEdit/CompleteEditMedicalRecord.jsx";
 const App = () => {
   const isAuth = useAuthCheck();
   moment?.defineLocale("it", {
@@ -159,10 +161,22 @@ const App = () => {
             </UserProtected>
           }
         />
+        <Route
+          path="/user/edit-pet-info/:id"
+          element={
+            <UserProtected>
+              <EditMedicalRecord />
+            </UserProtected>
+          }
+        />
         <Route path="/user/add-pet-info" element={<MedicalRecord />} />
         <Route
           path="/user/complete-single-medical-record"
           element={<CompleteSingleMedicalRecord />}
+        />
+        <Route
+          path="/user/complete-edit-medical-record/:id"
+          element={<CompleteEditMedicalRecord />}
         />
         <Route
           path="/user/complete-medical-record"
