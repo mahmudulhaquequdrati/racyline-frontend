@@ -18,7 +18,6 @@ const genders = [
 function EditMedicalRecord() {
   const navigate = useNavigate();
   const location = useLocation();
-  const pathName = location?.pathname;
   const { id } = useParams();
   const [isExistPets, setIsExistPets] = useState([]);
   const [selected, setSelected] = useState();
@@ -89,20 +88,21 @@ function EditMedicalRecord() {
     e.preventDefault();
     const petsData = [];
     const petInfo = {
-      general_information: {
-        pet_photo: inputData?.profile_image_url,
-        animal_name: inputData?.animalName,
-        species: inputData?.specie,
-        race: inputData?.race,
-        date_of_birth: inputData?.dateOfBirth,
-        sex: selected,
-        microchip_number: inputData?.Microchip_number,
-        implantation_date: inputData?.ImplantationDate,
-      },
-      medical_history: {},
+      pet_photo: inputData?.profile_image_url,
+      animal_name: inputData?.animalName,
+      species: inputData?.specie,
+      race: inputData?.race,
+      date_of_birth: inputData?.dateOfBirth,
+      sex: selected,
+      microchip_number: inputData?.Microchip_number,
+      implantation_date: inputData?.ImplantationDate,
     };
-    isExistPets.push(petInfo);
-    localStorage.setItem("petsData", JSON.stringify(isExistPets));
+    localStorage.setItem(
+      "petsData",
+      JSON.stringify(
+        isExistPets?.map((d) => ({ ...d, general_information: petInfo }))
+      )
+    );
     return navigate(`/user/complete-edit-medical-record/${id}`, {
       replace: true,
       state: { ...location, petInfoIndex: `${0}` },
