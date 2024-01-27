@@ -30,7 +30,7 @@ export default function AnimalDetails() {
   return (
     <section className="bg-primary py-20">
       <div
-        className="px-10
+        className="px-6 lg:px-0 max-w-[1140px] mx-auto
        "
       >
         <p className="font-bold mb-6 text-2xl">Cartella clinica dell’animale</p>
