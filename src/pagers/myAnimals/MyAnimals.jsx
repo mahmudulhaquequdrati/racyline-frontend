@@ -80,16 +80,15 @@ export default function MyAnimals() {
           </div>
 
           {animalData?.data?.length > 0 &&
-            animalData?.data?.map((petInfo, index) => {
-              return (
+            animalData?.data?.map((petInfo, index) =>
+              petInfo?.data?.map((res) => (
                 <div key={index} className="p-3 rounded-lg border bg-white">
                   <div className="flex gap-6 items-center justify-start ">
                     <figure className="w-20 h-20 object-cover rounded-full overflow-hidden">
                       <img
                         className="w-full h-full object-cover rounded-full"
                         src={
-                          petInfo?.data[0]?.general_information?.pet_photo ||
-                          defaultPetImage
+                          res?.general_information?.pet_photo || defaultPetImage
                         }
                         alt=""
                       />
@@ -97,38 +96,32 @@ export default function MyAnimals() {
 
                     <article>
                       <h2 className="text-base font-bold">
-                        {petInfo?.data[0]?.general_information?.animal_name}
+                        {res?.general_information?.animal_name}
                       </h2>
                       <p className="text-[15px] mt-1 text-[#00000066] flex gap-2 items-center">
-                        <span>
-                          {petInfo?.data[0]?.general_information?.species}
-                        </span>
+                        <span>{res?.general_information?.species}</span>
                         <span className="block w-[5px] h-[5px] rounded-full bg-[#E5E7EC]"></span>
-                        <span>
-                          {petInfo?.data[0]?.general_information?.race}
-                        </span>
+                        <span>{res?.general_information?.race}</span>
                       </p>
                     </article>
                   </div>
                   <div className="flex gap-4 mt-6">
                     <button
-                      onClick={(e) =>
-                        navigate(`/user/my-animals/${petInfo?._id}`)
-                      }
+                      onClick={(e) => navigate(`/user/my-animals/${res?._id}`)}
                       className={`w-full rounded-lg py-3 px-4 outline-none text-secondary border-secondary border hover:bg-secondary hover:text-white transition duration-300`}
                     >
                       Visualizza cartella clinica
                     </button>
                     <button
-                      onClick={(e) => handleRemovePetsInfo(petInfo?._id)}
+                      onClick={(e) => handleRemovePetsInfo(res?._id)}
                       className={`max-w-max rounded-lg py-3 px-4 outline-none text-secondary border-secondary border hover:bg-secondary hover:text-white transition duration-300`}
                     >
                       Elimina
                     </button>
                   </div>
                 </div>
-              );
-            })}
+              ))
+            )}
         </div>
         {/* <div className="mt-5">
           {animalData?.length > 0 ? (

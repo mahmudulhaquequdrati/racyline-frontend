@@ -11,7 +11,11 @@ const PetInfoModal = ({ isOpen, setIsOpen, singleData }) => {
   const [data, setData] = useState({});
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_SERVER_LINK}/pets/report/${singleData}`)
+      .get(
+        `${import.meta.env.VITE_SERVER_LINK}/pets/report/${
+          singleData.data[0]?._id
+        }`
+      )
       .then((res) => {
         setData(res?.data?.data[0]);
       });
