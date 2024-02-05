@@ -80,7 +80,11 @@ export default function AnimalDetails() {
                   <td>
                     {moment(data?.general_information?.date_of_birth).format(
                       "DD/MM/YYYY"
-                    )}
+                    ) === "Invalid date"
+                      ? "-"
+                      : moment(data?.general_information?.date_of_birth).format(
+                          "DD/MM/YYYY"
+                        )}
                   </td>
                   <td> {data?.general_information?.sex?.gender}</td>
                 </tr>
@@ -111,7 +115,11 @@ export default function AnimalDetails() {
                     {" "}
                     {moment(
                       data?.general_information?.implantation_date
-                    ).format("DD/MM/YYYY")}
+                    ).format("DD/MM/YYYY") === "Invalid date"
+                      ? "-"
+                      : moment(
+                          data?.general_information?.implantation_date
+                        ).format("DD/MM/YYYY")}
                   </td>
                 </tr>
               </tbody>
