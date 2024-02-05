@@ -107,8 +107,9 @@ const AppointmentSuccess = () => {
               : timeHour < 10
               ? `${timeHour + `:` + timeMin}`
               : `${timeHour + `:` + timeMin}`}{" "}
-            di Martedì {moment(data?.appointDate?.date).format("DD MMMM YYYY")}{" "}
-            con il/la Dottore/Dottoressa
+            di {moment(data?.appointDate?.date).format("dddd")}{" "}
+            {moment(data?.appointDate?.date).format("DD MMMM YYYY")} con il/la
+            Dottore/Dottoressa
           </p>
           <div className="flex gap-6">
             <div className="w-[100px] h-[100px]">

@@ -426,7 +426,8 @@ const Appointment = () => {
           >
             <p className="text-[15px] font-normal leading-6">
               Stai prenotando un appuntamento per le {data?.appointDate?.time}{" "}
-              di Martedì{" "}
+              di {moment(data?.appointDate?.date).format("dddd")}
+              {""}
               {moment(data?.appointDate?.date).format("DD MMMM YYYY")} con il/la
               Dottore/Dottoressa
             </p>
