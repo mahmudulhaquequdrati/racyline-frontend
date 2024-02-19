@@ -16,9 +16,14 @@ function CompleteEditMedicalRecord() {
   const selectedPetIndex = 0;
   const petsData = JSON.parse(localStorage.getItem("petsData"));
   console.log(petsData);
+  const petParentsData =
+    petsData[selectedPetIndex]?.medical_history?.medical_diary;
   const [notes, setNotes] = useState(
-    petsData[selectedPetIndex]?.medical_history?.medical_diary !== undefined
-      ? petsData[selectedPetIndex]?.medical_history?.medical_diary
+    petParentsData !== undefined
+      ? petParentsData?.map((d) => ({
+          ...d,
+          selectedImage: d?.report_file?.map((j) => j?.name),
+        }))
       : []
   );
   const [note, setNote] = useState({
@@ -109,7 +114,11 @@ function CompleteEditMedicalRecord() {
       isEditingMode: true,
       noteIndex: noteId,
     });
-    setNote(notes[noteId]);
+    const selectedData = notes[noteId];
+    setNote({
+      ...selectedData,
+      selectedImage: selectedData?.report_file?.map((f) => f.name),
+    });
   };
 
   // get Dynamic input value
@@ -286,11 +295,10 @@ function CompleteEditMedicalRecord() {
                   ? "Modifica la nota medica"
                   : "Aggiungi un nuova nota medica"}
               </p>
-
               <div>
                 <input
                   type="date"
-                  value={note?.date}
+                  value={moment(note?.date).format("YYYY-MM-DD")}
                   onChange={(e) => setNote({ ...note, date: e.target.value })}
                   className={`w-full rounded-lg py-3 px-4 outline-none border-[1px] mt-5 ${
                     fieldError && inputData?.medicalData === ""
@@ -397,6 +405,7 @@ function CompleteEditMedicalRecord() {
 
             {/* Add note component ends here  */}
           </div>
+          {console.log(notes)}
           {newNoteOpen?.isEditingMode ? (
             <>
               {notes
@@ -456,7 +465,7 @@ function CompleteEditMedicalRecord() {
                           {moment(item?.date).format("DD-MM-YYYY")}{" "}
                         </p>
                       </div>
-
+                      {console.log(item)}
                       <div className="py-3 flex gap-1 flex-wrap">
                         {item?.selectedImage &&
                           item?.selectedImage?.map((file, FIdx) => (
