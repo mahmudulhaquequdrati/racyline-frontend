@@ -43,7 +43,7 @@ const OurServices = () => {
         ))}
       </div>
       <div className="flex justify-center items-center">
-        <button className="bg-[#033C5A] text-white uppercase px-6 py-2 rounded-sm font-semibold tracking-tighter cursor-pointer mt-8">
+        <button className="bg-[#033C5A] text-white  px-6 py-2 rounded-sm  cursor-pointer mt-8">
           Inizia ora
         </button>
       </div>

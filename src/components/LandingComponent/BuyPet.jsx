@@ -20,7 +20,7 @@ const BuyPet = () => {
             esperienze, consigli e storie con altri proprietari e scopri
             comerendere la vita del tuo pet ancora più felice e salutare.
           </p>
-          <button className="bg-[#033C5A] text-white uppercase px-4 py-2 rounded-sm font-semibold tracking-tighter cursor-pointer mt-8">
+          <button className="bg-[#033C5A] text-white  px-4 py-2 rounded-sm   cursor-pointer mt-8">
             Trova il tuo veterinario
           </button>
         </div>

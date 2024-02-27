@@ -15,7 +15,7 @@ const OurPets = () => {
             stiamo trasformando il benessere, un integratore alla volta.
             Unisciti a noi in questo viaggio verso una salute migliore.
           </p>
-          <button className="bg-[#033C5A] text-white uppercase px-4 py-2 rounded-sm font-semibold tracking-tighter cursor-pointer mt-8">
+          <button className="bg-[#033C5A] text-white  px-4 py-2 rounded-sm cursor-pointer mt-8">
             Scopri ora SeriPet
           </button>
         </div>
