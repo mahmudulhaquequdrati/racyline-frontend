@@ -13,7 +13,7 @@ const LandingHeader = () => {
 
   return (
     <section style={headerStyle} className="h-[500px] md:h-[600px]">
-      <div className="p-10 lg:w-[70%] mx-auto text-center ">
+      <div className="py-10 px-5 lg:w-[70%] mx-auto text-center ">
         <div className="bg-[#D4D9DD] text-[#033C5A] p-6 lg:p-16 my-5">
           {/* <h1 className="text-[2.25rem] lg:text-[5rem] tracking-tighter font-[900] mb-5">
             CALENDARPET
@@ -32,7 +32,7 @@ const LandingHeader = () => {
         </div>
       </div>
       <div className=" flex flex-col justify-center items-center">
-        <p className=" text-white text-xl lg:text-4xl tracking-tighter font-bold text-center mb-10">
+        <p className=" text-white text-xl lg:text-4xl tracking-tighter font-bold text-center mb-10 mx-1 md:mx-0">
           La tua prenotazione veterinaria a portata di click.
         </p>
         <button className="bg-white  px-4 py-2 rounded-sm   cursor-pointer">
