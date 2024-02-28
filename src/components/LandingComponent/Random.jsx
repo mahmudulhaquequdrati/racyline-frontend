@@ -2,7 +2,7 @@ const Random = ({ backgroundColor, flexDirection, image, heading, para }) => {
   return (
     <div className={`${backgroundColor} py-2`}>
       <div
-        className={`max-w-[1140px] mx-auto ${flexDirection} justify-center items-center gap-x-20 md:my-10 p-[16px]`}
+        className={`max-w-[1140px] mx-auto ${flexDirection} justify-center items-center gap-x-20 md:my-10 py-[16px] px-2`}
       >
         <img
           src={image}

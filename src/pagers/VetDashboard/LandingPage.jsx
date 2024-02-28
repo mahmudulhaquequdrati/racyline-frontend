@@ -22,7 +22,7 @@ import OurPets from "./OurPets";
 export default function LandingPage() {
   return (
     <section className=" ">
-      <div className="overflow-hidden px-6 md:px-0 mx-auto relative">
+      <div className="overflow-hidden px-2 md:px-0 mx-auto relative">
         <LandingHeader />
         <Random
           backgroundColor="bg-transparent"
