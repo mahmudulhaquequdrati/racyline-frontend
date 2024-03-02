@@ -35,7 +35,15 @@ const LandingHeader = () => {
         <p className=" text-white text-xl lg:text-4xl tracking-tighter font-bold text-center mb-10 mx-1 md:mx-0">
           La tua prenotazione veterinaria a portata di click.
         </p>
-        <button className="bg-white  px-4 py-2 rounded-sm   cursor-pointer">
+        <button
+          // onClick={
+          //   () => {
+          //     window.location.href = "/user/vet-lists";
+          //   }
+
+          // }
+          className="bg-white  px-4 py-2 rounded-sm   cursor-pointer"
+        >
           Prenota Ora
         </button>
       </div>

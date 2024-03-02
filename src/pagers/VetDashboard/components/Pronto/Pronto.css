@@ -1,0 +1,6 @@
+.bg-image {
+  background: url("../../../../assets/images/image (7).png") center/cover
+    no-repeat;
+  background-color: white;
+  height: 800px; /* Adjust the height as needed */
+}

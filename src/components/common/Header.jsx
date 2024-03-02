@@ -19,7 +19,7 @@ export default function Header() {
             <Link
               to="/vets/login"
               // onClick={() => navigate("/login")}
-              className="text-xs whitespace-nowrap cursor-pointer"
+              className="text-xs md:text-sm whitespace-nowrap cursor-pointer"
             >
               Sei un medico veterinario?{" "}
             </Link>
@@ -40,7 +40,7 @@ export default function Header() {
             <Link
               to="/vets/login"
               // onClick={() => navigate("/login")}
-              className="text-xs whitespace-nowrap cursor-pointer"
+              className="text-xs md:text-sm  whitespace-nowrap cursor-pointer"
             >
               Sei un medico veterinario?{" "}
             </Link>
