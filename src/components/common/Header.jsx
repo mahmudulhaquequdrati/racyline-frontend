@@ -15,11 +15,11 @@ export default function Header() {
           <img src={logo} className="w-[80%] md:w-[100%]" alt="logo" />
         </Link>
         {!user && !accessToken ? (
-          <div className="flex gap-3 md:gap-8 uppercase ">
+          <div className="flex gap-1 md:gap-8 uppercase items-center">
             <Link
               to="/vets/login"
               // onClick={() => navigate("/login")}
-              className="text-sm  cursor-pointer"
+              className="text-xs md:text-sm whitespace-nowrap cursor-pointer"
             >
               Sei un medico veterinario?{" "}
             </Link>
@@ -36,11 +36,11 @@ export default function Header() {
           </div>
         )}
         {user?.role === "user" && !user?.completed_medical_report && (
-          <div className="flex gap-3 md:gap-8 uppercase ">
+          <div className="flex gap-1 items-center md:gap-8 uppercase ">
             <Link
               to="/vets/login"
               // onClick={() => navigate("/login")}
-              className="text-sm  cursor-pointer"
+              className="text-xs md:text-sm  whitespace-nowrap cursor-pointer"
             >
               Sei un medico veterinario?{" "}
             </Link>
