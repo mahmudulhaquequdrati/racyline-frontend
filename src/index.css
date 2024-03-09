@@ -318,3 +318,8 @@ abbr[title] {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+.fc-daygrid-event-harness{
+  background-color: #3788d8;
+  color: white;
+}

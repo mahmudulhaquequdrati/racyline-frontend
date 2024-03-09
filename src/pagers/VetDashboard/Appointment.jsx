@@ -21,15 +21,19 @@ const Appointment = () => {
   } = useGetVetAppointmentDetailsQuery(user?._id);
   const [isOpen, setIsOpen] = useState(false);
 
-  const deleteAppointment = (id) => {
-    axios
-      .delete(`${import.meta.env.VITE_SERVER_LINK}/appointment/delete/${id}`)
-      .then((res) => {
-        notifySuccess("Appuntamento eliminato con successo!");
-        if (res?.data?.success) {
-          refetch();
-        }
-      });
+  const deleteAppointment = (data) => {
+    if (data?.userId) {
+      axios
+        .delete(
+          `${import.meta.env.VITE_SERVER_LINK}/appointment/delete/${data?.id}`
+        )
+        .then((res) => {
+          notifySuccess("Appuntamento eliminato con successo!");
+          if (res?.data?.success) {
+            refetch();
+          }
+        });
+    }
   };
   const [singleData, setSingleData] = useState({});
   function openModal(data) {
@@ -52,7 +56,7 @@ const Appointment = () => {
     );
     return data;
   };
-  console.log(allAppointmentList?.data);
+
   const handleSearchChange = (e) => {
     setSearchInput(e.target.value);
   };
@@ -236,7 +240,9 @@ const Appointment = () => {
                                 </div>
                                 <div>
                                   <button
-                                    onClick={() => openModal(res)}
+                                    onClick={() =>
+                                      res?.animaleId && openModal(res)
+                                    }
                                     className="border border-primary px-5 py-3 rounded text-primary whitespace-nowrap"
                                   >
                                     Visualizza la cartella
@@ -353,9 +359,7 @@ const Appointment = () => {
                                     </DropdownMenu.Item>
                                     <DropdownMenu.Item
                                       className="group text-[13px] leading-none  rounded-[3px] flex items-center h-[25px] px-[5px] relative pl-[25px] select-none outline-none cursor-pointer data-[disabled]:pointer-events-none   mt-3 mb-3"
-                                      onClick={() =>
-                                        deleteAppointment(res?._id)
-                                      }
+                                      onClick={() => deleteAppointment(res)}
                                     >
                                       <p className=" flex  items-center rounded-lg p-2 transition duration-150 ease-in-out  focus:outline-none focus-visible:ring focus-visible:ring-orange-500/50">
                                         <div className="">

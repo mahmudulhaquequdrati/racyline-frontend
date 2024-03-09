@@ -42,6 +42,7 @@ import AnimalDetails from "./pagers/myAnimals/AnimalDetails.jsx";
 import VetsDashboard from "./pagers/VetDashboard/VetsDashboard.jsx";
 import EditMedicalRecord from "./pagers/AnimalClinical/AnimalClinicalEdit/EditMedicalRecord.jsx";
 import CompleteEditMedicalRecord from "./pagers/AnimalClinical/AnimalClinicalEdit/CompleteEditMedicalRecord.jsx";
+import HomeCalender from "./pagers/VetDashboard/HomeCalender.jsx";
 const App = () => {
   const isAuth = useAuthCheck();
   moment?.defineLocale("it", {
@@ -193,6 +194,7 @@ const App = () => {
           }
         /> */}
         <Route path="/vets" element={<VetsDashboard />}>
+          <Route path="home" element={<HomeCalender />} />
           <Route path="my-appointment" element={<VetAppointment />} />
           <Route path="MyAvailabilities" element={<Availabilities />} />
           <Route path="accountsettings" element={<AccountSetting />} />

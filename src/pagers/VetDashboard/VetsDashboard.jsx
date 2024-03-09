@@ -9,6 +9,17 @@ export default function VetsDashboard() {
         <div className="hidden md:block w-max bg-white h-min p-5 lg:p-7 rounded-md whitespace-nowrap">
           <div className="flex flex-col gap-2">
             <div
+              onClick={() => navigate("/vets/home")}
+              className={`cursor-pointer flex items-center gap-2 ${
+                location.pathname !== "/vets/home" ? "text-gray-400" : ""
+              }`}
+            >
+              <div>Home</div>
+              {location.pathname === "/vets/home" && (
+                <div className="w-2 h-2 rounded-full bg-secondary"></div>
+              )}
+            </div>
+            <div
               onClick={() => navigate("/vets/my-appointment")}
               className={`cursor-pointer flex items-center gap-2 ${
                 location.pathname !== "/vets/my-appointment"
