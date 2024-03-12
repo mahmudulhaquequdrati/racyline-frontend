@@ -3,48 +3,6 @@ import { useGetAllVetListsQuery } from "../../features/vetLists/vetLists";
 import VetList from "./VetList";
 
 const VetLists = () => {
-  const vetList = [
-    {
-      id: 1,
-      name: "Mario Rossi",
-      image: "",
-      company: "Veterinario di medicina generale, Chirurgo veterinario",
-      location: "Via Roma, 1, Roma, 00196 Roma (RM), Italia",
-      treatmentAnimals: ["Canini", "Felini", "Roditori"],
-      availability: [
-        { day: "Da Lunedì a Venerdì", time: "15.00 - 22.30" },
-        { day: "Sabato", time: "14.00 - 19.00" },
-        { day: "Domenica", time: "Chiuso" },
-      ],
-    },
-    {
-      id: 2,
-      name: "Mario Rossi",
-      image: "",
-      company: "Veterinario di medicina generale, Chirurgo veterinario",
-      location: "Via Roma, 1, Roma, 00196 Roma (RM), Italia",
-      treatmentAnimals: ["Canini", "Felini", "Roditori"],
-      availability: [
-        { day: "Da Lunedì a Venerdì", time: "15.00 - 22.30" },
-        { day: "Sabato", time: "14.00 - 19.00" },
-        { day: "Domenica", time: "Chiuso" },
-      ],
-    },
-    {
-      id: 3,
-      name: "Mario Rossi",
-      image: "",
-      company: "Veterinario di medicina generale, Chirurgo veterinario",
-      location: "Via Roma, 1, Roma, 00196 Roma (RM), Italia",
-      treatmentAnimals: ["Canini", "Felini", "Roditori"],
-      availability: [
-        { day: "Da Lunedì a Venerdì", time: "15.00 - 22.30" },
-        { day: "Sabato", time: "14.00 - 19.00" },
-        { day: "Domenica", time: "Chiuso" },
-      ],
-    },
-  ];
-
   const {
     data: vetLists,
     isLoading,

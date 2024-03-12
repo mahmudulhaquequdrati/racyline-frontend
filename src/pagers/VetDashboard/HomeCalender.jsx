@@ -90,16 +90,16 @@ const HomeCalender = () => {
       });
   };
 
-  const deleteAppointment = (id) => {
-    axios
-      .delete(`${import.meta.env.VITE_SERVER_LINK}/appointment/delete/${id}`)
-      .then((res) => {
-        notifySuccess("Appuntamento eliminato con successo!");
-        if (res?.data?.success) {
-          refetch();
-        }
-      });
-  };
+  // const deleteAppointment = (id) => {
+  //   axios
+  //     .delete(`${import.meta.env.VITE_SERVER_LINK}/appointment/delete/${id}`)
+  //     .then((res) => {
+  //       notifySuccess("Appuntamento eliminato con successo!");
+  //       if (res?.data?.success) {
+  //         refetch();
+  //       }
+  //     });
+  // };
   const deleteBlockCalender = (id) => {
     axios
       .delete(`${import.meta.env.VITE_SERVER_LINK}/blockcalender/${id}`)
@@ -117,9 +117,10 @@ const HomeCalender = () => {
       if (confirmation) {
         if (title === "Block") {
           deleteBlockCalender(id);
-        } else {
-          deleteAppointment(id);
         }
+        // else {
+        //   deleteAppointment(id);
+        // }
       }
     }
   };
