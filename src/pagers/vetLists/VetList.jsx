@@ -190,6 +190,7 @@ const VetList = ({ vetInfo }) => {
               appointmentDate={appointmentDate}
               setAppointmentDate={setAppointmentDate}
               vetAvailabilities={availability?.availabilities}
+              block_dates={availability?.block_dates}
             />
           </div>
 

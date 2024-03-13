@@ -39,6 +39,7 @@ export default function VetCalender({
   appointmentDate,
   setAppointmentDate,
   vetAvailabilities,
+  block_dates,
 }) {
   // console.log(appointmentDate?.time);
   const onDateChange = (val) => {
@@ -50,11 +51,44 @@ export default function VetCalender({
       };
     });
   };
-  const disabledWeeks = vetAvailabilities
-    ?.filter((day) => !day.available)
-    .map((day) => moment().startOf("week").day(day.name).format("dddd"));
-  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  console.log(Date());
+
+  const isDateDisabled = (date) => {
+    const formattedDate = moment(date).format("YYYY-MM-DD");
+    const weekName = moment(date).format("dddd");
+    const disabledWeeks = vetAvailabilities
+      ?.filter((day) => !day.available)
+      .map((day) => moment().startOf("week").day(day.name).format("dddd"));
+
+    const disableDates = () => {
+      const formattedDate = moment(date).format("YYYY-MM-DD");
+      const disabled = block_dates.some((blockDate) => {
+        const formatedDisableStart = blockDate.blockStartDateTime
+          ? moment(blockDate.blockStartDateTime).format("YYYY-MM-DD")
+          : "";
+        const formatedDisableEnd = blockDate.blockEndDateTime
+          ? moment(blockDate.blockEndDateTime).format("YYYY-MM-DD")
+          : "";
+        if (formatedDisableStart && !formatedDisableEnd) {
+          return formattedDate == formatedDisableStart;
+        } else if (formatedDisableStart && formatedDisableEnd) {
+          console.log("hello");
+          return (
+            formattedDate >= formatedDisableStart &&
+            formattedDate <= formatedDisableEnd
+          );
+        } else {
+          return false;
+        }
+      });
+      return disabled;
+    };
+
+    return (
+      (disabledWeeks && disabledWeeks.includes(weekName)) || // Previous condition
+      disableDates()
+    );
+  };
+
   return (
     <div className="max-w-[1140px] w-full mx-auto">
       <Calendar
@@ -62,10 +96,7 @@ export default function VetCalender({
         onChange={onDateChange}
         value={appointmentDate?.date}
         className={"customizeCalender"}
-        tileDisabled={({ date }) => {
-          const weekName = moment(date).format("dddd");
-          return disabledWeeks?.includes(weekName);
-        }}
+        tileDisabled={({ date }) => isDateDisabled(date)}
         prev2Label={null}
         next2Label={null}
         nextLabel={<NextIcon />}
