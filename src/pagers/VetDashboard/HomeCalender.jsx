@@ -10,7 +10,11 @@ import BloccaModal from "./BloccaModal";
 import { useSelector } from "react-redux";
 import { useGetVetAppointmentDetailsQuery } from "../../features/appointment/appointmentApi";
 import axios from "axios";
-import { notifySuccess } from "../../components/common/Toast/Toast";
+import {
+  notifyError,
+  notifySuccess,
+} from "../../components/common/Toast/Toast";
+import moment from "moment";
 
 const HomeCalender = () => {
   const { user } = useSelector((state) => state.auth);
@@ -70,13 +74,43 @@ const HomeCalender = () => {
     ]);
   }
 
-  console.log(events);
+  // console.log(events);
   const handleSingleDateBlock = (e) => {
     e.preventDefault();
+    // console.log(singleDate);
+
+    // if on the same day , there exists any appointment then do no block rather show a message else block the day
+    const isAppointmentExists = allAppointmentList?.data?.some(
+      (appointment) => {
+        // console.log(
+
+        //   appointment.appointmentDate.split("T")[0].split("-")[2],
+
+        //   new Date(singleDate).toLocaleString().split("/")[1]
+        // );
+        return (
+          appointment.appointmentDate.split("T")[0].split("-")[2] ===
+          new Date(singleDate).toLocaleString().split("/")[1]
+        );
+      }
+    );
+
+    if (isAppointmentExists) {
+      // translate to italian
+      notifyError(
+        "Già un appuntamento è prenotato per questa data! Non puoi bloccare questa data!"
+      );
+      setIsPopupVisible(false);
+
+      return;
+    }
+
     const data = {
-      blockStartDateTime: singleDate,
+      blockStartDateTime: new Date(singleDate).toLocaleDateString(),
       vetId: user?._id,
     };
+
+    // console.log(data);
     axios
       .post(`${import.meta.env.VITE_SERVER_LINK}/create-blockcalender`, data)
       .then((res) => {
@@ -113,14 +147,21 @@ const HomeCalender = () => {
 
   const handleDeleteEvent = (id, title, canDelete) => {
     if (canDelete) {
-      const confirmation = window.confirm(`Are you sure you want to delete ?`);
-      if (confirmation) {
-        if (title === "Block") {
-          deleteBlockCalender(id);
+      if (title === "Block") {
+        const confirmation = window.confirm(
+          `Are you sure you want to delete ?`
+        );
+        if (confirmation) {
+          console.log(title, id, canDelete);
+          if (title === "Block") {
+            deleteBlockCalender(id);
+          }
+          // else {
+          //   deleteAppointment(id);
+          // }
         }
-        // else {
-        //   deleteAppointment(id);
-        // }
+      } else {
+        console.log("not possible to delete");
       }
     }
   };
@@ -133,6 +174,8 @@ const HomeCalender = () => {
           setIsOpen={setOpenModal}
           getData={refetch}
           singleDate={singleDate}
+          allAppointmentList={allAppointmentList}
+          blockData={blockData}
         />
       )}
       {bloccaModal && (
@@ -152,6 +195,28 @@ const HomeCalender = () => {
           left: "prev,next today",
           center: "title",
           right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek",
+        }}
+        // change the event color
+
+        eventClassNames={(event) => {
+          if (
+            event?.event?._def?.extendedProps?.canDelete &&
+            event?.event?.title === "Block"
+          ) {
+            return "bg-red-500 border-red-500 !m-0";
+          } else {
+          }
+        }}
+        eventBorderColor="transparent"
+        eventMouseEnter={(e) => {
+          if (e.event._def.title === "Block") {
+            e.el.classList.add("!bg-red-500");
+          } else {
+            return;
+          }
+          // add hover effect in the e.el (event element)
+          // e.el.style.backgroundColor = "red";
+          e.el.classList.add("!bg-red-500");
         }}
         eventClick={(e) =>
           handleDeleteEvent(

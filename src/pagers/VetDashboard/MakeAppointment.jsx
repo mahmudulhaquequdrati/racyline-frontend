@@ -4,7 +4,15 @@ import CancelIcon from "../../assets/ICONS/Cancel.svg";
 import moment from "moment";
 import axios from "axios";
 import { useSelector } from "react-redux";
-const MakeAppointment = ({ isOpen, setIsOpen, getData, singleDate }) => {
+import { notifyError } from "../../components/common/Toast/Toast";
+const MakeAppointment = ({
+  isOpen,
+  setIsOpen,
+  getData,
+  singleDate,
+  allAppointmentList,
+  blockData,
+}) => {
   const { user } = useSelector((state) => state.auth);
   const [isLoading, setIsLoading] = useState(false);
   function closeModal() {
@@ -20,8 +28,46 @@ const MakeAppointment = ({ isOpen, setIsOpen, getData, singleDate }) => {
       [event.target.name]: event.target.value,
     }));
   };
+
+  // blockStartDateTime;
+  // ("2024-03-21T00:00");
+  // blockEndDateTime;
+  // ("2024-03-30T22:34");
+
+  // check if the date is within the blocked blockStartDateTime and blockEndDateTime
+  const isWithinBlockedDate = (date) => {
+    let isBlocked = false;
+    // console.log(new Date(singleDate).toLocaleDateString().split("/")[1]);
+    blockData?.data?.forEach((block) => {
+      // console.log(
+      //   new Date(block.blockStartDateTime).toLocaleDateString()?.split("/")[1]
+      // );
+      if (
+        // the date i sent, if there exists a date within the blockStartDateTime and blockEndDateTime then it is blocked
+        new Date(date).toLocaleDateString().split("/")[1] ===
+          new Date(block.blockStartDateTime)
+            .toLocaleDateString()
+            .split("/")[1] ||
+        (new Date(date).toLocaleDateString().split("/")[1] >=
+          new Date(block.blockStartDateTime)
+            .toLocaleDateString()
+            .split("/")[1] &&
+          new Date(date).toLocaleDateString().split("/")[1] <=
+            new Date(block.blockEndDateTime).toLocaleDateString().split("/")[1])
+      ) {
+        isBlocked = true;
+      }
+    });
+    return isBlocked;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (isWithinBlockedDate(appoinmentDate)) {
+      notifyError("Questa data è bloccata, seleziona un'altra data.");
+      return;
+    }
+
     setIsLoading(true);
     const data = {
       ...inputData,

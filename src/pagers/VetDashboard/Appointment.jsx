@@ -22,18 +22,19 @@ const Appointment = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const deleteAppointment = (data) => {
-    if (data?.userId) {
-      axios
-        .delete(
-          `${import.meta.env.VITE_SERVER_LINK}/appointment/delete/${data?.id}`
-        )
-        .then((res) => {
-          notifySuccess("Appuntamento eliminato con successo!");
-          if (res?.data?.success) {
-            refetch();
-          }
-        });
-    }
+    // console.log(data);
+    // if (data?.userId) {
+    axios
+      .delete(
+        `${import.meta.env.VITE_SERVER_LINK}/appointment/delete/${data?._id}`
+      )
+      .then((res) => {
+        notifySuccess("Appuntamento eliminato con successo!");
+        if (res?.data?.success) {
+          refetch();
+        }
+      });
+    // }
   };
   const [singleData, setSingleData] = useState({});
   function openModal(data) {
