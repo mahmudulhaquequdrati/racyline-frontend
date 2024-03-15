@@ -43,7 +43,7 @@ export default function VetCalender({
 }) {
   // console.log(appointmentDate?.time);
   const onDateChange = (val) => {
-    console.log(val);
+    // console.log(val);
     setAppointmentDate((prev) => {
       return {
         ...prev,
@@ -51,6 +51,8 @@ export default function VetCalender({
       };
     });
   };
+
+  // console.log(block_dates, "block_dates");
 
   const isDateDisabled = (date) => {
     const formattedDate = moment(date).format("YYYY-MM-DD");
@@ -71,7 +73,7 @@ export default function VetCalender({
         if (formatedDisableStart && !formatedDisableEnd) {
           return formattedDate == formatedDisableStart;
         } else if (formatedDisableStart && formatedDisableEnd) {
-          console.log("hello");
+          // console.log("hello");
           return (
             formattedDate >= formatedDisableStart &&
             formattedDate <= formatedDisableEnd

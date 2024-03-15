@@ -63,16 +63,16 @@ const MakeAppointment = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (isWithinBlockedDate(appoinmentDate)) {
-      notifyError("Questa data è bloccata, seleziona un'altra data.");
-      return;
-    }
+    // if (isWithinBlockedDate(appoinmentDate)) {
+    //   notifyError("Questa data è bloccata, seleziona un'altra data.");
+    //   return;
+    // }
 
     setIsLoading(true);
     const data = {
       ...inputData,
       appointmentDate: appoinmentDate,
-      appointmentTime: moment(appoinmentDate).format("hh:mm"),
+      appointmentTime: moment(appoinmentDate).format("HH:mm"),
       vetInfo: {
         vetId: user?._id,
       },
