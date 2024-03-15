@@ -38,7 +38,7 @@ const HomeCalender = () => {
   const [bloccaModal, setBloccaModal] = useState(false);
   const [singleDate, setSingleDate] = useState(null);
   const handleSelectDate = (info, e) => {
-    console.log(info);
+    // console.log(info);
     setSingleDate(info.date);
     setPosition({
       left: info.jsEvent.screenX - 10,
@@ -82,12 +82,6 @@ const HomeCalender = () => {
     // if on the same day , there exists any appointment then do no block rather show a message else block the day
     const isAppointmentExists = allAppointmentList?.data?.some(
       (appointment) => {
-        // console.log(
-
-        //   appointment.appointmentDate.split("T")[0].split("-")[2],
-
-        //   new Date(singleDate).toLocaleString().split("/")[1]
-        // );
         return (
           appointment.appointmentDate.split("T")[0].split("-")[2] ===
           new Date(singleDate).toLocaleString().split("/")[1]
@@ -106,7 +100,7 @@ const HomeCalender = () => {
     }
 
     const data = {
-      blockStartDateTime: new Date(singleDate).toLocaleDateString(),
+      blockStartDateTime: singleDate,
       vetId: user?._id,
     };
 
@@ -309,6 +303,7 @@ const transformAppointmentsToEvents = (appointments) => {
           appointment.appointmentTime
         }:00`
       );
+      // console.log(new Date(appointment.appointmentDate));
       const endDateTime = new Date(startDateTime.getTime() + 15 * 60000);
 
       events.push({

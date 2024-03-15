@@ -26,6 +26,8 @@ const VetList = ({ vetInfo }) => {
     doctor_type2 = [],
   } = vetInfo || {};
 
+  // console.log(vetInfo);
+
   const handelGetAppointment = () => {
     if (appointmentDate?.time !== null) {
       const appointmentData = {
@@ -64,10 +66,29 @@ const VetList = ({ vetInfo }) => {
   const current_appointment_data = appointments?.filter((d) =>
     moment(d?.appointmentDate).isSame(moment(appointmentDate.date))
   );
+
+  const formattedDate = new Date(appointmentDate.date)
+    ?.toLocaleDateString()
+    .split("/");
+
+  const newFormattedDate = `${formattedDate[2]}-${
+    formattedDate[0].length === 2 ? formattedDate[0] : 0 + `${formattedDate[0]}`
+  }-${formattedDate[1]}`;
+
+  const custom_appointment_data = appointments?.filter((d) => {
+    return d.appointmentDate.split("T")[0] === newFormattedDate;
+  });
+
   if (current_appointment_data && current_appointment_data?.length > 0) {
     timeSlots2 = current_appointment_data?.map((item) => item.appointmentTime);
   }
+  if (custom_appointment_data?.length > 0) {
+    custom_appointment_data?.map((item) => {
+      timeSlots2.push(item.appointmentTime);
+    });
+  }
   // console.log(timeSlots2);
+
   current_day_data?.map((timeData, i) => {
     // Iterate through each time interval
     timeData?.availabilities?.forEach((interval) => {
